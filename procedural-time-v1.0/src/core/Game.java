@@ -24,7 +24,7 @@ public class Game extends Core{
 
 	private ImageTools imgTools = new ImageTools();
 	
-	private Image[][] imgArray;
+	private BufferedImage[][] imgArray;
 	private BufferedImage[][] guiArray;
 	//private Image[][] itemArray;
 	private ItemType[] itemTypes;
@@ -33,11 +33,11 @@ public class Game extends Core{
 	private TileMap tileMap;
 
 	private Human player;
-	private Human NPC[] = new Human[500];
+	private Human NPC[] = new Human[1];
 	private Animation[] charAnims;
 	private int incPause;
 	private Random rand = new Random();
-	private int mapSize = 1000;
+	private int mapSize = 500;
 	
 	
 	private GUI gui;
@@ -151,7 +151,7 @@ public class Game extends Core{
 	
 	private void loadMap(){
 		Image img = imgTools.loadImage("map.png");
-		imgArray = imgTools.loadSprites(img, TILE_SIZE, 10, 10, SCALE);
+		imgArray = imgTools.loadBuffSprites(img, TILE_SIZE, 10, 10, SCALE);
 		tileMap = new TileMap(imgArray, null, TILE_SIZE, SCALE, mapSize, mapSize);
 	}
 	
@@ -172,7 +172,7 @@ public class Game extends Core{
 		itemTypes[2] = new ItemType("apple", itemArray[3][0]);
 		itemTypes[3] = new ItemType("orb", itemArray[4][0]);
 		
-		for (int i = 0; i < 1000; i++){
+		for (int i = 0; i < 100; i++){
 			//worldItems[i] = new Item(itemTypes[rand.nextInt(itemTypes.length)], new Point(rand.nextInt((mapSize - 10)*TILE_SIZE) + 30,rand.nextInt((mapSize - 10)*TILE_SIZE) + 30));
 			worldItems.add(new Item(itemTypes[rand.nextInt(itemTypes.length)], new Point(rand.nextInt((mapSize - 10)*TILE_SIZE) + 30,rand.nextInt((mapSize - 10)*TILE_SIZE) + 30)));
 		}
@@ -337,7 +337,8 @@ public class Game extends Core{
 			for (int j = 0; j < tileMap.mapHeight; j++){
 				Tile tempTile = tileMap.getTile(i, j); 
 				if (tempTile.getX() < player.getPos().x + SCALE*centX && tempTile.getX() > player.getPos().x - SCALE*centX && tempTile.getY() < player.getPos().y + SCALE*centY && tempTile.getY() > player.getPos().y - SCALE*centY )
-				{g.drawImage(tileMap.getTileImage(i, j), tempTile.getX() - player.getPos().x + offset.x, tempTile.getY() - player.getPos().y + offset.y, null);}
+				{g.drawImage(tileMap.getImageOfType(tempTile.getType()), tempTile.getX() - player.getPos().x + offset.x, tempTile.getY() - player.getPos().y + offset.y, null);}
+				
 			}
 		}
 		
@@ -347,6 +348,7 @@ public class Game extends Core{
 		}
 		
 		//////// Draw NPCs //////////
+		
 		for (int i = 0; i < NPC.length; i++){
 			if (NPC[i].getPos().x < player.getPos().x + SCALE*centX && NPC[i].getPos().x > player.getPos().x - SCALE*centX && NPC[i].getPos().y < player.getPos().y + SCALE*centY && NPC[i].getPos().y > player.getPos().y - SCALE*centY)
 			{g.drawImage(NPC[i].getImage(), NPC[i].getPos().x - player.getPos().x + offset.x, NPC[i].getPos().y - player.getPos().y + offset.y, null);}
@@ -364,7 +366,6 @@ public class Game extends Core{
 			for (int i = 0; i < player.getCollisionPts().length; i++){
 				g.fillOval(offset.x + player.getCollisionPts()[i].x, offset.y + player.getCollisionPts()[i].y, 3, 3);
 			}
-			
 			g.setColor(Color.gray);
 			g.fillRect(5, 510, 200, 60);
 			g.setColor(Color.white);

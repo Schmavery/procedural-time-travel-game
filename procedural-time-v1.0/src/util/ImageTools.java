@@ -1,6 +1,8 @@
 package util;
 
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -13,14 +15,43 @@ import javax.swing.ImageIcon;
 
 public class ImageTools {
 	
-	
-	public Image[][] loadSprites(Image spriteSheet, int spriteSize, int scale){
-	return loadSprites(spriteSheet, spriteSize, 0, 0, scale);
+	private BufferedImage toCompatibleImage(BufferedImage image)
+	{
+		// obtain the current system graphical settings
+		GraphicsConfiguration gfx_config = GraphicsEnvironment.
+			getLocalGraphicsEnvironment().getDefaultScreenDevice().
+			getDefaultConfiguration();
+
+		/*
+		 * if image is already compatible and optimized for current system 
+		 * settings, simply return it
+		 */
+		if (image.getColorModel().equals(gfx_config.getColorModel()))
+			return image;
+
+		// image is not optimized, so create a new image that is
+		BufferedImage new_image = gfx_config.createCompatibleImage(
+				image.getWidth(), image.getHeight(), image.getTransparency());
+
+		// get the graphics context of the new image to draw the old image on
+		Graphics2D g2d = (Graphics2D) new_image.getGraphics();
+
+		// actually draw the image and dispose of context no longer needed
+		g2d.drawImage(image, 0, 0, null);
+		g2d.dispose();
+
+		// return the new optimized image
+		return new_image; 
 	}
 	
+	/*
+	public BufferedImage[][] loadSprites(Image spriteSheet, int spriteSize, int scale){
+		return loadSprites(spriteSheet, spriteSize, 0, 0, scale);
+	}
+	*/
 	public BufferedImage[][] loadBuffSprites(Image spriteSheet, int spriteSize, int scale){
 		return loadBuffSprites(spriteSheet, spriteSize, 0, 0, scale);
-		}
+	}
 
 	public BufferedImage[][] loadBuffSprites(Image spriteSheet, int spriteSize, int width, int height, int scale){
 		spriteSize = spriteSize/scale;
@@ -42,8 +73,9 @@ public class ImageTools {
 		}
 		return imgArray;
 	}
-	
-	public Image[][] loadSprites (Image spriteSheet, int spriteSize, int width, int height, int scale){
+
+	/*
+	public BufferedImage[][] loadSprites (Image spriteSheet, int spriteSize, int width, int height, int scale){
 		BufferedImage[][] buffImgArray = loadBuffSprites(spriteSheet, spriteSize, width, height, scale);
 		Image[][] imgArray = new Image[width][height];
 		for (int i = 0; i < width; i++){
@@ -52,7 +84,7 @@ public class ImageTools {
 			}
 		}
 		return imgArray;
-	}
+	}*/
 	
 	public BufferedImage imageToBufferedImage(Image image, int width, int height)
 	  {
@@ -64,8 +96,13 @@ public class ImageTools {
 	    return dest;
 	  }
 	
-	public Image loadImage(String path){
-		return new ImageIcon(getClass().getResource("../resources/images/" + path)).getImage();
+	public BufferedImage loadImage(String path){
+		Image img = new ImageIcon(getClass().getResource("../resources/images/" + path)).getImage();
+		BufferedImage buffImg = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		buffImg.getGraphics().drawImage(img, 0, 0, null);
+		buffImg.getGraphics().dispose();
+		//return toCompatibleImage(buffImg);
+		return buffImg;
 	}
 	
 	public Image pinkToAlpha(Image image){

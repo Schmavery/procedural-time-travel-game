@@ -31,6 +31,8 @@ public abstract class Core implements KeyListener, MouseListener, MouseMotionLis
 	public void init(){
 		keys_pressed = new boolean[256];
 		sm = new ScreenManager("Chronobe");
+		//System.setProperty("sun.java2d.opengl", "True");
+		//System.setProperty("sun.java2d.xrender", "True");
 		running = true;
 		paused = false;
 		
@@ -49,7 +51,7 @@ public abstract class Core implements KeyListener, MouseListener, MouseMotionLis
 		long delta;
 		long sleepTime;
 		long calcTime;
-		long sleepConst = 20;
+		long sleepConst = 50;
 		// keep looping round til the game ends
 
 		while (running) {
@@ -72,8 +74,9 @@ public abstract class Core implements KeyListener, MouseListener, MouseMotionLis
 			sm.updateGraphics();
 			
 			calcTime = System.currentTimeMillis() - lastLoopTime;
-			if (calcTime < sleepConst) {sleepTime = sleepConst - calcTime;}
-			else {sleepTime = 1;}
+			if (calcTime <= sleepConst) {
+				sleepTime = sleepConst - calcTime;
+			} else {System.out.println("Overtime by:"+(calcTime-sleepConst));sleepTime = 1;}
 			// pause for a bit.
 			try { Thread.sleep(sleepTime); } catch (Exception e) {}
 		}

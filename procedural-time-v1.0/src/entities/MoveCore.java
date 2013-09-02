@@ -13,7 +13,8 @@ public class MoveCore {
 	private Random rand = new Random();
 	private int randTimer;	
 	
-	private double speed = 1.5;
+	//private double speed = 1.5;
+	private double speed = 3;
 	
 	private int[] walkKeyX = {0,1,1,1,0,-1,-1,-1};
 	private int[] walkKeyY = {-1,-1,0,1,1,1,0,-1};
