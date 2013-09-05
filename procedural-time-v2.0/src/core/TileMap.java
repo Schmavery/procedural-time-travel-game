@@ -13,12 +13,17 @@ public class TileMap implements Serializable{
 	private Tile[][] tileMap;
 	private int size;
 	
+	private int[] grassID = {1,2,3,4,5};
+	private int[] dirtID = {1,2,3,4,5};
+	private int[] sandID = {1,2,3,4,5};
+	private int[] waterID = {1,2,3,4,5};
+	
 	public TileMap(int size){
 		tileMap = new Tile[size][size];
 		this.size = size;
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(Type.GRASS, x, y);
+				tileMap[x][y] = new Tile(Type.GRASS, grassID[4], x, y);
 			}
 		}
 	}
@@ -28,10 +33,10 @@ public class TileMap implements Serializable{
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
 		try {	
 			range = Math.abs(range);
-			int x1 = Math.min(size, Math.max(0, pos_x - range));
-			int x2 = Math.min(size, Math.max(0, pos_x + range));
-			int y1 = Math.min(size, Math.max(0, pos_y - range));
-			int y2 = Math.min(size, Math.max(0, pos_y + range));
+			int x1 = Math.min(size-1, Math.max(0, pos_x - range));
+			int x2 = Math.min(size-1, Math.max(0, pos_x + range));
+			int y1 = Math.min(size-1, Math.max(0, pos_y - range));
+			int y2 = Math.min(size-1, Math.max(0, pos_y + range));
 			Tile[] tiles = new Tile[(x2-x1+1)*(y2-y1+1)];
 			int counter = 0;
 			for(int x = x1; x <= x2; x++){
@@ -62,10 +67,25 @@ public class TileMap implements Serializable{
 		return null;
 	}
 	
-	public int calcBitmask(Type centerType){
-		
-		
-		return 0;
+	public int calcBitmask(Type centerType, int x, int y){
+		int total = 0;
+		if (x - 1 < 0 ||tileMap[x-1][y].getType() != centerType){
+			total += 1;
+		}
+		if (y - 1 < 0 || tileMap[x][y-1].getType() != centerType){
+			total += 2;
+		}
+		if (x > size || tileMap[x+1][y].getType() != centerType){
+			total += 4;
+		}
+		if (y > size || tileMap[x][y+1].getType() != centerType){
+			total += 8;
+		}
+		return total;
+	}
+	
+	public void generateTerrain(){
+		new 
 	}
 	
 	public Type getType(int x, int y){
