@@ -74,27 +74,33 @@ public class Game extends Core {
 	
 	public void draw(){
 		//glClear(GL_COLOR_BUFFER_BIT);
+		int tileID = 4;
+		int tileX = tileID % 16;
+		int tileY = tileID / 16;
+		
+		
 		float tileSide = TILE_SIZE * SCALE;
 		int playerTile_x = (int) Math.floor(player_x / (tileSide));
 		int playerTile_y = (int) Math.floor(player_y / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
-		System.out.println(player_x+"/"+SCREEN_WIDTH/2f);
-		for (Tile tile : tileMap.getSurroundingTiles(5, playerTile_x, playerTile_y)){
+		for (Tile tile : tileMap.getSurroundingTiles(7, playerTile_x, playerTile_y)){
 			glPushMatrix();
 				glTranslatef(tile.getX() * tileSide - player_x + SCREEN_WIDTH/2f,
 						tile.getY() * tileSide - player_y + SCREEN_HEIGHT/2f, 0);
 				glBegin(GL_QUADS);
-				glTexCoord2f(0, 0);
+				glTexCoord2f(tileX/16f, tileY/16f);				//short,short
 				glVertex2f(0, 0);
-				glTexCoord2f(1f/16, 0);
+				glTexCoord2f((tileX+1)/16f, tileY/16f);			//long, short
 				glVertex2f(tileSide, 0);
-				glTexCoord2f(1f/16, 1f/16);
+				glTexCoord2f((tileX+1)/16f, (tileY+1)/16f);		//long,  long
 				glVertex2f(tileSide, tileSide);
-				glTexCoord2f(0, 1f/16);
+				glTexCoord2f(tileX/16f, (tileY+1)/16f);			//short, long
 				glVertex2f(0, tileSide);
 				glEnd();
 			glPopMatrix();
 		}
+		
+		//glBindTexture(GL_TEXTURE_2D, peopleTex);
 		glPushMatrix();
 		glTranslatef(SCREEN_WIDTH/2f, SCREEN_HEIGHT/2f, 0);
 		glBegin(GL_QUADS);

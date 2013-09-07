@@ -14,6 +14,9 @@ public class Tile implements Serializable{
 	private int textureID;
 	private int texX, texY;
 	
+	float elevation;
+	float humidity;
+	
 	private int calcTextureID(){
 		
 		return 0;

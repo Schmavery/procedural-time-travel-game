@@ -85,7 +85,7 @@ public class TileMap implements Serializable{
 	}
 	
 	public void generateTerrain(){
-		new 
+	
 	}
 	
 	public Type getType(int x, int y){
