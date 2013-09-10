@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import core.Tile.Type;
 
@@ -12,8 +13,10 @@ public class TileMap implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Tile[][] tileMap;
 	private int size;
+	private Random rand;
 	
-	private int[] grassID = {1,2,3,4,5};
+	// Corner IDs for different terrain
+	private int[] grassID = {17,17,17,17,17,17,17,20,24,25,57,72,72,72,72,72,73};
 	private int[] dirtID = {1,2,3,4,5};
 	private int[] sandID = {1,2,3,4,5};
 	private int[] waterID = {1,2,3,4,5};
@@ -21,14 +24,15 @@ public class TileMap implements Serializable{
 	public TileMap(int size){
 		tileMap = new Tile[size][size];
 		this.size = size;
+		this.rand = new Random();
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(Type.GRASS, grassID[4], x, y);
+				tileMap[x][y] = new Tile(Type.GRASS, grassID[rand.nextInt(grassID.length)], x, y);
 			}
 		}
 	}
 	
-	// Returns a square of tiles centered on (x,y), with sidelength 2*range
+	// Returns a square of tiles centered on (x,y), with sidelength (2*range+1)
 	// Handles negatives and points close to the edge of the map
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
 		try {	

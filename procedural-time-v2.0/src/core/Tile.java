@@ -22,11 +22,14 @@ public class Tile implements Serializable{
 		return 0;
 	}
 	
-	public Tile(Type type, int textureId, int x, int y){
+	public Tile(Type type, int textureID, int x, int y){
 		this.type = type;
 		this.x = x;
 		this.y = y;
-		textureID = calcTextureID();
+		this.texX = textureID % 16;
+		this.texY = textureID / 16;
+		//System.out.println(x);
+//		textureID = calcTextureID();
 	}
 	
 	public Type getType(){return type;}

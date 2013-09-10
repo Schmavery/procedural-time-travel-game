@@ -26,6 +26,10 @@ public class AnimationManager {
 		}
 	}
 	
+	private void destroy(Animation oldAnim){
+		animList.remove(oldAnim);
+	}
+	
 	
 	public class Animation {
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
@@ -60,6 +64,10 @@ public class AnimationManager {
 		
 		public SpriteSheet getSpriteSheet(){
 			return spriteSheet;
+		}
+		
+		public void destroy(){
+			AnimationManager.this.destroy(this);
 		}
 		
 		private void addFrame(int x, int y){

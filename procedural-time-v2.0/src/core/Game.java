@@ -36,7 +36,7 @@ public class Game extends Core {
 	
 	public void init() {
 		super.init();
-		tileMap = new TileMap(20);
+		tileMap = new TileMap(1000);
 		player_x = 300f;
 		player_y = 300f;
 		try {
@@ -51,8 +51,9 @@ public class Game extends Core {
 	
 	}
 	
-	public void update(long delta){
-		float speed = 5;
+	public void update(long deltaTime){
+		System.out.println(deltaTime);
+		float speed = (float) (0.2*deltaTime);
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
 			player_y -= speed;
 		}
@@ -74,16 +75,20 @@ public class Game extends Core {
 	
 	public void draw(){
 		//glClear(GL_COLOR_BUFFER_BIT);
-		int tileID = 4;
-		int tileX = tileID % 16;
-		int tileY = tileID / 16;
+//		int tileID = 73;
+//		int tileX = tileID % 16;
+//		int tileY
 		
 		
 		float tileSide = TILE_SIZE * SCALE;
 		int playerTile_x = (int) Math.floor(player_x / (tileSide));
 		int playerTile_y = (int) Math.floor(player_y / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
-		for (Tile tile : tileMap.getSurroundingTiles(7, playerTile_x, playerTile_y)){
+		for (Tile tile : tileMap.getSurroundingTiles(11, playerTile_x, playerTile_y)){
+
+			int tileX = tile.getTexX();
+			int tileY = tile.getTexY();
+			System.out.println(tileX);
 			glPushMatrix();
 				glTranslatef(tile.getX() * tileSide - player_x + SCREEN_WIDTH/2f,
 						tile.getY() * tileSide - player_y + SCREEN_HEIGHT/2f, 0);

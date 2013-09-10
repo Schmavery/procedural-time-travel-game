@@ -19,8 +19,8 @@ import org.lwjgl.opengl.DisplayMode;
 
  
 public class Core {
-	public static final int SCREEN_HEIGHT = 640;
-	public static final int SCREEN_WIDTH = 640;
+	public static final int SCREEN_WIDTH = 1000;
+	public static final int SCREEN_HEIGHT = 800;
 
 	private long lastFrame;
 
