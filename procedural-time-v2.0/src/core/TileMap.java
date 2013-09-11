@@ -14,22 +14,26 @@ public class TileMap implements Serializable{
 	private Tile[][] tileMap;
 	private int size;
 	private Random rand;
+	private int seed;
 	
 	// Corner IDs for different terrain
-	private int[] grassID = {17,17,17,17,17,17,17,20,24,25,57,72,72,72,72,72,73};
-	private int[] dirtID = {1,2,3,4,5};
+	private int[] grassID = {17,17,17,17,17,17,17,17,17,17,20,24,25,57,72,72,72,72,72,72,72,72,73};
+	private int[] dirtID = {6,6,6,6,6,6,6,6,6,6,6,8,9,22,22,22,22,22,22,22,22,22,38,38,38,38,38,38};
 	private int[] sandID = {1,2,3,4,5};
 	private int[] waterID = {1,2,3,4,5};
 	
 	public TileMap(int size){
+		seed = (int) System.currentTimeMillis();
+		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
-		this.rand = new Random();
-		for (int x = 0; x < size; x++){
-			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(Type.GRASS, grassID[rand.nextInt(grassID.length)], x, y);
-			}
-		}
+		this.rand = new Random(seed);
+//		for (int x = 0; x < size; x++){
+//			for (int y = 0; y < size; y++){
+//				tileMap[x][y] = new Tile(Type.GRASS, grassID[rand.nextInt(grassID.length)], x, y);
+//			}
+//		}
+		generateTerrain();
 	}
 	
 	// Returns a square of tiles centered on (x,y), with sidelength (2*range+1)
@@ -71,8 +75,11 @@ public class TileMap implements Serializable{
 		return null;
 	}
 	
-	public int calcBitmask(Type centerType, int x, int y){
+	public int calcBitmask(int x, int y){
 		int total = 0;
+		Type centerType = tileMap[x][y].getType();
+		x = Math.min(1, Math.max(size-2,x));
+		y = Math.min(1, Math.max(size-2,y));
 		if (x - 1 < 0 ||tileMap[x-1][y].getType() != centerType){
 			total += 1;
 		}
@@ -88,11 +95,36 @@ public class TileMap implements Serializable{
 		return total;
 	}
 	
-	public void generateTerrain(){
-	
+	private void generateTerrain(){
+		PerlinNoise.setSeed(seed);
+		for (int x = 0; x < size; x++){
+			for (int y = 0; y < size; y++){
+				tileMap[x][y] = new Tile(genTileType(x, y), 1, x, y);
+			}
+		}
+		for (int x = 0; x < size; x++){
+			for (int y = 0; y < size; y++){
+				if (tileMap[x][y].getType() == Type.GRASS)
+					tileMap[x][y].setTextureID(grassID[rand.nextInt(grassID.length)]);
+				else 
+					tileMap[x][y].setTextureID(dirtID[rand.nextInt(dirtID.length)]);
+			}
+		}
 	}
 	
-	public Type getType(int x, int y){
+	private Type genTileType(int x, int y){
+		double scaleX = 1.1/50;
+		double scaleY = 10;
+		double noise = scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
+		//System.out.println(noise);
+		if (noise > 0.3){
+			return Type.GRASS; //17
+		} else {
+			return Type.DIRT; //22
+		}
+	}
+	
+	public Type getTexID(int x, int y){
 		return tileMap[x][y].getType();
 	}
 	

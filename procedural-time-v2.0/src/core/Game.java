@@ -17,7 +17,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 public class Game extends Core {
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 3f;
+	public static float SCALE = 2f;
 	
 	public float player_x;
 	public float player_y;
@@ -52,8 +52,8 @@ public class Game extends Core {
 	}
 	
 	public void update(long deltaTime){
-		System.out.println(deltaTime);
-		float speed = (float) (0.2*deltaTime);
+		//System.out.println(deltaTime);
+		float speed = (float) (0.5*deltaTime);
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
 			player_y -= speed;
 		}
@@ -84,11 +84,10 @@ public class Game extends Core {
 		int playerTile_x = (int) Math.floor(player_x / (tileSide));
 		int playerTile_y = (int) Math.floor(player_y / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
-		for (Tile tile : tileMap.getSurroundingTiles(11, playerTile_x, playerTile_y)){
+		for (Tile tile : tileMap.getSurroundingTiles(16, playerTile_x, playerTile_y)){
 
 			int tileX = tile.getTexX();
 			int tileY = tile.getTexY();
-			System.out.println(tileX);
 			glPushMatrix();
 				glTranslatef(tile.getX() * tileSide - player_x + SCREEN_WIDTH/2f,
 						tile.getY() * tileSide - player_y + SCREEN_HEIGHT/2f, 0);

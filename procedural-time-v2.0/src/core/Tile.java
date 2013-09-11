@@ -32,6 +32,11 @@ public class Tile implements Serializable{
 //		textureID = calcTextureID();
 	}
 	
+	public void setTextureID(int textureID){
+		this.texX = textureID % 16;
+		this.texY = textureID / 16;
+	}
+	
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}

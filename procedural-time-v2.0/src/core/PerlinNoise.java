@@ -34,7 +34,7 @@ public final class PerlinNoise {
       init();
    }
    
-   public void setSeed(int newSeed){
+   public static void setSeed(int newSeed){
 	   seed = newSeed;
 	   init();
    }
@@ -200,11 +200,10 @@ public final class PerlinNoise {
    }
 
    private static void init() {
-	  //System.out.println("inited");
       int i, j, k;
       double u, v, w, U, V, W, Hi, Lo;
-      //java.util.Random r = new java.util.Random(seed);
-      java.util.Random r = new java.util.Random();
+      java.util.Random r = new java.util.Random(seed);
+      //java.util.Random r = new java.util.Random();
       for (i = 0; i < B; i++) {
          p[i] = i;
          g1[i] = 2 * r.nextDouble() - 1;
