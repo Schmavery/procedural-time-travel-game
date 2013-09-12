@@ -1,6 +1,6 @@
 package core;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
@@ -11,6 +11,7 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -42,10 +43,10 @@ public class Core {
         // GL init code
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, -1);
+        glOrtho(-0.5, SCREEN_WIDTH, SCREEN_HEIGHT, -0.5, 1, -1);
         glMatrixMode(GL_MODELVIEW);
-//		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); <<-- for some reason
-//		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); <<-- these don't work
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
     }
@@ -56,9 +57,7 @@ public class Core {
         	glClear(GL_COLOR_BUFFER_BIT);
         	update(getDelta());
         	draw();
-        	//if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_Q))
-        	//	break;
-        	
+
         	//int mouse_x = Mouse.getX();
         	//int mouse_y = SCREEN_HEIGHT - Mouse.getY() - 1;
         	

@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.management.PlatformManagedObject;
-
-import javax.swing.text.JTextComponent.KeyBinding;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -54,16 +51,16 @@ public class Game extends Core {
 	public void update(long deltaTime){
 		//System.out.println(deltaTime);
 		float speed = (float) (0.5*deltaTime);
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
 			player_y -= speed;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)){
 			player_y += speed;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)){
 			player_x += speed;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)){
 			player_x -= speed;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
@@ -74,12 +71,8 @@ public class Game extends Core {
 	}
 	
 	public void draw(){
-		//glClear(GL_COLOR_BUFFER_BIT);
-//		int tileID = 73;
-//		int tileX = tileID % 16;
-//		int tileY
 		
-		
+		// Draw TileMap
 		float tileSide = TILE_SIZE * SCALE;
 		int playerTile_x = (int) Math.floor(player_x / (tileSide));
 		int playerTile_y = (int) Math.floor(player_y / (tileSide));
