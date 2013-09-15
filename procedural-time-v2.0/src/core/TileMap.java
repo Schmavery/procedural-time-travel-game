@@ -17,10 +17,10 @@ public class TileMap implements Serializable{
 	private int seed;
 	
 	// Corner IDs for different terrain
-	private int[] grassID = {17,17,17,17,17,17,17,17,17,17,20,24,25,57,72,72,72,72,72,72,72,72,73};
-	private int[] dirtID = {6,6,6,6,6,6,6,6,6,6,6,8,9,22,22,22,22,22,22,22,22,22,38,38,38,38,38,38};
-	private int[] sandID = {1,2,3,4,5};
-	private int[] waterID = {1,2,3,4,5};
+	private int[] grassID = {0};
+	private int[] dirtID = {79};
+	private int[] sandID = {16};
+	private int[] waterID = {32};
 	
 	public TileMap(int size){
 		seed = (int) System.currentTimeMillis();
@@ -28,11 +28,6 @@ public class TileMap implements Serializable{
 		tileMap = new Tile[size][size];
 		this.size = size;
 		this.rand = new Random(seed);
-//		for (int x = 0; x < size; x++){
-//			for (int y = 0; y < size; y++){
-//				tileMap[x][y] = new Tile(Type.GRASS, grassID[rand.nextInt(grassID.length)], x, y);
-//			}
-//		}
 		generateTerrain();
 	}
 	
@@ -75,21 +70,21 @@ public class TileMap implements Serializable{
 		return null;
 	}
 	
-	public int calcBitmask(int x, int y){
+	public int calcBitmask(int x, int y, Type centerType, Type outerType){
 		int total = 0;
-		Type centerType = tileMap[x][y].getType();
-		x = Math.min(1, Math.max(size-2,x));
-		y = Math.min(1, Math.max(size-2,y));
-		if (x - 1 < 0 ||tileMap[x-1][y].getType() != centerType){
+		//Type centerType = tileMap[x][y].getType();
+		//x = Math.min(1, Math.max(size-2,x));
+		//y = Math.min(1, Math.max(size-2,y));
+		if (tileMap[x-1][y].getType() != centerType){
 			total += 1;
 		}
-		if (y - 1 < 0 || tileMap[x][y-1].getType() != centerType){
+		if (tileMap[x][y-1].getType() != centerType){
 			total += 2;
 		}
-		if (x > size || tileMap[x+1][y].getType() != centerType){
+		if (tileMap[x+1][y].getType() != centerType){
 			total += 4;
 		}
-		if (y > size || tileMap[x][y+1].getType() != centerType){
+		if (tileMap[x][y+1].getType() != centerType){
 			total += 8;
 		}
 		return total;
