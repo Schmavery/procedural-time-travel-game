@@ -17,8 +17,8 @@ public class TileMap implements Serializable{
 	private int seed;
 	
 	// Corner IDs for different terrain
-	private int[] grassID = {17,17,17,17,17,17,17,17,17,17,20,24,25,57,72,72,72,72,72,72,72,72,73};
-	private int[] dirtID = {6,6,6,6,6,6,6,6,6,6,6,8,9,22,22,22,22,22,22,22,22,22,38,38,38,38,38,38};
+	private int[] grassID = {0,64,65};
+	private int[] dirtID = {77,78,79};
 	private int[] sandID = {1,2,3,4,5};
 	private int[] waterID = {1,2,3,4,5};
 	
@@ -28,11 +28,7 @@ public class TileMap implements Serializable{
 		tileMap = new Tile[size][size];
 		this.size = size;
 		this.rand = new Random(seed);
-//		for (int x = 0; x < size; x++){
-//			for (int y = 0; y < size; y++){
-//				tileMap[x][y] = new Tile(Type.GRASS, grassID[rand.nextInt(grassID.length)], x, y);
-//			}
-//		}
+
 		generateTerrain();
 	}
 	
@@ -78,18 +74,18 @@ public class TileMap implements Serializable{
 	public int calcBitmask(int x, int y){
 		int total = 0;
 		Type centerType = tileMap[x][y].getType();
-		x = Math.min(1, Math.max(size-2,x));
-		y = Math.min(1, Math.max(size-2,y));
-		if (x - 1 < 0 ||tileMap[x-1][y].getType() != centerType){
+
+
+		if (x - 1 >= 0 && tileMap[x-1][y].getType() != centerType){
 			total += 1;
 		}
-		if (y - 1 < 0 || tileMap[x][y-1].getType() != centerType){
+		if (y - 1 >= 0 && tileMap[x][y-1].getType() != centerType){
 			total += 2;
 		}
-		if (x > size || tileMap[x+1][y].getType() != centerType){
+		if (x + 1 < size && tileMap[x+1][y].getType() != centerType){
 			total += 4;
 		}
-		if (y > size || tileMap[x][y+1].getType() != centerType){
+		if (y + 1 < size && tileMap[x][y+1].getType() != centerType){
 			total += 8;
 		}
 		return total;
@@ -104,10 +100,7 @@ public class TileMap implements Serializable{
 		}
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				if (tileMap[x][y].getType() == Type.GRASS)
-					tileMap[x][y].setTextureID(grassID[rand.nextInt(grassID.length)]);
-				else 
-					tileMap[x][y].setTextureID(dirtID[rand.nextInt(dirtID.length)]);
+				tileMap[x][y].setTextureID(genAnimID(x, y));
 			}
 		}
 	}
@@ -116,11 +109,20 @@ public class TileMap implements Serializable{
 		double scaleX = 1.1/50;
 		double scaleY = 10;
 		double noise = scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
-		//System.out.println(noise);
 		if (noise > 0.3){
-			return Type.GRASS; //17
+			return Type.GRASS;
 		} else {
-			return Type.DIRT; //22
+			return Type.DIRT;
+		}
+	}
+	
+	private int genAnimID(int x, int y){
+		int bit = calcBitmask(x, y);
+		if (tileMap[x][y].getType() == Type.GRASS){
+			if (bit == 0) {return grassID[rand.nextInt(grassID.length)];}
+			return bit;
+		}else {
+			return dirtID[rand.nextInt(dirtID.length)];
 		}
 	}
 	
