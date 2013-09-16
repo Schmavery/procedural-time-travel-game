@@ -23,7 +23,8 @@ public class TileMap implements Serializable{
 	private int[] waterID = {1,2,3,4,5};
 	
 	public TileMap(int size){
-		seed = (int) System.currentTimeMillis();
+		//seed = (int) System.currentTimeMillis();
+		seed = 612915755; 
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
