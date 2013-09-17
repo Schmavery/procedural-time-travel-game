@@ -1,1 +1,28 @@
-flower 20 66 67
+g_c1 0 0
+g_c2 0 64
+g_c3 0 65
+g_w 0 1
+g_n 0 2
+g_nw 0 3
+g_e 0 4
+g_we 0 5
+g_ne 0 6
+g_wne 0 7
+g_s 0 8
+g_sw 0 9
+g_ns 0 10
+g_wns 0 11
+g_se 0 12
+g_wse 0 13
+g_nes 0 14
+g_nesw 0 15
+flower 500 66 67
+g_rock1 0 68
+g_rock2 0 69
+g_rock3 0 70
+d_c0 0 77
+d_c1 0 78
+d_c2 0 79
+d_rock1 0 74
+d_rock2 0 75
+d_rock3 0 76

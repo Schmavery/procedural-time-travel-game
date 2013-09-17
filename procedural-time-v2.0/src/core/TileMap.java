@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import core.AnimationManager.Animation;
 import core.Tile.Type;
 
 public class TileMap implements Serializable{
@@ -15,20 +16,31 @@ public class TileMap implements Serializable{
 	private int size;
 	private Random rand;
 	private int seed;
+	private AnimationManager animManager;
 	
 	// Corner IDs for different terrain
-	private int[] grassID = {0,64,65};
+	private String[] grassAnimStringsCenter = 
+		{"g_c1","g_c2","g_c3"};
+	private String[] grassAnimStrings = 
+		{"g_w","g_n","g_nw","g_e","g_we","g_ne",
+			"g_wne","g_s","g_sw","g_ns","g_wns","g_se","g_wse","g_nes","g_nesw"};
+	private String[] dirtAnimStrings = 
+		{"d_c0", "d_c1", "d_c2"};
+
+	private int[] grassID = {0,64,65,66};
 	private int[] dirtID = {77,78,79};
 	private int[] sandID = {1,2,3,4,5};
 	private int[] waterID = {1,2,3,4,5};
 	
-	public TileMap(int size){
-		//seed = (int) System.currentTimeMillis();
-		seed = 612915755; 
+	
+	
+	public TileMap(int size, AnimationManager am){
+		seed = (int) System.currentTimeMillis();
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
 		this.rand = new Random(seed);
+		animManager = am;
 
 		generateTerrain();
 	}
@@ -56,6 +68,8 @@ public class TileMap implements Serializable{
 		}
 		return null;
 	}
+	
+	// Doesn't currently work
 	public List<Tile> getSurroundingTiles2(int range, int pos_x, int pos_y){
 		range = Math.abs(range);
 		int x1 = Math.min(size, Math.max(0, pos_x - range));
@@ -71,6 +85,9 @@ public class TileMap implements Serializable{
 		}
 		return null;
 	}
+	
+	// Calculates "bitmask" to determine how the block is surrounded.
+	// This deals with the edges of tile regions
 	
 	public int calcBitmask(int x, int y){
 		int total = 0;
@@ -92,38 +109,73 @@ public class TileMap implements Serializable{
 		return total;
 	}
 	
+	// Uses Perlin noise to generate a random terrain
 	private void generateTerrain(){
 		PerlinNoise.setSeed(seed);
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(genTileType(x, y), 1, x, y);
+				tileMap[x][y] = new Tile(genTileType(x, y), calcPerlinVal(x, y), 1, x, y, null);
 			}
 		}
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y].setTextureID(genAnimID(x, y));
+				//tileMap[x][y].setTextureID(genAnimID(x, y));
+				tileMap[x][y].setAnim(genAnimID(x, y));
 			}
 		}
 	}
 	
+	// Uses Perlin noise to pick random tile types
+	// Helper class for generateTerrain()
 	private Type genTileType(int x, int y){
-		double scaleX = 1.1/50;
-		double scaleY = 10;
-		double noise = scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
-		if (noise > 0.3){
+		if (calcPerlinVal(x, y) > 0.3){
 			return Type.GRASS;
 		} else {
 			return Type.DIRT;
 		}
 	}
 	
-	private int genAnimID(int x, int y){
+	private double calcPerlinVal(int x, int y){
+		double scaleX = 1.1/50;
+		double scaleY = 10;
+		return scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
+	}
+	
+	
+	private Animation genAnimID(int x, int y){
 		int bit = calcBitmask(x, y);
-		if (tileMap[x][y].getType() == Type.GRASS){
-			if (bit == 0) {return grassID[rand.nextInt(grassID.length)];}
-			return bit;
-		}else {
-			return dirtID[rand.nextInt(dirtID.length)];
+		switch (tileMap[x][y].getType()){
+		case GRASS:
+			if (bit == 0) {
+				switch (rand.nextInt(50)){
+				case 1:
+				case 2:
+					return animManager.getAnim("flower");
+				case 3:
+					return animManager.getAnim("g_rock1");
+				case 4:
+					return animManager.getAnim("g_rock2");
+				case 5:
+					return animManager.getAnim("g_rock3");
+				default:
+					return animManager.getAnim(grassAnimStringsCenter[rand.nextInt(grassAnimStringsCenter.length)]);			
+				}					
+			}
+			return animManager.getAnim(grassAnimStrings[bit - 1]);
+		case DIRT:
+			switch (rand.nextInt(50)){
+			case 1:
+				return animManager.getAnim("d_rock1");
+			case 2:
+				return animManager.getAnim("d_rock2");
+			case 3:
+				return animManager.getAnim("d_rock3");
+
+			default:
+				return animManager.getAnim(dirtAnimStrings[rand.nextInt(dirtAnimStrings.length)]);
+			}
+		default:
+			return null;
 		}
 	}
 	

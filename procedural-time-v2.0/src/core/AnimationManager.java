@@ -14,6 +14,10 @@ public class AnimationManager {
 	
 	private LinkedList<Animation> animList;
 	
+	public AnimationManager() {
+		animList = new LinkedList<Animation>();
+	}
+	
 	public void loadAnims(String path, SpriteSheet sprites){
 		try {
 			FileReader fr = new FileReader(path);
@@ -40,6 +44,7 @@ public class AnimationManager {
 		//   0  - name     //
 		//   1  - pause    //
 		//  ... - frameIDs //
+		System.out.println(initString + ":" + parts.length);
 		int numFrames = parts.length - 2;
 		int pause = Integer.parseInt(parts[1]);
 		Animation anim = new Animation(numFrames, pause, parts[0], sprites);
@@ -58,8 +63,17 @@ public class AnimationManager {
 	
 	public void update(long deltaTime){
 		for (Animation anim : animList){
-			anim.update(deltaTime);
+			if (anim.animated)
+				anim.update(deltaTime);
 		}
+	}
+	
+	public Animation getAnim(String name){
+		for (Animation anim: animList){
+			if (anim.name.equals(name))
+				return anim;
+		}
+		return null;
 	}
 	
 	private void destroy(Animation oldAnim){
@@ -115,6 +129,7 @@ public class AnimationManager {
 		private void update(long deltaTime){
 			timer = (timer + deltaTime) % (pause * animArrayX.length);
 			dispPointer = (int) (timer / pause);
+			//System.out.println(dispPointer);
 		}
 	}
 }

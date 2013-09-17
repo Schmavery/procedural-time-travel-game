@@ -12,6 +12,8 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import core.AnimationManager.SpriteSheet;
+
 public class Game extends Core {
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 2f;
@@ -21,6 +23,7 @@ public class Game extends Core {
 
 	private Texture tileSheetTex;
 	private TileMap tileMap;
+	private AnimationManager animManager;
 	
 	public static void main(String[] args){
 		new Game();
@@ -33,7 +36,9 @@ public class Game extends Core {
 	
 	public void init() {
 		super.init();
-		tileMap = new TileMap(1000);
+		animManager = new AnimationManager();
+		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
+		tileMap = new TileMap(1000, animManager);
 		player_x = 300f;
 		player_y = 300f;
 		try {
@@ -50,6 +55,7 @@ public class Game extends Core {
 	
 	public void update(long deltaTime){
 		//System.out.println(deltaTime);
+		animManager.update(deltaTime);
 		float speed = (float) (0.5*deltaTime);
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
 			player_y -= speed;
@@ -81,6 +87,12 @@ public class Game extends Core {
 
 			int tileX = tile.getTexX();
 			int tileY = tile.getTexY();
+			//System.out.println(tile.getTexID());
+			//if (tile.getTexID() == 66){
+			//	tileX = animManager.getAnim("flower").getDispX();
+			//	tileY = animManager.getAnim("flower").getDispY();
+			//	
+		//	}
 			glPushMatrix();
 				glTranslatef(tile.getX() * tileSide - player_x + SCREEN_WIDTH/2f,
 						tile.getY() * tileSide - player_y + SCREEN_HEIGHT/2f, 0);
