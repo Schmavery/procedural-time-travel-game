@@ -13,8 +13,6 @@ public class Tile implements Serializable{
 
 	private int x, y;
 	private Type type;
-	private int textureID;
-	private int texX, texY;
 	private Animation anim;
 	double perlinVal;
 	
@@ -26,21 +24,12 @@ public class Tile implements Serializable{
 		return 0;
 	}
 	
-	public Tile(Type type, double perlinVal, int textureID, int x, int y, Animation anim){
+	public Tile(Type type, double perlinVal, int x, int y, Animation anim){
 		this.type = type;
 		this.x = x;
 		this.y = y;
-		//this.texX = textureID % 16;
-		//this.texY = textureID / 16;
-		//this.textureID = textureID;
 		this.anim = anim;
 		this.perlinVal = perlinVal;
-	}
-	
-	public void setTextureID(int textureID){
-		this.texX = textureID % 16;
-		this.texY = textureID / 16;
-		this.textureID = textureID;
 	}
 	
 	public void setAnim(Animation anim){
@@ -50,10 +39,6 @@ public class Tile implements Serializable{
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
-	//public int getTexX(){return texX;}
-	//public int getTexY(){return texY;}
 	public int getTexX(){return anim.getDispX();}
 	public int getTexY(){return anim.getDispY();}
-	public int getTexID(){return textureID;}
-	
 }

@@ -24,18 +24,25 @@ public class TileMap implements Serializable{
 	private String[] grassAnimStrings = 
 		{"g_w","g_n","g_nw","g_e","g_we","g_ne",
 			"g_wne","g_s","g_sw","g_ns","g_wns","g_se","g_wse","g_nes","g_nesw"};
+	private String[] sandAnimStrings =
+		{"s_c", "s_w", "s_n", "s_nw", "s_e", "s_we", "s_ne", "s_wne",
+			"s_s", "s_sw", "s_ns", "s_wns", "s_se", "s_wse", "s_nes", "s_nesw"};
+	private String[] waterAnimStrings =
+		{"w_c", "w_w", "w_n", "w_nw", "w_e", "w_we", "w_ne", "w_wne",
+			"w_s", "w_sw", "w_ns", "w_wns", "w_se", "w_wse", "w_nes", "w_nesw"};
 	private String[] dirtAnimStrings = 
 		{"d_c0", "d_c1", "d_c2"};
 
-	private int[] grassID = {0,64,65,66};
-	private int[] dirtID = {77,78,79};
-	private int[] sandID = {1,2,3,4,5};
-	private int[] waterID = {1,2,3,4,5};
+//	private int[] grassID = {0,64,65,66};
+//	private int[] dirtID = {77,78,79};
+//	private int[] sandID = {1,2,3,4,5};
+//	private int[] waterID = {1,2,3,4,5};
 	
 	
 	
 	public TileMap(int size, AnimationManager am){
-		seed = (int) System.currentTimeMillis();
+		//seed = (int) System.currentTimeMillis();
+		seed = 761052304;
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
@@ -114,7 +121,7 @@ public class TileMap implements Serializable{
 		PerlinNoise.setSeed(seed);
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(genTileType(x, y), calcPerlinVal(x, y), 1, x, y, null);
+				tileMap[x][y] = new Tile(genTileType(x, y), calcPerlinVal(x, y), x, y, null);
 			}
 		}
 		for (int x = 0; x < size; x++){
@@ -128,15 +135,20 @@ public class TileMap implements Serializable{
 	// Uses Perlin noise to pick random tile types
 	// Helper class for generateTerrain()
 	private Type genTileType(int x, int y){
-		if (calcPerlinVal(x, y) > 0.3){
+		double pVal = calcPerlinVal(x, y);
+		if(pVal > 3){
+			return Type.WATER;
+		}else if(pVal > 0.3){
 			return Type.GRASS;
+		} else if (pVal < -3){
+			return Type.SAND;
 		} else {
 			return Type.DIRT;
 		}
 	}
 	
 	private double calcPerlinVal(int x, int y){
-		double scaleX = 1.1/50;
+		double scaleX = 1.1/100;
 		double scaleY = 10;
 		return scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
 	}
@@ -174,6 +186,10 @@ public class TileMap implements Serializable{
 			default:
 				return animManager.getAnim(dirtAnimStrings[rand.nextInt(dirtAnimStrings.length)]);
 			}
+		case SAND:
+			return animManager.getAnim(sandAnimStrings[bit]);
+		case WATER:
+			return animManager.getAnim(waterAnimStrings[bit]);
 		default:
 			return null;
 		}

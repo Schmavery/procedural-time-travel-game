@@ -30,6 +30,7 @@ public class AnimationManager {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		System.out.println("Loaded animations from '" + path + "'.");
 	}
 	
 	public Animation newAnim(int len, long pause, String name, SpriteSheet sprites){
@@ -44,7 +45,7 @@ public class AnimationManager {
 		//   0  - name     //
 		//   1  - pause    //
 		//  ... - frameIDs //
-		System.out.println(initString + ":" + parts.length);
+		//System.out.println(initString + ":" + parts.length);
 		int numFrames = parts.length - 2;
 		int pause = Integer.parseInt(parts[1]);
 		Animation anim = new Animation(numFrames, pause, parts[0], sprites);
@@ -54,6 +55,7 @@ public class AnimationManager {
 			int texY = Integer.parseInt(parts[i]) / 16;
 			anim.addFrame(texX, texY);
 		}
+		
 		return anim;
 	}
 	

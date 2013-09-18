@@ -16,7 +16,7 @@ import core.AnimationManager.SpriteSheet;
 
 public class Game extends Core {
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 2f;
+	public static float SCALE = 3f;
 	
 	public float player_x;
 	public float player_y;

@@ -26,3 +26,35 @@ d_c2 0 79
 d_rock1 0 74
 d_rock2 0 75
 d_rock3 0 76
+s_c 0 16
+s_w 0 17
+s_n 0 18
+s_nw 0 19
+s_e 0 20
+s_we 0 21
+s_ne 0 22
+s_wne 0 23
+s_s 0 24
+s_sw 0 25
+s_ns 0 26
+s_wns 0 27
+s_se 0 28
+s_wse 0 29
+s_nes 0 30
+s_nesw 0 31
+w_c 400 32 48
+w_w 400 33 49
+w_n 400 34 50
+w_nw 400 35 51
+w_e 400 36 52
+w_we 400 37 53
+w_ne 400 38 54
+w_wne 400 39 55
+w_s 400 40 56
+w_sw 400 41 57
+w_ns 400 42 58
+w_wns 400 43 59
+w_se 400 44 60
+w_wse 400 45 61
+w_nes 400 46 62
+w_nesw 400 47 63
