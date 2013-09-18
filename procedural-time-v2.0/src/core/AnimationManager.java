@@ -39,6 +39,12 @@ public class AnimationManager {
 		return anim;
 	}
 	
+	public Animation cloneAnim(Animation anim){
+		Animation clone = anim.cloneAnim();
+		animList.add(clone);
+		return null;
+	}
+	
 	public Animation loadAnim(String initString, SpriteSheet sprites){
 		String[] parts = initString.split(" ");
 		//  Parts Legend:  //
@@ -105,6 +111,15 @@ public class AnimationManager {
 			dispPointer = 0;
 			timer = 0;
 			}
+		
+		private Animation cloneAnim(){
+			Animation anim = new Animation(this.animArrayX.length, 
+							this.pause, this.name, this.spriteSheet);
+			for (int i = 0; i < this.animArrayX.length; i++){
+				anim.addFrame(this.animArrayX[i], this.animArrayY[i]);				
+			}
+			return anim;
+		}
 		
 		public int getDispX(){
 			return animArrayX[dispPointer];
