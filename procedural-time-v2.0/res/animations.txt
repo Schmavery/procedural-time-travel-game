@@ -16,7 +16,7 @@ g_se 0 12
 g_wse 0 13
 g_nes 0 14
 g_nesw 0 15
-flower 500 66 67
+flower 600 66 67
 g_rock1 0 68
 g_rock2 0 69
 g_rock3 0 70

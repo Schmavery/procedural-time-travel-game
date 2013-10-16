@@ -47,6 +47,8 @@ public class Core {
         glMatrixMode(GL_MODELVIEW);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glEnable(GL_BLEND); 
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_DEPTH_TEST);
     }

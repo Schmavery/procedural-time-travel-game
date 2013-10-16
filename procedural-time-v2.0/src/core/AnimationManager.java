@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class AnimationManager {
 	
@@ -90,6 +91,7 @@ public class AnimationManager {
 	
 	
 	public class Animation {
+		private Random rand = new Random();
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
 		private int[] animArrayX;		// X position of frame on spritesheet
 		private int[] animArrayY;		// Y position of frame on spritesheet
@@ -112,13 +114,19 @@ public class AnimationManager {
 			timer = 0;
 			}
 		
-		private Animation cloneAnim(){
+		public Animation cloneAnim(){
 			Animation anim = new Animation(this.animArrayX.length, 
 							this.pause, this.name, this.spriteSheet);
 			for (int i = 0; i < this.animArrayX.length; i++){
 				anim.addFrame(this.animArrayX[i], this.animArrayY[i]);				
 			}
+			//anim.randomize();
 			return anim;
+		}
+		
+		private void randomize(){
+			if (animated)
+				timer = (timer + rand.nextInt()) % (pause * animArrayX.length);
 		}
 		
 		public int getDispX(){
@@ -143,7 +151,7 @@ public class AnimationManager {
 			fillCount++;
 		}
 		
-		private void update(long deltaTime){
+		public void update(long deltaTime){
 			timer = (timer + deltaTime) % (pause * animArrayX.length);
 			dispPointer = (int) (timer / pause);
 			//System.out.println(dispPointer);
