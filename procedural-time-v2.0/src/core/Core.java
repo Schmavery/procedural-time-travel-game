@@ -22,11 +22,15 @@ import org.lwjgl.opengl.DisplayMode;
 public class Core {
 	public static final int SCREEN_WIDTH = 1000;
 	public static final int SCREEN_HEIGHT = 800;
+	
+	public static enum GameState {READY, RUNNING, PAUSED};
 
+	private GameState state = GameState.READY;
 	private long lastFrame;
 
     public Core() {
     	init();
+    	state = GameState.RUNNING;
     	gameLoop();
     }
     	
@@ -57,7 +61,14 @@ public class Core {
         while (!Display.isCloseRequested()) {
         	// Render
         	glClear(GL_COLOR_BUFFER_BIT);
-        	update(getDelta());
+        	switch (state){
+        	case RUNNING:
+	        	gameUpdate(getDelta());
+        		break;
+        	case PAUSED:
+        		pauseUpdate(getDelta());
+        		break;
+        	}
         	draw();
 
         	//int mouse_x = Mouse.getX();
@@ -70,9 +81,21 @@ public class Core {
         exit();
     }
 
-	public void update(long delta) {}
+	public void gameUpdate(long delta) {}
+	public void pauseUpdate(long delta) {}
 	public void draw() {}
 	
+	public void pauseGame(){
+		state = GameState.PAUSED;
+	}
+	public void unpauseGame(){
+		state = GameState.RUNNING;
+	}
+	
+	/**
+	 * Calculates frame time.
+	 * @return Time since last frame.
+	 */
 	private long getDelta(){
 		long currentTime = (Sys.getTime()*1000)/Sys.getTimerResolution();
 		long delta = currentTime - lastFrame;
@@ -80,6 +103,9 @@ public class Core {
 		return delta;
 	}
 	
+	/**
+	 * Safely close the program.
+	 */
 	public void exit(){
 		Display.destroy();
         System.exit(0);

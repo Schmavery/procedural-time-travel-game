@@ -16,14 +16,6 @@ public class Tile implements Serializable{
 	private Animation anim;
 	double perlinVal;
 	
-	float elevation;
-	float humidity;
-	
-	private int calcTextureID(){
-		
-		return 0;
-	}
-	
 	public Tile(Type type, double perlinVal, int x, int y, Animation anim){
 		this.type = type;
 		this.x = x;

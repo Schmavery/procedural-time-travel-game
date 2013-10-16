@@ -1,6 +1,7 @@
 package core;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
+
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -78,8 +79,7 @@ public class Game extends Core {
 	
 	}
 	
-	public void update(long deltaTime){
-		//System.out.println(deltaTime);
+	public void gameUpdate(long deltaTime){
 		animManager.update(deltaTime);
 		float speed = (float) (0.5*deltaTime);
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
@@ -99,11 +99,20 @@ public class Game extends Core {
 			player.move(-speed, 0f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
-				Keyboard.isKeyDown(Keyboard.KEY_Q)){
+				Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 			exit();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
+			pauseGame();
 		}
 		player.update(deltaTime);
 		
+	}
+	
+	public void pauseUpdate(long deltaTime){
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
+			unpauseGame();
+		}
 	}
 	
 	public void draw(){

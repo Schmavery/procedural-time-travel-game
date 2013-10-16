@@ -33,12 +33,6 @@ public class TileMap implements Serializable{
 	private String[] dirtAnimStrings = 
 		{"d_c0", "d_c1", "d_c2"};
 
-//	private int[] grassID = {0,64,65,66};
-//	private int[] dirtID = {77,78,79};
-//	private int[] sandID = {1,2,3,4,5};
-//	private int[] waterID = {1,2,3,4,5};
-	
-	
 	
 	public TileMap(int size, AnimationManager am){
 		//seed = (int) System.currentTimeMillis();
@@ -52,8 +46,11 @@ public class TileMap implements Serializable{
 		generateTerrain();
 	}
 	
-	// Returns a square of tiles centered on (x,y), with sidelength (2*range+1)
-	// Handles negatives and points close to the edge of the map
+	
+	/**
+	 * Returns a square of tiles centered on (x,y), with sidelength (2*range+1)
+	 * Handles negatives and points close to the edge of the map
+	 */
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
 		try {	
 			range = Math.abs(range);
@@ -93,9 +90,10 @@ public class TileMap implements Serializable{
 		return null;
 	}
 	
-	// Calculates "bitmask" to determine how the block is surrounded.
-	// This deals with the edges of tile regions
-	
+	/**
+	 * Calculates "bitmask" to determine how the block is surrounded.
+	 * This deals with the edges of tile regions 
+	 */
 	public int calcBitmask(int x, int y){
 		int total = 0;
 		Type centerType = tileMap[x][y].getType();
@@ -116,7 +114,9 @@ public class TileMap implements Serializable{
 		return total;
 	}
 	
-	// Uses Perlin noise to generate a random terrain
+	/**
+	 * Uses Perlin noise to generate a random terrain
+	 */
 	private void generateTerrain(){
 		PerlinNoise.setSeed(seed);
 		for (int x = 0; x < size; x++){
@@ -132,7 +132,10 @@ public class TileMap implements Serializable{
 		}
 	}
 	
-	// Uses Perlin noise to pick random tile types
+	/**
+	 * Uses Perlin noise to pick random tile types
+	 * Helper class for generateTerrain()
+	 */
 	// Helper class for generateTerrain()
 	private Type genTileType(int x, int y){
 		double pVal = calcPerlinVal(x, y);
@@ -153,7 +156,14 @@ public class TileMap implements Serializable{
 		return scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
 	}
 	
-	
+	/**
+	 * Assigns animation ID based on location and tile type.
+	 * This uses a simplified marching squares algorithm with
+	 * cell index calculated in calcBitmask().
+	 * @param x Tile position
+	 * @param y Tile position
+	 * @return Animation
+	 */
 	private Animation genAnimID(int x, int y){
 		int bit = calcBitmask(x, y);
 		switch (tileMap[x][y].getType()){
