@@ -25,17 +25,17 @@ public class Human {
 	
 	public void update(long deltaTime){
 		moving = (dx != 0 || dy != 0);
-		switch (facing){
-		case NORTH:
-			break;
-		case EAST:
-			break;
-		case SOUTH:
-			break;
-		case WEST:
-			break;
+			
+		if (dy < 0){
+			facing = Facing.NORTH;
+		} else if (dy > 0){
+			facing = Facing.SOUTH;
+		} else if (dx > 0){
+			facing = Facing.EAST;
+		} else if (dx < 0){
+			facing = Facing.WEST;
 		}
-		
+			
 		x += dx;
 		y += dy;
 		dx = 0;
