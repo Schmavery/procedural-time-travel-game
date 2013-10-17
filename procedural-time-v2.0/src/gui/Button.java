@@ -1,7 +1,10 @@
 package gui;
 
-import org.lwjgl.util.Rectangle;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.lwjgl.util.Color;
+import org.lwjgl.util.Rectangle;
 /**
  * 
  * @author avery
@@ -17,16 +20,18 @@ import org.lwjgl.util.Color;
  *  - Borders - (Decorator design pattern?)
  */
 
-public class Button {
+public class Button implements Element{
 	private String text;
-	private String action;
+	private LinkedList<String> actions;
 	private Color color;
 	int cornerRadius = 0;
 	private Rectangle boundingBox;
 	
-	public Button(String text, Rectangle box){
+	public Button(String text, Rectangle box, String action){
 		this.text = text;
 		this.boundingBox = box;
+		actions = new LinkedList<String>();
+		actions.add(action);
 	}
 	
 	public void setColor(Color c){
@@ -35,11 +40,25 @@ public class Button {
 	public void setText(String t){
 		this.text = t;
 	}
-	public void setAction(String a){
-		this.action = a;
+	public void addAction(String a){
+		this.actions.add(a);
 	}
 	
-	public String getAction(){ return action; }
+	/**
+	 * On a click event, returns all actions triggered by this button.
+	 * (Generally there should only be one as order of actions is
+	 *  not guaranteed)
+	 * @return List of actions;
+	 */
+	public List<String> click(int x, int y){
+		return actions;
+	}
+	
+	public void draw(){
+		
+	}
+	
+	//public String getAction(){ return action; }
 	public String getText(){ return text; }
 	public Color getColor(){ return color; }
 	public Rectangle getRect(){ return boundingBox; }

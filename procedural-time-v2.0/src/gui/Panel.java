@@ -1,9 +1,19 @@
 package gui;
 
-import org.lwjgl.util.Rectangle;
+import java.util.List;
 
-public interface Panel {
-	public void click(int x, int y);
-	public void actionPerformed(String action);
-	public void draw();
+public class Panel implements Element{
+	
+	public List<String> click(int x, int y){
+		return null;
+	}
+
+	public void actionPerformed(String action) {
+		
+	}
+
+	public void draw() {
+		
+	}
+
 }
