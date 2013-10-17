@@ -82,6 +82,7 @@ public class Game extends Core {
 	public void gameUpdate(long deltaTime){
 		animManager.update(deltaTime);
 		float speed = (float) (0.5*deltaTime);
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
 			player_y -= speed;
 			player.move(0f, -speed);
@@ -114,6 +115,7 @@ public class Game extends Core {
 			unpauseGame();
 		}
 	}
+	
 	
 	public void draw(){
 		

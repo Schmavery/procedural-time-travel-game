@@ -19,6 +19,13 @@ public class AnimationManager {
 		animList = new LinkedList<Animation>();
 	}
 	
+	/**
+	 * Loads a list of animations from a file defined by path.
+	 * The file is a list of strings formatted according to the 
+	 * documentation for loadAnim().
+	 * @param path Filepath of animation list.
+	 * @param sprites Spritesheet corresponding to the animation.
+	 */
 	public void loadAnims(String path, SpriteSheet sprites){
 		try {
 			FileReader fr = new FileReader(path);
@@ -34,28 +41,28 @@ public class AnimationManager {
 		System.out.println("Loaded animations from '" + path + "'.");
 	}
 	
-	public Animation newAnim(int len, long pause, String name, SpriteSheet sprites){
-		Animation anim = new Animation(len, pause, name, sprites);
-		animList.add(anim);
-		return anim;
-	}
-	
-	public Animation cloneAnim(Animation anim){
-		Animation clone = anim.cloneAnim();
-		animList.add(clone);
-		return null;
-	}
-	
-	public Animation loadAnim(String initString, SpriteSheet sprites){
-		String[] parts = initString.split(" ");
-		//  Parts Legend:  //
-		//   0  - name     //
-		//   1  - pause    //
-		//  ... - frameIDs //
-		//System.out.println(initString + ":" + parts.length);
+	/**
+	 * Loads up an animation defined by a string in the following format:
+	 * index | contents
+	 * ================
+	 *    0  | name     
+	 *    1  | pause    
+	 *   ... | frameIDs 
+	 *   
+	 * Where name is the name of the animations,
+	 * pause is the time (ms) between frames
+	 * and frameIDs is a list of sprite IDs
+	 * 
+	 * All values are separated by spaces.
+	 * @param parseString The string to be parsed.
+	 * @param sprites The spritesheet corresponding to the sprite IDs.
+	 * @return Animation
+	 */
+	public Animation loadAnim(String parseString, SpriteSheet sprites){
+		String[] parts = parseString.split(" ");
 		int numFrames = parts.length - 2;
 		int pause = Integer.parseInt(parts[1]);
-		Animation anim = new Animation(numFrames, pause, parts[0], sprites);
+		Animation anim = new Animation(numFrames, pause, parts[0], sprites, true);
 		animList.add(anim);
 		for (int i = 2; i < parts.length; i++){
 			int texX = Integer.parseInt(parts[i]) % 16;
@@ -70,6 +77,11 @@ public class AnimationManager {
 		anim.addFrame(x, y);
 	}
 	
+	/**
+	 * Updates all Animations that are stored in the manager.
+	 * If an animation has only one frame, it is skipped.
+	 * @param deltaTime Time since last cycle.
+	 */
 	public void update(long deltaTime){
 		for (Animation anim : animList){
 			if (anim.animated)
@@ -77,6 +89,12 @@ public class AnimationManager {
 		}
 	}
 	
+	/**
+	 *  Searches for an animation in the manager by name.
+	 *  The name of each animation is defined in the animation file.
+	 * @param name Name of the animation
+	 * @return Animation corresponding to the name
+	 */
 	public Animation getAnim(String name){
 		for (Animation anim: animList){
 			if (anim.name.equals(name))
@@ -90,9 +108,19 @@ public class AnimationManager {
 	}
 	
 	
+	/**
+	 * Class describing a single animation.  These can be cloned to create
+	 * standalone animations that can be manually updated.
+	 * Animations should not be created manually but instead loaded by
+	 * the AnimationManager from a file using loadAnims().
+	 * 
+	 * @author avery
+	 *
+	 */
 	public class Animation {
 		private Random rand = new Random();
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
+		private boolean autoUpdated;	// true if the animation is held by the AnimationManager.
 		private int[] animArrayX;		// X position of frame on spritesheet
 		private int[] animArrayY;		// Y position of frame on spritesheet
 		private int fillCount;			// Keeps track of index while populating animation
@@ -102,7 +130,7 @@ public class AnimationManager {
 		private String name;
 		private SpriteSheet spriteSheet;
 		
-		public Animation(int len, long pause, String name, SpriteSheet spriteSheet){
+		private Animation(int len, long pause, String name, SpriteSheet spriteSheet, boolean autoUpdate){
 			this.pause = pause;
 			this.spriteSheet = spriteSheet;
 			this.name = name;
@@ -112,14 +140,23 @@ public class AnimationManager {
 			animated  = (len > 1);
 			dispPointer = 0;
 			timer = 0;
+			this.autoUpdated = autoUpdate;
 			}
 		
+		/**
+		 * Used to create clones of animations loaded by AnimationManager.
+		 * This should be used only if you want to manually control the update
+		 * of the animation.  Otherwise use a reference to the animation held
+		 * and updated by AnimationManager.
+		 * @return new Animation that is a clone of the calling Animation
+		 */
 		public Animation cloneAnim(){
 			Animation anim = new Animation(this.animArrayX.length, 
-							this.pause, this.name, this.spriteSheet);
+							this.pause, this.name, this.spriteSheet, false);
 			for (int i = 0; i < this.animArrayX.length; i++){
 				anim.addFrame(this.animArrayX[i], this.animArrayY[i]);				
 			}
+			
 			//anim.randomize();
 			return anim;
 		}
@@ -142,7 +179,8 @@ public class AnimationManager {
 		}
 		
 		public void destroy(){
-			AnimationManager.this.destroy(this);
+			if (autoUpdated)
+				AnimationManager.this.destroy(this);
 		}
 		
 		private void addFrame(int x, int y){
@@ -154,7 +192,6 @@ public class AnimationManager {
 		public void update(long deltaTime){
 			timer = (timer + deltaTime) % (pause * animArrayX.length);
 			dispPointer = (int) (timer / pause);
-			//System.out.println(dispPointer);
 		}
 	}
 }

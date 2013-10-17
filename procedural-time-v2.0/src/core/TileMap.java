@@ -9,6 +9,11 @@ import java.util.Random;
 import core.AnimationManager.Animation;
 import core.Tile.Type;
 
+/**
+ * Class that keeps a record of all the tiles in the tilemap.
+ * @author avery
+ *
+ */
 public class TileMap implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,8 +40,7 @@ public class TileMap implements Serializable{
 
 	
 	public TileMap(int size, AnimationManager am){
-		//seed = (int) System.currentTimeMillis();
-		seed = 761052304;
+		seed = (int) System.currentTimeMillis();
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
@@ -48,8 +52,13 @@ public class TileMap implements Serializable{
 	
 	
 	/**
-	 * Returns a square of tiles centered on (x,y), with sidelength (2*range+1)
+	 * Returns all tiles contained within the square centered on (x,y), with sidelength (2*range+1)
+	 * Then you can iterate through the resulting array and perform operations on all nearby tiles.
 	 * Handles negatives and points close to the edge of the map
+	 * @param range Distance from center
+	 * @param centerX
+	 * @param centerY
+	 * @return Array of tiles corresponding to the surrounding tiles.
 	 */
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
 		try {	
@@ -92,7 +101,7 @@ public class TileMap implements Serializable{
 	
 	/**
 	 * Calculates "bitmask" to determine how the block is surrounded.
-	 * This deals with the edges of tile regions 
+	 * This deals with the edges of tile regions. 
 	 */
 	public int calcBitmask(int x, int y){
 		int total = 0;
@@ -136,7 +145,6 @@ public class TileMap implements Serializable{
 	 * Uses Perlin noise to pick random tile types
 	 * Helper class for generateTerrain()
 	 */
-	// Helper class for generateTerrain()
 	private Type genTileType(int x, int y){
 		double pVal = calcPerlinVal(x, y);
 		if(pVal > 3){
