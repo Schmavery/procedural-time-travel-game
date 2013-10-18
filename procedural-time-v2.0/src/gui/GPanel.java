@@ -49,18 +49,20 @@ public class GPanel extends GElement{
 	
 	public void draw() {
 		// Draw myself
-		
 		glDisable(GL_TEXTURE_2D);
 		
 		glColor3f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		glPushMatrix();
 			glTranslatef(boundingBox.getX(), boundingBox.getY(), 0);
+
+		if (visible){
 			glBegin(GL_QUADS);
 			glVertex2f(0, 0);
 			glVertex2f(boundingBox.getWidth(), 0);
 			glVertex2f(boundingBox.getWidth(), boundingBox.getHeight());
 			glVertex2f(0, boundingBox.getHeight());
 			glEnd();
+		}
 		
 		// Draw my children
 			for (GElement child : children){

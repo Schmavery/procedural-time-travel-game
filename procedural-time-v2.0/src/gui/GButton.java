@@ -1,20 +1,5 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnable;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
-import java.awt.Font;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import org.lwjgl.util.Color;
@@ -54,7 +39,6 @@ public class GButton extends GElement{
 	public GButton(String name, String text, Rectangle box, String action, Color c){
 		super(name, action, c, box);
 		this.text = text;
-		
 	}
 	
 	public void setColor(Color c){

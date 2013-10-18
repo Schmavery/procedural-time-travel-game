@@ -10,7 +10,7 @@ import java.util.Random;
 public class AnimationManager {
 	
 	public static enum SpriteSheet {
-		MAP, ITEMS, PEOPLE;
+		MAP, ITEMS, PEOPLE, GUI;
 	}
 	
 	private LinkedList<Animation> animList;

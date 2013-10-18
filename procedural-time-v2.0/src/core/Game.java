@@ -122,8 +122,6 @@ public class Game extends Core {
 			pauseDown = true;
 		} else if (pauseDown){
 			pauseDown = false;
-			System.out.println(panel.getChild("p2"));
-			panel.getChild("panel").hide();
 			pauseGame();
 		}
 		player.update(deltaTime);
@@ -135,8 +133,7 @@ public class Game extends Core {
 			pauseDown = true;
 		} else if (pauseDown){
 			pauseDown = false;
-			panel.getChild("panel").hide();
-			pauseGame();
+			unpauseGame();
 		}
 		player.update(deltaTime);
 	}
