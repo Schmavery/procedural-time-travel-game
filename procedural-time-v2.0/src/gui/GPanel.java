@@ -16,7 +16,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
+import org.lwjgl.util.WritableDimension;
+import org.lwjgl.util.WritablePoint;
+import org.lwjgl.util.WritableRectangle;
 
 public class GPanel extends GElement{
 	ArrayList<GElement> children;
@@ -26,27 +30,19 @@ public class GPanel extends GElement{
 		children = new ArrayList<>();
 	}
 	
-	public List<String> click(int x, int y){
-		LinkedList<String> actionStrings = new LinkedList<String>(actions);
-		for (GElement child : children){
-			actionStrings.addAll(child.click(x, y));
-		}
-		return actionStrings;
-	}
-
-	public void addChild(GElement e){
-		children.add(e);
-	}
-	
-	public GElement getChild(String name){
-		for (GElement child : children){
-			if (child.getName().equals(name)){
-				return child;
+	public ClickEvent click(int x, int y){
+		if (boundingBox.contains(x, y)){
+			//System.out.println("Click in "+name);
+			for (GElement child : children){
+				ClickEvent tmp = child.click(x - boundingBox.getX(), y - boundingBox.getY());
+				if (tmp != null){
+					return tmp;
+				}
 			}
 		}
 		return null;
 	}
-	
+
 	public void draw() {
 		// Draw myself
 		glDisable(GL_TEXTURE_2D);
@@ -71,4 +67,40 @@ public class GPanel extends GElement{
 		glPopMatrix();
 	}
 
+	public void update(long deltaTime){
+		for (GElement child : children){
+			child.update(deltaTime);
+		}
+	}
+
+	public boolean addChild(GElement e){
+		for (GElement child : children){
+			if (child.overlaps(e)){
+				System.out.println("Error: Overlapping children.");
+				return false;
+			}
+		}
+		Rectangle tmpRect = new Rectangle(e.getX() + boundingBox.getX(),
+				e.getY() + boundingBox.getY(), 
+				e.getWidth(), e.getHeight());
+		
+		if (boundingBox.contains(tmpRect)){
+			children.add(e);
+			return true;
+		}else{
+			System.out.println("Error: Child out of bounds.");
+			return false;
+		}
+	}
+	
+	public GElement getChild(String name){
+		for (GElement child : children){
+			if (child.getName().equals(name)){
+				return child;
+			}
+		}
+		return null;
+	}
+	
+	
 }
