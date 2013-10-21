@@ -19,7 +19,7 @@ import org.lwjgl.opengl.DisplayMode;
 //import org.lwjgl.input.Mouse;
 
  
-public class Core {
+public abstract class Core {
 	public static final int SCREEN_WIDTH = 1000;
 	public static final int SCREEN_HEIGHT = 800;
 	
@@ -60,15 +60,21 @@ public class Core {
     private void gameLoop(){
         while (!Display.isCloseRequested()) {
         	// Render
-        	glClear(GL_COLOR_BUFFER_BIT);
+        	long deltaTime = getDelta();
+        	update(deltaTime);
         	switch (state){
-        	case RUNNING:
-	        	gameUpdate(getDelta());
-        		break;
-        	case PAUSED:
-        		pauseUpdate(getDelta());
-        		break;
+	        	case READY:
+	        		System.out.println("Error, game not running.");
+	        		exit();
+	        		break;
+	        	case RUNNING:
+		        	gameUpdate(deltaTime);
+	        		break;
+	        	case PAUSED:
+	        		pauseUpdate(deltaTime);
+	        		break;
         	}
+        	glClear(GL_COLOR_BUFFER_BIT);
         	draw();
 
         	//int mouse_x = Mouse.getX();
@@ -81,9 +87,10 @@ public class Core {
         exit();
     }
 
-	public void gameUpdate(long delta) {}
-	public void pauseUpdate(long delta) {}
-	public void draw() {}
+    public abstract void update(long delta);
+	public abstract void gameUpdate(long delta);
+	public abstract void pauseUpdate(long delta);
+	public abstract void draw();
 	
 	public void pauseGame(){
 		state = GameState.PAUSED;

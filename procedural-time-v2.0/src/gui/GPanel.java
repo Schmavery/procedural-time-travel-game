@@ -1,26 +1,14 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.lwjgl.util.Color;
-import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
-import org.lwjgl.util.WritableDimension;
-import org.lwjgl.util.WritablePoint;
-import org.lwjgl.util.WritableRectangle;
 
 public class GPanel extends GElement{
 	ArrayList<GElement> children;
@@ -30,11 +18,34 @@ public class GPanel extends GElement{
 		children = new ArrayList<>();
 	}
 	
-	public ClickEvent click(int x, int y){
+	public ClickEvent clickDown(int x, int y){
 		if (boundingBox.contains(x, y)){
-			//System.out.println("Click in "+name);
 			for (GElement child : children){
-				ClickEvent tmp = child.click(x - boundingBox.getX(), y - boundingBox.getY());
+				ClickEvent tmp = child.clickDown(x - boundingBox.getX(), y - boundingBox.getY());
+				if (tmp != null){
+					return tmp;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public ClickEvent clickUp(int x, int y){
+		if (boundingBox.contains(x, y)){
+			for (GElement child : children){
+				ClickEvent tmp = child.clickUp(x - boundingBox.getX(), y - boundingBox.getY());
+				if (tmp != null){
+					return tmp;
+				}
+			}
+		}
+		return null;
+	}
+
+	public ClickEvent clickHold(int x, int y){
+		if (boundingBox.contains(x, y)){
+			for (GElement child : children){
+				ClickEvent tmp = child.clickHold(x - boundingBox.getX(), y - boundingBox.getY());
 				if (tmp != null){
 					return tmp;
 				}
@@ -45,21 +56,13 @@ public class GPanel extends GElement{
 
 	public void draw() {
 		// Draw myself
-		//glDisable(GL_TEXTURE_2D);
-		
 		glColor3f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		glPushMatrix();
-			glTranslatef(boundingBox.getX(), boundingBox.getY(), 0);
+			glTranslatef(getX(), getY(), 0);
 			
 			if (visible){
-//				glBegin(GL_QUADS);
-//				glVertex2f(0, 0);
-//				glVertex2f(boundingBox.getWidth(), 0);
-//				glVertex2f(boundingBox.getWidth(), boundingBox.getHeight());
-//				glVertex2f(0, boundingBox.getHeight());
-//				glEnd();
-				int innerW = boundingBox.getWidth() - 32;
-				int innerH = boundingBox.getHeight() - 32;
+				int innerW = getWidth() - 32;
+				int innerH = getHeight() - 32;
 				drawSprite(0,      0, 0, 4, 16, 16);		// Top Left
 				drawSprite(16,     0, 1, 4, innerW, 16);	// Top Mid
 				drawSprite(innerW + 16, 0, 2, 4, 16, 16);	// Top Right
@@ -91,8 +94,8 @@ public class GPanel extends GElement{
 				return false;
 			}
 		}
-		Rectangle tmpRect = new Rectangle(e.getX() + boundingBox.getX(),
-				e.getY() + boundingBox.getY(), 
+		Rectangle tmpRect = new Rectangle(e.getX() + getX(),
+				e.getY() + getY(), 
 				e.getWidth(), e.getHeight());
 		
 		if (boundingBox.contains(tmpRect)){
