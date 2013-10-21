@@ -1,5 +1,14 @@
 package gui;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glTexCoord2f;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glVertex2f;
+
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableRectangle;
 import org.lwjgl.util.Rectangle;
@@ -41,9 +50,30 @@ public abstract class GElement implements ReadableRectangle{
 				boundingBox.intersects(e.boundingBox));
 	}
 	
+	public void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
+		glPushMatrix();
+			glTranslatef(x, y, 0);
+			glBegin(GL_QUADS);
+			glTexCoord2f(texX/32f, texY/32f);				//short,short
+			glVertex2f(0, 0);
+			glTexCoord2f((texX+1)/32f, texY/32f);			//long, short
+			glVertex2f(spriteW, 0);
+			glTexCoord2f((texX+1)/32f, (texY+1)/32f);		//long,  long
+			glVertex2f(spriteW, spriteH);
+			glTexCoord2f(texX/32f, (texY+1)/32f);			//short, long
+			glVertex2f(0, spriteH);
+			glEnd();
+		glPopMatrix();
+	}
+	
 	public abstract ClickEvent click(int x, int y);
 	public abstract void update(long deltaTime);
 	public abstract void draw();
+	
+	
+	public void setRect(Rectangle rect){
+		this.boundingBox = rect;
+	}
 
 	// Implement ReadableRectangle
 	public void getBounds(WritableRectangle arg0) {boundingBox.getBounds(arg0);}

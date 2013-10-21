@@ -44,6 +44,8 @@ public class Game extends Core {
 
 	private Texture tileSheetTex;
 	private Texture peopleTex;
+	private Texture guiTex;
+	
 	private TileMap tileMap;
 	private AnimationManager animManager;
 	
@@ -62,19 +64,18 @@ public class Game extends Core {
 		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
 		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
 
-		panel = new GPanel("panel", null, new Rectangle(10,200,400,200), new Color(95, 158, 160));
-		GButton p2 = new GButton("Dr. Seuss", "testButton", null, new Rectangle(10, 10, 50, 50), new Color(50, 100, 50));
-		GPanel p3 = new GPanel("p3", null, new Rectangle(70, 10, 50, 50), new Color(50, 50, 50));
-		GPanel p4 = new GPanel("p4", null, new Rectangle(10, 70, 50, 50), new Color(50, 50, 50));
-		GButton p5 = new GButton("Eggs and Ham", "otherButton", null, new Rectangle(70, 70, 50, 50), new Color(50, 50, 100));
-		GPanel p6 = new GPanel("p4", null, new Rectangle(130, 10, 210, 110), new Color(50, 50, 50));
-		GPanel p7 = new GPanel("p4", null, new Rectangle(10, 10, 50, 50), new Color(200, 50, 50));
-		p6.addChild(p7);
+		panel = new GPanel("panel", null, new Rectangle(10,200,355,200), new Color(95, 158, 160));
+
+		GButton p1 = new GButton("Dr. Seuss", "test", null, 10, 10, new Color(50, 100, 50));
+		GButton p2 = new GButton("Eggs and Ham", "other", null, 10, 70, new Color(50, 50, 100));
+		GPanel p3 = new GPanel("p4", null, new Rectangle(130, 10, 210, 110), new Color(50, 50, 50));
+		GPanel p4 = new GPanel("p4", null, new Rectangle(5, 5, 100, 100), new Color(200, 50, 50));
+		GButton p5 = new GButton("Sam I Am", "Really long button", null, 10, 135, new Color(100, 50, 50));
+		p3.addChild(p4);
+		panel.addChild(p1);
 		panel.addChild(p2);
 		panel.addChild(p3);
-		panel.addChild(p4);
 		panel.addChild(p5);
-		panel.addChild(p6);
 
 		tileMap = new TileMap(1000, animManager);
 		player_x = 300f;
@@ -92,6 +93,7 @@ public class Game extends Core {
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
 			peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
+			guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -177,6 +179,7 @@ public class Game extends Core {
 		//System.out.println(player.getTexX() + ", " + player.getTexY());
 		drawSprite (SCREEN_WIDTH/2f, SCREEN_HEIGHT/2f, player.getTexX(), player.getTexY(), tileSide);
 		
+		glBindTexture(GL_TEXTURE_2D, guiTex.getTextureID());
 		panel.draw();
 		
 		
