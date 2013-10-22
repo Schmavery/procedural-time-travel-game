@@ -2,20 +2,21 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
-public class PathFinder {
+public class PathFinder<T extends Pathable<T>> {
 	List<PathNode> open, closed;
-	Pathable target;
+	T target;
 	PathNode finalNode;
 	
 	private class PathNode implements Comparable<PathNode>{
-		private Pathable node;
+		private T node;
 		private PathNode parent;
 		private int cost;
 		private int total;
 		
-		PathNode(Pathable n, PathNode p) {
+		PathNode(T n, PathNode p) {
 			this.node = n;
 			this.parent = p;
 			this.cost = parent.cost + parent.node.moveCost(n);
@@ -42,7 +43,18 @@ public class PathFinder {
 		
 	}
 	
-	public PathFinder(Pathable start, Pathable target){
+	public PathFinder(T start, T target){
+		newPath(start, target);
+	}
+
+	public void clear(){
+		this.open.clear();
+		this.closed.clear();
+		this.finalNode = null;
+		this.target = null;
+	}
+	
+	public void newPath(T start, T target){
 		this.target = target;
 		PathNode startNode = new PathNode(start, null);
 		open = new ArrayList<PathNode>();
@@ -67,22 +79,34 @@ public class PathFinder {
 		}
 	}
 	
-	public List<Pathable> getPath(){
-		// Generate returnable path
-		return null;
+	/**
+	 * Generate and return path to target, or null if one doesn't exist.
+	 * @return The path to the target, or null if one doesn't exist.
+	 */
+	public List<T> getPath(){
+		if (finalNode == null){
+			return null;
+		}
+		PathNode tmpNode = finalNode;
+		LinkedList<T> path = new LinkedList<T>();
+		while (tmpNode.parent != null){
+			path.offerFirst(tmpNode.node);
+			tmpNode = tmpNode.parent;
+		}
+		return path;
 	}
 	
 	/**
 	 * This could have many different implementations.  To keep it simple,
 	 * this first try will use a sorted ArrayList.
-	 * @return Whether or not the calculation is finished.
+	 * @return true if the calculation is finished, false otherwise
 	 */
 	private boolean calcPath(){
 		// Find node with lowest total cost.
 		PathNode node = open.remove(0);
 
 		// Add all neighbouring nodes to open
-		for (Pathable p : node.node.getReachable()){
+		for (T p : node.node.getReachable()){
 			PathNode tmp = new PathNode(p, node);
 			int index = Collections.binarySearch(open, tmp);
 			if (index > 0){
@@ -91,7 +115,6 @@ public class PathFinder {
 				open.add(-(index + 1), tmp);
 			}
 		}
-		//Collections.sort(open);
 		
 		// Close node
 		closed.add(node);
