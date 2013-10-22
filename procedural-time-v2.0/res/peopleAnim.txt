@@ -1,7 +1,7 @@
 main_n_anim 150 4 5 6 7 
 main_s_anim 150 0 1 2 3 
-main_w_anim 150 18 19
-main_e_anim 150 16 17
+main_w_anim 150 20 21 22 23
+main_e_anim 150 16 17 18 19
 main_n 0 4
 main_s 0 0
 main_w 0 18
