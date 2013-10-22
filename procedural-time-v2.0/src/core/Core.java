@@ -1,16 +1,24 @@
 package core;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glTexParameterf;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -30,7 +38,6 @@ public abstract class Core {
 
     public Core() {
     	init();
-    	state = GameState.RUNNING;
     	gameLoop();
     }
     	
@@ -39,6 +46,7 @@ public abstract class Core {
             Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT));
             Display.setTitle("Procedural Time");
             Display.create();
+            state = GameState.RUNNING;
         } catch (LWJGLException e) {
             System.err.println("Display wasn't initialized correctly.");
             System.exit(1);
@@ -113,7 +121,7 @@ public abstract class Core {
 	/**
 	 * Safely close the program.
 	 */
-	public void exit(){
+	public static void exit(){
 		Display.destroy();
         System.exit(0);
 	}

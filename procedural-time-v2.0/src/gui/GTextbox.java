@@ -48,7 +48,7 @@ public class GTextbox extends GElement{
 	}
 
 	public void update(long deltaTime) {
-		
+		return;
 	}
 
 	public void draw() {

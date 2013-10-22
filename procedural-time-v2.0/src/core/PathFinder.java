@@ -2,7 +2,6 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class PathFinder {
@@ -53,8 +52,7 @@ public class PathFinder {
 	
 	public boolean generatePath(int steps){
 		if (steps > 0){
-			// Run algorithm to completion, return true.
-			while (!calcPath()){}
+			while (!calcPath()){ /* Run algorithm to completion*/ }
 			return true;
 		} else {
 			// Give the algorithm another few steps to run.

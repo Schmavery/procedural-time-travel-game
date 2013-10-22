@@ -13,12 +13,12 @@ public class ClickEvent {
 	}
 	
 	public String getAction(){
-		return action;
+		return this.action;
 	}
 	public String getSource(){
-		return source;
+		return this.source;
 	}
 	public EventType getType(){
-		return type;
+		return this.type;
 	}
 }

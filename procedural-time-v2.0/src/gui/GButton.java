@@ -118,7 +118,7 @@ public class GButton extends GElement{
 	}
 	
 	public void update(long deltaTime){
-		
+		return;
 	}
 	
 	public String getText(){ return text; }

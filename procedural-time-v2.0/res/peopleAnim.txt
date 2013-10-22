@@ -4,5 +4,5 @@ main_w_anim 150 20 21 22 23
 main_e_anim 150 16 17 18 19
 main_n 0 4
 main_s 0 0
-main_w 0 18
+main_w 0 21
 main_e 0 16

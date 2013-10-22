@@ -217,7 +217,7 @@ public class Game extends Core {
 		
 	}
 	
-	public void drawSprite(float x, float y, int texX, int texY, float spriteSide){
+	public static void drawSprite(float x, float y, int texX, int texY, float spriteSide){
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 			glBegin(GL_QUADS);

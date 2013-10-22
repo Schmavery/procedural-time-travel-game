@@ -2,10 +2,8 @@ package core;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 public class AnimationManager {
 	
@@ -35,10 +33,10 @@ public class AnimationManager {
 				loadAnim(s, sprites);
 			}
 			fr.close();
-		} catch (Exception e){
+			System.out.println("Loaded animations from '" + path + "'.");
+		} catch (IOException e){
 			e.printStackTrace();
 		}
-		System.out.println("Loaded animations from '" + path + "'.");
 	}
 	
 	/**
@@ -73,7 +71,7 @@ public class AnimationManager {
 		return anim;
 	}
 	
-	public void addFrame(Animation anim, int x, int y){
+	public static void addFrame(Animation anim, int x, int y){
 		anim.addFrame(x, y);
 	}
 	
@@ -118,7 +116,6 @@ public class AnimationManager {
 	 *
 	 */
 	public class Animation {
-		private Random rand = new Random();
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
 		private boolean autoUpdated;	// true if the animation is held by the AnimationManager.
 		private int[] animArrayX;		// X position of frame on spritesheet
@@ -157,13 +154,7 @@ public class AnimationManager {
 				anim.addFrame(this.animArrayX[i], this.animArrayY[i]);				
 			}
 			
-			//anim.randomize();
 			return anim;
-		}
-		
-		private void randomize(){
-			if (animated)
-				timer = (timer + rand.nextInt()) % (pause * animArrayX.length);
 		}
 		
 		public int getDispX(){

@@ -62,11 +62,11 @@ public class TileMap implements Serializable{
 	 */
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
 		try {	
-			range = Math.abs(range);
-			int x1 = Math.min(size-1, Math.max(0, pos_x - range));
-			int x2 = Math.min(size-1, Math.max(0, pos_x + range));
-			int y1 = Math.min(size-1, Math.max(0, pos_y - range));
-			int y2 = Math.min(size-1, Math.max(0, pos_y + range));
+			int absRange = Math.abs(range);
+			int x1 = Math.min(size-1, Math.max(0, pos_x - absRange));
+			int x2 = Math.min(size-1, Math.max(0, pos_x + absRange));
+			int y1 = Math.min(size-1, Math.max(0, pos_y - absRange));
+			int y2 = Math.min(size-1, Math.max(0, pos_y + absRange));
 			Tile[] tiles = new Tile[(x2-x1+1)*(y2-y1+1)];
 			int counter = 0;
 			for(int x = x1; x <= x2; x++){
@@ -84,11 +84,11 @@ public class TileMap implements Serializable{
 	
 	// Doesn't currently work
 	public List<Tile> getSurroundingTiles2(int range, int pos_x, int pos_y){
-		range = Math.abs(range);
-		int x1 = Math.min(size, Math.max(0, pos_x - range));
-		int x2 = Math.min(size, Math.max(0, pos_x + range));
-		int y1 = Math.min(size, Math.max(0, pos_y - range));
-		int y2 = Math.min(size, Math.max(0, pos_y + range));
+		int absRange = Math.abs(range);
+		int x1 = Math.min(size, Math.max(0, pos_x - absRange));
+		int x2 = Math.min(size, Math.max(0, pos_x + absRange));
+		int y1 = Math.min(size, Math.max(0, pos_y - absRange));
+		int y2 = Math.min(size, Math.max(0, pos_y + absRange));
 		List<Tile> l1 = Arrays.asList(tileMap[4]).subList(y1, y2);
 		List<Tile> l2 = Arrays.asList(tileMap[5]).subList(y1, y2);
 		l1.addAll(l2);
@@ -145,7 +145,7 @@ public class TileMap implements Serializable{
 	 * Uses Perlin noise to pick random tile types
 	 * Helper class for generateTerrain()
 	 */
-	private Type genTileType(int x, int y){
+	private static Type genTileType(int x, int y){
 		double pVal = calcPerlinVal(x, y);
 		if(pVal > 3){
 			return Type.WATER;
@@ -158,7 +158,7 @@ public class TileMap implements Serializable{
 		}
 	}
 	
-	private double calcPerlinVal(int x, int y){
+	private static double calcPerlinVal(int x, int y){
 		double scaleX = 1.1/100;
 		double scaleY = 10;
 		return scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);

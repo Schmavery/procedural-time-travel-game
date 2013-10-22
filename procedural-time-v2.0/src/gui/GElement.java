@@ -50,7 +50,7 @@ public abstract class GElement implements ReadableRectangle{
 				boundingBox.intersects(e.boundingBox));
 	}
 	
-	protected void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
+	protected static void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
 		glPushMatrix();
 			glTranslatef(x, y, 0);
 			glBegin(GL_QUADS);
@@ -66,7 +66,7 @@ public abstract class GElement implements ReadableRectangle{
 		glPopMatrix();
 	}
 	
-	protected void drawText(String text){
+	protected static void drawText(String text){
 		for (int i = 0; i < text.length(); i++){
 			char drawCh = text.toUpperCase().charAt(i);
 			int texX = (drawCh - ' ')%32;
