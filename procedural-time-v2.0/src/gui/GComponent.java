@@ -9,6 +9,8 @@ import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import javax.swing.border.Border;
+
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableRectangle;
 import org.lwjgl.util.Rectangle;
@@ -16,18 +18,19 @@ import org.lwjgl.util.WritableDimension;
 import org.lwjgl.util.WritablePoint;
 import org.lwjgl.util.WritableRectangle;
 
-public abstract class GElement implements ReadableRectangle{
+public abstract class GComponent implements ReadableRectangle{
 	
 	protected String name;
 	protected String action;
-	protected Color color;
+	//protected Color color;
 	protected Rectangle boundingBox;
 	protected boolean visible;
+	protected GBorder border;
 	
-	protected GElement(String name, String action, Color c, Rectangle box){
+	protected GComponent(String name, String action, Color c, Rectangle box){
 		this.name = name;
 		this.action = action;
-		color = c;
+		//color = c;
 		boundingBox = box;
 		visible = true;
 	}
@@ -41,13 +44,27 @@ public abstract class GElement implements ReadableRectangle{
 		visible = true;
 	}
 	
+	public void setBorder(GBorder border){
+		this.border = border;
+	}
+	
 	public String getName(){
 		return name;
 	}
 	
-	public boolean overlaps(GElement e){
+	public boolean isVisible(){
+		return visible;
+	}
+	
+	public boolean overlaps(GComponent e){
 		return (boundingBox.contains(e.boundingBox) || 
 				boundingBox.intersects(e.boundingBox));
+	}
+	
+	protected void drawBorder(){
+		if (border != null){
+			border.drawBorder(this);
+		}
 	}
 	
 	protected static void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
@@ -65,6 +82,7 @@ public abstract class GElement implements ReadableRectangle{
 			glEnd();
 		glPopMatrix();
 	}
+	
 	
 	protected static void drawText(String text){
 		for (int i = 0; i < text.length(); i++){

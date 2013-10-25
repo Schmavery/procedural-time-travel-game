@@ -23,7 +23,7 @@ import org.lwjgl.util.Rectangle;
  *  - Borders - (Decorator design pattern?)
  */
 
-public class GButton extends GElement{
+public class GButton extends GComponent{
 	private String text;
 	private Color textColor;
 	private boolean clickDown;
@@ -44,9 +44,9 @@ public class GButton extends GElement{
 	}
 	
 	
-	public void setColor(Color c){
-		this.color = c;
-	}
+//	public void setColor(Color c){
+//		this.color = c;
+//	}
 	
 	public void setTextColor(Color c){
 		this.textColor = c;
@@ -74,7 +74,7 @@ public class GButton extends GElement{
 	public ClickEvent clickUp(int x, int y){
 		if (boundingBox.contains(x, y) && clickDown){
 			clickDown = false;
-			return new ClickEvent(action, name, type);
+			return new ClickEvent(action, this, type);
 		}
 		return null;
 	}
@@ -88,24 +88,25 @@ public class GButton extends GElement{
 	
 	public void draw(){
 		//glDisable(GL_TEXTURE_2D);
-		if (clickDown){
-			glColor3f((color.getRed()+100)/255f, (color.getGreen()+100)/255f, (color.getBlue()+100)/255f);
-		} else {
-			glColor3f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
-		}
+//		if (clickDown){
+//			glColor3f((color.getRed()+100)/255f, (color.getGreen()+100)/255f, (color.getBlue()+100)/255f);
+//		} else {
+//			glColor3f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
+//		}
+		drawBorder();
 		glPushMatrix();
 			glTranslatef(getX(), getY(), 0);
-			int innerW = getWidth() - 32;
-			int innerH = getHeight() - 32;
-			drawSprite(0,      0, 0, 4, 16, 16);		// Top Left
-			drawSprite(16,     0, 1, 4, innerW, 16);	// Top Mid
-			drawSprite(innerW + 16, 0, 2, 4, 16, 16);	// Top Right
-			drawSprite(0,  16, 0, 5, 16, innerH);			// Mid Left
-			drawSprite(16, 16, 1, 5, innerW, innerH);		// Mid Mid
-			drawSprite(innerW + 16, 16, 2, 5, 16, innerH);
-			drawSprite(0,           innerH + 16, 0, 6, 16, 16);		// Bottom Left
-			drawSprite(16,          innerH + 16, 1, 6, innerW, 16);	// Bottom Mid
-			drawSprite(innerW + 16, innerH + 16, 2, 6, 16, 16);		// Bottom Right
+//			int innerW = getWidth() - 32;
+//			int innerH = getHeight() - 32;
+//			drawSprite(0,      0, 0, 4, 16, 16);		// Top Left
+//			drawSprite(16,     0, 1, 4, innerW, 16);	// Top Mid
+//			drawSprite(innerW + 16, 0, 2, 4, 16, 16);	// Top Right
+//			drawSprite(0,  16, 0, 5, 16, innerH);			// Mid Left
+//			drawSprite(16, 16, 1, 5, innerW, innerH);		// Mid Mid
+//			drawSprite(innerW + 16, 16, 2, 5, 16, innerH);
+//			drawSprite(0,           innerH + 16, 0, 6, 16, 16);		// Bottom Left
+//			drawSprite(16,          innerH + 16, 1, 6, innerW, 16);	// Bottom Mid
+//			drawSprite(innerW + 16, innerH + 16, 2, 6, 16, 16);		// Bottom Right
 			
 			glColor3f(textColor.getRed()/255f, textColor.getGreen()/255f, textColor.getBlue()/255f);
 			// Print the text
@@ -122,7 +123,7 @@ public class GButton extends GElement{
 	}
 	
 	public String getText(){ return text; }
-	public Color getColor(){ return color; }
+//	public Color getColor(){ return color; }
 	public Rectangle getRect(){ return boundingBox; }
 	
 }

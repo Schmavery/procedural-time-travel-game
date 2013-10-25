@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
-public class GTextbox extends GElement{
+public class GTextbox extends GComponent{
 
 	private String text;
 	private int textLen;
