@@ -35,15 +35,15 @@ public class GTextbox extends GComponent{
 		this.textColor = c;
 	}
 	
-	public ClickEvent clickDown(int x, int y) {
+	public GClickEvent clickDown(int x, int y) {
 		return null;
 	}
 
-	public ClickEvent clickUp(int x, int y) {
+	public GClickEvent clickUp(int x, int y) {
 		return null;
 	}
 
-	public ClickEvent clickHold(int x, int y) {
+	public GClickEvent clickHold(int x, int y) {
 		return null;
 	}
 
@@ -55,7 +55,7 @@ public class GTextbox extends GComponent{
 		glPushMatrix();
 			glColor3f(textColor.getRed()/255f, textColor.getGreen()/255f, textColor.getBlue()/255f);
 			glTranslatef(getX(), getY(), 0);
-			drawText(text);
+			GUtil.drawText(text);
 		glPopMatrix();
 	}
 

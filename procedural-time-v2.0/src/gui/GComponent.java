@@ -1,16 +1,5 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
-import javax.swing.border.Border;
-
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableRectangle;
 import org.lwjgl.util.Rectangle;
@@ -22,6 +11,7 @@ public abstract class GComponent implements ReadableRectangle{
 	
 	protected String name;
 	protected String action;
+	protected boolean clickDown;
 	//protected Color color;
 	protected Rectangle boundingBox;
 	protected boolean visible;
@@ -56,6 +46,10 @@ public abstract class GComponent implements ReadableRectangle{
 		return visible;
 	}
 	
+	public boolean isClicked(){
+		return clickDown;
+	}
+	
 	public boolean overlaps(GComponent e){
 		return (boundingBox.contains(e.boundingBox) || 
 				boundingBox.intersects(e.boundingBox));
@@ -66,36 +60,39 @@ public abstract class GComponent implements ReadableRectangle{
 			border.drawBorder(this);
 		}
 	}
-	
-	protected static void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
-		glPushMatrix();
-			glTranslatef(x, y, 0);
-			glBegin(GL_QUADS);
-			glTexCoord2f(texX/32f, texY/32f);				//short,short
-			glVertex2f(0, 0);
-			glTexCoord2f((texX+1)/32f, texY/32f);			//long, short
-			glVertex2f(spriteW, 0);
-			glTexCoord2f((texX+1)/32f, (texY+1)/32f);		//long,  long
-			glVertex2f(spriteW, spriteH);
-			glTexCoord2f(texX/32f, (texY+1)/32f);			//short, long
-			glVertex2f(0, spriteH);
-			glEnd();
-		glPopMatrix();
-	}
-	
-	
-	protected static void drawText(String text){
-		for (int i = 0; i < text.length(); i++){
-			char drawCh = text.toUpperCase().charAt(i);
-			int texX = (drawCh - ' ')%32;
-			int texY = (drawCh - ' ')/32;
-			drawSprite(i*16, 0, texX, texY, 16, 16);
+
+	/**
+	 * On a click event, returns a corresponding GClickEvent
+	 * @return GClickEvent
+	 */
+	public GClickEvent clickDown(int x, int y){
+		if (boundingBox.contains(x, y)){
+			clickDown = true;
 		}
+		return null;
 	}
 	
-	public abstract ClickEvent clickDown(int x, int y);
-	public abstract ClickEvent clickUp(int x, int y);
-	public abstract ClickEvent clickHold(int x, int y);
+	/**
+	 * On a click event, returns a corresponding GClickEvent
+	 * @return GClickEvent
+	 */
+	public GClickEvent clickUp(int x, int y){
+		if (boundingBox.contains(x, y) && clickDown){
+			clickDown = false;
+		}
+		return null;
+	}
+	
+	public GClickEvent clickHold(int x, int y){
+		if (!boundingBox.contains(x, y)){
+			clickDown = false;
+		}
+		return null;
+	}
+	
+//	public abstract GClickEvent clickDown(int x, int y);
+//	public abstract GClickEvent clickUp(int x, int y);
+//	public abstract GClickEvent clickHold(int x, int y);
 	public abstract void update(long deltaTime);
 	public abstract void draw();
 	

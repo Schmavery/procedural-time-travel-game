@@ -4,7 +4,7 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import gui.ClickEvent.EventType;
+import gui.GClickEvent.EventType;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
@@ -19,8 +19,6 @@ import org.lwjgl.util.Rectangle;
  * Alternative potential design: call an "actionPerformed" method and pass
  * in a string/action object?
  * 
- * Future features: 
- *  - Borders - (Decorator design pattern?)
  */
 
 public class GButton extends GComponent{
@@ -43,11 +41,6 @@ public class GButton extends GComponent{
 		this.text = text;
 	}
 	
-	
-//	public void setColor(Color c){
-//		this.color = c;
-//	}
-	
 	public void setTextColor(Color c){
 		this.textColor = c;
 	}
@@ -56,32 +49,39 @@ public class GButton extends GComponent{
 		this.text = t;
 	}
 	
-	/**
-	 * On a click event, returns a corresponding ClickEvent
-	 * @return ClickEvent
-	 */
-	public ClickEvent clickDown(int x, int y){
-		if (boundingBox.contains(x, y)){
-			clickDown = true;
-		}
-		return null;
-	}
-	
-	/**
-	 * On a click event, returns a corresponding ClickEvent
-	 * @return ClickEvent
-	 */
-	public ClickEvent clickUp(int x, int y){
-		if (boundingBox.contains(x, y) && clickDown){
-			clickDown = false;
-			return new ClickEvent(action, this, type);
-		}
-		return null;
-	}
-	
-	public ClickEvent clickHold(int x, int y){
-		if (!boundingBox.contains(x, y)){
-			clickDown = false;
+//	/**
+//	 * On a click event, returns a corresponding GClickEvent
+//	 * @return GClickEvent
+//	 */
+//	public GClickEvent clickDown(int x, int y){
+//		if (boundingBox.contains(x, y)){
+//			clickDown = true;
+//		}
+//		return null;
+//	}
+//	
+//	/**
+//	 * On a click event, returns a corresponding GClickEvent
+//	 * @return GClickEvent
+//	 */
+//	public GClickEvent clickUp(int x, int y){
+//		if (boundingBox.contains(x, y) && clickDown){
+//			clickDown = false;
+//			return new GClickEvent(action, this, type);
+//		}
+//		return null;
+//	}
+//	
+//	public GClickEvent clickHold(int x, int y){
+//		if (!boundingBox.contains(x, y)){
+//			clickDown = false;
+//		}
+//		return null;
+//	}
+	public GClickEvent clickUp(int x, int y){
+		super.clickUp(x, y);
+		if (boundingBox.contains(x, y) && isClicked()){
+			return new GClickEvent(action, this, type);
 		}
 		return null;
 	}
@@ -111,7 +111,7 @@ public class GButton extends GComponent{
 			glColor3f(textColor.getRed()/255f, textColor.getGreen()/255f, textColor.getBlue()/255f);
 			// Print the text
 			glTranslatef(16, 16, 0);
-			drawText(text);
+			GUtil.drawText(text);
 			
 		glPopMatrix();
 
@@ -123,7 +123,6 @@ public class GButton extends GComponent{
 	}
 	
 	public String getText(){ return text; }
-//	public Color getColor(){ return color; }
 	public Rectangle getRect(){ return boundingBox; }
 	
 }

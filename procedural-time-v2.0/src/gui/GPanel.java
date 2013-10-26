@@ -10,19 +10,18 @@ import java.util.ArrayList;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
-public class GPanel extends GComponent{
+public class GPanel extends GComponent implements GContainer{
 	ArrayList<GComponent> children;
-	int slideX, slideY, slideSpeedX, slideSpeedY;
 
 	public GPanel(String name, String action, Rectangle box, Color c){
 		super(name, action, c, box);
 		children = new ArrayList<>();
 	}
 	
-	public ClickEvent clickDown(int x, int y){
+	public GClickEvent clickDown(int x, int y){
 		if (boundingBox.contains(x, y)){
 			for (GComponent child : children){
-				ClickEvent tmp = child.clickDown(x - boundingBox.getX(), y - boundingBox.getY());
+				GClickEvent tmp = child.clickDown(x - boundingBox.getX(), y - boundingBox.getY());
 				if (tmp != null){
 					return tmp;
 				}
@@ -31,10 +30,10 @@ public class GPanel extends GComponent{
 		return null;
 	}
 	
-	public ClickEvent clickUp(int x, int y){
+	public GClickEvent clickUp(int x, int y){
 		if (boundingBox.contains(x, y)){
 			for (GComponent child : children){
-				ClickEvent tmp = child.clickUp(x - boundingBox.getX(), y - boundingBox.getY());
+				GClickEvent tmp = child.clickUp(x - boundingBox.getX(), y - boundingBox.getY());
 				if (tmp != null){
 					return tmp;
 				}
@@ -43,10 +42,10 @@ public class GPanel extends GComponent{
 		return null;
 	}
 
-	public ClickEvent clickHold(int x, int y){
+	public GClickEvent clickHold(int x, int y){
 		if (boundingBox.contains(x, y)){
 			for (GComponent child : children){
-				ClickEvent tmp = child.clickHold(x - boundingBox.getX(), y - boundingBox.getY());
+				GClickEvent tmp = child.clickHold(x - boundingBox.getX(), y - boundingBox.getY());
 				if (tmp != null){
 					return tmp;
 				}
@@ -89,6 +88,10 @@ public class GPanel extends GComponent{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gui.GContainer#addChild(gui.GComponent)
+	 */
+	@Override
 	public boolean addChild(GComponent e){
 		for (GComponent child : children){
 			if (child.overlaps(e)){
@@ -109,6 +112,10 @@ public class GPanel extends GComponent{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see gui.GContainer#getChild(java.lang.String)
+	 */
+	@Override
 	public GComponent getChild(String name){
 		for (GComponent child : children){
 			if (child.getName().equals(name)){
@@ -116,6 +123,12 @@ public class GPanel extends GComponent{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void setLayout(GLayoutManager layout) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -29,9 +29,10 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import core.AnimationManager.SpriteSheet;
 import entities.Human;
-import gui.ClickEvent;
+import gui.GClickEvent;
 import gui.GBorderFactory;
 import gui.GButton;
+import gui.GContainer;
 import gui.GPanel;
 import gui.GTextbox;
 
@@ -103,9 +104,9 @@ public class Game extends Core {
 
 		GTextbox title = new GTextbox("title", "<< Main Menu >>", 50, 15);
 		GButton p1 = new GButton("Dr. Seuss", "Menu", "pause", 10, 45, new Color(50, 100, 50));
-		p1.setBorder(GBorderFactory.createBasicBorder(new Color(50, 100, 50)));
+		p1.setBorder(GBorderFactory.createButtonBorder(new Color(50, 100, 50)));
 		GButton p2 = new GButton("Eggs and Ham", "Pause", null, 10, 105, new Color(50, 50, 100));
-		p2.setBorder(GBorderFactory.createBasicBorder(new Color(50, 50, 100)));
+		p2.setBorder(GBorderFactory.createButtonBorder(new Color(50, 50, 100)));
 		GPanel p3 = new GPanel("p3", null, new Rectangle(130, 45, 210, 110), new Color(50, 50, 50));
 		p3.setBorder(GBorderFactory.createBasicBorder(new Color(50, 50, 50)));
 		GTextbox tb  = new GTextbox("tb", "test: ---  ", 10, 10);
@@ -115,7 +116,7 @@ public class Game extends Core {
 		tb.setTextColor(new Color(200, 200, 200));
 		tb2.setTextColor(new Color(200, 200, 200));
 		GButton p5 = new GButton("Sam I Am", "extra long button!", null, 10, 165, new Color(100, 50, 50));
-		p5.setBorder(GBorderFactory.createBasicBorder(new Color(100, 50, 50)));
+		p5.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 50)));
 		p3.addChild(tb);
 		p3.addChild(tb2);
 		p3.addChild(tb3);
@@ -134,17 +135,17 @@ public class Game extends Core {
 		}
 		while (Mouse.next()){
 			if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()){
-				ClickEvent tmp = panel.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
+				GClickEvent tmp = panel.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
 					System.out.println(tmp.getSource().getName());
 				}
 			} else if (Mouse.getEventButtonState()){
-				ClickEvent tmp = panel.clickDown(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
+				GClickEvent tmp = panel.clickDown(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
 					System.out.println(tmp.getSource().getName());
 				}
 			} else if (Mouse.getEventButton() == -1){
-				ClickEvent tmp = panel.clickHold(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
+				GClickEvent tmp = panel.clickHold(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
 					System.out.println(tmp.getSource().getName());
 				}
@@ -154,8 +155,8 @@ public class Game extends Core {
 	
 	public void gameUpdate(long deltaTime){
 		animManager.update(deltaTime);
-		((GTextbox)((GPanel) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
-		((GTextbox)((GPanel) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getY()/(SCALE*TILE_SIZE))));
+		((GTextbox)((GContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
+		((GTextbox)((GContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getY()/(SCALE*TILE_SIZE))));
 		float speed = (float) (0.5*deltaTime);
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){

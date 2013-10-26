@@ -1,12 +1,12 @@
 package gui;
 
-public class ClickEvent {
+public class GClickEvent {
 	public static enum EventType{BUTTON, MENU};
 	private String action;
 	private GComponent source;
 	private EventType type;
 	
-	public ClickEvent(String action, GComponent source, EventType type){
+	public GClickEvent(String action, GComponent source, EventType type){
 		this.action = action;
 		this.source = source;
 		this.type = type;
