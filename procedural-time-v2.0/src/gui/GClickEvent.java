@@ -3,10 +3,10 @@ package gui;
 public class GClickEvent {
 	public static enum EventType{BUTTON, MENU};
 	private String action;
-	private GComponent source;
+	private IElement source;
 	private EventType type;
 	
-	public GClickEvent(String action, GComponent source, EventType type){
+	public GClickEvent(String action, IElement source, EventType type){
 		this.action = action;
 		this.source = source;
 		this.type = type;
@@ -15,7 +15,7 @@ public class GClickEvent {
 	public String getAction(){
 		return this.action;
 	}
-	public GComponent getSource(){
+	public IElement getSource(){
 		return this.source;
 	}
 	public EventType getType(){

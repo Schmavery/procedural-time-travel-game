@@ -8,7 +8,9 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.glColor3f;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
 public class GUtil {
@@ -43,13 +45,17 @@ public class GUtil {
 		drawSprite(innerW + 16, innerH + 16, 2, 6, 16, 16);		// Bottom Right
 	}
 
-	protected static void drawText(String text){
-		for (int i = 0; i < text.length(); i++){
-			char drawCh = text.toUpperCase().charAt(i);
-			int texX = (drawCh - ' ')%32;
-			int texY = (drawCh - ' ')/32;
-			drawSprite(i*16, 0, texX, texY, 16, 16);
-		}
+	protected static void drawText(int x, int y, Color c, String text){
+		glPushMatrix();
+			glTranslatef(x, y, 0);
+			glColor3f(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f);
+			for (int i = 0; i < text.length(); i++){
+				char drawCh = text.toUpperCase().charAt(i);
+				int texX = (drawCh - ' ')%32;
+				int texY = (drawCh - ' ')/32;
+				drawSprite(i*16, 0, texX, texY, 16, 16);
+			}
+		glPopMatrix();
 	}
 
 }

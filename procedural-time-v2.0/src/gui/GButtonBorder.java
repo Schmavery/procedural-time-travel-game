@@ -3,7 +3,7 @@ package gui;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.Color;
 
-public class GButtonBorder implements GBorder{
+public class GButtonBorder implements IBorder{
 
 	private Color color;
 	
@@ -21,7 +21,7 @@ public class GButtonBorder implements GBorder{
 		glPushMatrix();
 			glTranslatef(comp.getX(), comp.getY(), 0);
 			if (comp.isVisible()){
-				GUtil.drawRect(comp.boundingBox);
+				GUtil.drawRect(comp.getRect());
 			}
 		
 		glPopMatrix();

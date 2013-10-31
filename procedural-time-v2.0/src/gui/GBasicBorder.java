@@ -1,18 +1,13 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import org.lwjgl.util.Color;
 
-public class GBasicBorder implements GBorder{
+public class GBasicBorder implements IBorder{
 	
 	private Color color;
 	
@@ -26,7 +21,7 @@ public class GBasicBorder implements GBorder{
 			glTranslatef(comp.getX(), comp.getY(), 0);
 			
 			if (comp.isVisible()){
-				GUtil.drawRect(comp.boundingBox);
+				GUtil.drawRect(comp.getRect());
 			}
 		
 		glPopMatrix();

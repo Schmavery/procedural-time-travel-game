@@ -1,10 +1,5 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
@@ -14,8 +9,15 @@ public class GTextbox extends GComponent{
 	private int textLen;
 	private Color textColor;
 	
+	public GTextbox(String name, String text){
+		super(name);
+		this.text = text;
+		this.textLen = text.length();
+		this.textColor = new Color(0, 0, 0);
+	}
+	
 	public GTextbox(String name, String text, int posX, int posY) {
-		super(name, null, null, null);
+		super(name, null, null);
 		Rectangle rect = new Rectangle(posX, posY, 16*text.length(), 16);
 		setRect(rect);
 		this.text = text;
@@ -52,11 +54,7 @@ public class GTextbox extends GComponent{
 	}
 
 	public void draw() {
-		glPushMatrix();
-			glColor3f(textColor.getRed()/255f, textColor.getGreen()/255f, textColor.getBlue()/255f);
-			glTranslatef(getX(), getY(), 0);
-			GUtil.drawText(text);
-		glPopMatrix();
+		GUtil.drawText(getX(), getY(), textColor, text);
 	}
 
 }

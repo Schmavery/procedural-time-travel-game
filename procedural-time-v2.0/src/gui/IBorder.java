@@ -1,5 +1,5 @@
 package gui;
 
-public interface GBorder {
+public interface IBorder {
 	public void drawBorder(GComponent comp);
 }

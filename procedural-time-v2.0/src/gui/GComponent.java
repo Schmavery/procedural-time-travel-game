@@ -1,26 +1,30 @@
 package gui;
 
-import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableRectangle;
 import org.lwjgl.util.Rectangle;
-import org.lwjgl.util.WritableDimension;
-import org.lwjgl.util.WritablePoint;
-import org.lwjgl.util.WritableRectangle;
 
-public abstract class GComponent implements ReadableRectangle{
+public abstract class GComponent implements IElement{
 	
 	protected String name;
 	protected String action;
-	protected boolean clickDown;
-	//protected Color color;
-	protected Rectangle boundingBox;
-	protected boolean visible;
-	protected GBorder border;
+	private boolean clickDown;
+	private boolean visible;
+	private IBorder border;
+	private Rectangle boundingBox;
 	
-	protected GComponent(String name, String action, Color c, Rectangle box){
+	protected GComponent(String name){
+		this.name = name;
+		visible = true;
+	}
+	
+	protected GComponent(String name, String action){
 		this.name = name;
 		this.action = action;
-		//color = c;
+		visible = true;
+	}
+	
+	protected GComponent(String name, String action, Rectangle box){
+		this.name = name;
+		this.action = action;
 		boundingBox = box;
 		visible = true;
 	}
@@ -29,12 +33,13 @@ public abstract class GComponent implements ReadableRectangle{
 		System.out.println("HIDING " + name);
 		visible = false;
 	}
+
 	public void show(){
 		System.out.println("SHOWING " + name);
 		visible = true;
 	}
 	
-	public void setBorder(GBorder border){
+	public void setBorder(IBorder border){
 		this.border = border;
 	}
 	
@@ -50,9 +55,9 @@ public abstract class GComponent implements ReadableRectangle{
 		return clickDown;
 	}
 	
-	public boolean overlaps(GComponent e){
-		return (boundingBox.contains(e.boundingBox) || 
-				boundingBox.intersects(e.boundingBox));
+	public boolean overlaps(IElement e){
+		return (boundingBox.contains(e.getRect()) || 
+				boundingBox.intersects(e.getRect()));
 	}
 	
 	protected void drawBorder(){
@@ -61,10 +66,6 @@ public abstract class GComponent implements ReadableRectangle{
 		}
 	}
 
-	/**
-	 * On a click event, returns a corresponding GClickEvent
-	 * @return GClickEvent
-	 */
 	public GClickEvent clickDown(int x, int y){
 		if (boundingBox.contains(x, y)){
 			clickDown = true;
@@ -72,10 +73,6 @@ public abstract class GComponent implements ReadableRectangle{
 		return null;
 	}
 	
-	/**
-	 * On a click event, returns a corresponding GClickEvent
-	 * @return GClickEvent
-	 */
 	public GClickEvent clickUp(int x, int y){
 		if (boundingBox.contains(x, y) && clickDown){
 			clickDown = false;
@@ -90,21 +87,16 @@ public abstract class GComponent implements ReadableRectangle{
 		return null;
 	}
 	
-//	public abstract GClickEvent clickDown(int x, int y);
-//	public abstract GClickEvent clickUp(int x, int y);
-//	public abstract GClickEvent clickHold(int x, int y);
 	public abstract void update(long deltaTime);
+
 	public abstract void draw();
 	
 	
 	public void setRect(Rectangle rect){
-		this.boundingBox = rect;
+		boundingBox = rect;
 	}
 
-	// Implement ReadableRectangle
-	public void getBounds(WritableRectangle arg0) {boundingBox.getBounds(arg0);}
-	public void getSize(WritableDimension arg0) {boundingBox.getSize(arg0);}
-	public void getLocation(WritablePoint arg0) {boundingBox.getLocation(arg0);}
+	public Rectangle getRect() {return boundingBox;}
 	public int getHeight() {return boundingBox.getHeight();}
 	public int getWidth() {return boundingBox.getWidth();}
 	public int getX() {return boundingBox.getX();}
