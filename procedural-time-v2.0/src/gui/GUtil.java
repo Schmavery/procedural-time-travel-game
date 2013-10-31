@@ -15,6 +15,8 @@ import org.lwjgl.util.Rectangle;
 
 public class GUtil {
 
+	public static enum Alignment {LEFT, CENTER, RIGHT, TOP, BOTTOM};
+	
 	protected static void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH){
 		glPushMatrix();
 			glTranslatef(x, y, 0);

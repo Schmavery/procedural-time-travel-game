@@ -1,5 +1,9 @@
 package gui;
 
+import java.security.AlgorithmConstraints;
+
+import gui.GUtil.Alignment;
+
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
@@ -8,6 +12,7 @@ public class GTextbox extends GComponent{
 	private String text;
 	private int textLen;
 	private Color textColor;
+	private Alignment alignment = Alignment.LEFT;
 	
 	public GTextbox(String name, String text){
 		super(name);
@@ -37,6 +42,10 @@ public class GTextbox extends GComponent{
 		this.textColor = c;
 	}
 	
+	public void setAlignment(Alignment alignment){
+		this.alignment = alignment;
+	}
+	
 	public GClickEvent clickDown(int x, int y) {
 		return null;
 	}
@@ -54,7 +63,34 @@ public class GTextbox extends GComponent{
 	}
 
 	public void draw() {
-		GUtil.drawText(getX(), getY(), textColor, text);
+		int xPos, yPos;
+		switch (alignment){
+			case LEFT:
+				xPos = getX() + 16;
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			case RIGHT:
+				xPos = getX() + (getWidth() - (text.length() + 1)*16);
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			case TOP:
+				xPos = getX() + (getWidth() - text.length()*16)/2;
+				yPos = getY() + 16;
+				break;
+			case BOTTOM:
+				xPos = getX() + (getWidth() - text.length()*16)/2;
+				yPos = getY() + (getHeight() - 2*16);
+				break;
+			case CENTER:
+				xPos = getX() + (getWidth() - text.length()*16)/2;
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			default:
+				xPos = getX();
+				yPos = getY();
+				break;
+	}
+		GUtil.drawText(xPos, yPos, textColor, text);
 	}
 
 }

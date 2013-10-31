@@ -17,8 +17,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -35,6 +33,7 @@ import gui.GClickEvent;
 import gui.GGridLayout;
 import gui.GPanel;
 import gui.GTextbox;
+import gui.GUtil.Alignment;
 import gui.IContainer;
 
 public class Game extends Core {
@@ -142,7 +141,6 @@ public class Game extends Core {
 		GButton b3 = new GButton("b3", "xyz", null);
 		b3.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 50)));
 		test.addChild(b3);
-		test.layout();
 	}
 	
 	public void update(long deltaTime){

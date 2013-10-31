@@ -99,6 +99,7 @@ public class GPanel extends GComponent implements IContainer{
 				
 		}
 		children.add(e);
+		layout();
 		return true;
 	}
 	
@@ -128,7 +129,6 @@ public class GPanel extends GComponent implements IContainer{
 	}
 	
 	public void layout() {
-		System.out.println(children.size());
 		layout.layoutContainer(this);
 	}
 
