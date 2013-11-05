@@ -6,12 +6,19 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.util.ArrayList;
 
+import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
 public class GPanel extends GComponent implements IContainer{
 	private ArrayList<IElement> children;
 	private ILayoutManager layout;
 
+	public GPanel(String name, Color c){
+		super(name);
+		children = new ArrayList<IElement>();
+		setBorder(GBorderFactory.createBasicBorder(c));
+	}
+	
 	public GPanel(String name){
 		super(name);
 		children = new ArrayList<IElement>();

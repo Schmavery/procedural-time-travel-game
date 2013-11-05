@@ -18,6 +18,13 @@ public class GButton extends GComponent{
 	private EventType type = EventType.BUTTON;
 	private Alignment alignment = Alignment.CENTER;
 	
+	public GButton(String name, String text, String action, Color c){
+		super(name, action);
+		this.text = text;
+		this.textColor = new Color(0, 0, 0);
+		setBorder(GBorderFactory.createButtonBorder(c));
+	}
+	
 	public GButton(String name, String text, String action){
 		super(name, action);
 		this.text = text;
