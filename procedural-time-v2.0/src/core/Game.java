@@ -33,7 +33,6 @@ import gui.GClickEvent;
 import gui.GGridLayout;
 import gui.GPanel;
 import gui.GTextbox;
-import gui.GUtil.Alignment;
 import gui.IContainer;
 
 public class Game extends Core {
@@ -129,18 +128,19 @@ public class Game extends Core {
 		
 		
 		IContainer test = new GPanel("Test Panel", "none", new Rectangle (435, 555, 550, 230));
-		screen.addChild(test);
-		test.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
 		test.setLayout(new GGridLayout(2, 2, 10, 10));
-		GButton b1 = new GButton("b1", "123", null);
-		b1.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 100)));
-		test.addChild(b1);
-		GButton b2 = new GButton("b2", "abc", null);
-		b2.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 100)));
-		test.addChild(b2);
-		GButton b3 = new GButton("b3", "xyz", null);
-		b3.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 50)));
-		test.addChild(b3);
+		screen.addChild(test);
+		IContainer inner = new GPanel("Inner Panel");
+		inner.setLayout(new GGridLayout(2, 2, 5, 5));
+		test.addChild(inner);
+		test.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
+
+		inner.addChild(new GButton("b1", "123", null, new Color(100, 50, 100)));
+		inner.addChild(new GButton("b2", "abc", null, new Color(100, 50, 100)));
+		inner.addChild(new GButton("b3", "xyz", null, new Color(100, 50, 50)));
+		test.addChild(new GButton("b4", "more stuff", null, new Color(10,100,100)));
+		test.addChild(new GButton("b4", "more stuff", null, new Color(100,100,10)));
+		test.addChild(new GButton("b4", "more stuff", null, new Color(100,10,100)));
 	}
 	
 	public void update(long deltaTime){
@@ -172,6 +172,7 @@ public class Game extends Core {
 		animManager.update(deltaTime);
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getY()/(SCALE*TILE_SIZE))));
+//		float speed = (float) (0.2*deltaTime);
 		float speed = (float) (0.5*deltaTime);
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){

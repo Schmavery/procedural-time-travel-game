@@ -13,6 +13,7 @@ public class Human {
 	private Animation[] movingAnims;
 	private Animation[] standingAnims;
 	private Facing facing;
+	private EntityFrame frame;
 	
 	public Human(float x, float y, TileMap tileMap){
 		this.x = x;
@@ -21,6 +22,7 @@ public class Human {
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
+		frame = new EntityFrame();
 	}
 	
 	public void update(long deltaTime){
@@ -37,7 +39,14 @@ public class Human {
 		}
 			
 		x += dx;
+		if (dx != 0 && frame.isColliding(tileMap, x, y)){
+			System.out.println();
+			x -= dx;
+		}
 		y += dy;
+		if (dy != 0 && frame.isColliding(tileMap, x, y)){
+			y -= dy;
+		}
 		dx = 0;
 		dy = 0;
 		

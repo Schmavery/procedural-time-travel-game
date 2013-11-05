@@ -10,7 +10,8 @@ import core.AnimationManager.Animation;
 import core.Tile.Type;
 
 /**
- * Class that keeps a record of all the tiles in the tilemap.
+ * Class that keeps generates the game tilemap using Perlin Noise.
+ * It then keeps a record of all these tiles.
  * @author avery
  *
  */
@@ -24,24 +25,25 @@ public class TileMap implements Serializable{
 	private AnimationManager animManager;
 	
 	// Corner IDs for different terrain
-	private String[] grassAnimStringsCenter = 
+	private String[] grassCenterAnimNames = 
 		{"g_c1","g_c2","g_c3"};
-	private String[] grassAnimStrings = 
+	private String[] grassAnimNames = 
 		{"g_w","g_n","g_nw","g_e","g_we","g_ne",
 			"g_wne","g_s","g_sw","g_ns","g_wns","g_se","g_wse","g_nes","g_nesw"};
-	private String[] sandAnimStrings =
+	private String[] sandAnimNames =
 		{"s_c", "s_w", "s_n", "s_nw", "s_e", "s_we", "s_ne", "s_wne",
 			"s_s", "s_sw", "s_ns", "s_wns", "s_se", "s_wse", "s_nes", "s_nesw"};
-	private String[] waterAnimStrings =
+	private String[] waterAnimNames =
 		{"w_c", "w_w", "w_n", "w_nw", "w_e", "w_we", "w_ne", "w_wne",
 			"w_s", "w_sw", "w_ns", "w_wns", "w_se", "w_wse", "w_nes", "w_nesw"};
-	private String[] dirtAnimStrings = 
+	private String[] dirtAnimNames = 
 		{"d_c0", "d_c1", "d_c2"};
 
 	
 	public TileMap(int size, AnimationManager am){
 		Tile.tileMap = this;
-		seed = (int) System.currentTimeMillis();
+//		seed = (int) System.currentTimeMillis();
+		seed = 366907858;
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
@@ -57,8 +59,8 @@ public class TileMap implements Serializable{
 	 * Then you can iterate through the resulting array and perform operations on all nearby tiles.
 	 * Handles negatives and points close to the edge of the map
 	 * @param range Distance from center
-	 * @param centerX
-	 * @param centerY
+	 * @param centerX X-coordinate of the center of the region
+	 * @param centerY Y-coordinate of the center of the region
 	 * @return Array of tiles corresponding to the surrounding tiles.
 	 */
 	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
@@ -189,10 +191,10 @@ public class TileMap implements Serializable{
 				case 5:
 					return animManager.getAnim("g_rock3");
 				default:
-					return animManager.getAnim(grassAnimStringsCenter[rand.nextInt(grassAnimStringsCenter.length)]);			
+					return animManager.getAnim(grassCenterAnimNames[rand.nextInt(grassCenterAnimNames.length)]);			
 				}					
 			}
-			return animManager.getAnim(grassAnimStrings[bit - 1]);
+			return animManager.getAnim(grassAnimNames[bit - 1]);
 		case DIRT:
 			switch (rand.nextInt(50)){
 			case 1:
@@ -203,12 +205,12 @@ public class TileMap implements Serializable{
 				return animManager.getAnim("d_rock3");
 
 			default:
-				return animManager.getAnim(dirtAnimStrings[rand.nextInt(dirtAnimStrings.length)]);
+				return animManager.getAnim(dirtAnimNames[rand.nextInt(dirtAnimNames.length)]);
 			}
 		case SAND:
-			return animManager.getAnim(sandAnimStrings[bit]);
+			return animManager.getAnim(sandAnimNames[bit]);
 		case WATER:
-			return animManager.getAnim(waterAnimStrings[bit]);
+			return animManager.getAnim(waterAnimNames[bit]);
 		default:
 			return null;
 		}
@@ -216,6 +218,16 @@ public class TileMap implements Serializable{
 	
 	public Type getTexID(int x, int y){
 		return tileMap[x][y].getType();
+	}
+	
+	public Tile getTile(float x, float y){
+		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
+		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
+		if ( xIndex > 0 && xIndex < size && yIndex > 0 && yIndex < size){
+			return tileMap[xIndex][yIndex];
+		}
+		System.out.println("Invalid tile index");
+		return null;
 	}
 	
 }
