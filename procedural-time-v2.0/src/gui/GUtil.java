@@ -62,5 +62,13 @@ public class GUtil {
 			}
 		glPopMatrix();
 	}
+	
+	public static void drawBubble(Rectangle box){
+		drawRect(box);
+		drawSprite(box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight()-16, 3, 4, 16, 16, 32);
+		drawSprite(box.getX() + (box.getWidth()/2), box.getY()+box.getHeight()-16,      4, 4, 16, 16, 32);
+		drawSprite(box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight(),    3, 5, 16, 16, 32);
+		drawSprite(box.getX() + (box.getWidth()/2), box.getY()+box.getHeight(),         4, 5, 16, 16, 32);
+	}
 
 }

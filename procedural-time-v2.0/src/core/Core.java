@@ -89,7 +89,7 @@ public abstract class Core {
         	//int mouse_y = SCREEN_HEIGHT - Mouse.getY() - 1;
         	
             Display.update();
-            Display.sync(60);
+            Display.sync(120);
         }
  
         exit();

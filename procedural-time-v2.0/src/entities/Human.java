@@ -1,6 +1,10 @@
 package entities;
 
+import java.util.LinkedList;
+
 import core.AnimationManager.Animation;
+import core.Game;
+import core.Message;
 import core.Tile;
 import core.TileMap;
 
@@ -16,6 +20,7 @@ public class Human {
 	private Animation[] standingAnims;
 	private Facing facing;
 	private EntityFrame frame;
+	private LinkedList<Message> messages;
 	
 	public Human(float x, float y, TileMap tileMap){
 		this.x = x;
@@ -25,69 +30,92 @@ public class Human {
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
 		frame = new EntityFrame(15,10);
-		speed = 5f;
+		speed = 0.3f;
+		messages = new LinkedList<Message>();
+		Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+		newTile.addEntity(this);
 	}
-	
+
 	public void update(long deltaTime){
 		moving = (dx != 0 || dy != 0);
 		
-		Tile tile;
 		if (moving){
-			tile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
-		} else {
-			tile = null;
-		}
-		
-		// Handle Speed //
-		if (dx != 0 || dy != 0){
-			float hyp = 0.85f*speed; 
-			dx = Math.max(Math.min(hyp, dx), -hyp);
-			dy = Math.max(Math.min(hyp, dy), -hyp);
-		} else {
-			dx = Math.max(Math.min(speed, dx), -speed);
-			dy = Math.max(Math.min(speed, dy), -speed);
-		}
-		
-		// Handle Facing //	
-		if (dy < 0){
-			facing = Facing.NORTH;
-		} else if (dy > 0){
-			facing = Facing.SOUTH;
-		} else if (dx > 0){
-			facing = Facing.EAST;
-		} else if (dx < 0){
-			facing = Facing.WEST;
-		}
-			
-		x += dx;
-		if (dx != 0 && frame.isColliding(tileMap, x, y)){
-			System.out.println();
-			x -= dx;
-		}
-		y += dy;
-		if (dy != 0 && frame.isColliding(tileMap, x, y)){
-			y -= dy;
-		}
-		dx = 0;
-		dy = 0;
-		
-		if (tile != null){
-			Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
-			if (tile != null && newTile != null && !tile.isSameNode(newTile)){
-				tile.removeEntity(this);
-				newTile.addEntity(this);
+			Tile tile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+			dx = deltaTime*dx;
+			dy = deltaTime*dy;
+			float speed = deltaTime*this.speed;
+			// Handle Speed //
+			if (dx != 0 || dy != 0){
+				float hyp = 0.85f*speed; 
+				dx = Math.max(Math.min(hyp, dx), -hyp);
+				dy = Math.max(Math.min(hyp, dy), -hyp);
+			} else {
+				dx = Math.max(Math.min(speed, dx), -speed);
+				dy = Math.max(Math.min(speed, dy), -speed);
 			}
-		}
-		
-		
-		if (moving){
+			
+			// Handle Facing //	
+			if (dy < 0){
+				facing = Facing.NORTH;
+			} else if (dy > 0){
+				facing = Facing.SOUTH;
+			} else if (dx > 0){
+				facing = Facing.EAST;
+			} else if (dx < 0){
+				facing = Facing.WEST;
+			}
+			
+			x += dx;
+			if (dx != 0 && frame.isColliding(tileMap, x, y)){
+				System.out.println();
+				x -= dx;
+			}
+			y += dy;
+			if (dy != 0 && frame.isColliding(tileMap, x, y)){
+				y -= dy;
+			}
+			dx = 0;
+			dy = 0;
+			
+			if (tile != null){
+				Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+				if (tile != null && newTile != null && !tile.isSameNode(newTile)){
+					tile.removeEntity(this);
+					newTile.addEntity(this);
+				}
+			}
 			movingAnims[facing.ordinal()].update(deltaTime);
 		}
+		
+		// Add new messages.
+		boolean test = false;
+		int range = 50*(int) Game.SCALE;
+		for (Message m : Message.getOldMessages()){
+			if ((messages.isEmpty() || 
+					(m.getTime() >= messages.getLast().getTime() && !m.equals(messages.getLast()))) &&
+					!m.getSender().equals(this) &&
+					(m.getX() > x - range && m.getX() < x + range) &&
+					(m.getY() > y - range && m.getY() < y + range)){
+				messages.add(m);
+				if (m.getText().equals("hi")){
+					test = true;
+				}
+			}
+		}
+		if (test) {Message.say(x, y, "What's up?", this);}
+		
+		
+		
 	}
 	
 	public void move(float dx, float dy){
 		this.dx += dx;
 		this.dy += dy;
+	}
+	
+	public void move(Facing f){
+		facing = f;
+		moving = true;
 	}
 	
 	public void setMovingAnims( Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w ){

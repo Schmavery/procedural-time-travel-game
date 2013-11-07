@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -34,6 +35,7 @@ public class Game extends Core {
 	public static float SCALE = 3f;
 	
 	Human player;
+	Human[] humans;
 	
 	boolean pauseDown = false;
 	GPanel screen;
@@ -64,15 +66,32 @@ public class Game extends Core {
 		initGUI();
 
 		tileMap = new TileMap(1000, animManager);
+		Random rand = new Random();
+		humans = new Human[10000];
 		player = new Human(300f, 300f, tileMap);
-		player.setMovingAnims(animManager.getAnim("main_n_anim"), 
-				animManager.getAnim("main_e_anim"),
-				animManager.getAnim("main_s_anim"),
-				animManager.getAnim("main_w_anim"));
-		player.setStandingAnims(animManager.getAnim("main_n"), 
-				animManager.getAnim("main_e"),
-				animManager.getAnim("main_s"),
-				animManager.getAnim("main_w"));
+			player.setMovingAnims(animManager.getAnim("main_n_anim"), 
+					animManager.getAnim("main_e_anim"),
+					animManager.getAnim("main_s_anim"),
+					animManager.getAnim("main_w_anim"));
+			player.setStandingAnims(animManager.getAnim("main_n"), 
+					animManager.getAnim("main_e"),
+					animManager.getAnim("main_s"),
+					animManager.getAnim("main_w"));
+		humans[0] = player;
+//		player.move(1f, 1f);
+		for (int i = 1; i < humans.length; i++){
+			humans[i] = new Human(rand.nextFloat()*SCALE*TILE_SIZE*999,
+					rand.nextFloat()*SCALE*TILE_SIZE*999, tileMap);
+			humans[i].setMovingAnims(animManager.getAnim("main_n_anim"), 
+					animManager.getAnim("main_e_anim"),
+					animManager.getAnim("main_s_anim"),
+					animManager.getAnim("main_w_anim"));
+			humans[i].setStandingAnims(animManager.getAnim("main_n"), 
+					animManager.getAnim("main_e"),
+					animManager.getAnim("main_s"),
+					animManager.getAnim("main_w"));
+//			humans[i].move(1, 1);
+		}
 		
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
@@ -122,16 +141,17 @@ public class Game extends Core {
 		
 		
 		IContainer test = new GPanel("Test Panel", "none", new Rectangle (435, 555, 550, 230));
-		test.setLayout(new GGridLayout(2, 2, 10, 10));
 		screen.addChild(test);
-		IContainer inner = new GPanel("Inner Panel");
-		inner.setLayout(new GGridLayout(2, 2, 5, 5));
-		test.addChild(inner);
+		test.setLayout(new GGridLayout(2, 2, 10, 10));
 		test.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
+//		IContainer inner = new GPanel("Inner Panel");
+//		inner.setLayout(new GGridLayout(2, 2, 5, 5));
+//		test.addChild(inner);
 
 //		inner.addChild(new GButton("b1", "123", null, new Color(100, 50, 100)));
 //		inner.addChild(new GButton("b2", "abc", null, new Color(100, 50, 100)));
 //		inner.addChild(new GButton("b3", "xyz", null, new Color(100, 50, 50)));
+		test.addChild(new GButton("b4", "Say \"Something\"", "say something", new Color(10,100,100)));
 		test.addChild(new GButton("b4", "Say \"Hi\"", "say hi", new Color(10,100,100)));
 		test.addChild(new GButton("b4", "Say \"Hello\"", "say hello", new Color(100,100,10)));
 		test.addChild(new GButton("b4", "Say \"Howdy\"", "say howdy", new Color(100,10,100)));
@@ -147,7 +167,7 @@ public class Game extends Core {
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
 //					System.out.println(tmp.getSource().getName());
-					if (tmp.getAction().regionMatches(0, "say", 0, 3)){
+					if (tmp.getAction() != null && tmp.getAction().regionMatches(0, "say", 0, 3)){
 						Message.say(player.getX(), player.getY(), tmp.getAction().substring(4), player);
 					}
 				}
@@ -169,7 +189,7 @@ public class Game extends Core {
 		animManager.update(deltaTime);
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getY()/(SCALE*TILE_SIZE))));
-		float speed = (float) (0.3*deltaTime);
+		float speed = 100f;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
 			player.move(0f, -speed);
@@ -190,7 +210,10 @@ public class Game extends Core {
 			pauseDown = false;
 			pauseGame();
 		}
-		player.update(deltaTime);
+//		player.update(deltaTime);
+		for (int i = 0; i < humans.length; i++){
+			humans[i].update(deltaTime);
+		}
 		screen.update(deltaTime);
 		Message.update();
 		
@@ -217,19 +240,44 @@ public class Game extends Core {
 		int playerTile_x = (int) Math.floor(player.getX() / (tileSide));
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
-		for (Tile tile : tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
-				playerTile_x, playerTile_y)){
+		
+		Tile[] closeTiles = tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
+				playerTile_x, playerTile_y);
+		
+		for (Tile tile : closeTiles){
 
 			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
 			
 		}
+//		GUtil.drawSprite (SCREEN_WIDTH/2f, SCREEN_HEIGHT/2f, player.getTexX(), player.getTexY(), tileSide, tileSide, 16);
 		
 		glBindTexture(GL_TEXTURE_2D, peopleTex.getTextureID());
-		GUtil.drawSprite (SCREEN_WIDTH/2f, SCREEN_HEIGHT/2f, player.getTexX(), player.getTexY(), tileSide, tileSide, 16);
+		
+		for (Tile tile : closeTiles){
+			for (Human h : tile.entities){
+				GUtil.drawSprite (h.getX() - player.getX() + SCREEN_WIDTH/2f,
+						h.getY() - player.getY() + SCREEN_HEIGHT/2f,
+						h.getTexX(), h.getTexY(), tileSide, tileSide, 16);
+			}
+//			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
+//					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
+//					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
+		}
+//		for (int i = ; i < )
 		
 		glBindTexture(GL_TEXTURE_2D, guiTex.getTextureID());
+		
+		for (Message m : Message.getOldMessages()){
+			Rectangle rect = new Rectangle(
+					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (m.getText().length()-1)*8), 
+					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
+					(m.getText().length()+2)*16, 49);
+			glColor3f(200/255f, 200/255f, 175/255f);
+			GUtil.drawBubble(rect);
+			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
+		}
 		
 		for (Message m : Message.getMessages()){
 			Rectangle rect = new Rectangle(
@@ -237,7 +285,7 @@ public class Game extends Core {
 					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
 					(m.getText().length()+2)*16, 49);
 			glColor3f(200/255f, 200/255f, 175/255f);
-			GUtil.drawRect(rect);
+			GUtil.drawBubble(rect);
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
 		}
 		

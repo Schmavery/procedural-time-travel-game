@@ -6,6 +6,7 @@ import entities.Human;
 
 public class Message {
 	static LinkedList<Message> messages = new LinkedList<Message>();
+	static LinkedList<Message> oldMessages = new LinkedList<Message>();
 	
 	private float x, y;
 	private String text;
@@ -38,11 +39,17 @@ public class Message {
 	public static LinkedList<Message> getMessages(){
 		return messages;
 	}
+	public static LinkedList<Message> getOldMessages(){
+		return oldMessages;
+	}
 	
 	public static void update(){
 		long curTime = System.currentTimeMillis();
-		while (!messages.isEmpty() && messages.getFirst().getTime() < curTime - 1000){
-			messages.removeFirst();
+		while (!messages.isEmpty() && messages.getFirst().getTime() < curTime - 500){
+			oldMessages.add(messages.removeFirst());
+		}
+		while (!oldMessages.isEmpty() && oldMessages.getFirst().getTime() < curTime - 1000){
+			oldMessages.removeFirst();
 		}
 	}
 }
