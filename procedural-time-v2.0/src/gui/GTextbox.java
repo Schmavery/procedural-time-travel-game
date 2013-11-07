@@ -1,7 +1,5 @@
 package gui;
 
-import java.security.AlgorithmConstraints;
-
 import gui.GUtil.Alignment;
 
 import org.lwjgl.util.Color;

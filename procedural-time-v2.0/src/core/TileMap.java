@@ -133,7 +133,7 @@ public class TileMap implements Serializable{
 		PerlinNoise.setSeed(seed);
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y] = new Tile(genTileType(x, y), calcPerlinVal(x, y), x, y, null);
+				tileMap[x][y] = new Tile(genTileType(x, y), calcPerlinVal(x, y), x, y);
 			}
 		}
 		for (int x = 0; x < size; x++){
@@ -223,7 +223,7 @@ public class TileMap implements Serializable{
 	public Tile getTile(float x, float y){
 		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
 		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
-		if ( xIndex > 0 && xIndex < size && yIndex > 0 && yIndex < size){
+		if ( xIndex >= 0 && xIndex < size && yIndex >= 0 && yIndex < size){
 			return tileMap[xIndex][yIndex];
 		}
 		System.out.println("Invalid tile index");

@@ -2,9 +2,11 @@ package core;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import core.AnimationManager.Animation;
+import entities.Human;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -19,18 +21,19 @@ public class Tile implements Serializable, Pathable<Tile>{
 	private Animation anim;
 	double perlinVal;
 	boolean walkable;
+	LinkedList<Human> entities;
 	
-	public Tile(Type type, double perlinVal, int x, int y, Animation anim){
+	public Tile(Type type, double perlinVal, int x, int y){
 		this.type = type;
+		this.x = x;
+		this.y = y;
+		this.perlinVal = perlinVal;
+		this.entities = new LinkedList<Human>();
 		if (type == Type.WATER){
 			walkable = false;
 		} else {
 			walkable = true;
 		}
-		this.x = x;
-		this.y = y;
-		this.anim = anim;
-		this.perlinVal = perlinVal;
 	}
 	
 	public void setAnim(Animation anim){
@@ -77,4 +80,13 @@ public class Tile implements Serializable, Pathable<Tile>{
 		}
 		return 10;
 	}
+	
+	public void addEntity(Human h){
+		entities.add(h);
+	}
+	
+	public void removeEntity(Human h){
+		entities.remove(h);
+	}
+	
 }

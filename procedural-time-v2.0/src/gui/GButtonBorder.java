@@ -19,7 +19,6 @@ public class GButtonBorder implements IBorder{
 			glColor3f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		}
 		glPushMatrix();
-			glTranslatef(comp.getX(), comp.getY(), 0);
 			if (comp.isVisible()){
 				GUtil.drawRect(comp.getRect());
 			}

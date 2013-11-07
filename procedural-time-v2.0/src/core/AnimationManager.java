@@ -184,5 +184,9 @@ public class AnimationManager {
 			timer = (timer + deltaTime) % (pause * animArrayX.length);
 			dispPointer = (int) (timer / pause);
 		}
+		
+		public String toString(){
+			return name;
+		}
 	}
 }

@@ -7,19 +7,23 @@ import core.TileMap;
 public class EntityFrame {
 	private float[] xCorners;
 	private float[] yCorners;
+	private float xCenter;
+	private float yCenter;
 	
-	public EntityFrame(){
-		float size = Game.TILE_SIZE*Game.SCALE;
+	public EntityFrame(int padding, int offset){
+		float size = Game.TILE_SIZE*Game.SCALE - padding;
+		xCenter = size/2;
+		yCenter = (size/2) + offset;
 		xCorners = new float[4];
 		yCorners = new float[4];
-		xCorners[0] = 0;
+		xCorners[0] = padding;
 		xCorners[1] = size;
 		xCorners[2] = size;
-		xCorners[3] = 0;
-		yCorners[0] = 0;
-		yCorners[1] = 0;
-		yCorners[2] = size;
-		yCorners[3] = size;
+		xCorners[3] = padding;
+		yCorners[0] = padding + offset;
+		yCorners[1] = padding + offset;
+		yCorners[2] = size + offset;
+		yCorners[3] = size + offset;
 	}
 	
 	private float getX(int index, float x){
@@ -41,10 +45,16 @@ public class EntityFrame {
 	public boolean isColliding(TileMap tm, float x, float y){
 		for (int i = 0; i < 4; i++){
 			Tile tile = tm.getTile(getX(i, x), getY(i, y));
-			if (!tile.isWalkable()){
+			if (tile != null && !tile.isWalkable()){
 				return true;
 			}
 		}
 		return false;
 	}
+	public float getCenterX(float x){
+		return xCenter + x;
+	};
+	public float getCenterY(float y){
+		return yCenter + y;
+	};
 }

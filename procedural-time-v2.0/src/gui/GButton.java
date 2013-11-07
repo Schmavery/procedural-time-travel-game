@@ -56,14 +56,17 @@ public class GButton extends GComponent{
 		this.alignment = alignment;
 	}
 	
+	@Override
 	public GClickEvent clickUp(int x, int y){
-		super.clickUp(x, y);
+		GClickEvent ce = null;
 		if (getRect().contains(x, y) && isClicked()){
-			return new GClickEvent(action, this, type);
+			ce = new GClickEvent(action, this, type);
 		}
-		return null;
+		super.clickUp(x, y);
+		return ce;
 	}
 	
+	@Override
 	public void draw(){
 		drawBorder();
 		int xPos, yPos;

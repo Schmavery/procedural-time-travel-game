@@ -1,6 +1,7 @@
 package entities;
 
 import core.AnimationManager.Animation;
+import core.Tile;
 import core.TileMap;
 
 public class Human {
@@ -9,6 +10,7 @@ public class Human {
 	private TileMap tileMap;
 	private float x, y;
 	private float dx, dy;
+	private float speed;
 	private boolean moving;
 	private Animation[] movingAnims;
 	private Animation[] standingAnims;
@@ -22,12 +24,31 @@ public class Human {
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
-		frame = new EntityFrame();
+		frame = new EntityFrame(15,10);
+		speed = 5f;
 	}
 	
 	public void update(long deltaTime){
 		moving = (dx != 0 || dy != 0);
-			
+		
+		Tile tile;
+		if (moving){
+			tile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+		} else {
+			tile = null;
+		}
+		
+		// Handle Speed //
+		if (dx != 0 || dy != 0){
+			float hyp = 0.85f*speed; 
+			dx = Math.max(Math.min(hyp, dx), -hyp);
+			dy = Math.max(Math.min(hyp, dy), -hyp);
+		} else {
+			dx = Math.max(Math.min(speed, dx), -speed);
+			dy = Math.max(Math.min(speed, dy), -speed);
+		}
+		
+		// Handle Facing //	
 		if (dy < 0){
 			facing = Facing.NORTH;
 		} else if (dy > 0){
@@ -49,6 +70,14 @@ public class Human {
 		}
 		dx = 0;
 		dy = 0;
+		
+		if (tile != null){
+			Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+			if (tile != null && newTile != null && !tile.isSameNode(newTile)){
+				tile.removeEntity(this);
+				newTile.addEntity(this);
+			}
+		}
 		
 		
 		if (moving){
@@ -89,4 +118,5 @@ public class Human {
 			return movingAnims[facing.ordinal()].getDispY();
 		return standingAnims[facing.ordinal()].getDispY();
 	}	
+	
 }
