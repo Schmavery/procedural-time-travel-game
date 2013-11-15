@@ -1,8 +1,16 @@
-main_n_anim 150 4 5 6 7 
-main_s_anim 150 0 1 2 3 
-main_w_anim 150 20 21 22 23
-main_e_anim 150 16 17 18 19
-main_n 0 4
-main_s 0 0
-main_w 0 21
-main_e 0 16
+man_n_anim 150 4 5 6 7 
+man_s_anim 150 0 1 2 3 
+man_w_anim 150 20 21 22 23
+man_e_anim 150 16 17 18 19
+man_n 0 4
+man_s 0 0
+man_w 0 21
+man_e 0 16
+girl_n_anim 150 36 37 38 39 
+girl_s_anim 150 32 33 34 35 
+girl_w_anim 150 52 53 54 55
+girl_e_anim 150 48 49 50 51
+girl_n 0 36
+girl_s 0 32
+girl_w 0 53
+girl_e 0 48

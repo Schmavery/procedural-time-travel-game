@@ -48,8 +48,13 @@ public class Message {
 		while (!messages.isEmpty() && messages.getFirst().getTime() < curTime - 500){
 			oldMessages.add(messages.removeFirst());
 		}
+//		for (Message m : oldMessages){
+//			if (m.getTime() < curTime - (m.getText().length()*200)){
+//				oldMessages.remove(m);
+//			}
+//		}
 		while (!oldMessages.isEmpty() && oldMessages.getFirst().getTime() < curTime - 1000){
-			oldMessages.removeFirst();
+				oldMessages.removeFirst();
 		}
 	}
 }

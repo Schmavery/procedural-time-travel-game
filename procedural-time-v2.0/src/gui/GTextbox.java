@@ -3,20 +3,19 @@ package gui;
 import gui.GUtil.Alignment;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
 public class GTextbox extends GComponent{
 
 	private String text;
-	private int textLen;
-	private Color textColor;
+	private ReadableColor textColor;
 	private Alignment alignment = Alignment.LEFT;
 	
 	public GTextbox(String name, String text){
 		super(name);
 		this.text = text;
-		this.textLen = text.length();
-		this.textColor = new Color(0, 0, 0);
+		this.textColor = Color.BLACK;
 	}
 	
 	public GTextbox(String name, String text, int posX, int posY) {
@@ -24,19 +23,14 @@ public class GTextbox extends GComponent{
 		Rectangle rect = new Rectangle(posX, posY, 16*text.length(), 16);
 		setRect(rect);
 		this.text = text;
-		this.textLen = text.length();
-		this.textColor = new Color(0, 0, 0);
+		this.textColor = Color.BLACK;
 	}
 
 	public void setText(String text){
-		if (text.length() > textLen){
-			this.text = text.substring(0, textLen);
-			return;
-		}
 		this.text = text;
 	}
 	
-	public void setTextColor(Color c){
+	public void setTextColor(ReadableColor c){
 		this.textColor = c;
 	}
 	

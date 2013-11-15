@@ -10,7 +10,9 @@ import core.TileMap;
 
 public class Human {
 	public static enum Facing {NORTH, EAST, SOUTH, WEST};
-	
+	public static enum Gender {MALE, FEMALE, DWARF, OTHER};
+
+
 	private TileMap tileMap;
 	private float x, y;
 	private float dx, dy;
@@ -22,18 +24,25 @@ public class Human {
 	private EntityFrame frame;
 	private LinkedList<Message> messages;
 	
-	public Human(float x, float y, TileMap tileMap){
+
+	String name;
+	private Gender gender;
+	
+	public Human(float x, float y, Gender gender, TileMap tileMap){
 		this.x = x;
 		this.y = y;
+		this.gender = gender;
 		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
 		frame = new EntityFrame(15,10);
-		speed = 0.3f;
+		speed = 0.4f;
 		messages = new LinkedList<Message>();
 		Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
 		newTile.addEntity(this);
+		
+		name = NameGen.genName(this.gender);
 	}
 
 	public void update(long deltaTime){
@@ -97,12 +106,12 @@ public class Human {
 					(m.getX() > x - range && m.getX() < x + range) &&
 					(m.getY() > y - range && m.getY() < y + range)){
 				messages.add(m);
-				if (m.getText().equals("hi")){
+				if (m.getText().equals("hey")){
 					test = true;
 				}
 			}
 		}
-		if (test) {Message.say(x, y, "What's up?", this);}
+		if (test) {Message.say(x, y, "What's up? I'm "+name+"!", this);}
 		
 		
 		
@@ -134,6 +143,10 @@ public class Human {
 	
 	public float getX(){return x;}
 	public float getY(){return y;}
+	public String getName(){return name;}
+	
+	public void setX(float x){this.x = x;}
+	public void setY(float x){this.y = y;}
 	
 	public int getTexX(){ 
 		if (moving){

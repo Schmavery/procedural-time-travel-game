@@ -1,13 +1,16 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.util.Color;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+
+import org.lwjgl.util.ReadableColor;
 
 public class GButtonBorder implements IBorder{
 
-	private Color color;
+	private ReadableColor color;
 	
-	public GButtonBorder(Color c) {
+	public GButtonBorder(ReadableColor c) {
 		this.color = c;
 	}
 

@@ -5,12 +5,13 @@ import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 
 public class GBasicBorder implements IBorder{
 	
-	private Color color;
+	private ReadableColor color;
 	
-	public GBasicBorder(Color c){
+	public GBasicBorder(ReadableColor c){
 		this.color = c;
 	}
 

@@ -67,14 +67,16 @@ public class GPanel extends GComponent implements IContainer{
 
 	public void draw() {
 		// Draw myself
-		drawBorder();
-		glPushMatrix();
-			glTranslatef(getX(), getY(), 0);
-			// Draw my children
-			for (IElement child : children){
-				child.draw();
-			}
-		glPopMatrix();
+		if (isVisible()){
+			drawBorder();
+			glPushMatrix();
+				glTranslatef(getX(), getY(), 0);
+				// Draw my children
+				for (IElement child : children){
+					child.draw();
+				}
+			glPopMatrix();
+		}
 	}
 
 	public void update(long deltaTime){
