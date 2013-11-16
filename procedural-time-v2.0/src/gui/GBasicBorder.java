@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 
 public class GBasicBorder implements IBorder{

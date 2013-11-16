@@ -68,6 +68,9 @@ public class GButton extends GComponent{
 	
 	@Override
 	public void draw(){
+		if (!isVisible())
+			return;
+		
 		drawBorder();
 		int xPos, yPos;
 		switch (alignment){

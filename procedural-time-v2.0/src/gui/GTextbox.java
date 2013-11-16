@@ -55,6 +55,9 @@ public class GTextbox extends GComponent{
 	}
 
 	public void draw() {
+		if (!isVisible())
+			return;
+		
 		int xPos, yPos;
 		switch (alignment){
 			case LEFT:

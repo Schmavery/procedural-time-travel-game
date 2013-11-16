@@ -145,9 +145,6 @@ public class Human {
 	public float getY(){return y;}
 	public String getName(){return name;}
 	
-	public void setX(float x){this.x = x;}
-	public void setY(float x){this.y = y;}
-	
 	public int getTexX(){ 
 		if (moving){
 			return movingAnims[facing.ordinal()].getDispX();

@@ -5,7 +5,6 @@ import java.util.Random;
 import entities.Human.Gender;
 
 public class NameGen {
-	private static String[] preNames = {"Bob", "Joe", "Jor", "Big", "Wil", "A'y", "Hag", "Fly", "Lar", "Cat", "Jim", "Bel", "Bre", "Lee"};
 	private static String[] mPreNames = {"Bob", "Joe", "Jor", "Big", "Wil", "A'y", "Hag", "Fly", "Lar", "Jim", "Bel", "Bre", "Lee"};
 	private static String[] fPreNames = {"Jor", "Big", "A'y", "Fly", "Cat", "Bel", "Bre", "Lee"};
 	private static String[] mEndNames = {"bo", "ook", "bok", "ose", "arm", "rod", "son", "roy", "ray", "buk", "eep", "lob", "orn", "bob"};
