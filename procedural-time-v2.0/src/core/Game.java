@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
@@ -35,10 +34,12 @@ import gui.GUtil.Alignment;
 import gui.IContainer;
 
 public class Game extends Core {
+	public static enum Time {NIGHT, DAY, EVENING, MORNING};
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;
 	
-	public long totalTime = 0;
+	long totalTime = 0;
+	Time time = Time.DAY;
 	
 	Human player;
 	Human[] humans;
@@ -241,6 +242,15 @@ public class Game extends Core {
 	
 	public void gameUpdate(long deltaTime){
 		totalTime += deltaTime;
+		if (totalTime % 100000 < 10000){
+			time = Time.MORNING;
+		} else if (totalTime % 100000 < 50000){
+			time = Time.DAY;
+		} else if (totalTime % 100000 < 60000){
+			time = Time.EVENING;
+		} else {
+			time = Time.NIGHT;
+		}
 		
 		animManager.update(deltaTime);
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
@@ -287,8 +297,23 @@ public class Game extends Core {
 	
 	
 	public void draw(){
+		float shade;
+		switch (time){
+		case DAY:
+			shade = 1f;
+			break;
+		case NIGHT:
+			shade = .2f;
+			break;
+		case EVENING:
+		case MORNING:
+			shade = .7f;
+			break;
+		default:
+			shade = 1f;
+		}
 		
-		glColor3f(1f, 1f, 1f);
+		glColor3f(shade, shade, shade);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
 		// Draw TileMap
