@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
@@ -135,6 +137,24 @@ public class Game extends Core {
 		}
 	
 		initGUI();
+		markovTest();
+	}
+	
+	public void markovTest(){
+		String test = "Aache, Aanwas, Aaron, Abaet, Abarden, Abbadon, Abbe, Abbo, Abe, Aberbysion, Abeyaratne, Aboloft, "
+				+ "Abril, Abthony, Abu, Acamen, Acear, Acele, Acence, Achalla, Achard, Achilles, Acholate, Ackmard, Ada, "
+				+ "Adame, Adaon, Adeen, Adena, Adiannon, Adoma, Adon, Adorra, Adric, Advoc, Aegir, Aeglaeca, Aenas, Aerden, "
+				+ "Aerin, Aerinha, Aesa, Aette, Aevor, Afflon, Agamemon, Ageon, Aghon, Agmemon, Agnar, Agnvala, Agravaine, "
+				+ "Agrippa, Agsded, Ahalfar, Ahanna, Ahburn, Ahdun, Aidan, Ailion, Airen, Airis, Airk, Ajax, Akara, Akassa, "
+				+ "Akia, Akkad, Akki, Akvar, Rashid, Alabama, Aladan, Alan, Alandis, Alaric, Alarion, Alaris, Alayne, Alberon, "
+				+ "Albright, Aldaren, Aldden, Alderman, Aldmor, Aldor, Aldren, Aldwin, Alec, Aleemy, Alek, Alenthe, Alexander,"
+				+ " Alfred";
+		String[] testArr = test.split(", ");
+		Markov markov = new Markov(Arrays.asList(testArr), 2);
+		for (int i = 0; i < 10; i++){
+			System.out.println(markov.genWordInRange(4, 10));
+		}
+	
 	}
 	
 	public void initGUI(){

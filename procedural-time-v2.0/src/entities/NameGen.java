@@ -8,7 +8,7 @@ public class NameGen {
 	private static String[] mPreNames = {"Bob", "Joe", "Jor", "Big", "Wil", "A'y", "Hag", "Fly", "Lar", "Jim", "Bel", "Bre", "Lee"};
 	private static String[] fPreNames = {"Jor", "Big", "A'y", "Fly", "Cat", "Bel", "Bre", "Lee"};
 	private static String[] mEndNames = {"bo", "ook", "bok", "ose", "arm", "rod", "son", "roy", "ray", "buk", "eep", "lob", "orn", "bob"};
-	private static String[] fEndNames = {"'la", "la", "ly", "bell"};
+	private static String[] fEndNames = {"'la", "la", "ly", "bell", "lyn", "ane"};
 	private static String[] occupations = {"Friar", "Sailor", "Buccaneer",	"Dandy", "Raider", "Bandit", "Duelist", "Craftsman", "Burglar", "Dancer", "Scout"};
 	private static Random rand = new Random();
 	
