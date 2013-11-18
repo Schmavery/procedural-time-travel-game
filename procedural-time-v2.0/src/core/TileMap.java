@@ -3,6 +3,7 @@ package core;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -63,50 +64,50 @@ public class TileMap implements Serializable{
 	 * @param centerY Y-coordinate of the center of the region
 	 * @return Array of tiles corresponding to the surrounding tiles.
 	 */
-	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
-		try {	
-			int absRange = Math.abs(range);
-			int x1 = Math.min(size-1, Math.max(0, pos_x - absRange));
-			int x2 = Math.min(size-1, Math.max(0, pos_x + absRange));
-			int y1 = Math.min(size-1, Math.max(0, pos_y - absRange));
-			int y2 = Math.min(size-1, Math.max(0, pos_y + absRange));
-			Tile[] tiles = new Tile[(x2-x1+1)*(y2-y1+1)];
-			int counter = 0;
-			for(int x = x1; x <= x2; x++){
-				for (int y = y1; y <= y2; y++){
-					tiles[counter] = tileMap[x][y];
-					counter++;
-				}
-			}
-			return tiles;
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	public Tile[] getSurroundingTiles(int range, int pos_x, int pos_y){
+//		try {	
+//			int absRange = Math.abs(range);
+//			int x1 = Math.min(size-1, Math.max(0, pos_x - absRange));
+//			int x2 = Math.min(size-1, Math.max(0, pos_x + absRange));
+//			int y1 = Math.min(size-1, Math.max(0, pos_y - absRange));
+//			int y2 = Math.min(size-1, Math.max(0, pos_y + absRange));
+//			Tile[] tiles = new Tile[(x2-x1+1)*(y2-y1+1)];
+//			int counter = 0;
+//			for(int x = x1; x <= x2; x++){
+//				for (int y = y1; y <= y2; y++){
+//					tiles[counter] = tileMap[x][y];
+//					counter++;
+//				}
+//			}
+//			return tiles;
+//		} catch (Exception e){
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 	// Doesn't currently work
-	public List<Tile> getSurroundingTiles2(int range, int pos_x, int pos_y){
-		int absRange = Math.abs(range);
-		int x1 = Math.min(size, Math.max(0, pos_x - absRange));
-		int x2 = Math.min(size, Math.max(0, pos_x + absRange));
-		int y1 = Math.min(size, Math.max(0, pos_y - absRange));
-		int y2 = Math.min(size, Math.max(0, pos_y + absRange));
-		List<Tile> l1 = Arrays.asList(tileMap[4]).subList(y1, y2);
-		List<Tile> l2 = Arrays.asList(tileMap[5]).subList(y1, y2);
-		l1.addAll(l2);
-		List<Tile> resultList = new ArrayList<Tile>();
-		for(int x = x1; x <= x2; x++){
-			resultList.addAll(Arrays.asList(tileMap[x]).subList(y1, y2));
-		}
-		return null;
-	}
+//	public List<Tile> getSurroundingTiles2(int range, int pos_x, int pos_y){
+//		int absRange = Math.abs(range);
+//		int x1 = Math.min(size, Math.max(0, pos_x - absRange));
+//		int x2 = Math.min(size, Math.max(0, pos_x + absRange));
+//		int y1 = Math.min(size, Math.max(0, pos_y - absRange));
+//		int y2 = Math.min(size, Math.max(0, pos_y + absRange));
+//		List<Tile> l1 = Arrays.asList(tileMap[4]).subList(y1, y2);
+//		List<Tile> l2 = Arrays.asList(tileMap[5]).subList(y1, y2);
+//		l1.addAll(l2);
+//		List<Tile> resultList = new ArrayList<Tile>();
+//		for(int x = x1; x <= x2; x++){
+//			resultList.addAll(Arrays.asList(tileMap[x]).subList(y1, y2));
+//		}
+//		return null;
+//	}
 	
 	/**
 	 * Calculates "bitmask" to determine how the block is surrounded.
 	 * This deals with the edges of tile regions. 
 	 */
-	public int calcBitmask(int x, int y){
+	private int calcBitmask(int x, int y){
 		int total = 0;
 		Type centerType = tileMap[x][y].getType();
 
@@ -220,14 +221,69 @@ public class TileMap implements Serializable{
 		return tileMap[x][y].getType();
 	}
 	
-	public Tile getTile(float x, float y){
-		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
-		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
-		if ( xIndex >= 0 && xIndex < size && yIndex >= 0 && yIndex < size){
-			return tileMap[xIndex][yIndex];
+	public Tile getTile(int x, int y){
+		if ( x >= 0 && x < size && y >= 0 && y < size){
+			return tileMap[x][y];
 		}
 		System.out.println("Invalid tile index");
 		return null;
+	}
+	
+	public Tile getWorldTile(float x, float y){
+		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
+		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
+		return getTile(xIndex, yIndex);
+	}
+	
+	public LocaleIterator getLocale(int radius, int centerX, int centerY){
+		return new LocaleIterator(centerX, centerY, radius);
+	}
+	
+	public int getSize(){
+		return size;
+	}
+	
+	private class LocaleIterator implements Iterator<Tile>, Iterable<Tile>{
+
+		int currX, currY;
+		int x1, x2, y1, y2;
+		
+		public LocaleIterator(int centerX, int centerY, int radius){
+			int absRadius = Math.abs(radius);
+			x1 = Math.min(size, Math.max(0, centerX - absRadius));
+			x2 = Math.min(size, Math.max(0, centerX + absRadius));
+			y1 = Math.min(size, Math.max(0, centerY - absRadius));
+			y2 = Math.min(size, Math.max(0, centerY + absRadius));
+			
+			currX = x1;
+			currY = y1;
+		}
+		
+		@Override
+		public boolean hasNext()
+		{
+			return (currY < y2 || currX < x2);
+		}
+
+		@Override
+		public Tile next()
+		{
+			Tile curr = tileMap[currX][currY];
+			currX++;
+			if (currX > x2){
+				currX = x1;
+				currY++;
+			}
+			return curr;
+		}
+
+		/**
+		 * You can't remove.
+		 */
+		@Override
+		public void remove(){return;}
+		@Override
+		public Iterator<Tile> iterator(){return this;}
 	}
 	
 }

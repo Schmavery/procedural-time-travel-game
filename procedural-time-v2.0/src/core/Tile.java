@@ -1,7 +1,7 @@
 package core;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,13 +59,11 @@ public class Tile implements Serializable, Pathable<Tile>{
 	}
 
 	public List<Tile> getReachable() {
-		List<Tile> reachable = Arrays.asList(tileMap.getSurroundingTiles(1, x, y));
-		reachable.remove(this);
-		for (int i = reachable.size(); i >= 0; i--){
-			if (!reachable.get(i).walkable){
-				reachable.remove(i);
-			}
-		}
+		List<Tile> reachable = new ArrayList<>(4);
+		if (x - 1 > 0){reachable.add(tileMap.getTile(x - 1, y    ));}
+		if (y - 1 > 0){reachable.add(tileMap.getTile(x    , y - 1));}
+		if (x + 1 < tileMap.getSize()){reachable.add(tileMap.getTile(x + 1, y    ));}
+		if (y + 1 < tileMap.getSize()){reachable.add(tileMap.getTile(x    , y + 1));}
 		return reachable;
 	}
 

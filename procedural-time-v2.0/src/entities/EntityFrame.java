@@ -44,7 +44,7 @@ public class EntityFrame {
 	
 	public boolean isColliding(TileMap tm, float x, float y){
 		for (int i = 0; i < 4; i++){
-			Tile tile = tm.getTile(getX(i, x), getY(i, y));
+			Tile tile = tm.getWorldTile(getX(i, x), getY(i, y));
 			if (tile != null && !tile.isWalkable()){
 				return true;
 			}

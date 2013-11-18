@@ -89,7 +89,7 @@ public class Game extends Core {
 		for (int i = 1; i < humans.length; i++){
 			float randX = rand.nextFloat()*SCALE*TILE_SIZE*999;
 			float randY = rand.nextFloat()*SCALE*TILE_SIZE*999;
-			if (!tileMap.getTile(randX, randY).walkable){
+			if (!tileMap.getWorldTile(randX, randY).walkable){
 				i--;
 				continue;
 			}
@@ -120,7 +120,7 @@ public class Game extends Core {
 		}
 		
 		Human tmp = humans[rand.nextInt(humans.length)];
-		Tile tmpTile = tileMap.getTile(tmp.getX(), tmp.getY());
+		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
@@ -322,11 +322,10 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
 		
-		Tile[] closeTiles = tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
-				playerTile_x, playerTile_y);
+//		Tile[] closeTiles = tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
+//				playerTile_x, playerTile_y);
 		
-		for (Tile tile : closeTiles){
-
+		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
 			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
@@ -335,7 +334,7 @@ public class Game extends Core {
 		
 		glBindTexture(GL_TEXTURE_2D, peopleTex.getTextureID());
 		
-		for (Tile tile : closeTiles){
+		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
 			for (Human h : tile.entities){
 				GUtil.drawSprite (h.getX() - player.getX() + SCREEN_WIDTH/2f,
 						h.getY() - player.getY() + SCREEN_HEIGHT/2f,

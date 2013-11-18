@@ -39,7 +39,7 @@ public class Human {
 		frame = new EntityFrame(15,10);
 		speed = 0.4f;
 		messages = new LinkedList<Message>();
-		Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+		Tile newTile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
 		newTile.addEntity(this);
 		
 		name = NameGen.genName(this.gender);
@@ -49,7 +49,7 @@ public class Human {
 		moving = (dx != 0 || dy != 0);
 		
 		if (moving){
-			Tile tile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+			Tile tile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
 			dx = deltaTime*dx;
 			dy = deltaTime*dy;
 			float speed = deltaTime*this.speed;
@@ -87,7 +87,7 @@ public class Human {
 			dy = 0;
 			
 			if (tile != null){
-				Tile newTile = tileMap.getTile(frame.getCenterX(x), frame.getCenterY(y));
+				Tile newTile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
 				if (tile != null && newTile != null && !tile.isSameNode(newTile)){
 					tile.removeEntity(this);
 					newTile.addEntity(this);
