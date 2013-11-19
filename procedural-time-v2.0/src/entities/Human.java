@@ -28,7 +28,7 @@ public class Human {
 	String name;
 	private Gender gender;
 	
-	public Human(float x, float y, Gender gender, TileMap tileMap){
+	public Human(float x, float y, Gender gender, String name, TileMap tileMap){
 		this.x = x;
 		this.y = y;
 		this.gender = gender;
@@ -42,7 +42,8 @@ public class Human {
 		Tile newTile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
 		newTile.addEntity(this);
 		
-		name = NameGen.genName(this.gender);
+//		this.name = NameGen.genName(this.gender);
+		this.name = name;
 	}
 
 	public void update(long deltaTime){

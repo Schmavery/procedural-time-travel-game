@@ -1,5 +1,8 @@
 package core;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,6 +17,26 @@ public class Markov
 	private List<String> starts;
 	
 	public Markov(List<String> corpus, int length){
+		this.length = length;
+		starts = new ArrayList<>();
+		dict = new HashMap<>();
+		generateDict(corpus);
+	}
+	
+	public Markov(String path, int length){
+		ArrayList<String> corpus = new ArrayList<>();
+		try {
+			FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr);
+			String s = null;
+			while((s = br.readLine()) != null) {
+				corpus.add(s.replaceAll("\n", ""));
+			}
+			fr.close();
+			System.out.println("Loaded names from '" + path + "'.");
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 		this.length = length;
 		starts = new ArrayList<>();
 		dict = new HashMap<>();

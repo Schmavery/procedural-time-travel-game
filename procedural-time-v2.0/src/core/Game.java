@@ -44,6 +44,8 @@ public class Game extends Core {
 	Human player;
 	Human[] humans;
 	String targetName;
+	Markov maleNames;
+	Markov femaleNames;
 	
 	boolean pauseDown = false;
 	GPanel screen;
@@ -67,6 +69,7 @@ public class Game extends Core {
 	
 	public void init() {
 		super.init();
+		markovInit();
 		animManager = new AnimationManager();
 		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
 		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
@@ -75,7 +78,7 @@ public class Game extends Core {
 		tileMap = new TileMap(1000, animManager);
 		Random rand = new Random();
 		humans = new Human[10000];
-		player = new Human(300f, 300f, Gender.MALE, tileMap);
+		player = new Human(300f, 300f, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
 					animManager.getAnim("man_e_anim"),
 					animManager.getAnim("man_s_anim"),
@@ -95,7 +98,7 @@ public class Game extends Core {
 			}
 			
 			if (rand.nextBoolean()){
-				humans[i] = new Human(randX, randY, Gender.MALE, tileMap);
+				humans[i] = new Human(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 				
 				humans[i].setMovingAnims(animManager.getAnim("man_n_anim"), 
 						animManager.getAnim("man_e_anim"),
@@ -106,7 +109,7 @@ public class Game extends Core {
 						animManager.getAnim("man_s"),
 						animManager.getAnim("man_w"));
 			} else {
-				humans[i] = new Human(randX, randY, Gender.FEMALE, tileMap);
+				humans[i] = new Human(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10), tileMap);
 				
 				humans[i].setMovingAnims(animManager.getAnim("girl_n_anim"), 
 						animManager.getAnim("girl_e_anim"),
@@ -138,23 +141,14 @@ public class Game extends Core {
 		}
 	
 		initGUI();
-		markovTest();
 	}
 	
-	public void markovTest(){
-		String test = "Aache, Aanwas, Aaron, Abaet, Abarden, Abbadon, Abbe, Abbo, Abe, Aberbysion, Abeyaratne, Aboloft, "
-				+ "Abril, Abthony, Abu, Acamen, Acear, Acele, Acence, Achalla, Achard, Achilles, Acholate, Ackmard, Ada, "
-				+ "Adame, Adaon, Adeen, Adena, Adiannon, Adoma, Adon, Adorra, Adric, Advoc, Aegir, Aeglaeca, Aenas, Aerden, "
-				+ "Aerin, Aerinha, Aesa, Aette, Aevor, Afflon, Agamemon, Ageon, Aghon, Agmemon, Agnar, Agnvala, Agravaine, "
-				+ "Agrippa, Agsded, Ahalfar, Ahanna, Ahburn, Ahdun, Aidan, Ailion, Airen, Airis, Airk, Ajax, Akara, Akassa, "
-				+ "Akia, Akkad, Akki, Akvar, Rashid, Alabama, Aladan, Alan, Alandis, Alaric, Alarion, Alaris, Alayne, Alberon, "
-				+ "Albright, Aldaren, Aldden, Alderman, Aldmor, Aldor, Aldren, Aldwin, Alec, Aleemy, Alek, Alenthe, Alexander,"
-				+ " Alfred";
-		String[] testArr = test.split(", ");
-		Markov markov = new Markov(Arrays.asList(testArr), 2);
-		for (int i = 0; i < 10; i++){
-			System.out.println(markov.genWordInRange(4, 10));
-		}
+	public void markovInit(){
+		maleNames = new Markov("res/mnames.txt", 2);
+		femaleNames = new Markov("res/fnames.txt", 2);
+//		for (int i = 0; i < 10; i++){
+//			System.out.println(maleNames.genWordInRange(4, 10));
+//		}
 	
 	}
 	

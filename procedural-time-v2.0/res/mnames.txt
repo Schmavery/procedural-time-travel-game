@@ -100,7 +100,6 @@ Codern
 Colthan
 Connell
 Cordale
-Cos
 Cosdeer
 Cuparun
 Cusmirk
@@ -110,7 +109,6 @@ Cythnar
 Cyton	 	 
 Daburn
 Daermod
-Dak
 Dakamon
 Dakkone
 Dalburn
@@ -159,7 +157,6 @@ Efar
 Egmardern
 Eiridan
 Ekgamut
-Eli
 Elik
 Elson
 Elthin
@@ -196,9 +193,7 @@ Folmard
 Fraderk
 Fronar
 Fydar
-Fyn	 
 Gafolern
-Gai
 Galain
 Galiron
 Gametris
@@ -208,11 +203,9 @@ Gemedern
 Gemedes
 Gerirr
 Geth
-Gib
 Gibolock
 Gibolt
 Gith
-Gom
 Gosford
 Gothar
 Gothikar
@@ -263,13 +256,9 @@ Jaython
 Jesco
 Jespar
 Jethil
-Jex
-Jib
 Jibar
-Jin
 Juktar
 Julthor
-Jun
 Justal	 
 Kafar
 Kaldar
@@ -278,7 +267,6 @@ Keran
 Kesad
 Kesmon
 Kethren
-Kib
 Kibidon
 Kiden
 Kilbas
@@ -286,7 +274,6 @@ Kilburn
 Kildarien
 Kimdar
 Kinorn
-Kip
 Kirder
 Kodof
 Kolmorn
