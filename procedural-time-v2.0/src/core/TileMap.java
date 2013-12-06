@@ -1,10 +1,7 @@
 package core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 import core.AnimationManager.Animation;
@@ -217,28 +214,47 @@ public class TileMap implements Serializable{
 		}
 	}
 	
-	public Type getTexID(int x, int y){
-		return tileMap[x][y].getType();
+	public Type getTexID(int tileX, int tileY){
+		return tileMap[tileX][tileY].getType();
 	}
 	
-	public Tile getTile(int x, int y){
-		if ( x >= 0 && x < size && y >= 0 && y < size){
-			return tileMap[x][y];
+	
+	public Tile getTile(int tileX, int tileY){
+		if ( tileX >= 0 && tileX < size && tileY >= 0 && tileY < size){
+			return tileMap[tileX][tileY];
 		}
 		System.out.println("Invalid tile index");
 		return null;
 	}
 	
+	/**
+	 * Returns the tile corresponding to a world position.
+	 * @param x The number of pixels right of the origin.
+	 * @param y The number of pixels down from the origin.
+	 * @return The Tile corresponding to this position.
+	 */
 	public Tile getWorldTile(float x, float y){
 		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
 		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
 		return getTile(xIndex, yIndex);
 	}
 	
+	/**
+	 * Returns an iterator to tiles contained within the square centered on (x,y), with sidelength (2*range+1)
+	 * Handles negatives and points close to the edge of the map
+	 * @param radius Distance from center
+	 * @param centerX X-coordinate of the center of the region
+	 * @param centerY Y-coordinate of the center of the region
+	 * @return Iterator to tiles corresponding to the surrounding tiles.
+	 */
 	public LocaleIterator getLocale(int radius, int centerX, int centerY){
 		return new LocaleIterator(centerX, centerY, radius);
 	}
 	
+	/**
+	 * Get the size (in tiles) of the map.
+	 * @return The length (in tiles) of a map side.
+	 */
 	public int getSize(){
 		return size;
 	}
@@ -250,10 +266,10 @@ public class TileMap implements Serializable{
 		
 		public LocaleIterator(int centerX, int centerY, int radius){
 			int absRadius = Math.abs(radius);
-			x1 = Math.min(size, Math.max(0, centerX - absRadius));
-			x2 = Math.min(size, Math.max(0, centerX + absRadius));
-			y1 = Math.min(size, Math.max(0, centerY - absRadius));
-			y2 = Math.min(size, Math.max(0, centerY + absRadius));
+			x1 = Math.min(size - 1, Math.max(0, centerX - absRadius));
+			x2 = Math.min(size - 1, Math.max(0, centerX + absRadius));
+			y1 = Math.min(size - 1, Math.max(0, centerY - absRadius));
+			y2 = Math.min(size - 1, Math.max(0, centerY + absRadius));
 			
 			currX = x1;
 			currY = y1;

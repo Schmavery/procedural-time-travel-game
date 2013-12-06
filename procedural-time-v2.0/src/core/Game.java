@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
@@ -34,12 +33,12 @@ import gui.GUtil.Alignment;
 import gui.IContainer;
 
 public class Game extends Core {
-	public static enum Time {NIGHT, DAY, EVENING, MORNING};
+//	public static enum Time {NIGHT, DAY, EVENING, MORNING};
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;
 	
 	long totalTime = 0;
-	Time time = Time.DAY;
+//	Time time = Time.DAY;
 	
 	Human player;
 	Human[] humans;
@@ -127,6 +126,7 @@ public class Game extends Core {
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
+		player.walkTo(tmpTile.getX(), tmpTile.getY());
 		
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
@@ -144,8 +144,11 @@ public class Game extends Core {
 	}
 	
 	public void markovInit(){
-		maleNames = new Markov("res/mnames.txt", 2);
-		femaleNames = new Markov("res/fnames.txt", 2);
+//		maleNames = new Markov("res/mnames.txt", 2);
+//		femaleNames = new Markov("res/fnames.txt", 2);
+		maleNames = new Markov("res/german_male.txt", 2);
+		femaleNames = new Markov("res/german_female.txt", 2);
+
 //		for (int i = 0; i < 10; i++){
 //			System.out.println(maleNames.genWordInRange(4, 10));
 //		}
@@ -219,6 +222,11 @@ public class Game extends Core {
 					if (tmp.getAction() != null && tmp.getAction().regionMatches(0, "say", 0, 3)){
 						Message.say(player.getX(), player.getY(), tmp.getAction().substring(4), player);
 					}
+				} else {
+					int tileX = (int) (((Mouse.getEventX() + player.getX() - (SCREEN_WIDTH/2))/(SCALE*TILE_SIZE)));
+					int tileY = (int) (((SCREEN_HEIGHT - Mouse.getEventY() + player.getY() - (SCREEN_HEIGHT/2))/(SCALE*TILE_SIZE)));
+					System.out.println(tileX + ", " + tileY);
+					player.walkTo(tileX, tileY);  
 				}
 			} else if (Mouse.getEventButtonState()){
 				GClickEvent tmp = screen.clickDown(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
@@ -235,20 +243,20 @@ public class Game extends Core {
 	}
 	
 	public void gameUpdate(long deltaTime){
-		totalTime += deltaTime;
-		if (totalTime % 100000 < 10000){
-			time = Time.MORNING;
-		} else if (totalTime % 100000 < 50000){
-			time = Time.DAY;
-		} else if (totalTime % 100000 < 60000){
-			time = Time.EVENING;
-		} else {
-			time = Time.NIGHT;
-		}
-		
+//		totalTime += deltaTime;
+//		if (totalTime % 100000 < 10000){
+//			time = Time.MORNING;
+//		} else if (totalTime % 100000 < 50000){
+//			time = Time.DAY;
+//		} else if (totalTime % 100000 < 60000){
+//			time = Time.EVENING;
+//		} else {
+//			time = Time.NIGHT;
+//		}
+
 		animManager.update(deltaTime);
-		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getX()/(SCALE*TILE_SIZE))));
-		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getY()/(SCALE*TILE_SIZE))));
+		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
+		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
@@ -291,21 +299,21 @@ public class Game extends Core {
 	
 	
 	public void draw(){
-		float shade;
-		switch (time){
-		case DAY:
-			shade = 1f;
-			break;
-		case NIGHT:
-			shade = .2f;
-			break;
-		case EVENING:
-		case MORNING:
-			shade = .7f;
-			break;
-		default:
-			shade = 1f;
-		}
+		float shade = 1;
+//		switch (time){
+//		case DAY:
+//			shade = 1f;
+//			break;
+//		case NIGHT:
+//			shade = .2f;
+//			break;
+//		case EVENING:
+//		case MORNING:
+//			shade = .7f;
+//			break;
+//		default:
+//			shade = 1f;
+//		}
 		
 		glColor3f(shade, shade, shade);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -319,7 +327,7 @@ public class Game extends Core {
 //		Tile[] closeTiles = tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
 //				playerTile_x, playerTile_y);
 		
-		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
+		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
 			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);

@@ -51,6 +51,19 @@ public class EntityFrame {
 		}
 		return false;
 	}
+	
+	public boolean isContained(Tile tile, float x, float y){
+		int tileSide = (int) (Game.TILE_SIZE*Game.SCALE);
+		for (int i = 0; i < 4; i++){
+			if (getX(i, x) <= tile.getLeft()
+					|| getX(i, x) >= (tile.getLeft() + tileSide)
+					|| getY(i, y) <= tile.getTop()
+					|| getY(i, y) >= (tile.getTop() + tileSide))
+				return false;
+		}
+		return true;
+	}
+	
 	public float getCenterX(float x){
 		return xCenter + x;
 	};

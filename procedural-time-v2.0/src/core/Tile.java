@@ -46,6 +46,9 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public int getY(){return y;}
 	public int getTexX(){return anim.getDispX();}
 	public int getTexY(){return anim.getDispY();}
+	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}
+	public float getLeft(){return Game.SCALE*Game.TILE_SIZE*x;}
+	
 
 	///////////////////////////////////////
 	////// Inherited Pathable Methods /////
@@ -57,13 +60,24 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public int heuristic(Tile p) {
 		return Math.abs(this.x - p.x)  + Math.abs(this.y - p.y); 
 	}
+	
+	private void addTile(List<Tile> list, int x, int y){
+		if (x >= 0
+				&& x < tileMap.getSize()
+				&& y >= 0
+				&& y < tileMap.getSize()){
+			if (tileMap.getTile(x, y).walkable){
+				list.add(tileMap.getTile(x, y));
+			}
+		}
+	}
 
 	public List<Tile> getReachable() {
 		List<Tile> reachable = new ArrayList<>(4);
-		if (x - 1 > 0){reachable.add(tileMap.getTile(x - 1, y    ));}
-		if (y - 1 > 0){reachable.add(tileMap.getTile(x    , y - 1));}
-		if (x + 1 < tileMap.getSize()){reachable.add(tileMap.getTile(x + 1, y    ));}
-		if (y + 1 < tileMap.getSize()){reachable.add(tileMap.getTile(x    , y + 1));}
+		addTile(reachable, x - 1, y);
+		addTile(reachable, x    , y - 1);
+		addTile(reachable, x + 1, y);
+		addTile(reachable, x    , y + 1);
 		return reachable;
 	}
 
@@ -85,6 +99,11 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	public void removeEntity(Human h){
 		entities.remove(h);
+	}
+	
+	@Override
+	public String toString(){
+		return "Tile: " + x + ", " + y;
 	}
 	
 }

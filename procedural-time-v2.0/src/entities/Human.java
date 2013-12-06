@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.Message;
+import core.PathFinder;
 import core.Tile;
 import core.TileMap;
 
@@ -18,11 +19,13 @@ public class Human {
 	private float dx, dy;
 	private float speed;
 	private boolean moving;
+	private boolean collided;
 	private Animation[] movingAnims;
 	private Animation[] standingAnims;
 	private Facing facing;
 	private EntityFrame frame;
 	private LinkedList<Message> messages;
+	private PathFinder<Tile> tilePather;
 	
 
 	String name;
@@ -37,16 +40,25 @@ public class Human {
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
 		frame = new EntityFrame(15,10);
+		tilePather = new PathFinder<Tile>();
 		speed = 0.4f;
 		messages = new LinkedList<Message>();
-		Tile newTile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
-		newTile.addEntity(this);
+		tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y)).addEntity(this);
 		
 //		this.name = NameGen.genName(this.gender);
 		this.name = name;
 	}
 
 	public void update(long deltaTime){
+		if (!tilePather.isEmpty()){
+			dx = (tilePather.currNode().getLeft() + (Game.SCALE*Game.TILE_SIZE/2) - getCenterX())/deltaTime;
+			dy = (tilePather.currNode().getTop() + (Game.SCALE*Game.TILE_SIZE/2) - getCenterY())/deltaTime;
+			if (frame.isContained(tilePather.currNode(), x, y)){
+				tilePather.nextNode();
+			}
+
+		}
+		
 		moving = (dx != 0 || dy != 0);
 		
 		if (moving){
@@ -55,7 +67,7 @@ public class Human {
 			dy = deltaTime*dy;
 			float speed = deltaTime*this.speed;
 			// Handle Speed //
-			if (dx != 0 || dy != 0){
+			if (dx != 0 && dy != 0){
 				float hyp = 0.85f*speed; 
 				dx = Math.max(Math.min(hyp, dx), -hyp);
 				dy = Math.max(Math.min(hyp, dy), -hyp);
@@ -76,12 +88,14 @@ public class Human {
 			}
 			
 			x += dx;
+			collided = false;
 			if (dx != 0 && frame.isColliding(tileMap, x, y)){
-				System.out.println();
+				collided = true;
 				x -= dx;
 			}
 			y += dy;
 			if (dy != 0 && frame.isColliding(tileMap, x, y)){
+				collided = true;
 				y -= dy;
 			}
 			dx = 0;
@@ -122,11 +136,35 @@ public class Human {
 		this.dx += dx;
 		this.dy += dy;
 	}
+
 	
 	public void move(Facing f){
 		facing = f;
 		moving = true;
 	}
+	
+	public void walkTo(int tileX, int tileY){
+		if (tileMap.getTile(tileX, tileY) == null || !tileMap.getTile(tileX, tileY).isWalkable()){
+			System.out.println(tileX + ", " + tileY);
+			return;
+		} else {
+			tilePather.clear();
+			tilePather.newPath(	tileMap.getWorldTile(getCenterX(), getCenterY()),
+					tileMap.getTile(tileX, tileY));
+			tilePather.generatePath(0);
+			for (Tile t : tilePather.getPath()){
+				System.out.println(t.getX() + ", " + t.getY());
+			}
+		}
+	}
+	
+	public float getCenterX(){
+		return frame.getCenterX(x);
+	}
+	public float getCenterY(){
+		return frame.getCenterY(y);
+	}
+	
 	
 	public void setMovingAnims( Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w ){
 		this.movingAnims[0] = anim_n.cloneAnim();
