@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.Message;
+import core.PathException;
 import core.PathFinder;
 import core.Tile;
 import core.TileMap;
@@ -41,7 +42,7 @@ public class Human {
 		standingAnims = new Animation[4];
 		frame = new EntityFrame(15,10);
 		tilePather = new PathFinder<Tile>();
-		speed = 0.4f;
+		speed = 0.2f;
 		messages = new LinkedList<Message>();
 		tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y)).addEntity(this);
 		
@@ -145,15 +146,20 @@ public class Human {
 	
 	public void walkTo(int tileX, int tileY){
 		if (tileMap.getTile(tileX, tileY) == null || !tileMap.getTile(tileX, tileY).isWalkable()){
-			System.out.println(tileX + ", " + tileY);
+//			System.out.println(tileX + ", " + tileY);
 			return;
 		} else {
 			tilePather.clear();
 			tilePather.newPath(	tileMap.getWorldTile(getCenterX(), getCenterY()),
 					tileMap.getTile(tileX, tileY));
-			tilePather.generatePath(0);
-			for (Tile t : tilePather.getPath()){
-				System.out.println(t.getX() + ", " + t.getY());
+			try {
+				tilePather.generatePath(0);
+//				for (Tile t : tilePather.getPath()){
+//					System.out.println(t.getX() + ", " + t.getY());
+//				}
+			} catch (PathException e){
+				System.out.println(e.getMessage());
+				tilePather.clear();
 			}
 		}
 	}
@@ -182,6 +188,9 @@ public class Human {
 	
 	public float getX(){return x;}
 	public float getY(){return y;}
+	public int getTileX(){return (int) (x/(Game.SCALE*Game.TILE_SIZE));}
+	public int getTileY(){return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
+	public boolean isMoving(){return moving;}
 	public String getName(){return name;}
 	
 	public int getTexX(){ 

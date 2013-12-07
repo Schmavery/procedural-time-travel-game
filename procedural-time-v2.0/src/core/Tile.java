@@ -38,6 +38,9 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	public void setAnim(Animation anim){
 		this.anim = anim;
+		if (anim.toString().indexOf("rock") > -1){
+			walkable = false;
+		}
 	}
 	
 	public boolean isWalkable() {return walkable;}
@@ -58,7 +61,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	 * Implemented with a Manhattan distance measure.
 	 */
 	public int heuristic(Tile p) {
-		return Math.abs(this.x - p.x)  + Math.abs(this.y - p.y); 
+		return 5*(Math.abs(this.x - p.x)  + Math.abs(this.y - p.y)); 
 	}
 	
 	private void addTile(List<Tile> list, int x, int y){

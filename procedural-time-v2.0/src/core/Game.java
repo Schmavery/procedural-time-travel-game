@@ -36,6 +36,7 @@ public class Game extends Core {
 //	public static enum Time {NIGHT, DAY, EVENING, MORNING};
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;
+	public static Random rand = new Random();
 	
 	long totalTime = 0;
 //	Time time = Time.DAY;
@@ -77,7 +78,7 @@ public class Game extends Core {
 		tileMap = new TileMap(1000, animManager);
 		Random rand = new Random();
 		humans = new Human[10000];
-		player = new Human(300f, 300f, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+		player = new Human(500*SCALE*TILE_SIZE, 500*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
 					animManager.getAnim("man_e_anim"),
 					animManager.getAnim("man_s_anim"),
@@ -126,7 +127,7 @@ public class Game extends Core {
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
-		player.walkTo(tmpTile.getX(), tmpTile.getY());
+//		player.walkTo(tmpTile.getX(), tmpTile.getY());
 		
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
@@ -278,8 +279,16 @@ public class Game extends Core {
 			pauseDown = false;
 			pauseGame();
 		}
-//		player.update(deltaTime);
-		for (int i = 0; i < humans.length; i++){
+		player.update(deltaTime);
+		for (int i = 1; i < humans.length; i++){
+			if (!humans[i].isMoving()){
+				if (rand.nextInt(100) == 1){
+					int destX = humans[i].getTileX() + (rand.nextInt(10) - 5);
+					int destY = humans[i].getTileY() + (rand.nextInt(10) - 5);
+//					System.out.println("dest: "+humans[i].getTileX()+"->"+destX+", "+humans[i].getTileY()+"->"+destY);
+					humans[i].walkTo(destX, destY);
+				}
+			}
 			humans[i].update(deltaTime);
 		}
 		screen.update(deltaTime);

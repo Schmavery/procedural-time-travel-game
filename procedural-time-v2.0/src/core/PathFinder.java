@@ -85,10 +85,14 @@ public class PathFinder<T extends Pathable<T>> {
 		open.add(startNode);
 	}
 	
-	public boolean generatePath(int steps){
+	public boolean generatePath(int steps) throws PathException{
 		if (steps <= 0){
-			while (!calcPath()){ /* Run algorithm to completion*/ }
+			long startTime = System.currentTimeMillis();
+			while (!calcPath()){ /* Run algorithm to completion*/ 
+				if (System.currentTimeMillis() - startTime > 10) throw new PathException("Path timeout");
+			}
 			path = makePathList();
+//			System.out.println(System.currentTimeMillis() - time);
 			return true;
 		} else {
 			// Give the algorithm another few steps to run.
@@ -109,7 +113,7 @@ public class PathFinder<T extends Pathable<T>> {
 	 * @return The path to the target, or null if one doesn't exist.
 	 */
 	private List<T> makePathList(){
-		System.out.println("Making path list");
+//		System.out.println("Making path list");
 		if (finalNode == null){
 			return null;
 		}
@@ -154,13 +158,17 @@ public class PathFinder<T extends Pathable<T>> {
 	 * This could have many different implementations.  To keep it simple,
 	 * this first try will use a sorted ArrayList.
 	 * @return true if the calculation is finished, false otherwise
+	 * @throws PathException 
 	 * @throws Exception 
 	 */
-	private boolean calcPath(){
+	private boolean calcPath() throws PathException{
 		// Find node with lowest total cost.
+		if (open.isEmpty()){
+			throw new PathException("Empty open list.");
+		}
 		PathNode node = open.remove(0);
 		if (node.node.equals(target)){
-			System.out.println("Found final!");
+//			System.out.println("Found final!");
 			finalNode = node;
 			return true;
 		}
