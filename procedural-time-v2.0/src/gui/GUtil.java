@@ -13,8 +13,10 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
-public class GUtil {
+public final class GUtil {
 
+	private GUtil(){}
+	
 	public static enum Alignment {LEFT, CENTER, RIGHT, TOP, BOTTOM};
 	
 	public static void drawSprite(float x, float y, int texX, int texY, float spriteW, float spriteH, float ssSize){
