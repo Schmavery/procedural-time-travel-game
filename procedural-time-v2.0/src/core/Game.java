@@ -145,10 +145,10 @@ public class Game extends Core {
 	}
 	
 	public void markovInit(){
-//		maleNames = new Markov("res/mnames.txt", 2);
-//		femaleNames = new Markov("res/fnames.txt", 2);
-		maleNames = new Markov("res/german_male.txt", 2);
-		femaleNames = new Markov("res/german_female.txt", 2);
+		maleNames = new Markov("res/mnames.txt", 2);
+		femaleNames = new Markov("res/fnames.txt", 2);
+//		maleNames = new Markov("res/german_male.txt", 2);
+//		femaleNames = new Markov("res/german_female.txt", 2);
 
 //		for (int i = 0; i < 10; i++){
 //			System.out.println(maleNames.genWordInRange(4, 10));
@@ -287,6 +287,9 @@ public class Game extends Core {
 					int destY = humans[i].getTileY() + (rand.nextInt(10) - 5);
 //					System.out.println("dest: "+humans[i].getTileX()+"->"+destX+", "+humans[i].getTileY()+"->"+destY);
 					humans[i].walkTo(destX, destY);
+				}
+				if (rand.nextInt(1000) == 1){
+					Message.say(humans[i].getX(), humans[i].getY(), "hey", humans[i]);
 				}
 			}
 			humans[i].update(deltaTime);
