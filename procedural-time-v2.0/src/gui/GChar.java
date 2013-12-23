@@ -23,8 +23,8 @@ public class GChar
 		this.xAdvance = xAdvance;
 	}
 	
-	public int draw(int xPos, int yPos){
-		GUtil.drawSprite(xPos+xOffset, yPos+yOffset, width, height, x, y, width, height, 256);
+	public int draw(int xPos, int yPos, float texSize){
+		GUtil.drawSprite(xPos+xOffset, yPos+yOffset, width, height, x, y, width, height, texSize);
 		return xAdvance;
 	}
 

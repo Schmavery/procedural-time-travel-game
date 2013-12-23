@@ -2,9 +2,9 @@ package gui;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
 //import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
@@ -15,10 +15,12 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
+import org.newdawn.slick.opengl.Texture;
 
 public final class GUtil {
 
 	public static GFont fnt;
+	private static Texture guiTex;
 	
 	private GUtil(){}
 	
@@ -58,7 +60,7 @@ public final class GUtil {
 	}
 
 	public static void drawRect(Rectangle box){
-		glBindTexture(GL_TEXTURE_2D, 4);
+		glBindTexture(GL_TEXTURE_2D, guiTex.getTextureID());
 		glPushMatrix();
 			glTranslatef(box.getX(), box.getY(), 0);
 			int innerW = box.getWidth() - 32;
@@ -112,5 +114,9 @@ public final class GUtil {
 	public static void setFont(GFont font){
 		fnt = font;
 	}
+	public static void setGuiTex(Texture tex){
+		guiTex = tex;
+	}
+	
 
 }

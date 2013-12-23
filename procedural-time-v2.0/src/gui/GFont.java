@@ -90,7 +90,7 @@ public class GFont
 	}
 	
 	public int drawChar(char c, int xPos, int yPos){
-		return getChar(c).draw(xPos, yPos);
+		return getChar(c).draw(xPos, yPos, tex.getTextureHeight());
 	}
 	
 	public int stringLength(String str){

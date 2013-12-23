@@ -138,6 +138,7 @@ public class Game extends Core {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
 			peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
 			guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
+			GUtil.setGuiTex(guiTex);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -350,7 +351,6 @@ public class Game extends Core {
 			}
 		}
 		
-		glBindTexture(GL_TEXTURE_2D, guiTex.getTextureID());
 		
 		for (Message m : Message.getOldMessages()){
 			Rectangle rect = new Rectangle(
