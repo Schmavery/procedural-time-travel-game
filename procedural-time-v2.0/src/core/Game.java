@@ -25,6 +25,7 @@ import entities.Human.Gender;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
+import gui.GFont;
 import gui.GGridLayout;
 import gui.GPanel;
 import gui.GTextbox;
@@ -55,6 +56,8 @@ public class Game extends Core {
 	private Texture peopleTex;
 	private Texture guiTex;
 	
+	private GFont font;
+	
 	private TileMap tileMap;
 	private AnimationManager animManager;
 	
@@ -70,6 +73,8 @@ public class Game extends Core {
 	public void init() {
 		super.init();
 		markovInit();
+		font = new GFont("res/arial.fnt");
+		GUtil.setFont(font);
 		animManager = new AnimationManager();
 		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
 		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
@@ -147,12 +152,6 @@ public class Game extends Core {
 	public void markovInit(){
 		maleNames = new Markov("res/mnames.txt", 2);
 		femaleNames = new Markov("res/fnames.txt", 2);
-//		maleNames = new Markov("res/german_male.txt", 2);
-//		femaleNames = new Markov("res/german_female.txt", 2);
-
-//		for (int i = 0; i < 10; i++){
-//			System.out.println(maleNames.genWordInRange(4, 10));
-//		}
 	
 	}
 	
@@ -175,7 +174,7 @@ public class Game extends Core {
 		GTextbox tb4 = new GTextbox("tb4", "test: ---  ", 10, 70);
 		tb.setTextColor(new Color(200, 200, 200));
 		tb2.setTextColor(new Color(200, 200, 200));
-		GButton p5 = new GButton("Sam I Am", "extra long button!", null, 10, 165);
+		GButton p5 = new GButton("Sam I Am", "Extra Long Button!", null, 10, 165);
 		p5.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 50)));
 		p3.addChild(tb);
 		p3.addChild(tb2);
@@ -192,10 +191,10 @@ public class Game extends Core {
 		screen.addChild(test);
 		test.setLayout(new GGridLayout(2, 2, 10, 10));
 		test.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
-		test.addChild(new GButton("b4", "Say \"Something\"", "say something", new Color(10,100,100)));
-		test.addChild(new GButton("b4", "Say \"Hey\"", "say hey", new Color(10,100,100)));
-		test.addChild(new GButton("b4", "Say \"Hello\"", "say hello", new Color(100,100,10)));
-		test.addChild(new GButton("b4", "Say \"Howdy\"", "say howdy", new Color(100,10,100)));
+		test.addChild(new GButton("b4", "Say \"Something\"", "say Something!", new Color(10,100,100)));
+		test.addChild(new GButton("b4", "Say \"Hey\"", "say Hey!", new Color(10,100,100)));
+		test.addChild(new GButton("b4", "Say \"Hello\"", "say Hello", new Color(100,100,10)));
+		test.addChild(new GButton("b4", "Say \"Howdy\"", "say Howdy", new Color(100,10,100)));
 		
 		IContainer targetPanel = new GPanel("Target", "none", new Rectangle (675,25,300,100));
 		targetPanel.setBorder(GBorderFactory.createBasicBorder(Color.DKGREY));
@@ -285,18 +284,16 @@ public class Game extends Core {
 				if (rand.nextInt(100) == 1){
 					int destX = humans[i].getTileX() + (rand.nextInt(10) - 5);
 					int destY = humans[i].getTileY() + (rand.nextInt(10) - 5);
-//					System.out.println("dest: "+humans[i].getTileX()+"->"+destX+", "+humans[i].getTileY()+"->"+destY);
 					humans[i].walkTo(destX, destY);
 				}
 				if (rand.nextInt(1000) == 1){
-					Message.say(humans[i].getX(), humans[i].getY(), "hey", humans[i]);
+					Message.say(humans[i].getX(), humans[i].getY(), "Hey.", humans[i]);
 				}
 			}
 			humans[i].update(deltaTime);
 		}
 		screen.update(deltaTime);
 		Message.update();
-		
 	}
 	
 	public void pauseUpdate(long deltaTime){
@@ -336,9 +333,6 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
 		
-//		Tile[] closeTiles = tileMap.getSurroundingTiles((SCREEN_WIDTH/(int)tileSide)/2 + 1, 
-//				playerTile_x, playerTile_y);
-		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
 			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
@@ -360,9 +354,9 @@ public class Game extends Core {
 		
 		for (Message m : Message.getOldMessages()){
 			Rectangle rect = new Rectangle(
-					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (m.getText().length()-1)*8), 
+					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
 					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
-					(m.getText().length()+2)*16, 49);
+					(GUtil.textLength(m.getText())) + 32, 50);
 			glColor3f(200/255f, 200/255f, 175/255f);
 			GUtil.drawBubble(rect);
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
@@ -374,16 +368,16 @@ public class Game extends Core {
 				((GTextbox)((IContainer) (screen.getChild("Target"))).getChild("target")).setTextColor(Color.GREEN);
 			}
 			Rectangle rect = new Rectangle(
-					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (m.getText().length()-1)*8), 
+					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
 					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
-					(m.getText().length()+2)*16, 49);
+					(GUtil.textLength(m.getText())) + 32, 50);
 			glColor3f(200/255f, 200/255f, 175/255f);
 			GUtil.drawBubble(rect);
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
 		}
 		
 		screen.draw();
-		
+	
 	}
 
 }

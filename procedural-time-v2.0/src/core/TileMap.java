@@ -223,7 +223,7 @@ public class TileMap implements Serializable{
 		if ( tileX >= 0 && tileX < size && tileY >= 0 && tileY < size){
 			return tileMap[tileX][tileY];
 		}
-		System.out.println("Invalid tile index");
+//		System.out.println("Invalid tile index");
 		return null;
 	}
 	

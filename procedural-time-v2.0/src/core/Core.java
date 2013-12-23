@@ -38,6 +38,8 @@ public abstract class Core {
 
     public Core() {
     	init();
+    	System.gc();
+    	state = GameState.RUNNING;
     	gameLoop();
     }
     	
@@ -46,7 +48,6 @@ public abstract class Core {
             Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT));
             Display.setTitle("Procedural Time");
             Display.create();
-            state = GameState.RUNNING;
         } catch (LWJGLException e) {
             System.err.println("Display wasn't initialized correctly.");
             System.exit(1);
@@ -99,7 +100,7 @@ public abstract class Core {
 	public abstract void gameUpdate(long delta);
 	public abstract void pauseUpdate(long delta);
 	public abstract void draw();
-	
+
 	public void pauseGame(){
 		state = GameState.PAUSED;
 	}

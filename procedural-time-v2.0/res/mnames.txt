@@ -37,7 +37,7 @@ Auchfor
 Auden
 Ault
 Ayrie
-Aysen	 	 
+Aysen
 Bacohl
 Badeek
 Baduk
@@ -106,7 +106,7 @@ Cusmirk
 Cydare
 Cylmar
 Cythnar
-Cyton	 	 
+Cyton
 Daburn
 Daermod
 Dakamon
@@ -149,7 +149,7 @@ Duran
 Durmark
 Dusaro
 Dyfar
-Dyten	 
+Dyten
 Eard
 Eckard
 Efamar
@@ -176,7 +176,7 @@ Etdar
 Ethen
 Etmere
 Etran
-Eythil	 	 
+Eythil
 Faoturk
 Faowind
 Fearlock
@@ -217,7 +217,7 @@ Gustov
 Guthale
 Gybol
 Gybrush
-Gyin	 	 
+Gyin
 Halmar
 Harrenhal
 Hasten
@@ -231,7 +231,7 @@ Hildale
 Hildar
 Hileict
 Hydale
-Hyten	 
+Hyten
 Iarmod
 Idon
 Ieli
@@ -259,7 +259,7 @@ Jethil
 Jibar
 Juktar
 Julthor
-Justal	 
+Justal
 Kafar
 Kaldar
 Kellan
@@ -277,7 +277,7 @@ Kinorn
 Kirder
 Kodof
 Kolmorn
-Kyrad	 
+Kyrad
 Lackus
 Lacspor
 Laderic
@@ -299,7 +299,7 @@ Lox
 Ludokrin
 Luphildern
 Lupin
-Lurd	 	 
+Lurd
 Macon
 Madarlon
 Mafar
@@ -337,7 +337,7 @@ Mufar
 Mujarin
 Mylo
 Mythik
-Mythil	 
+Mythil
 Nadeer
 Nalfar
 Namorn
@@ -353,8 +353,7 @@ Nothar
 Nuthor
 Nuwolf
 Nydale
-Nythil	 	 
-O’tho
+Nythil
 Ocarin
 Occelot
 Occhi
@@ -367,7 +366,7 @@ Omarn
 Orin
 Ospar
 Othelen
-Oxbaren	 
+Oxbaren
 Padan
 Palid
 Papur
@@ -398,7 +397,7 @@ Quiad
 Quid
 Quiss
 Qupar
-Qysan	 	 
+Qysan
 Radag'mal
 Randar
 Raysdan
@@ -426,7 +425,7 @@ Ryfar
 Ryodan
 Rysdan
 Rythen
-Rythern	 	 
+Rythern
 Sabal
 Sadareen
 Safilix
@@ -467,7 +466,7 @@ Suth
 Sutlin
 Syr
 Syth
-Sythril	 
+Sythril
 Talberon
 Telpur
 Temil
@@ -485,7 +484,6 @@ Ticharol
 Tilner
 Tithan
 Tobale
-Tol’Solie
 Tolle
 Tolsar
 Toma
@@ -495,7 +493,7 @@ Towerlock
 Tuk
 Tuscanar
 Tusdar
-Tyden	 	 
+Tyden
 Uerthe
 Ugmar
 Uhrd
@@ -521,8 +519,7 @@ Virde
 Voltain
 Volux
 Voudim
-Vythethi	 
-Wak’dern
+Vythethi
 Walkar
 Wanar
 Wekmar
@@ -546,7 +543,6 @@ Xenil
 Xex
 Xithyl
 Xuio
-Y’reth
 Yabaro
 Yepal
 Yesirn

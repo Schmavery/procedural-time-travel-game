@@ -122,7 +122,7 @@ public class Human {
 					(m.getX() > x - range && m.getX() < x + range) &&
 					(m.getY() > y - range && m.getY() < y + range)){
 				messages.add(m);
-				if (m.getText().equals("hey")){
+				if (m.getText().toLowerCase().indexOf("hey") >= 0){
 					test = true;
 				}
 			}
