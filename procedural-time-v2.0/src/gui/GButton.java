@@ -79,7 +79,7 @@ public class GButton extends GComponent{
 				yPos = getY() + (getHeight() - 16)/2;
 				break;
 			case RIGHT:
-				xPos = getX() + (getWidth() - (text.length() + 1)*16);
+				xPos = getX() + (getWidth() - GUtil.textLength(text) - 16);
 				yPos = getY() + (getHeight() - 16)/2;
 				break;
 			case TOP:

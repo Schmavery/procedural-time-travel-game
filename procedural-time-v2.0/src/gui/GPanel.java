@@ -1,10 +1,7 @@
 package gui;
 
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
@@ -32,7 +29,7 @@ public class GPanel extends GComponent implements IContainer{
 	public GClickEvent clickDown(int x, int y){
 		if (getRect().contains(x, y)){
 			for (IElement child : children){
-				GClickEvent tmp = child.clickDown(x - getRect().getX(), y - getRect().getY());
+				GClickEvent tmp = child.clickDown(x, y);
 				if (tmp != null){
 					return tmp;
 				}
@@ -44,7 +41,7 @@ public class GPanel extends GComponent implements IContainer{
 	public GClickEvent clickUp(int x, int y){
 		if (getRect().contains(x, y)){
 			for (IElement child : children){
-				GClickEvent tmp = child.clickUp(x - getRect().getX(), y - getRect().getY());
+				GClickEvent tmp = child.clickUp(x, y);
 				if (tmp != null){
 					return tmp;
 				}
@@ -56,7 +53,7 @@ public class GPanel extends GComponent implements IContainer{
 	public GClickEvent clickHold(int x, int y){
 		if (getRect().contains(x, y)){
 			for (IElement child : children){
-				GClickEvent tmp = child.clickHold(x - getRect().getX(), y - getRect().getY());
+				GClickEvent tmp = child.clickHold(x, y);
 				if (tmp != null){
 					return tmp;
 				}
@@ -66,18 +63,13 @@ public class GPanel extends GComponent implements IContainer{
 	}
 
 	public void draw() {
-		// Draw myself
 		if (!isVisible())
 			return;
 		
 		drawBorder();
-		glPushMatrix();
-			glTranslatef(getX(), getY(), 0);
-			// Draw my children
-			for (IElement child : children){
-				child.draw();
-			}
-		glPopMatrix();
+		for (IElement child : children){
+			child.draw();
+		}
 	}
 
 	public void update(long deltaTime){
@@ -88,28 +80,35 @@ public class GPanel extends GComponent implements IContainer{
 
 	@Override
 	public boolean addChild(IElement e){
+		Rectangle tmpRect;
+		if (e.getRect() == null){
+			tmpRect = null;
+		} else {
+			tmpRect = new Rectangle(e.getX() + getX(),
+				e.getY() + getY(), 
+				e.getWidth(), e.getHeight());
+		}
 		if (layout == null){
-			for (IElement child : children){
-				if (child.overlaps(e)){
-					System.out.println("Error: Overlapping children.");
-					return false;
-				}
-			}
-			Rectangle tmpRect = new Rectangle(e.getX() + getX(),
-					e.getY() + getY(), 
-					e.getWidth(), e.getHeight());
+//			for (IElement child : children){
+//				if (child.overlaps(e)){
+//					System.out.println("Error: Overlapping children.");
+//					return false;
+//				}
+//			}
 			
 			if (getRect().contains(tmpRect)){
 				children.add(e);
-				return true;
+				e.translateRect(getX(), getY());
 			}else{
 				System.out.println("Error: Child out of bounds.");
 				return false;
 			}
 				
+		} else {
+			children.add(e);
+			e.translateRect(getX(), getY());
+			layout();
 		}
-		children.add(e);
-		layout();
 		return true;
 	}
 	
@@ -123,6 +122,12 @@ public class GPanel extends GComponent implements IContainer{
 		return null;
 	}
 	
+	@Override
+	public List<IElement> getChildren(){
+		return children;
+	}
+	
+	@Override
 	public IElement getChild(int index){
 		if (index < children.size()){
 			return children.get(index);
@@ -130,8 +135,17 @@ public class GPanel extends GComponent implements IContainer{
 		return null;
 	}
 	
+	@Override
 	public int getChildCount(){
 		return children.size();
+	}
+	
+	@Override
+	public void translateRect(int x, int y){
+		super.translateRect(x, y);
+		for (IElement e : children){
+			e.translateRect(x, y);
+		}
 	}
 
 	public void setLayout(ILayoutManager layout) {

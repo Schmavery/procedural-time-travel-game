@@ -30,8 +30,8 @@ public class GGridLayout implements ILayoutManager{
 		int height = (parent.getHeight() - (rows + 1)*vgap) / rows;
 		for (int i = 0; i < parent.getChildCount(); i++){
 			parent.getChild(i).setRect(new Rectangle(
-					(i%cols)*(width + hgap) + hgap,
-					(i/cols)*(height + vgap) + vgap,
+					(i%cols)*(width + hgap) + hgap + parent.getX(),
+					(i/cols)*(height + vgap) + vgap + parent.getY(),
 					width,
 					height
 					));;

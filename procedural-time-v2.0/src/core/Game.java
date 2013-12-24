@@ -1,9 +1,5 @@
 package core;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glColor3f;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -132,7 +128,6 @@ public class Game extends Core {
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
-//		player.walkTo(tmpTile.getX(), tmpTile.getY());
 		
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
@@ -244,16 +239,6 @@ public class Game extends Core {
 	}
 	
 	public void gameUpdate(long deltaTime){
-//		totalTime += deltaTime;
-//		if (totalTime % 100000 < 10000){
-//			time = Time.MORNING;
-//		} else if (totalTime % 100000 < 50000){
-//			time = Time.DAY;
-//		} else if (totalTime % 100000 < 60000){
-//			time = Time.EVENING;
-//		} else {
-//			time = Time.NIGHT;
-//		}
 
 		animManager.update(deltaTime);
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
@@ -309,43 +294,22 @@ public class Game extends Core {
 	
 	
 	public void draw(){
-		float shade = 1;
-//		switch (time){
-//		case DAY:
-//			shade = 1f;
-//			break;
-//		case NIGHT:
-//			shade = .2f;
-//			break;
-//		case EVENING:
-//		case MORNING:
-//			shade = .7f;
-//			break;
-//		default:
-//			shade = 1f;
-//		}
-		
-		glColor3f(shade, shade, shade);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		
 		// Draw TileMap
 		float tileSide = TILE_SIZE * SCALE;
 		int playerTile_x = (int) Math.floor(player.getX() / (tileSide));
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
-		glBindTexture(GL_TEXTURE_2D, tileSheetTex.getTextureID());
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
-			GUtil.drawSprite(tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
+			GUtil.drawSprite(tileSheetTex.getTextureID(), tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
 			
 		}
 		
-		glBindTexture(GL_TEXTURE_2D, peopleTex.getTextureID());
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
 			for (Human h : tile.entities){
-				GUtil.drawSprite (h.getX() - player.getX() + SCREEN_WIDTH/2f,
+				GUtil.drawSprite (peopleTex.getTextureID(), h.getX() - player.getX() + SCREEN_WIDTH/2f,
 						h.getY() - player.getY() + SCREEN_HEIGHT/2f,
 						h.getTexX(), h.getTexY(), tileSide, tileSide, 16);
 			}
@@ -357,8 +321,7 @@ public class Game extends Core {
 					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
 					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
 					(GUtil.textLength(m.getText())) + 32, 50);
-			glColor3f(200/255f, 200/255f, 175/255f);
-			GUtil.drawBubble(rect);
+			GUtil.drawBubble(rect, new Color(200, 200, 175));
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
 		}
 		
@@ -371,8 +334,7 @@ public class Game extends Core {
 					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
 					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
 					(GUtil.textLength(m.getText())) + 32, 50);
-			glColor3f(200/255f, 200/255f, 175/255f);
-			GUtil.drawBubble(rect);
+			GUtil.drawBubble(rect, new Color(200, 200, 175));
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
 		}
 		

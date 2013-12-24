@@ -60,30 +60,30 @@ public class GTextbox extends GComponent{
 		
 		int xPos, yPos;
 		switch (alignment){
-		case LEFT:
-			xPos = getX() + 16;
-			yPos = getY() + (getHeight() - 16)/2;
-			break;
-		case RIGHT:
-			xPos = getX() + (getWidth() - (text.length() + 1)*16);
-			yPos = getY() + (getHeight() - 16)/2;
-			break;
-		case TOP:
-			xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
-			yPos = getY() + 16;
-			break;
-		case BOTTOM:
-			xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
-			yPos = getY() + (getHeight() - 2*16);
-			break;
-		case CENTER:
-			xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
-			yPos = getY() + (getHeight() - 16)/2;
-			break;
-		default:
-			xPos = getX();
-			yPos = getY();
-			break;
+			case LEFT:
+				xPos = getX() + 16;
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			case RIGHT:
+				xPos = getX() + (getWidth() - GUtil.textLength(text) - 16);
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			case TOP:
+				xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
+				yPos = getY() + 16;
+				break;
+			case BOTTOM:
+				xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
+				yPos = getY() + (getHeight() - 2*16);
+				break;
+			case CENTER:
+				xPos = getX() + (getWidth() - GUtil.textLength(text))/2;
+				yPos = getY() + (getHeight() - 16)/2;
+				break;
+			default:
+				xPos = getX();
+				yPos = getY();
+				break;	
 	}
 		GUtil.drawText(xPos, yPos, textColor, text);
 	}

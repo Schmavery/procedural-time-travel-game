@@ -1,5 +1,8 @@
 package gui;
 
+import org.lwjgl.util.ReadableColor;
+import org.newdawn.slick.opengl.Texture;
+
 public class GChar
 {
 	private int id, x, y, width, height, xOffset, yOffset, xAdvance;
@@ -23,8 +26,9 @@ public class GChar
 		this.xAdvance = xAdvance;
 	}
 	
-	public int draw(int xPos, int yPos, float texSize){
-		GUtil.drawSprite(xPos+xOffset, yPos+yOffset, width, height, x, y, width, height, texSize);
+	public int draw(int xPos, int yPos, Texture tex, ReadableColor c){
+		GUtil.drawSprite(tex.getTextureID(), xPos+xOffset, yPos+yOffset, width, height, 
+				x, y, width, height, tex.getTextureHeight(), c);
 		return xAdvance;
 	}
 

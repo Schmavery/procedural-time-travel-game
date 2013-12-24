@@ -1,7 +1,6 @@
 package core;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_NEAREST;
@@ -12,19 +11,18 @@ import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
-import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
+import gui.GUtil;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-//import org.lwjgl.input.Mouse;
 
  
 public abstract class Core {
@@ -52,6 +50,8 @@ public abstract class Core {
             System.err.println("Display wasn't initialized correctly.");
             System.exit(1);
         }
+        
+        
         
         // GL init code
         glMatrixMode(GL_PROJECTION);
@@ -83,9 +83,13 @@ public abstract class Core {
 	        		pauseUpdate(deltaTime);
 	        		break;
         	}
-        	glClear(GL_COLOR_BUFFER_BIT);
+//        	glClear(GL_COLOR_BUFFER_BIT);
+        	GUtil.begin();
+//        	System.out.println("Drawing");
         	draw();
-
+//        	System.out.println("Done Drawing");
+        	GUtil.end();
+//        	System.out.println("Ended");
         	//int mouse_x = Mouse.getX();
         	//int mouse_y = SCREEN_HEIGHT - Mouse.getY() - 1;
         	

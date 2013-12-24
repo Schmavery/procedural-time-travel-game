@@ -91,11 +91,16 @@ public abstract class GComponent implements IElement{
 
 	public abstract void draw();
 	
+	public void translateRect(int x, int y){
+		if (boundingBox != null)
+			boundingBox.translate(x, y);
+	}
+	
 	
 	public void setRect(Rectangle rect){
 		boundingBox = rect;
 	}
-
+	
 	public Rectangle getRect() {return boundingBox;}
 	public int getHeight() {return boundingBox.getHeight();}
 	public int getWidth() {return boundingBox.getWidth();}

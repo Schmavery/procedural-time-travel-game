@@ -37,6 +37,8 @@ public interface IElement {
 	public void draw();
 
 	public void setRect(Rectangle rect);
+	
+	public void translateRect(int x, int y);
 
 	public Rectangle getRect();
 

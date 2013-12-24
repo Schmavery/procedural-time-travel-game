@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -89,8 +90,14 @@ public class GFont
 		}
 	}
 	
-	public int drawChar(char c, int xPos, int yPos){
-		return getChar(c).draw(xPos, yPos, tex.getTextureHeight());
+	public int drawChar(char ch, int xPos, int yPos, ReadableColor c){
+		return getChar(ch).draw(xPos, yPos, tex, c);
+	}
+	
+	public void drawText(String text, int x, int y, ReadableColor c){
+		for (int i = 0; i < text.length(); i++){
+			x += drawChar(text.charAt(i), x, y, c);
+		}
 	}
 	
 	public int stringLength(String str){
