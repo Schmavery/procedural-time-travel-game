@@ -10,6 +10,7 @@ public class PathFinder<T extends Pathable<T>> {
 	T target;
 	PathNode finalNode;
 	List<T> path;
+	boolean running = false;
 	
 	private class PathNode implements Comparable<PathNode>{
 		private T node;
@@ -77,12 +78,14 @@ public class PathFinder<T extends Pathable<T>> {
 		this.closed.clear();
 		this.finalNode = null;
 		this.target = null;
+		running = false;
 	}
 	
 	public void newPath(T start, T target){
 		this.target = target;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
+		running = true;
 	}
 	
 	public boolean generatePath(int steps) throws PathException{
@@ -164,12 +167,12 @@ public class PathFinder<T extends Pathable<T>> {
 	private boolean calcPath() throws PathException{
 		// Find node with lowest total cost.
 		if (open.isEmpty()){
-			throw new PathException("Empty open list.");
+			throw new PathException("Empty open list. " + target.toString());
 		}
 		PathNode node = open.remove(0);
 		if (node.node.equals(target)){
-//			System.out.println("Found final!");
 			finalNode = node;
+			running = false;
 			return true;
 		}
 
@@ -181,7 +184,6 @@ public class PathFinder<T extends Pathable<T>> {
 				open.get(index).newParent(tmp);
 			} else {
 				if (closed.indexOf(tmp) > -1){
-//					System.out.println("in closed");
 					continue;
 				}
 //				System.out.println("new node");
@@ -194,9 +196,13 @@ public class PathFinder<T extends Pathable<T>> {
 			}
 			
 		}
-//		System.out.println("closed node " + node.node.toString());
 		// Close node
 		closed.add(node);
 		return false;
 	}
+	
+	public boolean isRunning(){
+		return running;
+	}
+	
 }

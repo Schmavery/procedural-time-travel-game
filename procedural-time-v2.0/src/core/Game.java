@@ -4,18 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-import core.AnimationManager.SpriteSheet;
 import entities.Human;
 import entities.Human.Gender;
 import gui.GBorderFactory;
@@ -27,6 +29,7 @@ import gui.GPanel;
 import gui.GTextbox;
 import gui.GUtil;
 import gui.GUtil.Alignment;
+import gui.GUtil.SpriteSheet;
 import gui.IContainer;
 
 public class Game extends Core {
@@ -40,6 +43,8 @@ public class Game extends Core {
 	
 	Human player;
 	Human[] humans;
+	List<Human> drawList;
+	Comparator<Human> drawComparator;
 	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
@@ -69,6 +74,14 @@ public class Game extends Core {
 	public void init() {
 		super.init();
 		markovInit();
+		drawList = new ArrayList<>(100);
+		drawComparator = new Comparator<Human>()
+		{
+			public int compare(Human h1, Human h2)
+			{
+				return (int) (h1.getY() - h2.getY());
+			}
+		};
 		font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		animManager = new AnimationManager();
@@ -134,6 +147,8 @@ public class Game extends Core {
 			peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
 			guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
 			GUtil.setGuiTex(guiTex);
+			GUtil.setPeopleTex(peopleTex);
+			GUtil.setMapTex(tileSheetTex);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -216,7 +231,7 @@ public class Game extends Core {
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
 					if (tmp.getAction() != null && tmp.getAction().regionMatches(0, "say", 0, 3)){
-						Message.say(player.getX(), player.getY(), tmp.getAction().substring(4), player);
+						player.say(tmp.getAction().substring(4));
 					}
 				} else {
 					int tileX = (int) (((Mouse.getEventX() + player.getX() - (SCREEN_WIDTH/2))/(SCALE*TILE_SIZE)));
@@ -273,13 +288,14 @@ public class Game extends Core {
 					humans[i].walkTo(destX, destY);
 				}
 				if (rand.nextInt(1000) == 1){
-					Message.say(humans[i].getX(), humans[i].getY(), "Hey.", humans[i]);
+//					Message.say(humans[i].getX(), humans[i].getY(), "Hey.", humans[i]);
+					humans[i].say("Hey.");
 				}
 			}
 			humans[i].update(deltaTime);
 		}
 		screen.update(deltaTime);
-		Message.update();
+//		Message.update();
 	}
 	
 	public void pauseUpdate(long deltaTime){
@@ -300,44 +316,22 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
-			GUtil.drawSprite(tileSheetTex.getTextureID(), tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
+			GUtil.drawSprite(SpriteSheet.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
 			
 		}
 		
-		
+		drawList.clear();
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
-			for (Human h : tile.entities){
-				GUtil.drawSprite (peopleTex.getTextureID(), h.getX() - player.getX() + SCREEN_WIDTH/2f,
-						h.getY() - player.getY() + SCREEN_HEIGHT/2f,
-						h.getTexX(), h.getTexY(), tileSide, tileSide, 16);
-			}
+			if (tile.getEntities() != null)
+				drawList.addAll(tile.getEntities());
 		}
-		
-		
-		for (Message m : Message.getOldMessages()){
-			Rectangle rect = new Rectangle(
-					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
-					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
-					(GUtil.textLength(m.getText())) + 32, 50);
-			GUtil.drawBubble(rect, new Color(200, 200, 175));
-			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
+		Collections.sort(drawList, drawComparator);
+		for (Human h : drawList){
+			h.draw(SCREEN_WIDTH/2f - player.getX(), SCREEN_HEIGHT/2f - player.getY());
 		}
-		
-		for (Message m : Message.getMessages()){
-			if (m.getText().indexOf(targetName) != -1){
-				((GTextbox)((IContainer) (screen.getChild("Target"))).getChild("target")).setText("A LIFE");
-				((GTextbox)((IContainer) (screen.getChild("Target"))).getChild("target")).setTextColor(Color.GREEN);
-			}
-			Rectangle rect = new Rectangle(
-					(int) (m.getSender().getX() - player.getX() + (SCREEN_WIDTH/2) - (GUtil.textLength(m.getText()) - 16)/2), 
-					(int) (m.getSender().getY() - player.getY() + (SCREEN_HEIGHT/2) - 60),
-					(GUtil.textLength(m.getText())) + 32, 50);
-			GUtil.drawBubble(rect, new Color(200, 200, 175));
-			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
-		}
-		
+
 		screen.draw();
 	
 	}

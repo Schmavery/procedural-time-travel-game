@@ -178,7 +178,6 @@ public class SpriteBatch {
 		colorArray[colIndex+14] =  getColor(col.z);
 		colorArray[colIndex+15] =  getColor(col.w);
 		
-		
 		vertIndex+=8;
 		texIndex+=8;
 		colIndex += 16;

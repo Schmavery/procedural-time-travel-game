@@ -1,5 +1,7 @@
 package core;
 
+import gui.GUtil.SpriteSheet;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,9 +9,7 @@ import java.util.LinkedList;
 
 public class AnimationManager {
 	
-	public static enum SpriteSheet {
-		MAP, ITEMS, PEOPLE, GUI;
-	}
+	
 	
 	private LinkedList<Animation> animList;
 	

@@ -259,7 +259,7 @@ public class TileMap implements Serializable{
 		return size;
 	}
 	
-	private class LocaleIterator implements Iterator<Tile>, Iterable<Tile>{
+	public class LocaleIterator implements Iterator<Tile>, Iterable<Tile>{
 
 		int currX, currY;
 		int x1, x2, y1, y2;

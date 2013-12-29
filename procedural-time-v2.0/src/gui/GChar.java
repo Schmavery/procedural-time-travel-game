@@ -1,5 +1,7 @@
 package gui;
 
+import gui.GUtil.SpriteSheet;
+
 import org.lwjgl.util.ReadableColor;
 import org.newdawn.slick.opengl.Texture;
 
@@ -27,7 +29,7 @@ public class GChar
 	}
 	
 	public int draw(int xPos, int yPos, Texture tex, ReadableColor c){
-		GUtil.drawSprite(tex.getTextureID(), xPos+xOffset, yPos+yOffset, width, height, 
+		GUtil.drawSprite(SpriteSheet.FONT, xPos+xOffset, yPos+yOffset, width, height, 
 				x, y, width, height, tex.getTextureHeight(), c);
 		return xAdvance;
 	}

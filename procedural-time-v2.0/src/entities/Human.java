@@ -1,6 +1,14 @@
 package entities;
 
-import java.util.LinkedList;
+import gui.GUtil;
+import gui.GUtil.SpriteSheet;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.Rectangle;
 
 import core.AnimationManager.Animation;
 import core.Game;
@@ -14,7 +22,6 @@ public class Human {
 	public static enum Facing {NORTH, EAST, SOUTH, WEST};
 	public static enum Gender {MALE, FEMALE, DWARF, OTHER};
 
-
 	private TileMap tileMap;
 	private float x, y;
 	private float dx, dy;
@@ -25,7 +32,7 @@ public class Human {
 	private Animation[] standingAnims;
 	private Facing facing;
 	private EntityFrame frame;
-	private LinkedList<Message> messages;
+	private List<Message> messages;
 	private PathFinder<Tile> tilePather;
 	
 
@@ -43,7 +50,7 @@ public class Human {
 		frame = new EntityFrame(15,10);
 		tilePather = new PathFinder<Tile>();
 		speed = 0.2f;
-		messages = new LinkedList<Message>();
+		messages = new ArrayList<>(10);
 		tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y)).addEntity(this);
 		
 //		this.name = NameGen.genName(this.gender);
@@ -101,7 +108,6 @@ public class Human {
 			}
 			dx = 0;
 			dy = 0;
-			
 			if (tile != null){
 				Tile newTile = tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
 				if (tile != null && newTile != null && !tile.isSameNode(newTile)){
@@ -112,25 +118,61 @@ public class Human {
 			movingAnims[facing.ordinal()].update(deltaTime);
 		}
 		
-		// Add new messages.
-		boolean test = false;
-		int range = 50*(int) Game.SCALE;
-		for (Message m : Message.getOldMessages()){
-			if ((messages.isEmpty() || 
-					(m.getTime() >= messages.getLast().getTime() && !m.equals(messages.getLast()))) &&
-					!m.getSender().equals(this) &&
-					(m.getX() > x - range && m.getX() < x + range) &&
-					(m.getY() > y - range && m.getY() < y + range)){
-				messages.add(m);
-				if (m.getText().toLowerCase().indexOf("hey") >= 0){
-					test = true;
-				}
+		if (tilePather.isRunning()){
+			try {
+				tilePather.generatePath(100);
+			} catch (PathException e){
+				System.out.println(e.getMessage());
+				tilePather.clear();
 			}
 		}
-		if (test) {Message.say(x, y, "What's up? I'm "+name+"!", this);}
 		
+		pathGen();
+		processMessages();
 		
-		
+	}
+	
+	private void processMessages(){
+		long currTime = System.currentTimeMillis();
+		int delay = 200;
+		for (int i = 0; i < messages.size(); i++){
+			long age = currTime - messages.get(i).getTime();
+			if (age > delay && !messages.get(i).isBroadcast()){
+				broadcast(messages.get(i));
+			}
+			if (age > messages.get(i).getText().length()*100 + delay){
+				messages.remove(i);
+			}
+		}
+//		for (Message m : messages){
+//			long age = currTime - m.getTime();
+//			if (age > m.getText().length()d*100){
+//				messages.remove(m);
+//			}
+//		}
+	}
+	
+	public void tell(Message m){
+		if (m.getText().toLowerCase().indexOf("hey") > -1){
+			say("What's up? I'm " + name + "!");
+		}
+	}
+
+	public void say(String text){
+		Message m = new Message(x, y, text, this);
+		messages.add(m);
+	}
+	
+	private void broadcast(Message m){
+		m.broadcast();
+		int tileX = (int) getCenterX()/tileMap.getSize();
+		int tileY = (int) getCenterY()/tileMap.getSize();
+		for (Tile tile : tileMap.getLocale(m.getVolume(), getTileX(), getTileY())){
+			for (Human h : tile.getEntities()){
+				if (!h.equals(this))
+					h.tell(m);
+			}
+		}
 	}
 	
 	public void move(float dx, float dy){
@@ -146,17 +188,19 @@ public class Human {
 	
 	public void walkTo(int tileX, int tileY){
 		if (tileMap.getTile(tileX, tileY) == null || !tileMap.getTile(tileX, tileY).isWalkable()){
-//			System.out.println(tileX + ", " + tileY);
 			return;
 		} else {
 			tilePather.clear();
 			tilePather.newPath(	tileMap.getWorldTile(getCenterX(), getCenterY()),
 					tileMap.getTile(tileX, tileY));
+			pathGen();
+		}
+	}
+	
+	public void pathGen(){
+		if (tilePather.isRunning()){
 			try {
-				tilePather.generatePath(0);
-//				for (Tile t : tilePather.getPath()){
-//					System.out.println(t.getX() + ", " + t.getY());
-//				}
+				tilePather.generatePath(100);
 			} catch (PathException e){
 				System.out.println(e.getMessage());
 				tilePather.clear();
@@ -203,6 +247,20 @@ public class Human {
 		if (moving)
 			return movingAnims[facing.ordinal()].getDispY();
 		return standingAnims[facing.ordinal()].getDispY();
-	}	
+	}
+	
+	public void draw(float x, float y){
+		GUtil.drawSprite (SpriteSheet.PEOPLE, getX() + x,
+				getY() + y, getTexX(), getTexY(), Game.SCALE*Game.TILE_SIZE, Game.SCALE*Game.TILE_SIZE, 16);
+		if (!messages.isEmpty()){
+			Message m = messages.get(messages.size() - 1);
+			Rectangle rect = new Rectangle(
+					(int) (m.getSender().getX() + x - (GUtil.textLength(m.getText()) - 16)/2), 
+					(int) (m.getSender().getY() + y - 60),
+					(GUtil.textLength(m.getText())) + 32, 50);
+			GUtil.drawBubble(rect, new Color(200, 200, 175));
+			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
+		}
+	}
 	
 }

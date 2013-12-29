@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.text.html.parser.Entity;
+
 import core.AnimationManager.Animation;
 import entities.Human;
 
@@ -21,14 +23,14 @@ public class Tile implements Serializable, Pathable<Tile>{
 	private Animation anim;
 	double perlinVal;
 	boolean walkable;
-	LinkedList<Human> entities;
+	List<Human> entities;
 	
 	public Tile(Type type, double perlinVal, int x, int y){
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.perlinVal = perlinVal;
-		this.entities = new LinkedList<Human>();
+		this.entities = new LinkedList<>();
 		if (type == Type.WATER){
 			walkable = false;
 		} else {
@@ -38,9 +40,9 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	public void setAnim(Animation anim){
 		this.anim = anim;
-		if (anim.toString().indexOf("rock") > -1){
-			walkable = false;
-		}
+//		if (anim.toString().indexOf("rock") > -1){
+//			walkable = false;
+//		}
 	}
 	
 	public boolean isWalkable() {return walkable;}
@@ -96,6 +98,8 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return 10;
 	}
 	
+	//// Entity Management ////
+	
 	public void addEntity(Human h){
 		entities.add(h);
 	}
@@ -104,9 +108,13 @@ public class Tile implements Serializable, Pathable<Tile>{
 		entities.remove(h);
 	}
 	
+	public List<Human> getEntities(){
+		return entities;
+	}
+	
 	@Override
 	public String toString(){
-		return "Tile: " + x + ", " + y;
+		return "Tile: " + x + ", " + y + " - " + type;
 	}
 	
 }
