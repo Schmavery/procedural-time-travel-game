@@ -2,21 +2,21 @@ package core;
 
 import java.util.LinkedList;
 
-import entities.Human;
+import entities.AbstractEntity;
 
 public class Message {
 	private float x, y;
 	private String text;
-	private Human sender;
+	private AbstractEntity sender;
 	private long time;
 	private int volume;
 	private boolean broadcast;
 	
-	public Message(float x, float y, String text, Human sender){
+	public Message(float x, float y, String text, AbstractEntity sender){
 		this(x, y, text, sender, 3);
 	}
 	
-	public Message(float x, float y, String text, Human sender, int volume){
+	public Message(float x, float y, String text, AbstractEntity sender, int volume){
 		this.x = x;
 		this.y = y;
 		this.text = text;
@@ -34,7 +34,7 @@ public class Message {
 	public float getY(){return y;}
 	public String getText(){return text;}
 	public long getTime(){return time;}
-	public Human getSender(){return sender;}
+	public AbstractEntity getSender(){return sender;}
 	public int getVolume(){return volume;}
 	public boolean isBroadcast(){return broadcast;}
 	

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.text.html.parser.Entity;
 
 import core.AnimationManager.Animation;
+import entities.AbstractEntity;
 import entities.Human;
 
 public class Tile implements Serializable, Pathable<Tile>{
@@ -104,7 +105,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 		entities.add(h);
 	}
 	
-	public void removeEntity(Human h){
+	public void removeEntity(AbstractEntity h){
 		entities.remove(h);
 	}
 	

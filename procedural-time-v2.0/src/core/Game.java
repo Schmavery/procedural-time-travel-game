@@ -18,6 +18,7 @@ import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import entities.Drawable;
 import entities.Human;
 import entities.Human.Gender;
 import gui.GBorderFactory;
@@ -43,8 +44,8 @@ public class Game extends Core {
 	
 	Human player;
 	Human[] humans;
-	List<Human> drawList;
-	Comparator<Human> drawComparator;
+	List<Drawable> drawList;
+	Comparator<Drawable> drawComparator;
 	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
@@ -75,11 +76,11 @@ public class Game extends Core {
 		super.init();
 		markovInit();
 		drawList = new ArrayList<>(100);
-		drawComparator = new Comparator<Human>()
+		drawComparator = new Comparator<Drawable>()
 		{
-			public int compare(Human h1, Human h2)
+			public int compare(Drawable d1, Drawable d2)
 			{
-				return (int) (h1.getY() - h2.getY());
+				return (int) (d1.getY() - d2.getY());
 			}
 		};
 		font = new GFont("res/arial.fnt");
@@ -328,8 +329,8 @@ public class Game extends Core {
 				drawList.addAll(tile.getEntities());
 		}
 		Collections.sort(drawList, drawComparator);
-		for (Human h : drawList){
-			h.draw(SCREEN_WIDTH/2f - player.getX(), SCREEN_HEIGHT/2f - player.getY());
+		for (Drawable d : drawList){
+			d.draw(SCREEN_WIDTH/2f - player.getX(), SCREEN_HEIGHT/2f - player.getY());
 		}
 
 		screen.draw();

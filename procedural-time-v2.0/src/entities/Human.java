@@ -18,30 +18,15 @@ import core.PathFinder;
 import core.Tile;
 import core.TileMap;
 
-public class Human {
-	public static enum Facing {NORTH, EAST, SOUTH, WEST};
-	public static enum Gender {MALE, FEMALE, DWARF, OTHER};
-
-	private TileMap tileMap;
-	private float x, y;
-	private float dx, dy;
-	private float speed;
-	private boolean moving;
-	private boolean collided;
-	private Animation[] movingAnims;
-	private Animation[] standingAnims;
-	private Facing facing;
-	private EntityFrame frame;
+public class Human extends AbstractMovingEntity {
+	public static enum Gender {MALE, FEMALE, DWARF, OTHER}
 	private List<Message> messages;
-	private PathFinder<Tile> tilePather;
-	
-
 	String name;
 	private Gender gender;
 	
 	public Human(float x, float y, Gender gender, String name, TileMap tileMap){
-		this.x = x;
-		this.y = y;
+		super(x, y);
+
 		this.gender = gender;
 		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
@@ -144,12 +129,6 @@ public class Human {
 				messages.remove(i);
 			}
 		}
-//		for (Message m : messages){
-//			long age = currTime - m.getTime();
-//			if (age > m.getText().length()d*100){
-//				messages.remove(m);
-//			}
-//		}
 	}
 	
 	public void tell(Message m){
@@ -165,8 +144,6 @@ public class Human {
 	
 	private void broadcast(Message m){
 		m.broadcast();
-		int tileX = (int) getCenterX()/tileMap.getSize();
-		int tileY = (int) getCenterY()/tileMap.getSize();
 		for (Tile tile : tileMap.getLocale(m.getVolume(), getTileX(), getTileY())){
 			for (Human h : tile.getEntities()){
 				if (!h.equals(this))
@@ -175,82 +152,10 @@ public class Human {
 		}
 	}
 	
-	public void move(float dx, float dy){
-		this.dx += dx;
-		this.dy += dy;
-	}
-
-	
-	public void move(Facing f){
-		facing = f;
-		moving = true;
-	}
-	
-	public void walkTo(int tileX, int tileY){
-		if (tileMap.getTile(tileX, tileY) == null || !tileMap.getTile(tileX, tileY).isWalkable()){
-			return;
-		} else {
-			tilePather.clear();
-			tilePather.newPath(	tileMap.getWorldTile(getCenterX(), getCenterY()),
-					tileMap.getTile(tileX, tileY));
-			pathGen();
-		}
-	}
-	
-	public void pathGen(){
-		if (tilePather.isRunning()){
-			try {
-				tilePather.generatePath(100);
-			} catch (PathException e){
-				System.out.println(e.getMessage());
-				tilePather.clear();
-			}
-		}
-	}
-	
-	public float getCenterX(){
-		return frame.getCenterX(x);
-	}
-	public float getCenterY(){
-		return frame.getCenterY(y);
-	}
-	
-	
-	public void setMovingAnims( Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w ){
-		this.movingAnims[0] = anim_n.cloneAnim();
-		this.movingAnims[1] = anim_e.cloneAnim();
-		this.movingAnims[2] = anim_s.cloneAnim();
-		this.movingAnims[3] = anim_w.cloneAnim();
-	}
-
-	public void setStandingAnims( Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w ){
-		this.standingAnims[0] = anim_n.cloneAnim();
-		this.standingAnims[1] = anim_e.cloneAnim();
-		this.standingAnims[2] = anim_s.cloneAnim();
-		this.standingAnims[3] = anim_w.cloneAnim();
-	}
-	
-	public float getX(){return x;}
-	public float getY(){return y;}
-	public int getTileX(){return (int) (x/(Game.SCALE*Game.TILE_SIZE));}
-	public int getTileY(){return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
-	public boolean isMoving(){return moving;}
 	public String getName(){return name;}
 	
-	public int getTexX(){ 
-		if (moving){
-			return movingAnims[facing.ordinal()].getDispX();
-		}
-		return standingAnims[facing.ordinal()].getDispX();
-	}	
-	public int getTexY(){
-		if (moving)
-			return movingAnims[facing.ordinal()].getDispY();
-		return standingAnims[facing.ordinal()].getDispY();
-	}
-	
 	public void draw(float x, float y){
-		GUtil.drawSprite (SpriteSheet.PEOPLE, getX() + x,
+		GUtil.drawSprite (getSpriteSheet(), getX() + x,
 				getY() + y, getTexX(), getTexY(), Game.SCALE*Game.TILE_SIZE, Game.SCALE*Game.TILE_SIZE, 16);
 		if (!messages.isEmpty()){
 			Message m = messages.get(messages.size() - 1);
@@ -261,6 +166,12 @@ public class Human {
 			GUtil.drawBubble(rect, new Color(200, 200, 175));
 			GUtil.drawText(rect.getX()+16, rect.getY()+16, ReadableColor.BLACK, m.getText());
 		}
+	}
+
+	@Override
+	protected SpriteSheet getSpriteSheet()
+	{
+		return SpriteSheet.PEOPLE;
 	}
 	
 }
