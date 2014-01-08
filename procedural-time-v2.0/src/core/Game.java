@@ -14,6 +14,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -72,19 +73,22 @@ public class Game extends Core {
 		init();
 	}
 	
+	@Override
 	public void init() {
 		super.init();
-		markovInit();
+		initSpriteSheets();
+		drawLoading();
+		initMarkov();
+		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Drawable>()
 		{
+			@Override
 			public int compare(Drawable d1, Drawable d2)
 			{
 				return (int) (d1.getY() - d2.getY());
 			}
 		};
-		font = new GFont("res/arial.fnt");
-		GUtil.setFont(font);
 		animManager = new AnimationManager();
 		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
 		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
@@ -93,7 +97,7 @@ public class Game extends Core {
 		tileMap = new TileMap(1000, animManager);
 		Random rand = new Random();
 		humans = new Humanoid[10000];
-		player = new Humanoid(500*SCALE*TILE_SIZE, 500*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
 					animManager.getAnim("man_e_anim"),
 					animManager.getAnim("man_s_anim"),
@@ -143,6 +147,19 @@ public class Game extends Core {
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
 		
+		initGUI();
+	}
+	
+	public void initMarkov(){
+		maleNames = new Markov("res/mnames.txt", 2);
+		femaleNames = new Markov("res/fnames.txt", 2);
+	
+	}
+	
+	public void initSpriteSheets(){
+		font = new GFont("res/arial.fnt");
+		GUtil.setFont(font);
+		
 		try {
 			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
 			peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
@@ -157,14 +174,8 @@ public class Game extends Core {
 			e.printStackTrace();
 			exit();
 		}
-	
-		initGUI();
-	}
-	
-	public void markovInit(){
-		maleNames = new Markov("res/mnames.txt", 2);
-		femaleNames = new Markov("res/fnames.txt", 2);
-	
+		
+		
 	}
 	
 	public void initGUI(){
@@ -209,19 +220,20 @@ public class Game extends Core {
 		test.addChild(new GButton("b4", "Say \"Howdy\"", "say Howdy", new Color(100,10,100)));
 		
 		IContainer targetPanel = new GPanel("Target", "none", new Rectangle (675,25,300,100));
-		targetPanel.setBorder(GBorderFactory.createBasicBorder(Color.DKGREY));
+		targetPanel.setBorder(GBorderFactory.createBasicBorder(ReadableColor.DKGREY));
 		targetPanel.setLayout(new GGridLayout(2, 1, 5, 0));
 		tb = new GTextbox("message", "Go and find:");
-		tb.setTextColor(Color.WHITE);
+		tb.setTextColor(ReadableColor.WHITE);
 		targetPanel.addChild(tb);
 		tb = new GTextbox("target", targetName);
 		tb.setAlignment(Alignment.CENTER);
-		tb.setTextColor(Color.RED);
+		tb.setTextColor(ReadableColor.RED);
 		targetPanel.addChild(tb);
 		screen.addChild(targetPanel);
 		
 	}
 	
+	@Override
 	public void update(long deltaTime){
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
 				Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
@@ -254,6 +266,7 @@ public class Game extends Core {
 		}
 	}
 	
+	@Override
 	public void gameUpdate(long deltaTime){
 
 		animManager.update(deltaTime);
@@ -289,16 +302,15 @@ public class Game extends Core {
 					humans[i].walkTo(destX, destY);
 				}
 				if (rand.nextInt(1000) == 1){
-//					Message.say(humans[i].getX(), humans[i].getY(), "Hey.", humans[i]);
 					humans[i].say("Hey.");
 				}
 			}
 			humans[i].update(deltaTime);
 		}
 		screen.update(deltaTime);
-//		Message.update();
 	}
 	
+	@Override
 	public void pauseUpdate(long deltaTime){
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
 			pauseDown = true;
@@ -309,7 +321,7 @@ public class Game extends Core {
 		player.update(deltaTime);
 	}
 	
-	
+	@Override
 	public void draw(){
 		// Draw TileMap
 		float tileSide = TILE_SIZE * SCALE;
@@ -334,7 +346,7 @@ public class Game extends Core {
 		}
 
 		screen.draw();
-	
+		
 	}
 
 }

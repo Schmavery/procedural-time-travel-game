@@ -25,9 +25,10 @@ public class AnimationManager {
 	 * @param sprites Spritesheet corresponding to the animation.
 	 */
 	public void loadAnims(String path, SpriteSheet sprites){
-		try {
-			FileReader fr = new FileReader(path);
-			BufferedReader br = new BufferedReader(fr);
+		try (FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr)
+		){
+			
 			String s = null;
 			while((s = br.readLine()) != null) {
 				loadAnim(s, sprites);

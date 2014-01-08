@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import core.AnimationManager.Animation;
-import entities.AbstractEntity;
 import entities.Humanoid;
 import entities.interfaces.Entity;
 

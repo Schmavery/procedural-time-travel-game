@@ -1,13 +1,8 @@
 package gui;
 
-import java.io.ObjectInputStream.GetField;
-
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
-
-import core.SpriteBatch;
 
 public final class GUtil {
 	public static enum SpriteSheet {
@@ -24,7 +19,7 @@ public final class GUtil {
 	
 	public static void drawSprite(SpriteSheet spr, float x, float y, int texX, int texY, 
 			float spriteW, float spriteH, float ssSize){
-		drawSprite(spr, x, y, texX, texY, spriteW, spriteH, ssSize, Color.WHITE);
+		drawSprite(spr, x, y, texX, texY, spriteW, spriteH, ssSize, ReadableColor.WHITE);
 	}
 	
 	public static void drawSprite(SpriteSheet spr, float x, float y, int texX, int texY, 
@@ -92,7 +87,7 @@ public final class GUtil {
 	}
 	
 	public static void begin(){
-		batch.begin();
+		SpriteBatch.begin();
 	}
 	
 	public static void end(){

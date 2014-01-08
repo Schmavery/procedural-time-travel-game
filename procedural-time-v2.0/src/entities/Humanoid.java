@@ -24,7 +24,7 @@ import gui.GUtil.SpriteSheet;
 
 public class Humanoid extends AbstractMovingEntity implements Hittable, Talkable{
 	public static enum Gender {MALE, FEMALE, DWARF, OTHER}
-	public static enum EntityAction {SWING, USE, STOW, RETREIVE, PICKUP, DEFAULT}
+	public static enum EntityAction {SWING, USE, STOW, RETREIVE, TALK, PICKUP, DEFAULT}
 	public static Fist fist = new Fist();
 	
 	private List<Message> messages;

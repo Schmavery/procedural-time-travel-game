@@ -25,9 +25,9 @@ public class Markov
 	
 	public Markov(String path, int length){
 		ArrayList<String> corpus = new ArrayList<>();
-		try {
-			FileReader fr = new FileReader(path);
-			BufferedReader br = new BufferedReader(fr);
+		try (FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr)
+		){
 			String s = null;
 			while((s = br.readLine()) != null) {
 				corpus.add(s.replaceAll("\n", ""));

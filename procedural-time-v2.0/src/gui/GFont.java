@@ -22,16 +22,30 @@ public class GFont
 	
 	public GFont(String path){
 		properties = new HashMap<>();
-		try {
-			FileReader fr = new FileReader(path);
-			BufferedReader br = new BufferedReader(fr);
+//		try {
+//			FileReader fr = new FileReader(path);
+//			BufferedReader br = new BufferedReader(fr);
+//			String s = null;
+//			while((s = br.readLine()) != null) {
+//				parseLine(s);
+//			}
+//			fr.close();
+//			System.out.println("Loaded font file from '" + path + "'.");
+//		} catch (IOException e){
+//			e.printStackTrace();
+//		}
+		try (FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr)
+		){
 			String s = null;
 			while((s = br.readLine()) != null) {
 				parseLine(s);
 			}
 			fr.close();
 			System.out.println("Loaded font file from '" + path + "'.");
-		} catch (IOException e){
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -56,7 +70,7 @@ public class GFont
 		}
 	}
 	
-	private String[] splitLine(String line){
+	private static String[] splitLine(String line){
 		return line.split("[ ]+(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 	}
 
@@ -95,8 +109,9 @@ public class GFont
 	}
 	
 	public void drawText(String text, int x, int y, ReadableColor c){
+		int len = x;
 		for (int i = 0; i < text.length(); i++){
-			x += drawChar(text.charAt(i), x, y, c);
+			len += drawChar(text.charAt(i), len, y, c);
 		}
 	}
 	

@@ -23,6 +23,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.Rectangle;
 
  
 public abstract class Core {
@@ -36,7 +38,7 @@ public abstract class Core {
 
     public Core() {
     	init();
-    	System.gc();
+//    	System.gc();
     	state = GameState.RUNNING;
     	gameLoop();
     }
@@ -51,9 +53,7 @@ public abstract class Core {
             System.err.println("Display wasn't initialized correctly.");
             System.exit(1);
         }
-        
-        
-        
+
         // GL init code
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -68,6 +68,7 @@ public abstract class Core {
     }
     
     private void gameLoop(){
+    	System.out.println(System.currentTimeMillis());
         while (!Display.isCloseRequested()) {
         	// Render
         	long deltaTime = getDelta();
@@ -84,13 +85,9 @@ public abstract class Core {
 	        		pauseUpdate(deltaTime);
 	        		break;
         	}
-//        	glClear(GL_COLOR_BUFFER_BIT);
         	GUtil.begin();
-//        	System.out.println("Drawing");
         	draw();
-//        	System.out.println("Done Drawing");
         	GUtil.end();
-//        	System.out.println("Ended");
         	//int mouse_x = Mouse.getX();
         	//int mouse_y = SCREEN_HEIGHT - Mouse.getY() - 1;
         	
@@ -105,6 +102,19 @@ public abstract class Core {
 	public abstract void gameUpdate(long delta);
 	public abstract void pauseUpdate(long delta);
 	public abstract void draw();
+	
+	public static void drawLoading(){
+		GUtil.begin();
+		int h = 100;
+		int w = 300;
+		String str = "Generating Map...";
+		GUtil.drawRect(new Rectangle((SCREEN_WIDTH - w)/2, (SCREEN_HEIGHT - h)/2, w, h), ReadableColor.GREY);
+		GUtil.drawText((SCREEN_WIDTH - GUtil.textLength(str))/2, 
+				(SCREEN_HEIGHT - 40)/2, ReadableColor.WHITE, str);
+		GUtil.end();
+		Display.update();
+		System.out.println(System.currentTimeMillis());
+	}
 
 	public void pauseGame(){
 		state = GameState.PAUSED;
