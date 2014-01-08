@@ -1,8 +1,5 @@
 package entities;
 
-import gui.GUtil;
-import gui.GUtil.SpriteSheet;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +14,24 @@ import core.PathException;
 import core.PathFinder;
 import core.Tile;
 import core.TileMap;
+import entityInterfaces.Hittable;
+import entityInterfaces.Talkable;
+import entityInterfaces.Weapon;
+import gui.GUtil;
+import gui.GUtil.SpriteSheet;
 
-public class Human extends AbstractMovingEntity {
+public class Humanoid extends AbstractMovingEntity implements Hittable, Talkable{
 	public static enum Gender {MALE, FEMALE, DWARF, OTHER}
 	private List<Message> messages;
 	String name;
-	private Gender gender;
+	int life;
+//	private Gender gender;
 	
-	public Human(float x, float y, Gender gender, String name, TileMap tileMap){
+	public Humanoid(float x, float y, Gender gender, String name, TileMap tileMap){
 		super(x, y);
 
-		this.gender = gender;
+		life = 10;
+//		this.gender = gender;
 		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
@@ -131,6 +135,7 @@ public class Human extends AbstractMovingEntity {
 		}
 	}
 	
+	@Override
 	public void tell(Message m){
 		if (m.getText().toLowerCase().indexOf("hey") > -1){
 			say("What's up? I'm " + name + "!");
@@ -145,9 +150,9 @@ public class Human extends AbstractMovingEntity {
 	private void broadcast(Message m){
 		m.broadcast();
 		for (Tile tile : tileMap.getLocale(m.getVolume(), getTileX(), getTileY())){
-			for (Human h : tile.getEntities()){
-				if (!h.equals(this))
-					h.tell(m);
+			for (AbstractEntity h : tile.getEntities()){
+				if (h instanceof Talkable && !h.equals(this))
+					((Talkable) h).tell(m);
 			}
 		}
 	}
@@ -172,6 +177,11 @@ public class Human extends AbstractMovingEntity {
 	protected SpriteSheet getSpriteSheet()
 	{
 		return SpriteSheet.PEOPLE;
+	}
+
+	@Override
+	public void hit(Weapon w) {
+		life -= w.getDamage();
 	}
 	
 }

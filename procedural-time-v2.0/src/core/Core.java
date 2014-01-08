@@ -41,7 +41,8 @@ public abstract class Core {
     	gameLoop();
     }
     	
-    public void init() {
+    @SuppressWarnings("static-method")
+	public void init() {
         try {
             Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT));
             Display.setTitle("Procedural Time");

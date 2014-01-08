@@ -1,7 +1,5 @@
 package core;
 
-import java.util.LinkedList;
-
 import entities.AbstractEntity;
 
 public class Message {

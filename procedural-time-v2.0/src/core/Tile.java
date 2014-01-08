@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
-
 import core.AnimationManager.Animation;
 import entities.AbstractEntity;
-import entities.Human;
+import entities.Humanoid;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -24,7 +22,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	private Animation anim;
 	double perlinVal;
 	boolean walkable;
-	List<Human> entities;
+	List<AbstractEntity> entities;
 	
 	public Tile(Type type, double perlinVal, int x, int y){
 		this.type = type;
@@ -68,14 +66,21 @@ public class Tile implements Serializable, Pathable<Tile>{
 	}
 	
 	private void addTile(List<Tile> list, int x, int y){
+		if (isWalkableTile(x, y)){
+			list.add(tileMap.getTile(x, y));
+		}
+	}
+	
+	private boolean isWalkableTile(int x, int y){
 		if (x >= 0
 				&& x < tileMap.getSize()
 				&& y >= 0
 				&& y < tileMap.getSize()){
 			if (tileMap.getTile(x, y).walkable){
-				list.add(tileMap.getTile(x, y));
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public List<Tile> getReachable() {
@@ -84,6 +89,30 @@ public class Tile implements Serializable, Pathable<Tile>{
 		addTile(reachable, x    , y - 1);
 		addTile(reachable, x + 1, y);
 		addTile(reachable, x    , y + 1);
+		
+		if (isWalkableTile(x+1, y+1)){
+			if (isWalkableTile(x+1, y) && isWalkableTile(x, y+1)){
+				reachable.add(tileMap.getTile(x+1, y+1));
+			}
+		}
+		
+		if (isWalkableTile(x-1, y-1)){
+			if (isWalkableTile(x-1, y) && isWalkableTile(x, y-1)){
+				reachable.add(tileMap.getTile(x-1, y-1));
+			}
+		}
+		
+		if (isWalkableTile(x-1, y+1)){
+			if (isWalkableTile(x-1, y) && isWalkableTile(x, y+1)){
+				reachable.add(tileMap.getTile(x-1, y+1));
+			}
+		}
+		
+		if (isWalkableTile(x+1, y-1)){
+			if (isWalkableTile(x+1, y) && isWalkableTile(x, y-1)){
+				reachable.add(tileMap.getTile(x+1, y-1));
+			}
+		}
 		return reachable;
 	}
 
@@ -94,14 +123,14 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public int moveCost(Tile p) {
 		if (p.x - this.x != 0 && p.y - this.y != 0){
 			// Diagonal, costs a little more.
-			return 14;
+			return 30;
 		}
 		return 10;
 	}
 	
 	//// Entity Management ////
 	
-	public void addEntity(Human h){
+	public void addEntity(Humanoid h){
 		entities.add(h);
 	}
 	
@@ -109,7 +138,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 		entities.remove(h);
 	}
 	
-	public List<Human> getEntities(){
+	public List<AbstractEntity> getEntities(){
 		return entities;
 	}
 	

@@ -1,5 +1,6 @@
 package entities;
 
+import entityInterfaces.Drawable;
 import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 

@@ -18,9 +18,9 @@ import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-import entities.Drawable;
-import entities.Human;
-import entities.Human.Gender;
+import entities.Humanoid;
+import entities.Humanoid.Gender;
+import entityInterfaces.Drawable;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
@@ -42,8 +42,8 @@ public class Game extends Core {
 	long totalTime = 0;
 //	Time time = Time.DAY;
 	
-	Human player;
-	Human[] humans;
+	Humanoid player;
+	Humanoid[] humans;
 	List<Drawable> drawList;
 	Comparator<Drawable> drawComparator;
 	String targetName;
@@ -92,8 +92,8 @@ public class Game extends Core {
 
 		tileMap = new TileMap(1000, animManager);
 		Random rand = new Random();
-		humans = new Human[10000];
-		player = new Human(500*SCALE*TILE_SIZE, 500*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+		humans = new Humanoid[10000];
+		player = new Humanoid(500*SCALE*TILE_SIZE, 500*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
 					animManager.getAnim("man_e_anim"),
 					animManager.getAnim("man_s_anim"),
@@ -113,7 +113,7 @@ public class Game extends Core {
 			}
 			
 			if (rand.nextBoolean()){
-				humans[i] = new Human(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+				humans[i] = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
 				
 				humans[i].setMovingAnims(animManager.getAnim("man_n_anim"), 
 						animManager.getAnim("man_e_anim"),
@@ -124,7 +124,7 @@ public class Game extends Core {
 						animManager.getAnim("man_s"),
 						animManager.getAnim("man_w"));
 			} else {
-				humans[i] = new Human(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10), tileMap);
+				humans[i] = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10), tileMap);
 				
 				humans[i].setMovingAnims(animManager.getAnim("girl_n_anim"), 
 						animManager.getAnim("girl_e_anim"),
@@ -137,7 +137,7 @@ public class Game extends Core {
 			}
 		}
 		
-		Human tmp = humans[rand.nextInt(humans.length)];
+		Humanoid tmp = humans[rand.nextInt(humans.length)];
 		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
