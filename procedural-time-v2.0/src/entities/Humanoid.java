@@ -14,23 +14,32 @@ import core.PathException;
 import core.PathFinder;
 import core.Tile;
 import core.TileMap;
-import entityInterfaces.Hittable;
-import entityInterfaces.Talkable;
-import entityInterfaces.Weapon;
+import entities.interfaces.Entity;
+import entities.interfaces.Hittable;
+import entities.interfaces.Holdable;
+import entities.interfaces.Talkable;
+import entities.interfaces.Weapon;
 import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 
 public class Humanoid extends AbstractMovingEntity implements Hittable, Talkable{
 	public static enum Gender {MALE, FEMALE, DWARF, OTHER}
+	public static enum EntityAction {SWING, USE, STOW, RETREIVE, PICKUP, DEFAULT}
+	public static Fist fist = new Fist();
+	
 	private List<Message> messages;
 	String name;
 	int life;
+	Holdable[] inventory;
+	Holdable heldItem;
 //	private Gender gender;
 	
 	public Humanoid(float x, float y, Gender gender, String name, TileMap tileMap){
 		super(x, y);
 
 		life = 10;
+		inventory = new Holdable[3];
+		heldItem = fist;
 //		this.gender = gender;
 		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
@@ -150,7 +159,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable, Talkable
 	private void broadcast(Message m){
 		m.broadcast();
 		for (Tile tile : tileMap.getLocale(m.getVolume(), getTileX(), getTileY())){
-			for (AbstractEntity h : tile.getEntities()){
+			for (Entity h : tile.getEntities()){
 				if (h instanceof Talkable && !h.equals(this))
 					((Talkable) h).tell(m);
 			}
@@ -182,6 +191,56 @@ public class Humanoid extends AbstractMovingEntity implements Hittable, Talkable
 	@Override
 	public void hit(Weapon w) {
 		life -= w.getDamage();
+	}
+	
+	/**
+	 * Gives the item to this humanoid.
+	 * @param item Item to be given.
+	 * @return Returns false if 
+	 */
+	public boolean getItem(Holdable item){
+		if (heldItem != fist){
+			if (inventoryFull()){
+				return false;
+			} else {
+				stow(heldItem);
+				heldItem = item;
+				return true;
+			}
+		} else {
+			heldItem = item;
+			return true;
+		}
+	}
+	
+	private void retreive(int invIndex){
+		if (invIndex >= 0 && inventory[invIndex] != null){
+			Holdable item = inventory[invIndex];
+			inventory[invIndex] = null;
+			getItem(item);
+		}
+	}
+	
+	private void stow(Holdable item){
+		if (inventoryFull()){
+			return;
+		} else {
+			inventory[inventoryFreeSpot()] = item;
+			heldItem = fist;
+		}
+	}
+	
+	public boolean inventoryFull(){
+		return inventoryFreeSpot() > -1;
+	}
+	
+	private int inventoryFreeSpot(){
+		for (int i = 0; i < inventory.length; i++){
+			if (inventory[i] == null){
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 }

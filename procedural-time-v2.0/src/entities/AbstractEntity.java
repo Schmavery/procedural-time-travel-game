@@ -1,19 +1,13 @@
 package entities;
 
-import entityInterfaces.Drawable;
+import core.AnimationManager.Animation;
+import core.Game;
+import core.TileMap;
+import entities.interfaces.Entity;
 import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 
-import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
-import org.lwjgl.util.Rectangle;
-
-import core.AnimationManager.Animation;
-import core.Game;
-import core.Message;
-import core.TileMap;
-
-public abstract class AbstractEntity implements Drawable
+public abstract class AbstractEntity implements Entity
 {
 
 	public static enum Facing {NORTH, EAST, SOUTH, WEST}

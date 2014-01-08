@@ -8,6 +8,7 @@ import java.util.List;
 import core.AnimationManager.Animation;
 import entities.AbstractEntity;
 import entities.Humanoid;
+import entities.interfaces.Entity;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -22,7 +23,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	private Animation anim;
 	double perlinVal;
 	boolean walkable;
-	List<AbstractEntity> entities;
+	List<Entity> entities;
 	
 	public Tile(Type type, double perlinVal, int x, int y){
 		this.type = type;
@@ -134,11 +135,11 @@ public class Tile implements Serializable, Pathable<Tile>{
 		entities.add(h);
 	}
 	
-	public void removeEntity(AbstractEntity h){
+	public void removeEntity(Entity h){
 		entities.remove(h);
 	}
 	
-	public List<AbstractEntity> getEntities(){
+	public List<Entity> getEntities(){
 		return entities;
 	}
 	

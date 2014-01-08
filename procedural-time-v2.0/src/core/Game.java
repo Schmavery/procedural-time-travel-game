@@ -20,7 +20,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import entities.Humanoid;
 import entities.Humanoid.Gender;
-import entityInterfaces.Drawable;
+import entities.interfaces.Drawable;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;

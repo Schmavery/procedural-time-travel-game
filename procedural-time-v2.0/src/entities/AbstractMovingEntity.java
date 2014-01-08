@@ -15,6 +15,7 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	protected boolean collided;
 	protected Animation[] movingAnims;
 	protected PathFinder<Tile> tilePather;
+	
 
 	public AbstractMovingEntity(float x, float y)
 	{

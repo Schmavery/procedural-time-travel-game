@@ -1,4 +1,4 @@
-package entityInterfaces;
+package entities.interfaces;
 
 public interface Drawable
 {

@@ -302,4 +302,47 @@ public class TileMap implements Serializable{
 		public Iterator<Tile> iterator(){return this;}
 	}
 	
+	public class VisionIterator implements Iterator<Tile>, Iterable<Tile>{
+
+		int currX, currY;
+		int x1, x2, y1, y2;
+		
+		public VisionIterator(int centerX, int centerY, int length){
+//			int absRadius = Math.abs(radius);
+//			x1 = Math.min(size - 1, Math.max(0, centerX - absRadius));
+//			x2 = Math.min(size - 1, Math.max(0, centerX + absRadius));
+//			y1 = Math.min(size - 1, Math.max(0, centerY - absRadius));
+//			y2 = Math.min(size - 1, Math.max(0, centerY + absRadius));
+//			
+//			currX = x1;
+//			currY = y1;
+		}
+		
+		@Override
+		public boolean hasNext()
+		{
+			return (currY < y2 || currX < x2);
+		}
+
+		@Override
+		public Tile next()
+		{
+			Tile curr = tileMap[currX][currY];
+			currX++;
+			if (currX > x2){
+				currX = x1;
+				currY++;
+			}
+			return curr;
+		}
+
+		/**
+		 * You can't remove.
+		 */
+		@Override
+		public void remove(){return;}
+		@Override
+		public Iterator<Tile> iterator(){return this;}
+	}
+	
 }

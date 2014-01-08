@@ -3,13 +3,14 @@ package entities;
 import core.Tile;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
+import entities.interfaces.Holdable;
 import entities.interfaces.Weapon;
 
-public class Sword extends AbstractItem implements Weapon{
-	public int damage = 3;
-	
-	public Sword(float x, float y) {
-		super(x, y);
+public class Fist extends AbstractItem implements Weapon{
+public int damage = 1;
+
+	public Fist() {
+		super(0f, 0f);
 	}
 
 	@Override
@@ -27,11 +28,29 @@ public class Sword extends AbstractItem implements Weapon{
 
 	@Override
 	public void use(Humanoid user) {
-		swing(user);
+		if (user.inventoryFull()){
+			return;
+		}
+		Holdable removeItem = null;
+		for (Tile t : user.tileMap.getLocale(2, user.getTileX(), user.getTileY())){
+			for (Entity e : t.getEntities()){
+				if (e instanceof Holdable){
+					// TODO: Check for collision
+					user.getItem((Holdable) e);
+					removeItem = (Holdable) e;
+					break;
+				}
+			}
+			if (removeItem != null){
+				t.removeEntity(removeItem);
+				
+			}
+		}
 	}
 
 	@Override
 	public int getDamage() {
 		return damage;
 	}
+
 }
