@@ -1,6 +1,7 @@
 package entities;
 
 import core.AnimationManager.Animation;
+import core.Game;
 import core.PathException;
 import core.PathFinder;
 import core.Tile;
@@ -36,12 +37,12 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 
 	public void walkTo(int tileX, int tileY)
 	{
-		if (tileMap.getTile(tileX, tileY) == null || !tileMap.getTile(tileX, tileY).isWalkable()){
+		if (Game.getMap().getTile(tileX, tileY) == null || !Game.getMap().getTile(tileX, tileY).isWalkable()){
 			return;
 		} else {
 			tilePather.clear();
-			tilePather.newPath(	tileMap.getWorldTile(getCenterX(), getCenterY()),
-					tileMap.getTile(tileX, tileY));
+			tilePather.newPath(	Game.getMap().getWorldTile(getCenterX(), getCenterY()),
+					Game.getMap().getTile(tileX, tileY));
 			pathGen();
 		}
 	}

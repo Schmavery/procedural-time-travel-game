@@ -44,15 +44,14 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	// private Gender gender;
 
-	public Humanoid(float x, float y, Gender gender, String name,
-			TileMap tileMap) {
+	public Humanoid(float x, float y, Gender gender, String name) {
 		super(x, y);
 
 		health = 10;
 		inventory = new Holdable[3];
 		heldItem = fist;
 		// this.gender = gender;
-		this.tileMap = tileMap;
+//		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
@@ -60,7 +59,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		tilePather = new PathFinder<Tile>();
 		speed = 0.2f;
 		messages = new ArrayList<>(10);
-		tileMap.getWorldTile(frame.getCenterX(x), frame.getCenterY(y))
+		Game.getMap().getWorldTile(frame.getCenterX(x), frame.getCenterY(y))
 				.addEntity(this);
 
 		// this.name = NameGen.genName(this.gender);
@@ -84,7 +83,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		moving = (dx != 0 || dy != 0);
 
 		if (moving) {
-			Tile tile = tileMap.getWorldTile(frame.getCenterX(x),
+			Tile tile = Game.getMap().getWorldTile(frame.getCenterX(x),
 					frame.getCenterY(y));
 			dx = deltaTime * dx;
 			dy = deltaTime * dy;
@@ -112,19 +111,19 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 			x += dx;
 			collided = false;
-			if (dx != 0 && frame.isColliding(tileMap, x, y)) {
+			if (dx != 0 && frame.isColliding(Game.getMap(), x, y)) {
 				collided = true;
 				x -= dx;
 			}
 			y += dy;
-			if (dy != 0 && frame.isColliding(tileMap, x, y)) {
+			if (dy != 0 && frame.isColliding(Game.getMap(), x, y)) {
 				collided = true;
 				y -= dy;
 			}
 			dx = 0;
 			dy = 0;
 			if (tile != null) {
-				Tile newTile = tileMap.getWorldTile(frame.getCenterX(x),
+				Tile newTile = Game.getMap().getWorldTile(frame.getCenterX(x),
 						frame.getCenterY(y));
 				if (tile != null && newTile != null
 						&& !tile.isSameNode(newTile)) {
@@ -177,7 +176,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	private void broadcast(Message m) {
 		m.broadcast();
-		for (Tile tile : tileMap.getLocale(m.getVolume(), getTileX(),
+		for (Tile tile : Game.getMap().getLocale(m.getVolume(), getTileX(),
 				getTileY())) {
 			for (Entity h : tile.getEntities()) {
 				if (h instanceof Talkable && !h.equals(this))

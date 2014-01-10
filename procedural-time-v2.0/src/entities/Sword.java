@@ -1,5 +1,6 @@
 package entities;
 
+import core.Game;
 import core.Tile;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
@@ -14,7 +15,7 @@ public class Sword extends AbstractItem implements Weapon{
 
 	@Override
 	public void swing(Humanoid user) {
-		for (Tile t : tileMap.getLocale(2, user.getTileX(), user.getTileY())){
+		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
 				if (h instanceof Hittable){

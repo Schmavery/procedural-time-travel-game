@@ -14,7 +14,6 @@ public abstract class AbstractEntity implements Entity
 
 	public static enum Facing {NORTH, EAST, SOUTH, WEST}
 
-	protected static TileMap tileMap;
 	protected float x;
 	protected float y;
 	protected Animation[] standingAnims;

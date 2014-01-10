@@ -16,7 +16,6 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public static enum Type {
 		GRASS, DIRT, WATER, SAND;
 	}
-	static TileMap tileMap;
 
 	private int x, y;
 	private Type type;
@@ -82,16 +81,16 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	private void addTile(List<Tile> list, int x, int y){
 		if (isWalkableTile(x, y)){
-			list.add(tileMap.getTile(x, y));
+			list.add(Game.getMap().getTile(x, y));
 		}
 	}
 	
 	private boolean isWalkableTile(int x, int y){
 		if (x >= 0
-				&& x < tileMap.getSize()
+				&& x < Game.getMap().getSize()
 				&& y >= 0
-				&& y < tileMap.getSize()){
-			if (tileMap.getTile(x, y).walkable){
+				&& y < Game.getMap().getSize()){
+			if (Game.getMap().getTile(x, y).walkable){
 				return true;
 			}
 		}
@@ -107,25 +106,25 @@ public class Tile implements Serializable, Pathable<Tile>{
 		
 		if (isWalkableTile(x+1, y+1)){
 			if (isWalkableTile(x+1, y) && isWalkableTile(x, y+1)){
-				reachable.add(tileMap.getTile(x+1, y+1));
+				reachable.add(Game.getMap().getTile(x+1, y+1));
 			}
 		}
 		
 		if (isWalkableTile(x-1, y-1)){
 			if (isWalkableTile(x-1, y) && isWalkableTile(x, y-1)){
-				reachable.add(tileMap.getTile(x-1, y-1));
+				reachable.add(Game.getMap().getTile(x-1, y-1));
 			}
 		}
 		
 		if (isWalkableTile(x-1, y+1)){
 			if (isWalkableTile(x-1, y) && isWalkableTile(x, y+1)){
-				reachable.add(tileMap.getTile(x-1, y+1));
+				reachable.add(Game.getMap().getTile(x-1, y+1));
 			}
 		}
 		
 		if (isWalkableTile(x+1, y-1)){
 			if (isWalkableTile(x+1, y) && isWalkableTile(x, y-1)){
-				reachable.add(tileMap.getTile(x+1, y-1));
+				reachable.add(Game.getMap().getTile(x+1, y-1));
 			}
 		}
 		return reachable;

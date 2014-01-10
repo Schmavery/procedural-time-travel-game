@@ -36,13 +36,15 @@ import gui.GUtil.SpriteSheet;
 import gui.IContainer;
 
 public class Game extends Core {
-//	public static enum Time {NIGHT, DAY, EVENING, MORNING};
+	// Singletons
+	private static TileMap tileMap;
+	private static AnimationManager animManager;
+	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;
 	public static Random rand = new Random();
 	
 	long totalTime = 0;
-//	Time time = Time.DAY;
 	
 	Humanoid player;
 	Humanoid[] humans;
@@ -56,8 +58,13 @@ public class Game extends Core {
 	GPanel screen;
 	GPanel panel;
 	
-	private TileMap tileMap;
-	private AnimationManager animManager;
+	public static TileMap getMap(){
+		return tileMap;
+	}
+	
+	public static AnimationManager getAnims(){
+		return animManager;
+	}
 	
 	public static void main(String[] args){
 		new Game();
@@ -92,7 +99,7 @@ public class Game extends Core {
 		tileMap = new TileMap(1000, animManager);
 		Random rand = new Random();
 		humans = new Humanoid[10000];
-		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
 			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
 					animManager.getAnim("man_e_anim"),
 					animManager.getAnim("man_s_anim"),
@@ -112,7 +119,7 @@ public class Game extends Core {
 			}
 			
 			if (rand.nextBoolean()){
-				humans[i] = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10), tileMap);
+				humans[i] = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
 				humans[i].setMovingAnims(animManager.getAnim("man_n_anim"), 
 						animManager.getAnim("man_e_anim"),
@@ -123,7 +130,7 @@ public class Game extends Core {
 						animManager.getAnim("man_s"),
 						animManager.getAnim("man_w"));
 			} else {
-				humans[i] = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10), tileMap);
+				humans[i] = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
 				humans[i].setMovingAnims(animManager.getAnim("girl_n_anim"), 
 						animManager.getAnim("girl_e_anim"),

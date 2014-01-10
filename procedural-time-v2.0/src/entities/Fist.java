@@ -1,5 +1,6 @@
 package entities;
 
+import core.Game;
 import core.Tile;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
@@ -15,7 +16,7 @@ public int damage = 1;
 
 	@Override
 	public void swing(Humanoid user) {
-		for (Tile t : tileMap.getLocale(2, user.getTileX(), user.getTileY())){
+		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
 				if (h instanceof Hittable){
@@ -32,7 +33,7 @@ public int damage = 1;
 			return;
 		}
 		Holdable removeItem = null;
-		for (Tile t : user.tileMap.getLocale(2, user.getTileX(), user.getTileY())){
+		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			for (Entity e : t.getEntities()){
 				if (e instanceof Holdable){
 					// TODO: Check for collision

@@ -40,7 +40,6 @@ public class TileMap implements Serializable{
 
 	
 	public TileMap(int size, AnimationManager am){
-		Tile.tileMap = this;
 //		seed = (int) System.currentTimeMillis();
 		seed = 366907858;
 		System.out.println("Seed: "+seed);
