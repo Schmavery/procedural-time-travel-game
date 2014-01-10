@@ -9,8 +9,6 @@ import java.util.LinkedList;
 
 public class AnimationManager {
 	
-	
-	
 	private LinkedList<Animation> animList;
 	
 	public AnimationManager() {

@@ -2,5 +2,6 @@ package entities.interfaces;
 
 
 public interface Entity extends Drawable{
- // TODO
+	public int getTexX();
+	public int getTexY();
 }

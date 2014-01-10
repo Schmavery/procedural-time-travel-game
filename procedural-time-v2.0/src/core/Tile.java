@@ -8,6 +8,7 @@ import java.util.List;
 import core.AnimationManager.Animation;
 import entities.Humanoid;
 import entities.interfaces.Entity;
+import entities.interfaces.Placeable;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -44,7 +45,21 @@ public class Tile implements Serializable, Pathable<Tile>{
 //		}
 	}
 	
-	public boolean isWalkable() {return walkable;}
+	public boolean isWalkable() {
+		if (!walkable){
+			return false;
+		} else {
+			for (Entity e : entities){
+				if (e instanceof Placeable){
+					if (((Placeable) e).isPlaced() && !((Placeable) e).isWalkable()){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
@@ -130,7 +145,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	//// Entity Management ////
 	
-	public void addEntity(Humanoid h){
+	public void addEntity(Entity h){
 		entities.add(h);
 	}
 	

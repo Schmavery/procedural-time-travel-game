@@ -21,6 +21,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import entities.Humanoid;
 import entities.Humanoid.Gender;
+import entities.Sword;
 import entities.interfaces.Drawable;
 import gui.GBorderFactory;
 import gui.GButton;
@@ -54,12 +55,6 @@ public class Game extends Core {
 	boolean pauseDown = false;
 	GPanel screen;
 	GPanel panel;
-
-	private Texture tileSheetTex;
-	private Texture peopleTex;
-	private Texture guiTex;
-	
-	private GFont font;
 	
 	private TileMap tileMap;
 	private AnimationManager animManager;
@@ -146,7 +141,8 @@ public class Game extends Core {
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
-		
+		player.getItem(new Sword(0,0));
+		player.stow();
 		initGUI();
 	}
 	
@@ -156,17 +152,19 @@ public class Game extends Core {
 	
 	}
 	
-	public void initSpriteSheets(){
-		font = new GFont("res/arial.fnt");
+	public static void initSpriteSheets(){
+		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		
 		try {
-			tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
-			peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
-			guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
+			Texture tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
+			Texture peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
+			Texture guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
+			Texture itemTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/items.png")), GL11.GL_NEAREST);
 			GUtil.setGuiTex(guiTex);
 			GUtil.setPeopleTex(peopleTex);
 			GUtil.setMapTex(tileSheetTex);
+			GUtil.setItemTex(itemTex);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -235,10 +233,10 @@ public class Game extends Core {
 	
 	@Override
 	public void update(long deltaTime){
-		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
-				Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-				exit();
-		}
+//		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
+//				Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+//				exit();
+//		}
 		while (Mouse.next()){
 			if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()){
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
@@ -274,17 +272,35 @@ public class Game extends Core {
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
 			player.move(0f, -speed);
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
 			player.move(0f, speed);
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
 			player.move(speed, 0f);
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
 			player.move(-speed, 0f);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_1)){
+			player.retreive(0);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_2)){
+			player.retreive(1);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_3)){
+			player.retreive(2);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
+			player.swing();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)){
+			player.use();
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_E)){
+			player.drop();
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
@@ -346,6 +362,7 @@ public class Game extends Core {
 		}
 
 		screen.draw();
+		player.drawStatus(10, 10);
 		
 	}
 

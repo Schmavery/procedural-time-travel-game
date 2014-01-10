@@ -2,7 +2,6 @@ package gui;
 
 import gui.GUtil.Alignment;
 
-import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
@@ -15,7 +14,7 @@ public class GTextbox extends GComponent{
 	public GTextbox(String name, String text){
 		super(name);
 		this.text = text;
-		this.textColor = Color.BLACK;
+		this.textColor = ReadableColor.BLACK;
 	}
 	
 	public GTextbox(String name, String text, int posX, int posY) {
@@ -23,7 +22,7 @@ public class GTextbox extends GComponent{
 		Rectangle rect = new Rectangle(posX, posY, GUtil.textLength(text), 16);
 		setRect(rect);
 		this.text = text;
-		this.textColor = Color.BLACK;
+		this.textColor = ReadableColor.BLACK;
 	}
 
 	public void setText(String text){

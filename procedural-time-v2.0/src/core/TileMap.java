@@ -6,6 +6,7 @@ import java.util.Random;
 
 import core.AnimationManager.Animation;
 import core.Tile.Type;
+import entities.AbstractEntity.Facing;
 
 /**
  * Class that keeps generates the game tilemap using Perlin Noise.
@@ -265,11 +266,11 @@ public class TileMap implements Serializable{
 		int x1, x2, y1, y2;
 		
 		public LocaleIterator(int centerX, int centerY, int radius){
-			int absRadius = Math.abs(radius);
-			x1 = Math.min(size - 1, Math.max(0, centerX - absRadius));
-			x2 = Math.min(size - 1, Math.max(0, centerX + absRadius));
-			y1 = Math.min(size - 1, Math.max(0, centerY - absRadius));
-			y2 = Math.min(size - 1, Math.max(0, centerY + absRadius));
+//			int absRadius = Math.abs(radius);
+			x1 = Math.min(size - 1, Math.max(0, centerX - radius));
+			x2 = Math.min(size - 1, Math.max(0, centerX + radius));
+			y1 = Math.min(size - 1, Math.max(0, centerY - radius));
+			y2 = Math.min(size - 1, Math.max(0, centerY + radius));
 			
 			currX = x1;
 			currY = y1;
@@ -302,12 +303,26 @@ public class TileMap implements Serializable{
 		public Iterator<Tile> iterator(){return this;}
 	}
 	
+	/**
+	 * Returns an iterator to tiles contained within the isosceles triangle with the vertex opposite the base
+	 * located at (x, y) and opening in the direction of face.
+	 * Handles negatives and points close to the edge of the map.
+	 * @param centerX X-coordinate of the center of the region.
+	 * @param centerY Y-coordinate of the center of the region.
+	 * @param length length (height) of the triangle.
+	 * @param face Direction in which the triangle should expand.
+	 * @return Iterator to tiles corresponding to the surrounding tiles.
+	 */
+	public VisionIterator getVision(int centerX, int centerY, int length, Facing face){
+		return new VisionIterator(centerX, centerY, length, face);
+	}
+	
 	public class VisionIterator implements Iterator<Tile>, Iterable<Tile>{
 
 		int currX, currY;
 		int x1, x2, y1, y2;
 		
-		public VisionIterator(int centerX, int centerY, int length){
+		public VisionIterator(int centerX, int centerY, int length, Facing face){
 //			int absRadius = Math.abs(radius);
 //			x1 = Math.min(size - 1, Math.max(0, centerX - absRadius));
 //			x2 = Math.min(size - 1, Math.max(0, centerX + absRadius));

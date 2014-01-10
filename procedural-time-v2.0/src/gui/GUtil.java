@@ -10,7 +10,7 @@ public final class GUtil {
 	}
 	
 	public static GFont fnt;
-	private static Texture guiTex, mapTex, peopleTex;
+	private static Texture guiTex, mapTex, peopleTex, itemTex;
 	private static SpriteBatch batch = new SpriteBatch();
 	
 	private GUtil(){}
@@ -85,6 +85,9 @@ public final class GUtil {
 	public static void setMapTex(Texture tex){
 		mapTex = tex;
 	}
+	public static void setItemTex(Texture tex){
+		itemTex = tex;
+	}
 	
 	public static void begin(){
 		SpriteBatch.begin();
@@ -104,6 +107,8 @@ public final class GUtil {
 			return fnt.getTex().getTextureID();
 		case GUI:
 			return guiTex.getTextureID();
+		case ITEMS:
+			return itemTex.getTextureID();
 		default: 
 			return 0;
 		}

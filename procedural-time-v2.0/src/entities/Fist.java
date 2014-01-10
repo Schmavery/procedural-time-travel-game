@@ -15,12 +15,12 @@ public int damage = 1;
 
 	@Override
 	public void swing(Humanoid user) {
-		for (Tile t : user.tileMap.getLocale(2, user.getTileX(), user.getTileY())){
+		for (Tile t : tileMap.getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
 				if (h instanceof Hittable){
 					// TODO: Check for collision
-					((Hittable) h).hit(this);
+					((Hittable) h).hit(this, user);
 				}
 			}
 		}
@@ -51,6 +51,17 @@ public int damage = 1;
 	@Override
 	public int getDamage() {
 		return damage;
+	}
+	
+	
+	@Override
+	public int getTexX() {
+		return 6;
+	}
+	
+	@Override
+	public int getTexY() {
+		return 0;
 	}
 
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Random;
+
 import core.AnimationManager.Animation;
 import core.Game;
 import core.TileMap;
@@ -12,18 +14,20 @@ public abstract class AbstractEntity implements Entity
 
 	public static enum Facing {NORTH, EAST, SOUTH, WEST}
 
-	protected TileMap tileMap;
+	protected static TileMap tileMap;
 	protected float x;
 	protected float y;
 	protected Animation[] standingAnims;
 	protected Facing facing;
 	protected EntityFrame frame;
+	protected Random rand;
 
 	public AbstractEntity(float x, float y)
 	{
 		super();
 		this.x = x;
 		this.y = y;
+		rand = new Random();
 	}
 
 	public void setStandingAnims(Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w)
