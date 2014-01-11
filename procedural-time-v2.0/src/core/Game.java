@@ -19,6 +19,7 @@ import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import core.ActionFactory.ActionType;
 import entities.Humanoid;
 import entities.Humanoid.Gender;
 import entities.Sword;
@@ -94,9 +95,10 @@ public class Game extends Core {
 		animManager = new AnimationManager();
 		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
 		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
+		animManager.loadAnims("res/itemAnim.txt", SpriteSheet.ITEMS);
 		
 
-		tileMap = new TileMap(1000, animManager);
+		tileMap = new TileMap(1000);
 		Random rand = new Random();
 		humans = new Humanoid[10000];
 		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
@@ -148,8 +150,13 @@ public class Game extends Core {
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
-		player.getItem(new Sword(0,0));
-		player.stow();
+		Sword sw = new Sword(0, 0);
+//		sw.setStandingAnims(animManager.getAnim("girl_n"), 
+//				animManager.getAnim("girl_e"),
+//				animManager.getAnim("girl_s"),
+//				animManager.getAnim("girl_w"));
+		player.getItem(sw);
+		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
 	}
 	
@@ -292,22 +299,22 @@ public class Game extends Core {
 			player.move(-speed, 0f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_1)){
-			player.retreive(0);
+			player.doAction(ActionType.RETREIVE, 0);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_2)){
-			player.retreive(1);
+			player.doAction(ActionType.RETREIVE, 1);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_3)){
-			player.retreive(2);
+			player.doAction(ActionType.RETREIVE, 2);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
-			player.swing();
+			player.doAction(ActionType.SWING);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)){
-			player.use();
+			player.doAction(ActionType.USE);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_E)){
-			player.drop();
+			player.doAction(ActionType.DROP);
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){

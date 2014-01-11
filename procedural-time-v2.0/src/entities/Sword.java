@@ -11,6 +11,7 @@ public class Sword extends AbstractItem implements Weapon{
 	
 	public Sword(float x, float y) {
 		super(x, y);
+		setAnim(Game.getAnims().getAnim("sword"));
 	}
 
 	@Override
@@ -18,7 +19,7 @@ public class Sword extends AbstractItem implements Weapon{
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
-				if (h instanceof Hittable){
+				if (h instanceof Hittable && !h.equals(user)){
 					// TODO: Check for collision
 					((Hittable) h).hit(this, user);
 				}

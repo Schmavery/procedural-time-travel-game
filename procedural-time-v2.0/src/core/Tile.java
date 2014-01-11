@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import core.AnimationManager.Animation;
-import entities.Humanoid;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 
@@ -62,8 +61,8 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
-	public int getTexX(){return anim.getDispX();}
-	public int getTexY(){return anim.getDispY();}
+	public int getTexX(){return anim.getTexX();}
+	public int getTexY(){return anim.getTexY();}
 	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}
 	public float getLeft(){return Game.SCALE*Game.TILE_SIZE*x;}
 	

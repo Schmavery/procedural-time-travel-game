@@ -7,13 +7,15 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
+import core.ActionFactory;
+import core.ActionFactory.Action;
+import core.ActionFactory.ActionType;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.Message;
 import core.PathException;
 import core.PathFinder;
 import core.Tile;
-import core.TileMap;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Holdable;
@@ -26,12 +28,12 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		Talkable {
 	
 	public static enum Gender {
-		MALE, FEMALE, DWARF, OTHER
+		MALE, FEMALE
 	}
 
-	public static enum EntityAction {
-		SWING, USE, STOW, RETREIVE, TALK, PICKUP, DEFAULT
-	}
+//	public static enum EntityAction {
+//		SWING, USE, STOW, RETREIVE, TALK, PICKUP, DEFAULT
+//	}
 
 	public static Fist fist = new Fist();
 
@@ -41,17 +43,18 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	private int maxHealth;
 	Holdable[] inventory;
 	Holdable heldItem;
+	Action currentAction;
 
 	// private Gender gender;
 
 	public Humanoid(float x, float y, Gender gender, String name) {
 		super(x, y);
 
-		health = 10;
+		// this.gender = gender;
+		maxHealth = 20;
+		health = maxHealth;
 		inventory = new Holdable[3];
 		heldItem = fist;
-		// this.gender = gender;
-//		this.tileMap = tileMap;
 		this.facing = Facing.SOUTH;
 		movingAnims = new Animation[4];
 		standingAnims = new Animation[4];
@@ -62,7 +65,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		Game.getMap().getWorldTile(frame.getCenterX(x), frame.getCenterY(y))
 				.addEntity(this);
 
-		// this.name = NameGen.genName(this.gender);
 		this.name = name;
 	}
 
@@ -143,6 +145,11 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 			}
 		}
 
+		if (currentAction != null){
+			if (!currentAction.update(deltaTime)){
+				currentAction = null;
+			}
+		}
 		pathGen();
 		processMessages();
 
@@ -189,22 +196,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		return name;
 	}
 
-	public void draw(float x, float y) {
-		GUtil.drawSprite(getSpriteSheet(), getX() + x, getY() + y, getTexX(),
-				getTexY(), Game.SCALE * Game.TILE_SIZE, Game.SCALE
-						* Game.TILE_SIZE, 16);
-		if (!messages.isEmpty()) {
-			Message m = messages.get(messages.size() - 1);
-			Rectangle rect = new Rectangle(
-					(int) (m.getSender().getX() + x - (GUtil.textLength(m
-							.getText()) - 16) / 2), (int) (m.getSender().getY()
-							+ y - 60), (GUtil.textLength(m.getText())) + 32, 50);
-			GUtil.drawBubble(rect, new Color(200, 200, 175));
-			GUtil.drawText(rect.getX() + 16, rect.getY() + 16,
-					ReadableColor.BLACK, m.getText());
-		}
-	}
-
 	@Override
 	protected SpriteSheet getSpriteSheet() {
 		return SpriteSheet.PEOPLE;
@@ -212,7 +203,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	@Override
 	public void hit(Weapon w, Humanoid wielder) {
-		health -= w.getDamage();
+		setHealth(health - w.getDamage()); 
 	}
 
 	/**
@@ -247,7 +238,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		}
 	}
 
-	public void retreive(int invIndex) {
+	private void retreive(int invIndex) {
 		if (invIndex >= 0) {
 			if (inventory[invIndex] == null){
 				System.out.println("Fist!");
@@ -260,7 +251,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		}
 	}
 
-	public void stow() {
+	private void stow() {
 		if (inventoryFull()) {
 			return;
 		} else {
@@ -269,13 +260,33 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		}
 	}
 	
-	public void swing(){
-		heldItem.swing(this);
+	public void doAction(ActionType aType){
+		doAction(aType, 0);
 	}
 	
-	public void use(){
-		heldItem.use(this);
+	public void doAction(ActionType aType, int index){
+		if (currentAction != null){
+			System.out.println("Hey!");
+			return;
+		} else {
+			currentAction = ActionFactory.drop();
+			System.out.println(currentAction);
+			switch (aType) {
+				case DROP:
+					drop();
+					break;
+				case RETREIVE:
+					retreive(index);
+					break;
+				case SWING:
+					heldItem.swing(this);
+					break;
+				case USE:
+					heldItem.use(this);
+			}
+		}
 	}
+	
 
 	public boolean inventoryFull() {
 		return inventoryFreeSpot() == -1;
@@ -291,11 +302,39 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 	
 	public void setHealth(int h) {
-		health = Math.min(maxHealth, h);
+		health = Math.max(Math.min(maxHealth, h), 0);
+		System.out.println(health);
 	}
 
 	public int getHealth() {
 		return health;
+	}
+	
+	@Override
+	public void draw(float x, float y) {
+		if (currentAction != null){
+			currentAction.getAnim(facing).draw(x + getX(), y + getY());
+		} else {
+			super.draw(x, y);
+		}
+		if (!messages.isEmpty()) {
+			Message m = messages.get(messages.size() - 1);
+			Rectangle rect = new Rectangle(
+					(int) (m.getSender().getX() + x - (GUtil.textLength(m
+							.getText()) - 16) / 2), (int) (m.getSender().getY()
+							+ y - 60), (GUtil.textLength(m.getText())) + 32, 50);
+			GUtil.drawBubble(rect, new Color(200, 200, 175));
+			GUtil.drawText(rect.getX() + 16, rect.getY() + 16,
+					ReadableColor.BLACK, m.getText());
+		}
+		
+		if (health < maxHealth){
+			int len = 80;
+			int amt = (int) ((float) health / maxHealth * len);
+			GUtil.drawSprite(SpriteSheet.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
+			GUtil.drawSprite(SpriteSheet.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
+			GUtil.drawSprite(SpriteSheet.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
+		}
 	}
 	
 	public void drawStatus(float x, float y){

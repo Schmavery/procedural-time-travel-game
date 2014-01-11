@@ -4,7 +4,6 @@ import java.util.Random;
 
 import core.AnimationManager.Animation;
 import core.Game;
-import core.TileMap;
 import entities.interfaces.Entity;
 import gui.GUtil;
 import gui.GUtil.SpriteSheet;
@@ -23,10 +22,15 @@ public abstract class AbstractEntity implements Entity
 
 	public AbstractEntity(float x, float y)
 	{
-		super();
+		standingAnims = new Animation[4];
 		this.x = x;
 		this.y = y;
 		rand = new Random();
+		facing = Facing.NORTH;
+	}
+	
+	public void setAnim(Animation anim){
+		this.standingAnims[0] = anim.cloneAnim();
 	}
 
 	public void setStandingAnims(Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w)
@@ -49,19 +53,20 @@ public abstract class AbstractEntity implements Entity
 	public int getTileY()
 	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
 
-	public int getTexX()
-	{ 
-		return standingAnims[facing.ordinal()].getDispX();
-	}
-
-	public int getTexY()
-	{
-		return standingAnims[facing.ordinal()].getDispY();
-	}
+//	public int getTexX()
+//	{ 
+//		return standingAnims[facing.ordinal()].getTexX();
+//	}
+//
+//	public int getTexY()
+//	{
+//		return standingAnims[facing.ordinal()].getTexY();
+//	}
 	
 	public void draw(float x, float y){
-		GUtil.drawSprite (getSpriteSheet(), getX() + x,
-				getY() + y, getTexX(), getTexY(), Game.SCALE*Game.TILE_SIZE, Game.SCALE*Game.TILE_SIZE, 16);
+//		GUtil.drawSprite (getSpriteSheet(), getX() + x,
+//				getY() + y, getTexX(), getTexY(), Game.SCALE*Game.TILE_SIZE, Game.SCALE*Game.TILE_SIZE, 16);
+		standingAnims[facing.ordinal()].draw(x + getX(), y + getY());
 	}
 	
 	protected abstract SpriteSheet getSpriteSheet();

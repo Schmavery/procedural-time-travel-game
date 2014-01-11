@@ -1,5 +1,6 @@
 package core;
 
+import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 
 import java.io.BufferedReader;
@@ -20,16 +21,15 @@ public class AnimationManager {
 	 * The file is a list of strings formatted according to the 
 	 * documentation for loadAnim().
 	 * @param path Filepath of animation list.
-	 * @param sprites Spritesheet corresponding to the animation.
 	 */
-	public void loadAnims(String path, SpriteSheet sprites){
+	public void loadAnims(String path, SpriteSheet spr){
 		try (FileReader fr = new FileReader(path);
 			BufferedReader br = new BufferedReader(fr)
 		){
 			
 			String s = null;
 			while((s = br.readLine()) != null) {
-				loadAnim(s, sprites);
+				loadAnim(s, spr);
 			}
 			fr.close();
 			System.out.println("Loaded animations from '" + path + "'.");
@@ -55,11 +55,11 @@ public class AnimationManager {
 	 * @param sprites The spritesheet corresponding to the sprite IDs.
 	 * @return Animation
 	 */
-	public Animation loadAnim(String parseString, SpriteSheet sprites){
+	public Animation loadAnim(String parseString, SpriteSheet spr){
 		String[] parts = parseString.split(" ");
 		int numFrames = parts.length - 2;
 		int pause = Integer.parseInt(parts[1]);
-		Animation anim = new Animation(numFrames, pause, parts[0], sprites, true);
+		Animation anim = new Animation(spr, numFrames, pause, parts[0], true);
 		animList.add(anim);
 		for (int i = 2; i < parts.length; i++){
 			int texX = Integer.parseInt(parts[i]) % 16;
@@ -110,9 +110,6 @@ public class AnimationManager {
 	 * standalone animations that can be manually updated.
 	 * Animations should not be created manually but instead loaded by
 	 * the AnimationManager from a file using loadAnims().
-	 * 
-	 * @author avery
-	 *
 	 */
 	public class Animation {
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
@@ -126,9 +123,9 @@ public class AnimationManager {
 		private String name;
 		private SpriteSheet spriteSheet;
 		
-		private Animation(int len, long pause, String name, SpriteSheet spriteSheet, boolean autoUpdate){
+		private Animation(SpriteSheet spr, int len, long pause, String name, boolean autoUpdate){
+			spriteSheet = spr;
 			this.pause = pause;
-			this.spriteSheet = spriteSheet;
 			this.name = name;
 			animArrayX = new int[len];
 			animArrayY = new int[len];
@@ -147,8 +144,8 @@ public class AnimationManager {
 		 * @return new Animation that is a clone of the calling Animation
 		 */
 		public Animation cloneAnim(){
-			Animation anim = new Animation(this.animArrayX.length, 
-							this.pause, this.name, this.spriteSheet, false);
+			Animation anim = new Animation(this.spriteSheet, this.animArrayX.length, 
+							this.pause, this.name, false);
 			for (int i = 0; i < this.animArrayX.length; i++){
 				anim.addFrame(this.animArrayX[i], this.animArrayY[i]);				
 			}
@@ -156,21 +153,12 @@ public class AnimationManager {
 			return anim;
 		}
 		
-		public int getDispX(){
+		public int getTexX(){
 			return animArrayX[dispPointer];
 		}
 		
-		public int getDispY(){
+		public int getTexY(){
 			return animArrayY[dispPointer];
-		}
-		
-		public SpriteSheet getSpriteSheet(){
-			return spriteSheet;
-		}
-		
-		public void destroy(){
-			if (autoUpdated)
-				AnimationManager.this.destroy(this);
 		}
 		
 		private void addFrame(int x, int y){
@@ -179,13 +167,25 @@ public class AnimationManager {
 			fillCount++;
 		}
 		
-		public void update(long deltaTime){
-			timer = (timer + deltaTime) % (pause * animArrayX.length);
+		public boolean update(long deltaTime){
+			long tmptime = timer;
+			timer = (timer + deltaTime) % getAnimLength();
 			dispPointer = (int) (timer / pause);
+			return (timer > tmptime && deltaTime > 0);
+		}
+		
+		public long getAnimLength(){
+			return pause * animArrayX.length;
 		}
 		
 		public String toString(){
 			return name;
+		}
+		
+		public void draw(float x, float y){
+			GUtil.drawSprite(spriteSheet, x, y, getTexX(),
+					getTexY(), Game.SCALE * Game.TILE_SIZE, Game.SCALE
+							* Game.TILE_SIZE, 16);
 		}
 	}
 }

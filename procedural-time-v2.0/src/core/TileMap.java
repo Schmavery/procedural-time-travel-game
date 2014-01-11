@@ -21,7 +21,6 @@ public class TileMap implements Serializable{
 	private int size;
 	private Random rand;
 	private int seed;
-	private AnimationManager animManager;
 	
 	// Corner IDs for different terrain
 	private String[] grassCenterAnimNames = 
@@ -39,15 +38,13 @@ public class TileMap implements Serializable{
 		{"d_c0", "d_c1", "d_c2"};
 
 	
-	public TileMap(int size, AnimationManager am){
+	public TileMap(int size){
 //		seed = (int) System.currentTimeMillis();
 		seed = 366907858;
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
 		this.rand = new Random(seed);
-		animManager = am;
-
 		generateTerrain();
 	}
 	
@@ -181,34 +178,34 @@ public class TileMap implements Serializable{
 				switch (rand.nextInt(50)){
 				case 1:
 				case 2:
-					return animManager.getAnim("flower");
+					return Game.getAnims().getAnim("flower");
 				case 3:
-					return animManager.getAnim("g_rock1");
+					return Game.getAnims().getAnim("g_rock1");
 				case 4:
-					return animManager.getAnim("g_rock2");
+					return Game.getAnims().getAnim("g_rock2");
 				case 5:
-					return animManager.getAnim("g_rock3");
+					return Game.getAnims().getAnim("g_rock3");
 				default:
-					return animManager.getAnim(grassCenterAnimNames[rand.nextInt(grassCenterAnimNames.length)]);			
+					return Game.getAnims().getAnim(grassCenterAnimNames[rand.nextInt(grassCenterAnimNames.length)]);			
 				}					
 			}
-			return animManager.getAnim(grassAnimNames[bit - 1]);
+			return Game.getAnims().getAnim(grassAnimNames[bit - 1]);
 		case DIRT:
 			switch (rand.nextInt(50)){
 			case 1:
-				return animManager.getAnim("d_rock1");
+				return Game.getAnims().getAnim("d_rock1");
 			case 2:
-				return animManager.getAnim("d_rock2");
+				return Game.getAnims().getAnim("d_rock2");
 			case 3:
-				return animManager.getAnim("d_rock3");
+				return Game.getAnims().getAnim("d_rock3");
 
 			default:
-				return animManager.getAnim(dirtAnimNames[rand.nextInt(dirtAnimNames.length)]);
+				return Game.getAnims().getAnim(dirtAnimNames[rand.nextInt(dirtAnimNames.length)]);
 			}
 		case SAND:
-			return animManager.getAnim(sandAnimNames[bit]);
+			return Game.getAnims().getAnim(sandAnimNames[bit]);
 		case WATER:
-			return animManager.getAnim(waterAnimNames[bit]);
+			return Game.getAnims().getAnim(waterAnimNames[bit]);
 		default:
 			return null;
 		}

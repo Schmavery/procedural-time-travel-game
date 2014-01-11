@@ -6,8 +6,7 @@ import gui.GUtil.SpriteSheet;
 
 public abstract class AbstractItem extends AbstractEntity implements Item
 {
-	public static enum ItemState {LOOSE, PLACED, HELD, STOWED}
-	
+//	public static enum ItemState {LOOSE, PLACED, HELD, STOWED}
 //	private ItemState state;
 	public AbstractItem(float x, float y){
 		super(x, y);
@@ -24,9 +23,6 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	public void addToMap(float x, float y){
 		this.x = x;
 		this.y = y;
-		if (Game.getMap().getTile(getTileX(), getTileY()) == null)
-			System.out.println("...");
-		else
-			Game.getMap().getTile(getTileX(), getTileY()).addEntity(this);
+		Game.getMap().getTile(getTileX(), getTileY()).addEntity(this);
 	}
 }

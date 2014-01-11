@@ -1,5 +1,6 @@
 package entities;
 
+import gui.GUtil;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.PathException;
@@ -27,6 +28,7 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	{
 		this.dx += dx;
 		this.dy += dy;
+		tilePather.clear();
 	}
 
 	public void move(Facing f)
@@ -84,17 +86,25 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	public int getTexX()
 	{ 
 		if (moving){
-			return movingAnims[facing.ordinal()].getDispX();
+			return movingAnims[facing.ordinal()].getTexX();
 		}
-		return standingAnims[facing.ordinal()].getDispX();
+		return standingAnims[facing.ordinal()].getTexX();
 	}
 
 	@Override
 	public int getTexY()
 	{
 		if (moving)
-			return movingAnims[facing.ordinal()].getDispY();
-		return standingAnims[facing.ordinal()].getDispY();
+			return movingAnims[facing.ordinal()].getTexY();
+		return standingAnims[facing.ordinal()].getTexY();
+	}
+	
+	@Override
+	public void draw(float x, float y){
+		if (moving)
+			movingAnims[facing.ordinal()].draw(x + getX(), y + getY());
+		else 
+			super.draw(x, y);
 	}
 
 }

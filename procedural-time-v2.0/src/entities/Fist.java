@@ -12,6 +12,7 @@ public int damage = 1;
 
 	public Fist() {
 		super(0f, 0f);
+		setAnim(Game.getAnims().getAnim("fist"));
 	}
 
 	@Override
@@ -19,7 +20,7 @@ public int damage = 1;
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
-				if (h instanceof Hittable){
+				if (h instanceof Hittable && !h.equals(user)){
 					// TODO: Check for collision
 					((Hittable) h).hit(this, user);
 				}

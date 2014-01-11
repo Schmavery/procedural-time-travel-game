@@ -78,6 +78,7 @@ public class PathFinder<T extends Pathable<T>> {
 		this.closed.clear();
 		this.finalNode = null;
 		this.target = null;
+		path = null;
 		running = false;
 	}
 	
