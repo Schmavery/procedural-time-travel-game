@@ -6,7 +6,7 @@ import java.util.Random;
 
 import core.AnimationManager.Animation;
 import core.Tile.Type;
-import entities.AbstractEntity.Facing;
+import entities.abstr.AbstractEntity.Facing;
 
 /**
  * Class that keeps generates the game tilemap using Perlin Noise.

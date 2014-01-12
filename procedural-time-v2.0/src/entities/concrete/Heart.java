@@ -1,5 +1,6 @@
-package entities;
+package entities.concrete;
 
+import entities.abstr.AbstractItem;
 import entities.interfaces.Hittable;
 import entities.interfaces.Weapon;
 

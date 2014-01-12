@@ -1,15 +1,19 @@
-man_n_anim 150 4 5 6 7 
-man_s_anim 150 0 1 2 3 
-man_w_anim 150 20 21 22 23
-man_e_anim 150 16 17 18 19
 man_n 0 4
 man_s 0 0
 man_w 0 21
 man_e 0 16
-girl_n_anim 150 36 37 38 39 
-girl_s_anim 150 32 33 34 35 
-girl_w_anim 150 52 53 54 55
-girl_e_anim 150 48 49 50 51
+man_n_walk 150 4 5 6 7 
+man_s_walk 150 0 1 2 3 
+man_w_walk 150 20 21 22 23
+man_e_walk 150 16 17 18 19
+man_n_stow 100 10 11 10
+man_s_stow 100 8 9 8
+man_e_stow 100 24 25 24
+man_w_stow 100 27 26 27
+girl_n_walk 150 36 37 38 39 
+girl_s_walk 150 32 33 34 35 
+girl_w_walk 150 52 53 54 55
+girl_e_walk 150 48 49 50 51
 girl_n 0 36
 girl_s 0 32
 girl_w 0 53

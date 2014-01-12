@@ -1,4 +1,4 @@
-package entities;
+package entities.abstr;
 
 import core.Game;
 import entities.interfaces.Item;

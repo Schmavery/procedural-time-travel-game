@@ -1,7 +1,8 @@
-package entities;
+package entities.concrete;
 
 import core.Game;
 import core.Tile;
+import entities.abstr.AbstractItem;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Holdable;

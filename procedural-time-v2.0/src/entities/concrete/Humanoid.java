@@ -1,4 +1,4 @@
-package entities;
+package entities.concrete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import core.Message;
 import core.PathException;
 import core.PathFinder;
 import core.Tile;
+import entities.EntityFrame;
+import entities.abstr.AbstractMovingEntity;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Holdable;
@@ -30,10 +32,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	public static enum Gender {
 		MALE, FEMALE
 	}
-
-//	public static enum EntityAction {
-//		SWING, USE, STOW, RETREIVE, TALK, PICKUP, DEFAULT
-//	}
 
 	public static Fist fist = new Fist();
 
@@ -240,14 +238,22 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	private void retreive(int invIndex) {
 		if (invIndex >= 0) {
+			Holdable item = null;
 			if (inventory[invIndex] == null){
-				System.out.println("Fist!");
-				getItem(fist);
+//				System.out.println("Fist!");
+				item = fist;
+//				getItem(fist);
 			} else {
-				Holdable item = inventory[invIndex];
-				inventory[invIndex] = null;
-				getItem(item);
+				item = inventory[invIndex];
+//				inventory[invIndex] = null;
+//				getItem(item);
 			}
+			if (heldItem != fist){
+				inventory[invIndex] = heldItem;
+			} else {
+				inventory[invIndex] = null;
+			}
+			heldItem = item;
 		}
 	}
 
@@ -269,19 +275,22 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 			System.out.println("Hey!");
 			return;
 		} else {
-			currentAction = ActionFactory.drop();
 			System.out.println(currentAction);
 			switch (aType) {
 				case DROP:
+					currentAction = ActionFactory.drop();
 					drop();
 					break;
 				case RETREIVE:
+					currentAction = ActionFactory.retreive();
 					retreive(index);
 					break;
 				case SWING:
+					currentAction = ActionFactory.swing();
 					heldItem.swing(this);
 					break;
 				case USE:
+					currentAction = ActionFactory.use();
 					heldItem.use(this);
 			}
 		}

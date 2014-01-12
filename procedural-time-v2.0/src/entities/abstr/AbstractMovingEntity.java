@@ -1,6 +1,5 @@
-package entities;
+package entities.abstr;
 
-import gui.GUtil;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.PathException;

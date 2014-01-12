@@ -1,6 +1,6 @@
 package core;
 
-import entities.AbstractEntity;
+import entities.abstr.AbstractEntity;
 
 public class Message {
 	private float x, y;

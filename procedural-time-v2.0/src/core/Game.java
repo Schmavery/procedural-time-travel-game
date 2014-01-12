@@ -20,9 +20,9 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
-import entities.Humanoid;
-import entities.Humanoid.Gender;
-import entities.Sword;
+import entities.concrete.Humanoid;
+import entities.concrete.Sword;
+import entities.concrete.Humanoid.Gender;
 import entities.interfaces.Drawable;
 import gui.GBorderFactory;
 import gui.GButton;
@@ -102,10 +102,10 @@ public class Game extends Core {
 		Random rand = new Random();
 		humans = new Humanoid[10000];
 		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
-			player.setMovingAnims(animManager.getAnim("man_n_anim"), 
-					animManager.getAnim("man_e_anim"),
-					animManager.getAnim("man_s_anim"),
-					animManager.getAnim("man_w_anim"));
+			player.setMovingAnims(animManager.getAnim("man_n_walk"), 
+					animManager.getAnim("man_e_walk"),
+					animManager.getAnim("man_s_walk"),
+					animManager.getAnim("man_w_walk"));
 			player.setStandingAnims(animManager.getAnim("man_n"), 
 					animManager.getAnim("man_e"),
 					animManager.getAnim("man_s"),
@@ -123,10 +123,10 @@ public class Game extends Core {
 			if (rand.nextBoolean()){
 				humans[i] = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
-				humans[i].setMovingAnims(animManager.getAnim("man_n_anim"), 
-						animManager.getAnim("man_e_anim"),
-						animManager.getAnim("man_s_anim"),
-						animManager.getAnim("man_w_anim"));
+				humans[i].setMovingAnims(animManager.getAnim("man_n_walk"), 
+						animManager.getAnim("man_e_walk"),
+						animManager.getAnim("man_s_walk"),
+						animManager.getAnim("man_w_walk"));
 				humans[i].setStandingAnims(animManager.getAnim("man_n"), 
 						animManager.getAnim("man_e"),
 						animManager.getAnim("man_s"),
@@ -134,10 +134,10 @@ public class Game extends Core {
 			} else {
 				humans[i] = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
-				humans[i].setMovingAnims(animManager.getAnim("girl_n_anim"), 
-						animManager.getAnim("girl_e_anim"),
-						animManager.getAnim("girl_s_anim"),
-						animManager.getAnim("girl_w_anim"));
+				humans[i].setMovingAnims(animManager.getAnim("girl_n_walk"), 
+						animManager.getAnim("girl_e_walk"),
+						animManager.getAnim("girl_s_walk"),
+						animManager.getAnim("girl_w_walk"));
 				humans[i].setStandingAnims(animManager.getAnim("girl_n"), 
 						animManager.getAnim("girl_e"),
 						animManager.getAnim("girl_s"),
@@ -247,10 +247,9 @@ public class Game extends Core {
 	
 	@Override
 	public void update(long deltaTime){
-//		if (Keyboard.isKeyDown(Keyboard.KEY_Q) || 
-//				Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
-//				exit();
-//		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+				exit();
+		}
 		while (Mouse.next()){
 			if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()){
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());

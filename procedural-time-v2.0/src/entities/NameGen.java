@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Random;
 
-import entities.Humanoid.Gender;
+import entities.concrete.Humanoid.Gender;
 
 public class NameGen {
 	private static String[] mPreNames = {"Bob", "Joe", "Jor", "Big", "Wil", "A'y", "Hag", "Fly", "Lar", "Jim", "Bel", "Bre", "Lee"};

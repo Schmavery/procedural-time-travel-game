@@ -1,11 +1,11 @@
-package entities;
+package entities.abstr;
 
 import java.util.Random;
 
 import core.AnimationManager.Animation;
 import core.Game;
+import entities.EntityFrame;
 import entities.interfaces.Entity;
-import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 
 public abstract class AbstractEntity implements Entity

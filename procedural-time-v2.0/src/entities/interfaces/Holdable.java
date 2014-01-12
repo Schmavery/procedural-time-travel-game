@@ -1,6 +1,6 @@
 package entities.interfaces;
 
-import entities.Humanoid;
+import entities.concrete.Humanoid;
 
 public interface Holdable extends Item{
 	public void swing(Humanoid user);

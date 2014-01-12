@@ -100,9 +100,9 @@ public class AnimationManager {
 		return null;
 	}
 	
-	private void destroy(Animation oldAnim){
-		animList.remove(oldAnim);
-	}
+//	private void destroy(Animation oldAnim){
+//		animList.remove(oldAnim);
+//	}
 	
 	
 	/**
@@ -113,7 +113,7 @@ public class AnimationManager {
 	 */
 	public class Animation {
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
-		private boolean autoUpdated;	// true if the animation is held by the AnimationManager.
+//		private boolean autoUpdated;	// true if the animation is held by the AnimationManager.
 		private int[] animArrayX;		// X position of frame on spritesheet
 		private int[] animArrayY;		// Y position of frame on spritesheet
 		private int fillCount;			// Keeps track of index while populating animation
@@ -133,7 +133,7 @@ public class AnimationManager {
 			animated  = (len > 1);
 			dispPointer = 0;
 			timer = 0;
-			this.autoUpdated = autoUpdate;
+//			this.autoUpdated = autoUpdate;
 			}
 		
 		/**
