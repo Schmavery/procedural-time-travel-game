@@ -1,5 +1,6 @@
 package entities.concrete;
 
+import core.AnimationManager.Animation;
 import core.Game;
 import core.Tile;
 import entities.abstr.AbstractItem;
@@ -34,20 +35,15 @@ public int damage = 1;
 		if (user.inventoryFull()){
 			return;
 		}
-		Holdable removeItem = null;
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			for (Entity e : t.getEntities()){
 				if (e instanceof Holdable){
 					// TODO: Check for collision
-					user.getItem((Holdable) e);
-					removeItem = (Holdable) e;
-					break;
+					if (user.getItem((Holdable) e));
+						((Holdable) e).removeFromMap();
+					return;
 				}
-			}
-			if (removeItem != null){
-				t.removeEntity(removeItem);
-				
-			}
+			}			
 		}
 	}
 
@@ -56,15 +52,37 @@ public int damage = 1;
 		return damage;
 	}
 	
+	@Override
+	public Animation[] getSwingArray(){
+		return null;
+	}
 	
+	@Override
+	public Animation[] getUseArray(){
+		return null;
+	}
+
 	@Override
 	public int getTexX() {
-		return 6;
-	}
-	
-	@Override
-	public int getTexY() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int getTexY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+//	
+//	@Override
+//	public int getTexX() {
+//		return 6;
+//	}
+//	
+//	@Override
+//	public int getTexY() {
+//		return 0;
+//	}
 
 }

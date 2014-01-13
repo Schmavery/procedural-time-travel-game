@@ -195,11 +195,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	@Override
-	protected SpriteSheet getSpriteSheet() {
-		return SpriteSheet.PEOPLE;
-	}
-
-	@Override
 	public void hit(Weapon w, Humanoid wielder) {
 		setHealth(health - w.getDamage()); 
 	}
@@ -212,7 +207,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	 * @return Returns false if
 	 */
 	public boolean getItem(Holdable item) {
-		System.out.println("Got item");
 		if (heldItem != fist) {
 			if (inventoryFull()) {
 				return false;
@@ -240,13 +234,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		if (invIndex >= 0) {
 			Holdable item = null;
 			if (inventory[invIndex] == null){
-//				System.out.println("Fist!");
 				item = fist;
-//				getItem(fist);
 			} else {
 				item = inventory[invIndex];
-//				inventory[invIndex] = null;
-//				getItem(item);
 			}
 			if (heldItem != fist){
 				inventory[invIndex] = heldItem;
@@ -272,10 +262,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	
 	public void doAction(ActionType aType, int index){
 		if (currentAction != null){
-			System.out.println("Hey!");
+//			System.out.println("Hey!");
 			return;
 		} else {
-			System.out.println(currentAction);
 			switch (aType) {
 				case DROP:
 					currentAction = ActionFactory.drop();
@@ -350,7 +339,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		GUtil.drawRect(new Rectangle((int) x, (int) y, 260, 95), ReadableColor.DKGREY);
 		GUtil.drawRect(new Rectangle((int) x + 10, (int) y+10, 75, 75), ReadableColor.GREY);
 		if (heldItem != null){
-			GUtil.drawSprite(SpriteSheet.ITEMS, x + 15, y+15, heldItem.getTexX(), heldItem.getTexY(), 70, 70, 16);
+			heldItem.draw(x+15, y+15, 70, 70);
 		}
 		
 		GUtil.drawText((int) x + 100, (int) y + 60, ReadableColor.WHITE, name);
@@ -358,8 +347,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		for (int i = 0; i < inventory.length; i++){
 			GUtil.drawRect(new Rectangle((int) x+55*i + 90, (int) y+10, 50, 50), ReadableColor.GREY);
 			if (inventory[i] != null)
-				GUtil.drawSprite(SpriteSheet.ITEMS, x+55*i + 95, y+15, inventory[i].getTexX(), 
-						inventory[i].getTexY(), 40, 40, 16);
+				inventory[i].draw( x+55*i + 95, y+15, 40, 40);
 		}
 	}
 

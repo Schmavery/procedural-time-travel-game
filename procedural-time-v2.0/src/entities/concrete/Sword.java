@@ -2,6 +2,7 @@ package entities.concrete;
 
 import core.Game;
 import core.Tile;
+import core.AnimationManager.Animation;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
@@ -46,5 +47,16 @@ public class Sword extends AbstractItem implements Weapon{
 	@Override
 	public int getTexY() {
 		return 0;
+	}
+	
+	
+	@Override
+	public Animation[] getSwingArray(){
+		return null;
+	}
+	
+	@Override
+	public Animation[] getUseArray(){
+		return null;
 	}
 }

@@ -2,7 +2,6 @@ package entities.abstr;
 
 import core.Game;
 import entities.interfaces.Item;
-import gui.GUtil.SpriteSheet;
 
 public abstract class AbstractItem extends AbstractEntity implements Item
 {
@@ -11,12 +10,10 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	public AbstractItem(float x, float y){
 		super(x, y);
 	}
-
-	protected SpriteSheet getSpriteSheet(){
-		return SpriteSheet.ITEMS;
-	}
 	
 	public void removeFromMap(){
+		this.x = 0;
+		this.y = 0;
 		Game.getMap().getTile(getTileX(), getTileY()).removeEntity(this);
 	}
 	
@@ -24,5 +21,13 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 		this.x = x;
 		this.y = y;
 		Game.getMap().getTile(getTileX(), getTileY()).addEntity(this);
+	}
+	
+	@Override
+	public void draw(float x, float y){
+//		System.out.println("test");
+		facing = Facing.NORTH;
+		super.draw(x, y);
+//		System.out.println("Drew item " + this.toString());
 	}
 }

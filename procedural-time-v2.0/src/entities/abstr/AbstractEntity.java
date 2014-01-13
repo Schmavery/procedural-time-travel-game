@@ -5,8 +5,8 @@ import java.util.Random;
 import core.AnimationManager.Animation;
 import core.Game;
 import entities.EntityFrame;
+import entities.concrete.Sword;
 import entities.interfaces.Entity;
-import gui.GUtil.SpriteSheet;
 
 public abstract class AbstractEntity implements Entity
 {
@@ -69,6 +69,10 @@ public abstract class AbstractEntity implements Entity
 		standingAnims[facing.ordinal()].draw(x + getX(), y + getY());
 	}
 	
-	protected abstract SpriteSheet getSpriteSheet();
+	public void draw(float x, float y, float w, float h){
+		standingAnims[facing.ordinal()].draw(x + getX(), y + getY(), w, h);
+	}
+	
+//	protected abstract SpriteSheet getSpriteSheet();
 
 }

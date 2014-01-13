@@ -111,7 +111,7 @@ public class AnimationManager {
 	 * Animations should not be created manually but instead loaded by
 	 * the AnimationManager from a file using loadAnims().
 	 */
-	public class Animation {
+	public final class Animation {
 		private boolean animated;		// That's right, some animations aren't animated. Sue me.
 //		private boolean autoUpdated;	// true if the animation is held by the AnimationManager.
 		private int[] animArrayX;		// X position of frame on spritesheet
@@ -180,6 +180,10 @@ public class AnimationManager {
 		
 		public String toString(){
 			return name;
+		}
+		
+		public void draw(float x, float y, float w, float h){
+			GUtil.drawSprite(spriteSheet, x, y, getTexX(), getTexY(), w, h, 16);
 		}
 		
 		public void draw(float x, float y){
