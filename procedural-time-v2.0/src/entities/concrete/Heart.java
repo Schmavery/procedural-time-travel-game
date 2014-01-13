@@ -17,14 +17,14 @@ public class Heart extends AbstractItem implements Hittable{
 		wielder.setHealth(wielder.getHealth() + 1);;
 	}
 
-	@Override
-	public int getTexX() {
-		return 2;
-	}
-	
-	@Override
-	public int getTexY() {
-		return 0;
-	}
+//	@Override
+//	public int getTexX() {
+//		return 2;
+//	}
+//	
+//	@Override
+//	public int getTexY() {
+//		return 0;
+//	}
 	
 }

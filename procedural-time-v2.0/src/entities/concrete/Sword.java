@@ -39,15 +39,15 @@ public class Sword extends AbstractItem implements Weapon{
 		return damage;
 	}
 	
-	@Override
-	public int getTexX() {
-		return 5;
-	}
-	
-	@Override
-	public int getTexY() {
-		return 0;
-	}
+//	@Override
+//	public int getTexX() {
+//		return 5;
+//	}
+//	
+//	@Override
+//	public int getTexY() {
+//		return 0;
+//	}
 	
 	
 	@Override

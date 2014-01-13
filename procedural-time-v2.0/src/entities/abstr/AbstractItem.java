@@ -11,6 +11,10 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 		super(x, y);
 	}
 	
+	public AbstractItem(){
+		super(0, 0);
+	}
+	
 	public void removeFromMap(){
 		this.x = 0;
 		this.y = 0;

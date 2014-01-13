@@ -13,7 +13,7 @@ public class Fist extends AbstractItem implements Weapon{
 public int damage = 1;
 
 	public Fist() {
-		super(0f, 0f);
+		super();
 		setAnim(Game.getAnims().getAnim("fist"));
 	}
 
@@ -62,18 +62,6 @@ public int damage = 1;
 		return null;
 	}
 
-	@Override
-	public int getTexX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getTexY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 //	
 //	@Override
 //	public int getTexX() {

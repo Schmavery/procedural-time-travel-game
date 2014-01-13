@@ -6,16 +6,16 @@ public class AbstractBulk extends AbstractItem{
 		super(x, y);
 	}
 
-	@Override
-	public int getTexX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getTexY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	public int getTexX() {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public int getTexY() {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 }

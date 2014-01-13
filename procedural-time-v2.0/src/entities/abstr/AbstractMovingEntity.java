@@ -81,22 +81,22 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	public boolean isMoving()
 	{return moving;}
 	
-	@Override
-	public int getTexX()
-	{ 
-		if (moving){
-			return movingAnims[facing.ordinal()].getTexX();
-		}
-		return standingAnims[facing.ordinal()].getTexX();
-	}
-
-	@Override
-	public int getTexY()
-	{
-		if (moving)
-			return movingAnims[facing.ordinal()].getTexY();
-		return standingAnims[facing.ordinal()].getTexY();
-	}
+//	@Override
+//	public int getTexX()
+//	{ 
+//		if (moving){
+//			return movingAnims[facing.ordinal()].getTexX();
+//		}
+//		return standingAnims[facing.ordinal()].getTexX();
+//	}
+//
+//	@Override
+//	public int getTexY()
+//	{
+//		if (moving)
+//			return movingAnims[facing.ordinal()].getTexY();
+//		return standingAnims[facing.ordinal()].getTexY();
+//	}
 	
 	@Override
 	public void draw(float x, float y){
