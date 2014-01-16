@@ -13,3 +13,10 @@ Explanation of project:
 procedural-time-v1.0 is the original attempt at a realization of the project.  It currently gives the best idea of the goal in mind (though is still very far from the eventual imagined end-goal).  It basically consists of some basic procedurally generated terrain, dumb NPCs, useless items (that can be picked up!) and a very basic inventory/UI system.  This branch of the project has been mostly abandoned because it uses java2d, which proved to be slow.
 
 procedural-time-v2.0 is an attempt to rewrite the project using lwjgl (OpenGL) for graphics.  It makes use of a couple of external libraries, namely lwjgl and slick-utils.  It also uses fonts generated using the wonderful [BMFont](http://www.angelcode.com/products/bmfont/).
+
+Installation Instructions:
+==========================
+
+This project requires some external libraries to be linked in before it will run properly.
+
+[This](http://thecodinguniverse.com/lwjgl-workspace/) link will should you how to link up LWJGL to Eclipse.  Pretty much just follow all the instructions and it should work.
