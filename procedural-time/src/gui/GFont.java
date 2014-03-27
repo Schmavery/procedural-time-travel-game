@@ -22,18 +22,7 @@ public class GFont
 	
 	public GFont(String path){
 		properties = new HashMap<>();
-//		try {
-//			FileReader fr = new FileReader(path);
-//			BufferedReader br = new BufferedReader(fr);
-//			String s = null;
-//			while((s = br.readLine()) != null) {
-//				parseLine(s);
-//			}
-//			fr.close();
-//			System.out.println("Loaded font file from '" + path + "'.");
-//		} catch (IOException e){
-//			e.printStackTrace();
-//		}
+
 		try (FileReader fr = new FileReader(path);
 			BufferedReader br = new BufferedReader(fr)
 		){

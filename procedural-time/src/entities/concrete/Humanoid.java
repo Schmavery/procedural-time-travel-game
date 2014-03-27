@@ -145,6 +145,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 		if (currentAction != null){
 			if (!currentAction.update(deltaTime)){
+				endAction(currentAction);
 				currentAction = null;
 			}
 		}
@@ -281,10 +282,16 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 				case USE:
 					currentAction = ActionFactory.use();
 					heldItem.use(this);
+				case DIE:
+					currentAction = ActionFactory.die();
+					die();
 			}
 		}
 	}
 	
+	public void endAction(Action act){
+		// TODO
+	}
 
 	public boolean inventoryFull() {
 		return inventoryFreeSpot() == -1;
@@ -299,9 +306,27 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		return -1;
 	}
 	
+	public void die(){
+		switch (rand.nextInt(3)) {
+		case 0:
+			say("Euurghh...");
+			break;
+		case 1:
+			say("I will have my vengeance!");
+			break;
+		case 2:
+			say("Ouch!");
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void setHealth(int h) {
 		health = Math.max(Math.min(maxHealth, h), 0);
-		System.out.println(health);
+		if (health == 0){
+			die();
+		}
 	}
 
 	public int getHealth() {

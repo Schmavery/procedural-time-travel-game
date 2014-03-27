@@ -5,7 +5,6 @@ import java.util.Random;
 import core.AnimationManager.Animation;
 import core.Game;
 import entities.EntityFrame;
-import entities.concrete.Sword;
 import entities.interfaces.Entity;
 
 public abstract class AbstractEntity implements Entity

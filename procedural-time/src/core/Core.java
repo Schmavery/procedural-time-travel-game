@@ -69,6 +69,7 @@ public abstract class Core {
     
     private void gameLoop(){
     	System.out.println(System.currentTimeMillis());
+    	int counter = 0;
         while (!Display.isCloseRequested()) {
         	// Render
         	long deltaTime = getDelta();
@@ -88,8 +89,6 @@ public abstract class Core {
         	GUtil.begin();
         	draw();
         	GUtil.end();
-        	//int mouse_x = Mouse.getX();
-        	//int mouse_y = SCREEN_HEIGHT - Mouse.getY() - 1;
         	
             Display.update();
             Display.sync(60);

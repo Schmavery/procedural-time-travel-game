@@ -21,8 +21,8 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
 import entities.concrete.Humanoid;
-import entities.concrete.Sword;
 import entities.concrete.Humanoid.Gender;
+import entities.concrete.Sword;
 import entities.interfaces.Drawable;
 import gui.GBorderFactory;
 import gui.GButton;
@@ -48,7 +48,7 @@ public class Game extends Core {
 	long totalTime = 0;
 	
 	Humanoid player;
-	Humanoid[] humans;
+	List<Humanoid> humans;
 	List<Drawable> drawList;
 	Comparator<Drawable> drawComparator;
 	String targetName;
@@ -83,6 +83,8 @@ public class Game extends Core {
 		drawLoading();
 		initMarkov();
 		
+		int numHumans = 10000;
+		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Drawable>()
 		{
@@ -100,7 +102,7 @@ public class Game extends Core {
 
 		tileMap = new TileMap(1000);
 		Random rand = new Random();
-		humans = new Humanoid[10000];
+		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
 			player.setMovingAnims(animManager.getAnim("man_n_walk"), 
 					animManager.getAnim("man_e_walk"),
@@ -110,52 +112,49 @@ public class Game extends Core {
 					animManager.getAnim("man_e"),
 					animManager.getAnim("man_s"),
 					animManager.getAnim("man_w"));
-		humans[0] = player;
+		humans.add(player);
 		
-		for (int i = 1; i < humans.length; i++){
-			float randX = rand.nextFloat()*SCALE*TILE_SIZE*999;
-			float randY = rand.nextFloat()*SCALE*TILE_SIZE*999;
-			if (!tileMap.getWorldTile(randX, randY).walkable){
-				i--;
-				continue;
-			}
-			
+		for (int i = 1; i < numHumans; i++){
+			float randX;
+			float randY;
+			do{
+				randX = rand.nextFloat()*SCALE*TILE_SIZE*999;
+				randY = rand.nextFloat()*SCALE*TILE_SIZE*999;
+			} while (!tileMap.getWorldTile(randX, randY).walkable);
+
+			Humanoid tmpHuman;
 			if (rand.nextBoolean()){
-				humans[i] = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
+				tmpHuman = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
-				humans[i].setMovingAnims(animManager.getAnim("man_n_walk"), 
+				tmpHuman.setMovingAnims(animManager.getAnim("man_n_walk"), 
 						animManager.getAnim("man_e_walk"),
 						animManager.getAnim("man_s_walk"),
 						animManager.getAnim("man_w_walk"));
-				humans[i].setStandingAnims(animManager.getAnim("man_n"), 
+				tmpHuman.setStandingAnims(animManager.getAnim("man_n"), 
 						animManager.getAnim("man_e"),
 						animManager.getAnim("man_s"),
 						animManager.getAnim("man_w"));
 			} else {
-				humans[i] = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
+				tmpHuman = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
-				humans[i].setMovingAnims(animManager.getAnim("girl_n_walk"), 
+				tmpHuman.setMovingAnims(animManager.getAnim("girl_n_walk"), 
 						animManager.getAnim("girl_e_walk"),
 						animManager.getAnim("girl_s_walk"),
 						animManager.getAnim("girl_w_walk"));
-				humans[i].setStandingAnims(animManager.getAnim("girl_n"), 
+				tmpHuman.setStandingAnims(animManager.getAnim("girl_n"), 
 						animManager.getAnim("girl_e"),
 						animManager.getAnim("girl_s"),
 						animManager.getAnim("girl_w"));
 			}
+			humans.add(tmpHuman);
 		}
 		
-		Humanoid tmp = humans[rand.nextInt(humans.length)];
+		Humanoid tmp = humans.get(rand.nextInt(numHumans));
 		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
 		System.out.println(tmpTile.getX());
 		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
-		Sword sw = new Sword(0, 0);
-//		sw.setStandingAnims(animManager.getAnim("girl_n"), 
-//				animManager.getAnim("girl_e"),
-//				animManager.getAnim("girl_s"),
-//				animManager.getAnim("girl_w"));
-		player.getItem(sw);
+		player.getItem(new Sword(0, 0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
 	}
@@ -322,19 +321,23 @@ public class Game extends Core {
 			pauseDown = false;
 			pauseGame();
 		}
-		player.update(deltaTime);
-		for (int i = 1; i < humans.length; i++){
-			if (!humans[i].isMoving()){
-				if (rand.nextInt(100) == 1){
-					int destX = humans[i].getTileX() + (rand.nextInt(10) - 5);
-					int destY = humans[i].getTileY() + (rand.nextInt(10) - 5);
-					humans[i].walkTo(destX, destY);
-				}
-				if (rand.nextInt(1000) == 1){
-					humans[i].say("Hey.");
+
+		for (Humanoid human : humans){
+			if (human.equals(player)){
+				// Do nothing
+			} else {
+				if (!human.isMoving()){
+					if (rand.nextInt(100) == 1){
+						int destX = human.getTileX() + (rand.nextInt(10) - 5);
+						int destY = human.getTileY() + (rand.nextInt(10) - 5);
+						human.walkTo(destX, destY);
+					}
+					if (rand.nextInt(5000) == 1){
+						human.say("Hey.");
+					}
 				}
 			}
-			humans[i].update(deltaTime);
+			human.update(deltaTime);
 		}
 		screen.update(deltaTime);
 	}

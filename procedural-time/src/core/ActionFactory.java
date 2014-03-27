@@ -4,7 +4,7 @@ import core.AnimationManager.Animation;
 import entities.abstr.AbstractEntity.Facing;
 
 public class ActionFactory {
-	public static enum ActionType {DROP, SWING, USE, RETREIVE};
+	public static enum ActionType {DROP, SWING, USE, RETREIVE, DIE};
 	
 	public static Action drop(){
 		return new Action(
@@ -36,6 +36,15 @@ public class ActionFactory {
 	public static Action retreive(){
 		return new Action(
 				ActionType.RETREIVE,
+				Game.getAnims().getAnim("man_n_stow"), 
+				Game.getAnims().getAnim("man_e_stow"),
+				Game.getAnims().getAnim("man_s_stow"),
+				Game.getAnims().getAnim("man_w_stow"));
+	}
+	
+	public static Action die(){
+		return new Action(
+				ActionType.DIE,
 				Game.getAnims().getAnim("man_n_stow"), 
 				Game.getAnims().getAnim("man_e_stow"),
 				Game.getAnims().getAnim("man_s_stow"),
