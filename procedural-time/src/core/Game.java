@@ -22,6 +22,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import core.ActionFactory.ActionType;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
+import entities.concrete.NPC;
 import entities.concrete.Sword;
 import entities.interfaces.Drawable;
 import gui.GBorderFactory;
@@ -42,7 +43,7 @@ public class Game extends Core {
 	private static AnimationManager animManager;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 3f;
+	public static float SCALE = 2f;
 	public static Random rand = new Random();
 	
 	long totalTime = 0;
@@ -124,7 +125,7 @@ public class Game extends Core {
 
 			Humanoid tmpHuman;
 			if (rand.nextBoolean()){
-				tmpHuman = new Humanoid(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
+				tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
 				tmpHuman.setMovingAnims(animManager.getAnim("man_n_walk"), 
 						animManager.getAnim("man_e_walk"),
@@ -135,7 +136,7 @@ public class Game extends Core {
 						animManager.getAnim("man_s"),
 						animManager.getAnim("man_w"));
 			} else {
-				tmpHuman = new Humanoid(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
+				tmpHuman = new NPC(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
 				tmpHuman.setMovingAnims(animManager.getAnim("girl_n_walk"), 
 						animManager.getAnim("girl_e_walk"),

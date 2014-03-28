@@ -22,7 +22,7 @@ public int damage = 1;
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
-				if (h instanceof Hittable && !h.equals(user)){
+				if (h instanceof Hittable){
 					// TODO: Check for collision
 					((Hittable) h).hit(this, user);
 				}
@@ -61,16 +61,4 @@ public int damage = 1;
 	public Animation[] getUseArray(){
 		return null;
 	}
-
-//	
-//	@Override
-//	public int getTexX() {
-//		return 6;
-//	}
-//	
-//	@Override
-//	public int getTexY() {
-//		return 0;
-//	}
-
 }

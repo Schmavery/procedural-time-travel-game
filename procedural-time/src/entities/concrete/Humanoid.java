@@ -67,6 +67,10 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	public void update(long deltaTime) {
+		processMessages();
+		if (health == 0){
+			return;
+		}
 		if (!tilePather.isEmpty()) {
 			dx = (tilePather.currNode().getLeft()
 					+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterX())
@@ -150,11 +154,10 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 			}
 		}
 		pathGen();
-		processMessages();
-
+		
 	}
 
-	private void processMessages() {
+	protected void processMessages() {
 		long currTime = System.currentTimeMillis();
 		int delay = 200;
 		for (int i = 0; i < messages.size(); i++) {
@@ -197,14 +200,15 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	@Override
 	public void hit(Weapon w, Humanoid wielder) {
-		setHealth(health - w.getDamage()); 
+		if (this != wielder){
+			setHealth(health - w.getDamage()); 
+		}
 	}
 
 	/**
 	 * Gives the item to this humanoid.
 	 * 
-	 * @param item
-	 *            Item to be given.
+	 * @param item Item to be given.
 	 * @return Returns false if
 	 */
 	public boolean getItem(Holdable item) {
@@ -282,6 +286,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 				case USE:
 					currentAction = ActionFactory.use();
 					heldItem.use(this);
+					break;
 				case DIE:
 					currentAction = ActionFactory.die();
 					die();
