@@ -10,6 +10,7 @@ man_n_stow 100 10 11 10
 man_s_stow 100 8 9 8
 man_e_stow 100 24 25 24
 man_w_stow 100 27 26 27
+grave 0 12
 girl_n_walk 150 36 37 38 39 
 girl_s_walk 150 32 33 34 35 
 girl_w_walk 150 52 53 54 55

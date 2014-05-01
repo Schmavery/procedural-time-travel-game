@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class AnimationManager {
 	
-	private LinkedList<Animation> animList;
+	private static LinkedList<Animation> animList;
 	
 	public AnimationManager() {
 		animList = new LinkedList<Animation>();
@@ -92,7 +92,7 @@ public class AnimationManager {
 	 * @param name Name of the animation
 	 * @return Animation corresponding to the name
 	 */
-	public Animation getAnim(String name){
+	public static Animation getAnim(String name){
 		for (Animation anim: animList){
 			if (anim.name.equals(name))
 				return anim;

@@ -10,6 +10,7 @@ import org.lwjgl.util.Rectangle;
 import core.ActionFactory;
 import core.ActionFactory.Action;
 import core.ActionFactory.ActionType;
+import core.AnimationManager;
 import core.AnimationManager.Animation;
 import core.Game;
 import core.Message;
@@ -42,6 +43,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	Holdable[] inventory;
 	Holdable heldItem;
 	Action currentAction;
+	
 
 	// private Gender gender;
 
@@ -340,6 +342,15 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	
 	@Override
 	public void draw(float x, float y) {
+		if (health <= 0){
+			AnimationManager.getAnim("grave").draw(getX(), getY());;
+			//TODO: Redo this to use animations.
+//			GUtil.drawSprite(SpriteSheet.MAP, getX(), getY(), 2,
+//					2, Game.SCALE * Game.TILE_SIZE, Game.SCALE
+//							* Game.TILE_SIZE, 32);
+			return;
+		}
+		
 		if (currentAction != null){
 			currentAction.getAnim(facing).draw(x + getX(), y + getY());
 		} else {

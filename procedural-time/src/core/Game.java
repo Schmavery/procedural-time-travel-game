@@ -43,7 +43,7 @@ public class Game extends Core {
 	private static AnimationManager animManager;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 2f;
+	public static float SCALE = 3f;
 	public static Random rand = new Random();
 	
 	long totalTime = 0;
