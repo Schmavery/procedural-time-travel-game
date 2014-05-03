@@ -12,7 +12,29 @@ public class CompositeGoal extends AbstractGoal{
 	}
 	
 	public void addSubgoal(AbstractGoal goal){
+		subgoals.add(goal);
+	}
+	
+	private GoalStatus processSubgoals(){
+		// Remove completed or failed goals
+		while (!subgoals.isEmpty() && 
+				(subgoals.get(0).getStatus() == GoalStatus.COMPLETED || 
+				subgoals.get(0).getStatus() == GoalStatus.FAILED)){
+			subgoals.get(0).terminate();
+			subgoals.remove(0);
+		}
 		
+		// Continue processing
+		if (!subgoals.isEmpty()){
+			GoalStatus currStatus = subgoals.get(0).process();
+			if (currStatus == GoalStatus.COMPLETED && subgoals.size() > 1){
+				return GoalStatus.ACTIVE;
+			} else {
+				return currStatus;
+			}
+		} else {
+			return GoalStatus.COMPLETED;
+		}
 	}
 	
 	@Override
@@ -39,5 +61,11 @@ public class CompositeGoal extends AbstractGoal{
 	public boolean handleMessage() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public GoalStatus getStatus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

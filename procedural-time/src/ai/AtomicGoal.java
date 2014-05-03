@@ -2,6 +2,10 @@ package ai;
 
 public class AtomicGoal extends AbstractGoal {
 
+	public GoalStatus getStatus(){
+		return null;
+	}
+	
 	@Override
 	public void activate() {
 		// TODO Auto-generated method stub
