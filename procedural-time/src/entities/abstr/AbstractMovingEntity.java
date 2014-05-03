@@ -1,6 +1,6 @@
 package entities.abstr;
 
-import core.AnimationManager.Animation;
+import core.Animation;
 import core.Game;
 import core.PathException;
 import core.PathFinder;
@@ -34,6 +34,30 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	{
 		facing = f;
 		moving = true;
+	}
+	
+	public void seek(){
+		//TODO 
+	}
+	
+	public void flee(){
+		//TODO
+	}
+	
+	public void arrive(){
+		//TODO
+	}
+	
+	public void pursue(){
+		//TODO
+	}
+	
+	public void evade(){
+		//TODO
+	}
+	
+	public void wander(){
+		//TODO
 	}
 
 	public void walkTo(int tileX, int tileY)
@@ -80,23 +104,6 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 
 	public boolean isMoving()
 	{return moving;}
-	
-//	@Override
-//	public int getTexX()
-//	{ 
-//		if (moving){
-//			return movingAnims[facing.ordinal()].getTexX();
-//		}
-//		return standingAnims[facing.ordinal()].getTexX();
-//	}
-//
-//	@Override
-//	public int getTexY()
-//	{
-//		if (moving)
-//			return movingAnims[facing.ordinal()].getTexY();
-//		return standingAnims[facing.ordinal()].getTexY();
-//	}
 	
 	@Override
 	public void draw(float x, float y){

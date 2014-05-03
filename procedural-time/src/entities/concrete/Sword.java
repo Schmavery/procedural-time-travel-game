@@ -1,19 +1,20 @@
 package entities.concrete;
 
+import core.Animation;
+import core.AnimationManager;
 import core.Game;
 import core.Tile;
-import core.AnimationManager.Animation;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Weapon;
 
 public class Sword extends AbstractItem implements Weapon{
-	public int damage = 3;
+	public int damage = 5;
 	
 	public Sword(float x, float y) {
 		super(x, y);
-		setAnim(Game.getAnims().getAnim("sword"));
+		setAnim(AnimationManager.getAnim("sword"));
 	}
 
 	@Override
@@ -24,6 +25,8 @@ public class Sword extends AbstractItem implements Weapon{
 				if (h instanceof Hittable){
 					// TODO: Check for collision
 					((Hittable) h).hit(this, user);
+				} else {
+					System.out.println("Not hittable");
 				}
 			}
 		}

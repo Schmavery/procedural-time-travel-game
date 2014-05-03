@@ -2,7 +2,7 @@ package entities.abstr;
 
 import java.util.Random;
 
-import core.AnimationManager.Animation;
+import core.Animation;
 import core.Game;
 import entities.EntityFrame;
 import entities.interfaces.Entity;

@@ -1,6 +1,5 @@
 package core;
 
-import core.AnimationManager.Animation;
 import entities.abstr.AbstractEntity.Facing;
 
 public class ActionFactory {
@@ -9,46 +8,46 @@ public class ActionFactory {
 	public static Action drop(){
 		return new Action(
 				ActionType.DROP,
-				Game.getAnims().getAnim("man_n_walk"), 
-				Game.getAnims().getAnim("man_e_walk"),
-				Game.getAnims().getAnim("man_s_walk"),
-				Game.getAnims().getAnim("man_w_walk"));
+				AnimationManager.getAnim("man_n_walk"), 
+				AnimationManager.getAnim("man_e_walk"),
+				AnimationManager.getAnim("man_s_walk"),
+				AnimationManager.getAnim("man_w_walk"));
 	}
 	
 	public static Action swing(){
 		return new Action(
 				ActionType.SWING,
-				Game.getAnims().getAnim("man_n_walk"), 
-				Game.getAnims().getAnim("man_e_walk"),
-				Game.getAnims().getAnim("man_s_walk"),
-				Game.getAnims().getAnim("man_w_walk"));
+				AnimationManager.getAnim("man_n_walk"), 
+				AnimationManager.getAnim("man_e_walk"),
+				AnimationManager.getAnim("man_s_walk"),
+				AnimationManager.getAnim("man_w_walk"));
 	}
 	
 	public static Action use(){
 		return new Action(
 				ActionType.USE,
-				Game.getAnims().getAnim("man_n_walk"), 
-				Game.getAnims().getAnim("man_e_walk"),
-				Game.getAnims().getAnim("man_s_walk"),
-				Game.getAnims().getAnim("man_w_walk"));
+				AnimationManager.getAnim("man_n_walk"), 
+				AnimationManager.getAnim("man_e_walk"),
+				AnimationManager.getAnim("man_s_walk"),
+				AnimationManager.getAnim("man_w_walk"));
 	}
 	
 	public static Action retreive(){
 		return new Action(
 				ActionType.RETREIVE,
-				Game.getAnims().getAnim("man_n_stow"), 
-				Game.getAnims().getAnim("man_e_stow"),
-				Game.getAnims().getAnim("man_s_stow"),
-				Game.getAnims().getAnim("man_w_stow"));
+				AnimationManager.getAnim("man_n_stow"), 
+				AnimationManager.getAnim("man_e_stow"),
+				AnimationManager.getAnim("man_s_stow"),
+				AnimationManager.getAnim("man_w_stow"));
 	}
 	
 	public static Action die(){
 		return new Action(
 				ActionType.DIE,
-				Game.getAnims().getAnim("man_n_stow"), 
-				Game.getAnims().getAnim("man_e_stow"),
-				Game.getAnims().getAnim("man_s_stow"),
-				Game.getAnims().getAnim("man_w_stow"));
+				AnimationManager.getAnim("man_n_stow"), 
+				AnimationManager.getAnim("man_e_stow"),
+				AnimationManager.getAnim("man_s_stow"),
+				AnimationManager.getAnim("man_w_stow"));
 	}
 	
 	public static class Action {

@@ -1,4 +1,4 @@
-package core;
+package entities;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

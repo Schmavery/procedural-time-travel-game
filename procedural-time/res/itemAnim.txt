@@ -1,3 +1,4 @@
 sword 0 5
 fist 0 6
 heart 0 2
+wood 0 1

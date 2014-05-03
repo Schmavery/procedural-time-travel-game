@@ -1,6 +1,6 @@
 package entities.interfaces;
 
-import core.AnimationManager.Animation;
+import core.Animation;
 import entities.concrete.Humanoid;
 
 public interface Holdable extends Item{

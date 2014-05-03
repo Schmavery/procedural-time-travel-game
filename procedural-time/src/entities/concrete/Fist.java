@@ -1,6 +1,7 @@
 package entities.concrete;
 
-import core.AnimationManager.Animation;
+import core.Animation;
+import core.AnimationManager;
 import core.Game;
 import core.Tile;
 import entities.abstr.AbstractItem;
@@ -14,7 +15,7 @@ public int damage = 1;
 
 	public Fist() {
 		super();
-		setAnim(Game.getAnims().getAnim("fist"));
+		setAnim(AnimationManager.getAnim("fist"));
 	}
 
 	@Override

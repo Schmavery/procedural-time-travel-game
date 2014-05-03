@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Random;
 
-import core.AnimationManager.Animation;
 import core.Tile.Type;
 import entities.abstr.AbstractEntity.Facing;
 
@@ -178,34 +177,34 @@ public class TileMap implements Serializable{
 				switch (rand.nextInt(50)){
 				case 1:
 				case 2:
-					return Game.getAnims().getAnim("flower");
+					return AnimationManager.getAnim("flower");
 				case 3:
-					return Game.getAnims().getAnim("g_rock1");
+					return AnimationManager.getAnim("g_rock1");
 				case 4:
-					return Game.getAnims().getAnim("g_rock2");
+					return AnimationManager.getAnim("g_rock2");
 				case 5:
-					return Game.getAnims().getAnim("g_rock3");
+					return AnimationManager.getAnim("g_rock3");
 				default:
-					return Game.getAnims().getAnim(grassCenterAnimNames[rand.nextInt(grassCenterAnimNames.length)]);			
+					return AnimationManager.getAnim(grassCenterAnimNames[rand.nextInt(grassCenterAnimNames.length)]);			
 				}					
 			}
-			return Game.getAnims().getAnim(grassAnimNames[bit - 1]);
+			return AnimationManager.getAnim(grassAnimNames[bit - 1]);
 		case DIRT:
 			switch (rand.nextInt(50)){
 			case 1:
-				return Game.getAnims().getAnim("d_rock1");
+				return AnimationManager.getAnim("d_rock1");
 			case 2:
-				return Game.getAnims().getAnim("d_rock2");
+				return AnimationManager.getAnim("d_rock2");
 			case 3:
-				return Game.getAnims().getAnim("d_rock3");
+				return AnimationManager.getAnim("d_rock3");
 
 			default:
-				return Game.getAnims().getAnim(dirtAnimNames[rand.nextInt(dirtAnimNames.length)]);
+				return AnimationManager.getAnim(dirtAnimNames[rand.nextInt(dirtAnimNames.length)]);
 			}
 		case SAND:
-			return Game.getAnims().getAnim(sandAnimNames[bit]);
+			return AnimationManager.getAnim(sandAnimNames[bit]);
 		case WATER:
-			return Game.getAnims().getAnim(waterAnimNames[bit]);
+			return AnimationManager.getAnim(waterAnimNames[bit]);
 		default:
 			return null;
 		}

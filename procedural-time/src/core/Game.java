@@ -20,6 +20,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
+import entities.Markov;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
 import entities.concrete.NPC;
@@ -40,7 +41,7 @@ import gui.IContainer;
 public class Game extends Core {
 	// Singletons
 	private static TileMap tileMap;
-	private static AnimationManager animManager;
+//	private static AnimationManager AnimationManager;
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;
@@ -62,10 +63,6 @@ public class Game extends Core {
 	
 	public static TileMap getMap(){
 		return tileMap;
-	}
-	
-	public static AnimationManager getAnims(){
-		return animManager;
 	}
 	
 	public static void main(String[] args){
@@ -95,24 +92,23 @@ public class Game extends Core {
 				return (int) (d1.getY() - d2.getY());
 			}
 		};
-		animManager = new AnimationManager();
-		animManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
-		animManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
-		animManager.loadAnims("res/itemAnim.txt", SpriteSheet.ITEMS);
+		AnimationManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
+		AnimationManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
+		AnimationManager.loadAnims("res/itemAnim.txt", SpriteSheet.ITEMS);
 		
 
 		tileMap = new TileMap(1000);
 		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
-			player.setMovingAnims(animManager.getAnim("man_n_walk"), 
-					animManager.getAnim("man_e_walk"),
-					animManager.getAnim("man_s_walk"),
-					animManager.getAnim("man_w_walk"));
-			player.setStandingAnims(animManager.getAnim("man_n"), 
-					animManager.getAnim("man_e"),
-					animManager.getAnim("man_s"),
-					animManager.getAnim("man_w"));
+			player.setMovingAnims(AnimationManager.getAnim("man_n_walk"), 
+					AnimationManager.getAnim("man_e_walk"),
+					AnimationManager.getAnim("man_s_walk"),
+					AnimationManager.getAnim("man_w_walk"));
+			player.setStandingAnims(AnimationManager.getAnim("man_n"), 
+					AnimationManager.getAnim("man_e"),
+					AnimationManager.getAnim("man_s"),
+					AnimationManager.getAnim("man_w"));
 		humans.add(player);
 		
 		for (int i = 1; i < numHumans; i++){
@@ -127,25 +123,25 @@ public class Game extends Core {
 			if (rand.nextBoolean()){
 				tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
-				tmpHuman.setMovingAnims(animManager.getAnim("man_n_walk"), 
-						animManager.getAnim("man_e_walk"),
-						animManager.getAnim("man_s_walk"),
-						animManager.getAnim("man_w_walk"));
-				tmpHuman.setStandingAnims(animManager.getAnim("man_n"), 
-						animManager.getAnim("man_e"),
-						animManager.getAnim("man_s"),
-						animManager.getAnim("man_w"));
+				tmpHuman.setMovingAnims(AnimationManager.getAnim("man_n_walk"), 
+						AnimationManager.getAnim("man_e_walk"),
+						AnimationManager.getAnim("man_s_walk"),
+						AnimationManager.getAnim("man_w_walk"));
+				tmpHuman.setStandingAnims(AnimationManager.getAnim("man_n"), 
+						AnimationManager.getAnim("man_e"),
+						AnimationManager.getAnim("man_s"),
+						AnimationManager.getAnim("man_w"));
 			} else {
 				tmpHuman = new NPC(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
-				tmpHuman.setMovingAnims(animManager.getAnim("girl_n_walk"), 
-						animManager.getAnim("girl_e_walk"),
-						animManager.getAnim("girl_s_walk"),
-						animManager.getAnim("girl_w_walk"));
-				tmpHuman.setStandingAnims(animManager.getAnim("girl_n"), 
-						animManager.getAnim("girl_e"),
-						animManager.getAnim("girl_s"),
-						animManager.getAnim("girl_w"));
+				tmpHuman.setMovingAnims(AnimationManager.getAnim("girl_n_walk"), 
+						AnimationManager.getAnim("girl_e_walk"),
+						AnimationManager.getAnim("girl_s_walk"),
+						AnimationManager.getAnim("girl_w_walk"));
+				tmpHuman.setStandingAnims(AnimationManager.getAnim("girl_n"), 
+						AnimationManager.getAnim("girl_e"),
+						AnimationManager.getAnim("girl_s"),
+						AnimationManager.getAnim("girl_w"));
 			}
 			humans.add(tmpHuman);
 		}
@@ -280,7 +276,7 @@ public class Game extends Core {
 	@Override
 	public void gameUpdate(long deltaTime){
 
-		animManager.update(deltaTime);
+		AnimationManager.update(deltaTime);
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
 		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
@@ -324,10 +320,8 @@ public class Game extends Core {
 		}
 
 		for (Humanoid human : humans){
-			if (human.equals(player)){
-				// Do nothing
-			} else {
-				if (!human.isMoving()){
+			if (!human.equals(player)){
+				if (!human.isMoving() && !human.isDead()){
 					if (rand.nextInt(100) == 1){
 						int destX = human.getTileX() + (rand.nextInt(10) - 5);
 						int destY = human.getTileY() + (rand.nextInt(10) - 5);

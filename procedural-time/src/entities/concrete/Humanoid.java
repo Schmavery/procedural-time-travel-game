@@ -11,7 +11,7 @@ import core.ActionFactory;
 import core.ActionFactory.Action;
 import core.ActionFactory.ActionType;
 import core.AnimationManager;
-import core.AnimationManager.Animation;
+import core.Animation;
 import core.Game;
 import core.Message;
 import core.PathException;
@@ -66,11 +66,12 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 				.addEntity(this);
 
 		this.name = name;
+//		getItem(new Wood(0,0));
 	}
 
 	public void update(long deltaTime) {
 		processMessages();
-		if (health == 0){
+		if (isDead()){
 			return;
 		}
 		if (!tilePather.isEmpty()) {
@@ -175,7 +176,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	@Override
 	public void tell(Message m) {
-		if (m.getText().toLowerCase().indexOf("hey") > -1) {
+		if (isDead()){
+			return;
+		} else if (m.getText().toLowerCase().indexOf("hey") > -1) {
 			say("What's up? I'm " + name + "!");
 		}
 	}
@@ -232,7 +235,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		if (heldItem == fist){
 			return;
 		} else {
-			heldItem.addToMap(x, y);
+			heldItem.addToMap(getX() + rand.nextInt(20) - 10, getY() + rand.nextInt(20) - 10);
 			heldItem = fist;
 		}
 	}
@@ -258,7 +261,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		if (inventoryFull()) {
 			return;
 		} else {
-			inventory[inventoryFreeSpot()] = heldItem;
+			inventory[nextFreeInventorySpace()] = heldItem;
 			heldItem = fist;
 		}
 	}
@@ -290,6 +293,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 					heldItem.use(this);
 					break;
 				case DIE:
+					System.out.println("DEATH ACTION");
 					currentAction = ActionFactory.die();
 					die();
 			}
@@ -301,10 +305,10 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	public boolean inventoryFull() {
-		return inventoryFreeSpot() == -1;
+		return nextFreeInventorySpace() == -1;
 	}
 
-	private int inventoryFreeSpot() {
+	private int nextFreeInventorySpace() {
 		for (int i = 0; i < inventory.length; i++) {
 			if (inventory[i] == null) {
 				return i;
@@ -327,9 +331,17 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		default:
 			break;
 		}
+		
+		//Drop Items
+		while (heldItem != fist){
+			drop();
+		}
 	}
 	
 	public void setHealth(int h) {
+		if (isDead()){
+			return;
+		}
 		health = Math.max(Math.min(maxHealth, h), 0);
 		if (health == 0){
 			die();
@@ -340,18 +352,15 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		return health;
 	}
 	
+	public boolean isDead() {
+		return (health <= 0 && maxHealth > 0);
+	}
+	
 	@Override
 	public void draw(float x, float y) {
-		if (health <= 0){
-			AnimationManager.getAnim("grave").draw(getX(), getY());;
-			//TODO: Redo this to use animations.
-//			GUtil.drawSprite(SpriteSheet.MAP, getX(), getY(), 2,
-//					2, Game.SCALE * Game.TILE_SIZE, Game.SCALE
-//							* Game.TILE_SIZE, 32);
-			return;
-		}
-		
-		if (currentAction != null){
+		if (isDead()){
+			AnimationManager.getAnim("grave").draw(x + getX(), y + getY());
+		} else if (currentAction != null){
 			currentAction.getAnim(facing).draw(x + getX(), y + getY());
 		} else {
 			super.draw(x, y);
@@ -367,7 +376,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 					ReadableColor.BLACK, m.getText());
 		}
 		
-		if (health < maxHealth){
+		if (health < maxHealth && !isDead()){
 			int len = 80;
 			int amt = (int) ((float) health / maxHealth * len);
 			GUtil.drawSprite(SpriteSheet.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
