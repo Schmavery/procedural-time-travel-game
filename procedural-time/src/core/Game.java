@@ -41,7 +41,6 @@ import gui.IContainer;
 public class Game extends Core {
 	// Singletons
 	private static TileMap tileMap;
-//	private static AnimationManager AnimationManager;
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 3f;

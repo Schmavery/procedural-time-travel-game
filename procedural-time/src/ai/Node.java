@@ -5,6 +5,7 @@ public abstract class Node {
 	public static enum NodeStatus {RUNNING, SUCCESS, FAIL};
 	Node parent;
 	int priority;
+	boolean running;
 	
 	public Node(Node p){
 		this(p, 0);
@@ -16,6 +17,7 @@ public abstract class Node {
 	}
 	
 	public abstract NodeStatus execute();
+	public abstract void reset();
 
 	public Node getParent(){
 		return parent;
@@ -26,6 +28,10 @@ public abstract class Node {
 	
 	public int getPriority(){
 		return priority;
+	}
+	
+	public boolean isRunning(){
+		return running;
 	}
 	
 	public void setPriority(int p){

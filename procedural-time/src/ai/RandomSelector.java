@@ -20,4 +20,9 @@ public class RandomSelector extends AbstractSelector {
 		return executeChildNode(rand.nextInt(getSequence().size() - 1));
 	}
 
+	@Override
+	public void reset() {
+		// No action necessary
+	}
+
 }

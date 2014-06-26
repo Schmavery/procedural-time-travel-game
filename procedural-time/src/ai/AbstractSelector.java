@@ -1,12 +1,10 @@
 package ai;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractSelector extends Node{
 	private List<Node> sequence;
-	private List<Integer> running;
 	
 	public AbstractSelector(){
 		this(null);
@@ -15,11 +13,10 @@ public abstract class AbstractSelector extends Node{
 	public AbstractSelector(Node parent) {
 		super(parent);
 		sequence = new ArrayList<>();
-		running = new LinkedList<>();
 	}
 	
 	protected void addNode(Node n){
-		sequence.add(n);
+		getSequence().add(n);
 		n.setParent(this);
 	}
 	protected List<Node> getSequence(){
@@ -30,19 +27,14 @@ public abstract class AbstractSelector extends Node{
 		NodeStatus status = sequence.get(index).execute();
 		switch (status){
 		case RUNNING:
-			if (!running.contains(index)){
-				running.add(index);
-			}
+			running = true;
 			break;
 		case SUCCESS:
-			if (running.contains(index)){
-				running.remove(index);
-			}
+			running = false;
 			break;
 		case FAIL:
-			if (running.contains(index)){
-				running.remove(index);
-			}
+			running = false;
+			break;
 		}
 		return status;
 	}

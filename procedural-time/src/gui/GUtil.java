@@ -1,5 +1,10 @@
 package gui;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
@@ -111,6 +116,16 @@ public final class GUtil {
 			return itemTex.getTextureID();
 		default: 
 			return 0;
+		}
+	}
+	
+	static String readFile(String path, Charset encoding)
+	{
+		try {
+			return new String(Files.readAllBytes(Paths.get(path)), Charset.defaultCharset());
+		} catch (IOException e) {
+			System.out.println("Error: Could not read file.");
+			return "";
 		}
 	}
 
