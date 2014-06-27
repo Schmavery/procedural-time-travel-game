@@ -49,5 +49,7 @@ public interface IElement {
 	public int getX();
 
 	public int getY();
+	
+	public IElement search(String name);
 
 }

@@ -123,6 +123,20 @@ public class GPanel extends GComponent implements IContainer{
 	}
 	
 	@Override
+	public IElement search(String name){
+		if (getName().equals(name)){
+			return this;
+		}
+		IElement result;
+		for (IElement child : children){
+			if ((result = child.search(name)) != null){
+				return result;
+			}
+		}
+		return null;
+	}
+	
+	@Override
 	public List<IElement> getChildren(){
 		return children;
 	}

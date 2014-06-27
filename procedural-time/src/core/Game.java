@@ -276,8 +276,8 @@ public class Game extends Core {
 	public void gameUpdate(long deltaTime){
 
 		AnimationManager.update(deltaTime);
-		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb")).setText("X: "+String.valueOf((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
-		((GTextbox)((IContainer) (panel.getChild("p3"))).getChild("tb2")).setText("Y: "+String.valueOf((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
+		((GTextbox) (panel.search("tb"))).setText("X: "+ ((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
+		((GTextbox) (panel.search("tb2"))).setText("Y: "+ ((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){

@@ -106,5 +106,9 @@ public abstract class GComponent implements IElement{
 	public int getWidth() {return boundingBox.getWidth();}
 	public int getX() {return boundingBox.getX();}
 	public int getY() {return boundingBox.getY();}
-
+	
+	public IElement search(String name){
+		IElement t = (getName().equals(name)) ? this : null;
+		return t;
+	}
 }
