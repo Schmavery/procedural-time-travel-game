@@ -27,16 +27,17 @@ to be able to play it back.
 Imagine the following timeline:
 
 -----B1---B2--A1---C1---C2---A2---
-The player starts at time-point A1.  This means that the world up
+
+The player starts at timepoint A1.  This means that the world up
 until this point must first be generated.  Ideally, this can
 be done with a single seed, as no player input need be considered.
 
-The player plays the game until time-point A2, at which point he dies
-and is respawned at time-point B1, which can be generated using the 
+The player plays the game until timepoint A2, at which point he dies
+and is respawned at timepoint B1, which can be generated using the 
 initial seed.  Changes made now will affect the future world, but 
 this is ignored for the time being, though player input is recorded.
 
-The player dies at time-point B2 and respawns at C1.  This is far more
+The player dies at timepoint B2 and respawns at C1.  This is far more
 complicated as we must reconcile 3 timelines.
 
 1. Initial
@@ -45,9 +46,17 @@ complicated as we must reconcile 3 timelines.
 
 	Lazy Timeline Evaluation:
 Store all received data.  Record all seeds.
-When leaving time-interval A to spawn in time-interval B, where
-A is entirely before B, 
+When leaving time-interval B to spawn in time-interval C, where
+B is entirely before C, replay through the world history starting
+from B2, with the player input stored from timeline A applied at the 
+appropriate points.  This should result in a world that can start at
+timepoint C1.
 
+There is a issue when the recorded player input from timeline A conflicts
+with the changes from timelines B and eventually C.  This can be remedied in
+various ways, but the current plan is to ignore input after a conflict, and
+turn the player into an NPC.  Hopefully we can create a special type of 
+'adventurer' npc.
 
 
 	NPC Behaviour:
