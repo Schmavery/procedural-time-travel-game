@@ -43,7 +43,7 @@ public class Game extends Core {
 	private static TileMap tileMap;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 3f;
+	public static float SCALE = 2f;
 	public static Random rand = new Random();
 	
 	long totalTime = 0;
@@ -80,7 +80,7 @@ public class Game extends Core {
 		drawLoading();
 		initMarkov();
 		
-		int numHumans = 10000;
+		int numHumans = 10;
 		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Drawable>()
@@ -96,10 +96,10 @@ public class Game extends Core {
 		AnimationManager.loadAnims("res/itemAnim.txt", SpriteSheet.ITEMS);
 		
 
-		tileMap = new TileMap(1000);
+		tileMap = new TileMap(50);
 		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
-		player = new Humanoid(500*SCALE*TILE_SIZE, 100*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
+		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
 			player.setMovingAnims(AnimationManager.getAnim("man_n_walk"), 
 					AnimationManager.getAnim("man_e_walk"),
 					AnimationManager.getAnim("man_s_walk"),
@@ -114,8 +114,8 @@ public class Game extends Core {
 			float randX;
 			float randY;
 			do{
-				randX = rand.nextFloat()*SCALE*TILE_SIZE*999;
-				randY = rand.nextFloat()*SCALE*TILE_SIZE*999;
+				randX = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
+				randY = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
 			} while (!tileMap.getWorldTile(randX, randY).walkable);
 
 			Humanoid tmpHuman;

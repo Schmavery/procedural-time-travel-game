@@ -3,28 +3,29 @@ package ai;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractSelector extends Node{
-	private List<Node> sequence;
+public abstract class AbstractSelector<T> extends Node<T>{
+	private List<Node<? super T>> sequence;
 	
 	public AbstractSelector(){
 		this(null);
 	}
 	
-	public AbstractSelector(Node parent) {
+	public AbstractSelector(Node<? extends T> parent) {
 		super(parent);
 		sequence = new ArrayList<>();
 	}
 	
-	protected void addNode(Node n){
+	public void addNode(Node<? super T> n){
 		getSequence().add(n);
 		n.setParent(this);
 	}
-	protected List<Node> getSequence(){
+	
+	protected List<Node<? super T>> getSequence(){
 		return sequence;
 	}
 	
-	protected NodeStatus executeChildNode(int index){
-		NodeStatus status = sequence.get(index).execute();
+	protected NodeStatus executeChildNode(int index, T owner){
+		NodeStatus status = sequence.get(index).execute(owner);
 		switch (status){
 		case RUNNING:
 			running = true;

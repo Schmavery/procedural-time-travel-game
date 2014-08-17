@@ -2,7 +2,7 @@ package ai;
 
 import java.util.Random;
 
-public class RandomSelector extends AbstractSelector {
+public class RandomSelector<T> extends AbstractSelector<T> {
 
 	Random rand;
 	
@@ -10,19 +10,19 @@ public class RandomSelector extends AbstractSelector {
 		this(null, seed);
 	}
 	
-	public RandomSelector(Node parent, int seed){
+	public RandomSelector(Node<? extends T> parent, int seed){
 		super(parent);
 		rand = new Random(seed);
-	}
-	
-	@Override
-	public Node.NodeStatus execute() {
-		return executeChildNode(rand.nextInt(getSequence().size() - 1));
 	}
 
 	@Override
 	public void reset() {
 		// No action necessary
+	}
+
+	@Override
+	public ai.Node.NodeStatus execute(T owner) {
+		return executeChildNode(rand.nextInt(getSequence().size() - 1), owner);
 	}
 
 }

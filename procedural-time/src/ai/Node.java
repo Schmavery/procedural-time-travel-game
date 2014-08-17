@@ -1,28 +1,32 @@
 package ai;
 
-
-public abstract class Node {
+/**
+ * Basic building block of the behaviour tree.
+ * Any child can be less specific (superclass) than its parent,
+ * but not more specific (subclass).
+ */
+public abstract class Node<T> {
 	public static enum NodeStatus {RUNNING, SUCCESS, FAIL};
-	Node parent;
+	protected Node<? extends T> parent;
 	int priority;
 	boolean running;
 	
-	public Node(Node p){
+	public Node(Node<? extends T> p){
 		this(p, 0);
 	}
 	
-	public Node(Node parent, int priority){
+	public Node(Node<? extends T> parent, int priority){
 		this.parent = parent;
 		this.priority = priority;
 	}
 	
-	public abstract NodeStatus execute();
+	public abstract NodeStatus execute(T owner);
 	public abstract void reset();
 
-	public Node getParent(){
+	public Node<? extends T> getParent(){
 		return parent;
 	}
-	public void setParent(Node p){
+	public void setParent(Node<? extends T> p){
 		this.parent = p;
 	}
 	
