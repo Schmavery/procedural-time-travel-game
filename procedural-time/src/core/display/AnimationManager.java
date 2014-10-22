@@ -1,4 +1,4 @@
-package core;
+package core.display;
 
 import gui.GUtil.SpriteSheet;
 

@@ -20,6 +20,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
+import core.display.AnimationManager;
 import entities.Markov;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;

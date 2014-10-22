@@ -1,9 +1,9 @@
 package entities.concrete;
 
-import core.Animation;
-import core.AnimationManager;
 import core.Game;
 import core.Tile;
+import core.display.Animation;
+import core.display.AnimationManager;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;

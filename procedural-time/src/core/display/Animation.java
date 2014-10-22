@@ -1,5 +1,6 @@
-package core;
+package core.display;
 
+import core.Game;
 import gui.GUtil;
 import gui.GUtil.SpriteSheet;
 //import core.AnimationManager.Animation;

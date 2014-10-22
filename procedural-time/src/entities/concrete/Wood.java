@@ -1,7 +1,7 @@
 package entities.concrete;
 
-import core.Animation;
-import core.AnimationManager;
+import core.display.Animation;
+import core.display.AnimationManager;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Holdable;
 

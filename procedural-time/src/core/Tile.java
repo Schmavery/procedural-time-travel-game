@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import core.display.Animation;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 

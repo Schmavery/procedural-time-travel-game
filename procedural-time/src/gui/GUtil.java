@@ -36,7 +36,8 @@ public final class GUtil {
 	}
 	
 	public static void drawSprite(SpriteSheet spr, float x, float y, float spriteW, float spriteH, 
-									float texX, float texY, float texW, float texH, float size, ReadableColor c){
+									float texX, float texY, float texW, float texH, ReadableColor c){
+		int size = getTex(spr).getImageHeight();
 		float[] arr = {texX/size, texY/size, (texX+texW)/size, texY/size, 
 				(texX+texW)/size, (texY+texH)/size, texX/size, (texY+texH)/size};
 		batch.draw(getTexID(spr), arr, x, y, spriteW, spriteH, c);
@@ -103,19 +104,23 @@ public final class GUtil {
 	}
 	
 	private static int getTexID(SpriteSheet spr){
+		return getTex(spr).getTextureID();
+	}
+	
+	private static Texture getTex(SpriteSheet spr){
 		switch (spr){
 		case PEOPLE:
-			return peopleTex.getTextureID();
+			return peopleTex;
 		case MAP:
-			return mapTex.getTextureID();
+			return mapTex;
 		case FONT:
-			return fnt.getTex().getTextureID();
+			return fnt.getTex();
 		case GUI:
-			return guiTex.getTextureID();
+			return guiTex;
 		case ITEMS:
-			return itemTex.getTextureID();
+			return itemTex;
 		default: 
-			return 0;
+			return null;
 		}
 	}
 	

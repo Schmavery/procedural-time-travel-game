@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 import core.Tile.Type;
+import core.display.Animation;
+import core.display.AnimationManager;
 import entities.abstr.AbstractEntity.Facing;
 
 /**

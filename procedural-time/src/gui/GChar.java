@@ -30,7 +30,7 @@ public class GChar
 	
 	public int draw(int xPos, int yPos, Texture tex, ReadableColor c){
 		GUtil.drawSprite(SpriteSheet.FONT, xPos+xOffset, yPos+yOffset, width, height, 
-				x, y, width, height, tex.getTextureHeight(), c);
+				x, y, width, height, c);
 		return xAdvance;
 	}
 

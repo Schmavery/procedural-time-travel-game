@@ -1,5 +1,7 @@
 package core;
 
+import core.display.Animation;
+import core.display.AnimationManager;
 import entities.abstr.AbstractEntity.Facing;
 
 public class ActionFactory {
