@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import core.display.Animation;
+import core.path.Pathable;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 

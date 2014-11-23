@@ -7,6 +7,7 @@ import java.util.Random;
 import core.Tile.Type;
 import core.display.Animation;
 import core.display.AnimationManager;
+import core.util.PerlinNoise;
 import entities.abstr.AbstractEntity.Facing;
 
 /**

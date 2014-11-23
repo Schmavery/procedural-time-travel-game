@@ -1,4 +1,4 @@
-package core;
+package core.path;
 
 public class PathException extends Exception
 {

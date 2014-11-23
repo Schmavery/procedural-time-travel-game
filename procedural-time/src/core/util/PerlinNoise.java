@@ -1,4 +1,4 @@
-package core;
+package core.util;
 /**
     Computes Perlin Noise for one, two, and three dimensions.<p>
     The result is a continuous function that interpolates a smooth path

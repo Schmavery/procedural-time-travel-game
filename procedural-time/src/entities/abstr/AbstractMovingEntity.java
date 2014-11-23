@@ -1,10 +1,10 @@
 package entities.abstr;
 
 import core.Game;
-import core.PathException;
-import core.PathFinder;
 import core.Tile;
 import core.display.Animation;
+import core.path.PathException;
+import core.path.PathFinder;
 
 public abstract class AbstractMovingEntity extends AbstractEntity
 {

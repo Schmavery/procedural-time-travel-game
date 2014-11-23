@@ -1,4 +1,4 @@
-package core;
+package core.path;
 
 import java.util.ArrayList;
 import java.util.Collections;
