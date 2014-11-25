@@ -10,7 +10,7 @@ import core.util.Poly;
 public final class ImageDataParser {
 	private enum ParserState {DEFAULT, ANCHOR, HOOKS, BOUNDS, COLLISION};
 	public static void load(SpriteSheet ss, SpriteManager sm){
-		String[] data = ss.getData().split("\n");
+		String[] data = ss.readData().split("\n");
 		StringBuilder sb = new StringBuilder();
 		
 		for (String str : data){
@@ -21,12 +21,12 @@ public final class ImageDataParser {
 				sb.setLength(0);
 				sb.append(str+"\n");
 			} else if (str.startsWith("endimg")){
-				Image img = new Image();
+				Image img = new Image(ss);
 				loadImage(sb.toString(), img);
 				sm.addImage(img);
 			} else if (str.startsWith("endanim")){
-				Animation2 anim = new Animation2();
-				loadAnim(sb.toString(), anim, sm, ss);
+				Animation2 anim = new Animation2(ss);
+				loadAnim(sb.toString(), anim, sm);
 				sm.addAnim(anim);
 			} else {
 				sb.append(str+"\n");
@@ -151,7 +151,7 @@ public final class ImageDataParser {
 		return rect;
 	}
 	
-	public static void loadAnim(String data, Animation2 anim, SpriteManager sm, SpriteSheet ss){
+	public static void loadAnim(String data, Animation2 anim, SpriteManager sm){
 		// Parsed Image Data
 		for (String l : data.split("\n")){
 			if (l.startsWith("anim ")){
@@ -160,7 +160,7 @@ public final class ImageDataParser {
 				anim.setPause(Integer.valueOf(l.replaceAll("[^\\d]", "")));
 			} else if (l.startsWith("frame ")){
 				int frameId = Integer.valueOf(l.replaceAll("[^\\d]", ""));
-				anim.addFrame(sm.getImage(ss, frameId));
+				anim.addFrame(sm.getImage(anim.getSpriteSheet(), frameId));
 			}
 		}
 	}

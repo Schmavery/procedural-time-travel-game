@@ -8,22 +8,22 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SpriteSheet {
 	private SpriteSheetType type;
 	private String dataPath;
 	ArrayList<Image> imgs;
+	HashMap<String, Animation2> anims;
 	
 	public SpriteSheet(SpriteSheetType type, String dataPath){
 		this.type = type;
 		this.dataPath = dataPath;
+		imgs = new ArrayList<>();
+		anims = new HashMap<>();
 	}
 	
-	public SpriteSheetType getType(){
-		return type;
-	}
-	
-	public String getData(){
+	public String readData(){
 		try (BufferedReader br = new BufferedReader(new FileReader(new File(dataPath))))
 		{
 			StringBuilder sb = new StringBuilder();
@@ -31,7 +31,6 @@ public class SpriteSheet {
 			while (str != null){
 				sb.append(str);
 				str = br.readLine();
-				
 			}
 			return sb.toString();
 		} catch (FileNotFoundException e){
@@ -42,7 +41,23 @@ public class SpriteSheet {
 		return "";
 	}
 	
+	public SpriteSheetType getType(){
+		return type;
+	}
+	
 	public Image getImage(int id){
 		return imgs.get(id);
+	}
+	
+	public Animation2 getAnim(String key){
+		return anims.get(key);
+	}
+	
+	public void addImage(Image img){
+		imgs.add(img);
+	}
+	
+	public void addAnim(Animation2 anim){
+		anims.put(anim.getName(), anim);
 	}
 }

@@ -15,7 +15,8 @@ public class Image extends Sprite{
 	private Poly collisionPoly;
 	private Rectangle bounds;
 	
-	public Image() {
+	public Image(SpriteSheet ss) {
+		super(ss);
 		hooks = new ArrayList<>();
 	}
 	
@@ -64,7 +65,7 @@ public class Image extends Sprite{
 	}
 	
 	@Override
-	public void draw(float x, float y) {
+	public void drawModel(float x, float y) {
 		// TODO Auto-generated method stub
 		
 	}

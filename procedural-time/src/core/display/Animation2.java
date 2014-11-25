@@ -6,11 +6,15 @@ public class Animation2 extends Sprite{
 
 	String name;
 	int pause;
-	// TODO: Make this hold Images
 	ArrayList<Image> frameIds;
 	
-	public Animation2(){
+	public Animation2(SpriteSheet ss){
+		super(ss);
 		frameIds = new ArrayList<>();
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 	
 	public void setName(String n){
@@ -18,7 +22,7 @@ public class Animation2 extends Sprite{
 	}
 	
 	public void addFrame(Image img){
-		frameIds.add(img);
+		this.frameIds.add(img);
 	}
 	
 	public void setPause(int pause){
@@ -50,7 +54,7 @@ public class Animation2 extends Sprite{
 	}
 	
 	@Override
-	public void draw(float x, float y) {
+	public void drawModel(float x, float y) {
 		// TODO Auto-generated method stub
 		
 	}

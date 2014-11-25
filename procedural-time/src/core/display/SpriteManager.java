@@ -28,11 +28,11 @@ public class SpriteManager {
 	}
 	
 	public void addImage(Image img){
-		// TODO
+		img.getSpriteSheet().addImage(img);
 	}
 	
 	public void addAnim(Animation2 anim){
-		// TODO
+		anim.getSpriteSheet().addAnim(anim);
 	}
 	
 	public Image getImage(SpriteSheet ss, int id){
