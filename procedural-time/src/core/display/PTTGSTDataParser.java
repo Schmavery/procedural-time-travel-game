@@ -1,13 +1,14 @@
 package core.display;
 
-import java.util.LinkedList;
-
 import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
 
-import core.util.Poly;
-
-public final class ImageDataParser {
+/**
+ * Parses data for spritesheets according to the 
+ * pttg-sprite-tool data format, found on:
+ * https://github.com/Schmavery/pttg-sprite-tool
+ */
+public final class PTTGSTDataParser {
 	private enum ParserState {DEFAULT, ANCHOR, HOOKS, BOUNDS, COLLISION};
 	public static void load(SpriteSheet ss, SpriteManager sm){
 		String[] data = ss.readData().split("\n");
@@ -37,8 +38,6 @@ public final class ImageDataParser {
 	public static void loadImage(String data, Image img){
 		ParserState state = ParserState.DEFAULT;
 		SpriteHook tmpHook = null;
-		LinkedList<SpriteHook> hooks = new LinkedList<>();
-		Poly collisionPoly = new Poly();
 		Rectangle rect = new Rectangle();
 		Point pt;
 		
@@ -88,7 +87,6 @@ public final class ImageDataParser {
 					state = ParserState.ANCHOR;
 				} else if (l.startsWith("hooks")){
 					state = ParserState.HOOKS;
-					hooks = new LinkedList<>();
 				} else if (l.startsWith("img")){
 					state = ParserState.BOUNDS;
 					rect = new Rectangle();
@@ -103,6 +101,20 @@ public final class ImageDataParser {
 				break;
 			}
 			
+		}
+	}
+	
+	public static void loadAnim(String data, Animation2 anim, SpriteManager sm){
+		// Parsed Image Data
+		for (String l : data.split("\n")){
+			if (l.startsWith("anim ")){
+				anim.setName(l.substring(l.indexOf("[[")+2, l.indexOf("]]")));
+			} else if (l.startsWith("pause ")){
+				anim.setPause(Integer.valueOf(l.replaceAll("[^\\d]", "")));
+			} else if (l.startsWith("frame ")){
+				int frameId = Integer.valueOf(l.replaceAll("[^\\d]", ""));
+				anim.addFrame(sm.getImage(anim.getSpriteSheet(), frameId));
+			}
 		}
 	}
 	
@@ -127,41 +139,5 @@ public final class ImageDataParser {
 			System.out.println("Invalid point parsed: "+ str);
 		}
 		return pt;
-	}
-	
-	/**
-	 * Partially parse the save data to obtain the rect
-	 * defining the subimage.
-	 * @param data String loaded data
-	 * @return Rectangle defining bounds of subimage.
-	 */
-	public static Rectangle parseLoadRect(String data){
-		Rectangle rect = new Rectangle();
-		Point pt;
-		for (String l : data.split("\n")){
-			if (l.matches("pt +\\([0-9]+, ?[0-9]+\\)")){
-				pt = parsePoint(l.substring(l.indexOf("("), l.indexOf(")")+1));
-				rect.setLocation(pt);
-			} else if (l.matches("dim +\\([0-9]+, ?[0-9]+\\)")){
-				pt = parsePoint(l.substring(l.indexOf("("), l.indexOf(")")+1));
-				rect.setSize(pt.getX(), pt.getY());
-				break;
-			}
-		}
-		return rect;
-	}
-	
-	public static void loadAnim(String data, Animation2 anim, SpriteManager sm){
-		// Parsed Image Data
-		for (String l : data.split("\n")){
-			if (l.startsWith("anim ")){
-				anim.setName(l.substring(l.indexOf("[[")+2, l.indexOf("]]")));
-			} else if (l.startsWith("pause ")){
-				anim.setPause(Integer.valueOf(l.replaceAll("[^\\d]", "")));
-			} else if (l.startsWith("frame ")){
-				int frameId = Integer.valueOf(l.replaceAll("[^\\d]", ""));
-				anim.addFrame(sm.getImage(anim.getSpriteSheet(), frameId));
-			}
-		}
 	}
 }

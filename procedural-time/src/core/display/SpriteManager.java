@@ -9,7 +9,6 @@ public class SpriteManager {
 	
 	private static SpriteManager sm;
 	private HashMap<SpriteSheetType, SpriteSheet> spriteSheets;
-	private ArrayList<Animation2> anims;
 	
 	private  SpriteManager() {
 		spriteSheets = new HashMap<>();
@@ -24,7 +23,7 @@ public class SpriteManager {
 	
 	public void loadSpriteSheet(SpriteSheet ss){
 		spriteSheets.put(ss.getType(), ss);
-		ImageDataParser.load(ss, this);
+		PTTGSTDataParser.load(ss, this);
 	}
 	
 	public void addImage(Image img){

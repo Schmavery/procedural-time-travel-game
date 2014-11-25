@@ -16,6 +16,12 @@ public class SpriteSheet {
 	ArrayList<Image> imgs;
 	HashMap<String, Animation2> anims;
 	
+	/**
+	 * All the information that is needed before calling
+	 * SpriteManager.loadSpriteSheet(SpriteSheet);
+	 * @param type Type describing what is in the SS (people, map...)
+	 * @param dataPath Location of SS data file on disk (pttg-sprite-tool format)
+	 */
 	public SpriteSheet(SpriteSheetType type, String dataPath){
 		this.type = type;
 		this.dataPath = dataPath;
