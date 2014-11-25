@@ -1,9 +1,15 @@
 package core.util;
 
-import java.awt.Point;
+import org.lwjgl.util.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * General purpose Polygon class (using java.awt.Point)
+ * with the ability to test for overlap with another
+ * Polygon using the separating axis theor.
+ * (Note: This only works for convex polygons)
+ */
 public class Poly {
 	LinkedList<Point> pts;
 	
@@ -17,7 +23,7 @@ public class Poly {
 	
 	
 	
-	public void addPt(int x, int y){
+	public void addPoint(int x, int y){
 		Point newPt = new Point(x, y);
 		
 		int max = Integer.MIN_VALUE;
@@ -36,15 +42,15 @@ public class Poly {
 
 		pts.add(newPt);
 		radius = (max/2) + 1;
-		centerPt = new Point(p1.x + (p2.x - p1.x), p1.y + (p2.y - p1.y));
+		centerPt = new Point(p1.getX() + (p2.getX() - p1.getX()), p1.getY() + (p2.getY() - p1.getY()));
 	}
 	
 	private static int calcManhattanDist(Point p1, Point p2){
-		return Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y);
+		return Math.abs(p2.getX() - p1.getX()) + Math.abs(p2.getY() - p1.getY());
 	}
 	
 	private static Point genSubtracted(Point p1, Point p2){
-		return new Point(p1.x - p2.x, p1.y - p2.y);
+		return new Point(p1.getX() - p2.getX(), p1.getY() - p2.getY());
 	}
 
 	private List<Point> getNormals(){
@@ -65,7 +71,7 @@ public class Poly {
 		int max = Integer.MIN_VALUE;
 		for (Point pt : pts){
 			// Calc dot prod
-			int dot = pt.x*line.x + pt.y*line.y;
+			int dot = pt.getX()*line.getX() + pt.getY()*line.getY();
 			min = (dot < min) ? dot : min;
 			max = (dot > max) ? dot : max;
 		}
@@ -76,10 +82,14 @@ public class Poly {
 		return (int1.getX() < int2.getY() && int1.getY() > int2.getX());
 	}
 	
-	// for all normals of this and poly
-	// project each poly onto normal.
-	// if they overlap, continue
-	// otherwise return false
+	/**
+	 * For all normals of this and poly,
+	 * project each poly onto normal.
+	 * If they overlap, continue,
+	 * otherwise return false.
+	 * @param poly
+	 * @return true if the polygons overlap.
+	 */
 	public boolean overlaps(Poly poly){
 		if (calcManhattanDist(centerPt, poly.centerPt) > (radius + poly.radius)){
 			return false;
@@ -99,7 +109,7 @@ public class Poly {
 			if (i != 0){
 				sb.append(",");
 			}
-			sb.append("("+pts.get(i).x+","+pts.get(i).y+")");
+			sb.append("("+pts.get(i).getX()+","+pts.get(i).getY()+")");
 		}
 		return sb.toString();
 	}

@@ -25,7 +25,7 @@ import entities.interfaces.Holdable;
 import entities.interfaces.Talkable;
 import entities.interfaces.Weapon;
 import gui.GUtil;
-import gui.GUtil.SpriteSheet;
+import gui.GUtil.SpriteSheetType;
 
 public class Humanoid extends AbstractMovingEntity implements Hittable,
 		Talkable {
@@ -379,9 +379,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		if (health < maxHealth && !isDead()){
 			int len = 80;
 			int amt = (int) ((float) health / maxHealth * len);
-			GUtil.drawSprite(SpriteSheet.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
-			GUtil.drawSprite(SpriteSheet.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
-			GUtil.drawSprite(SpriteSheet.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
+			GUtil.drawSprite(SpriteSheetType.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
+			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
+			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
 		}
 	}
 	

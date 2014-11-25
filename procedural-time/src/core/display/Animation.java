@@ -2,7 +2,7 @@ package core.display;
 
 import core.Game;
 import gui.GUtil;
-import gui.GUtil.SpriteSheet;
+import gui.GUtil.SpriteSheetType;
 //import core.AnimationManager.Animation;
 
 /**
@@ -21,16 +21,16 @@ public final class Animation {
 	private long pause;				// delay between frames
 	private long timer;				// milliseconds into loop
 	protected String name;
-	private SpriteSheet spriteSheet;
+	private SpriteSheetType spriteSheet;
 	
-	protected Animation(SpriteSheet spr, int len, long pause, String name, boolean autoUpdate){
+	protected Animation(SpriteSheetType spr, int len, long pause, String name, boolean autoUpdate){
 		spriteSheet = spr;
 		this.pause = pause;
 		this.name = name;
 		animArrayX = new int[len];
 		animArrayY = new int[len];
 		fillCount = 0;
-		animated  = (len > 1);
+//		animated  = (len > 1);
 		dispPointer = 0;
 		timer = 0;
 //		this.autoUpdated = autoUpdate;

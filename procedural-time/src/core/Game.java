@@ -36,7 +36,7 @@ import gui.GPanel;
 import gui.GTextbox;
 import gui.GUtil;
 import gui.GUtil.Alignment;
-import gui.GUtil.SpriteSheet;
+import gui.GUtil.SpriteSheetType;
 import gui.IContainer;
 
 public class Game extends Core {
@@ -92,9 +92,9 @@ public class Game extends Core {
 				return (int) (d1.getY() - d2.getY());
 			}
 		};
-		AnimationManager.loadAnims("res/animations.txt", SpriteSheet.MAP);
-		AnimationManager.loadAnims("res/peopleAnim.txt", SpriteSheet.PEOPLE);
-		AnimationManager.loadAnims("res/itemAnim.txt", SpriteSheet.ITEMS);
+		AnimationManager.loadAnims("res/animations.txt", SpriteSheetType.MAP);
+		AnimationManager.loadAnims("res/peopleAnim.txt", SpriteSheetType.PEOPLE);
+		AnimationManager.loadAnims("res/itemAnim.txt", SpriteSheetType.ITEMS);
 		
 
 		tileMap = new TileMap(50);
@@ -356,7 +356,7 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
-			GUtil.drawSprite(SpriteSheet.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
+			GUtil.drawSprite(SpriteSheetType.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
 			

@@ -10,7 +10,7 @@ import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 
 public final class GUtil {
-	public static enum SpriteSheet {
+	public static enum SpriteSheetType {
 		MAP, ITEMS, PEOPLE, GUI, FONT;
 	}
 	
@@ -22,12 +22,12 @@ public final class GUtil {
 	
 	public static enum Alignment {LEFT, CENTER, RIGHT, TOP, BOTTOM};
 	
-	public static void drawSprite(SpriteSheet spr, float x, float y, int texX, int texY, 
+	public static void drawSprite(SpriteSheetType spr, float x, float y, int texX, int texY, 
 			float spriteW, float spriteH, float ssSize){
 		drawSprite(spr, x, y, texX, texY, spriteW, spriteH, ssSize, ReadableColor.WHITE);
 	}
 	
-	public static void drawSprite(SpriteSheet spr, float x, float y, int texX, int texY, 
+	public static void drawSprite(SpriteSheetType spr, float x, float y, int texX, int texY, 
 			float spriteW, float spriteH, float ssSize, ReadableColor c){
 
 		float[] arr = {texX/ssSize, texY/ssSize, (texX+1)/ssSize, texY/ssSize, 
@@ -35,7 +35,7 @@ public final class GUtil {
 		batch.draw(getTexID(spr), arr, x, y, spriteW, spriteH, c);
 	}
 	
-	public static void drawSprite(SpriteSheet spr, float x, float y, float spriteW, float spriteH, 
+	public static void drawSprite(SpriteSheetType spr, float x, float y, float spriteW, float spriteH, 
 									float texX, float texY, float texW, float texH, ReadableColor c){
 		int size = getTex(spr).getImageHeight();
 		float[] arr = {texX/size, texY/size, (texX+texW)/size, texY/size, 
@@ -48,15 +48,15 @@ public final class GUtil {
 		int y = box.getY();
 		int innerW = box.getWidth() - 32;
 		int innerH = box.getHeight() - 32;
-		drawSprite(SpriteSheet.GUI, x,      y, 0, 4, 16, 16, 32, c);					// Top Left
-		drawSprite(SpriteSheet.GUI, x+16,     y, 1, 4, innerW, 16, 32, c);				// Top Mid
-		drawSprite(SpriteSheet.GUI, x+innerW + 16, y, 2, 4, 16, 16, 32, c);				// Top Right
-		drawSprite(SpriteSheet.GUI, x,      y+16, 0, 5, 16, innerH, 32, c);					// Mid Left
-		drawSprite(SpriteSheet.GUI, x+16, y+16, 1, 5, innerW, innerH, 32, c);				// Mid Mid
-		drawSprite(SpriteSheet.GUI, x+innerW + 16, y+16, 2, 5, 16, innerH, 32, c);			// Mid Right
-		drawSprite(SpriteSheet.GUI, x,           y+innerH + 16, 0, 6, 16, 16, 32, c);		// Bottom Left
-		drawSprite(SpriteSheet.GUI, x+16,          y+innerH + 16, 1, 6, innerW, 16, 32, c);	// Bottom Mid
-		drawSprite(SpriteSheet.GUI, x+ innerW + 16, y+innerH + 16, 2, 6, 16, 16, 32, c);		// Bottom Right
+		drawSprite(SpriteSheetType.GUI, x,      y, 0, 4, 16, 16, 32, c);					// Top Left
+		drawSprite(SpriteSheetType.GUI, x+16,     y, 1, 4, innerW, 16, 32, c);				// Top Mid
+		drawSprite(SpriteSheetType.GUI, x+innerW + 16, y, 2, 4, 16, 16, 32, c);				// Top Right
+		drawSprite(SpriteSheetType.GUI, x,      y+16, 0, 5, 16, innerH, 32, c);					// Mid Left
+		drawSprite(SpriteSheetType.GUI, x+16, y+16, 1, 5, innerW, innerH, 32, c);				// Mid Mid
+		drawSprite(SpriteSheetType.GUI, x+innerW + 16, y+16, 2, 5, 16, innerH, 32, c);			// Mid Right
+		drawSprite(SpriteSheetType.GUI, x,           y+innerH + 16, 0, 6, 16, 16, 32, c);		// Bottom Left
+		drawSprite(SpriteSheetType.GUI, x+16,          y+innerH + 16, 1, 6, innerW, 16, 32, c);	// Bottom Mid
+		drawSprite(SpriteSheetType.GUI, x+ innerW + 16, y+innerH + 16, 2, 6, 16, 16, 32, c);		// Bottom Right
 	}
 
 	public static void drawText(int x, int y, ReadableColor c, String text){
@@ -73,10 +73,10 @@ public final class GUtil {
 	
 	public static void drawBubble(Rectangle box, ReadableColor c){
 		drawRect(box, c);
-		drawSprite(SpriteSheet.GUI, box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight()-16, 3, 4, 16, 16, 32, c);
-		drawSprite(SpriteSheet.GUI, box.getX() + (box.getWidth()/2), box.getY()+box.getHeight()-16,      4, 4, 16, 16, 32, c);
-		drawSprite(SpriteSheet.GUI, box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight(),    3, 5, 16, 16, 32, c);
-		drawSprite(SpriteSheet.GUI, box.getX() + (box.getWidth()/2), box.getY()+box.getHeight(),         4, 5, 16, 16, 32, c);
+		drawSprite(SpriteSheetType.GUI, box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight()-16, 3, 4, 16, 16, 32, c);
+		drawSprite(SpriteSheetType.GUI, box.getX() + (box.getWidth()/2), box.getY()+box.getHeight()-16,      4, 4, 16, 16, 32, c);
+		drawSprite(SpriteSheetType.GUI, box.getX() + (box.getWidth()/2 - 16), box.getY()+box.getHeight(),    3, 5, 16, 16, 32, c);
+		drawSprite(SpriteSheetType.GUI, box.getX() + (box.getWidth()/2), box.getY()+box.getHeight(),         4, 5, 16, 16, 32, c);
 	}
 	
 	public static void setFont(GFont font){
@@ -103,11 +103,11 @@ public final class GUtil {
 		batch.end();
 	}
 	
-	private static int getTexID(SpriteSheet spr){
+	private static int getTexID(SpriteSheetType spr){
 		return getTex(spr).getTextureID();
 	}
 	
-	private static Texture getTex(SpriteSheet spr){
+	private static Texture getTex(SpriteSheetType spr){
 		switch (spr){
 		case PEOPLE:
 			return peopleTex;

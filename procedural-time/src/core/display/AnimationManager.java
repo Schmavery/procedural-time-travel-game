@@ -1,6 +1,6 @@
 package core.display;
 
-import gui.GUtil.SpriteSheet;
+import gui.GUtil.SpriteSheetType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,7 +19,7 @@ public class AnimationManager {
 	 * documentation for loadAnim().
 	 * @param path Filepath of animation list.
 	 */
-	public static void loadAnims(String path, SpriteSheet spr){
+	public static void loadAnims(String path, SpriteSheetType spr){
 		try (FileReader fr = new FileReader(path);
 			BufferedReader br = new BufferedReader(fr)
 		){
@@ -52,7 +52,7 @@ public class AnimationManager {
 	 * @param sprites The spritesheet corresponding to the sprite IDs.
 	 * @return Animation
 	 */
-	public static Animation loadAnim(String parseString, SpriteSheet spr){
+	public static Animation loadAnim(String parseString, SpriteSheetType spr){
 		String[] parts = parseString.split(" ");
 		int numFrames = parts.length - 2;
 		int pause = Integer.parseInt(parts[1]);
