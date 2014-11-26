@@ -1,0 +1,1030 @@
+##res/people.png
+img 2
+pt (0,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (0,4)
+pt (0,0)
+endcollision
+endimg
+
+img 3
+pt (16,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,15)
+pt (9,15)
+pt (4,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+
+img 4
+pt (32,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+
+img 5
+pt (48,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (11,14)
+pt (6,15)
+pt (3,15)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+
+img 6
+pt (64,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+
+img 7
+pt (80,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (11,14)
+pt (6,15)
+pt (3,15)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+
+img 8
+pt (96,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+
+img 9
+pt (112,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,15)
+pt (9,15)
+pt (4,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+
+img 10
+pt (128,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+
+img 11
+pt (144,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,8)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,8)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,8)
+endcollision
+endimg
+
+img 12
+pt (160,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+
+img 13
+pt (176,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,7)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,7)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,7)
+endcollision
+endimg
+
+img 14
+pt (0,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+
+img 15
+pt (16,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (12,15)
+pt (3,15)
+pt (3,3)
+endcollision
+endimg
+
+img 16
+pt (32,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+
+img 17
+pt (48,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (12,15)
+pt (3,15)
+pt (3,3)
+endcollision
+endimg
+
+img 18
+pt (64,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,15)
+pt (3,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 19
+pt (80,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 20
+pt (96,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,15)
+pt (3,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 21
+pt (112,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 22
+pt (128,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+
+img 23
+pt (144,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (3,7)
+pt (3,3)
+endcollision
+endimg
+
+img 24
+pt (160,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,7)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 25
+pt (176,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+
+img 26
+pt (0,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,8)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (12,8)
+pt (11,11)
+pt (9,15)
+pt (5,15)
+pt (3,11)
+pt (2,8)
+endcollision
+endimg
+
+img 27
+pt (16,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,6)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (11,11)
+pt (10,13)
+pt (9,14)
+pt (6,15)
+pt (5,15)
+pt (4,13)
+pt (1,6)
+endcollision
+endimg
+
+img 28
+pt (32,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,5)
+pt (5,1)
+pt (9,1)
+pt (13,5)
+pt (11,11)
+pt (9,15)
+pt (5,15)
+pt (3,11)
+pt (1,5)
+endcollision
+endimg
+
+img 29
+pt (48,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,6)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (10,13)
+pt (9,15)
+pt (8,15)
+pt (5,14)
+pt (4,13)
+pt (3,11)
+pt (1,6)
+endcollision
+endimg
+
+img 30
+pt (64,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,8)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (12,8)
+pt (10,13)
+pt (9,15)
+pt (5,15)
+pt (4,13)
+pt (2,8)
+endcollision
+endimg
+
+img 31
+pt (80,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,6)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (11,11)
+pt (9,15)
+pt (8,15)
+pt (5,14)
+pt (4,13)
+pt (1,6)
+endcollision
+endimg
+
+img 32
+pt (96,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,5)
+pt (5,1)
+pt (9,1)
+pt (13,5)
+pt (10,13)
+pt (9,15)
+pt (5,15)
+pt (4,13)
+pt (1,5)
+endcollision
+endimg
+
+img 33
+pt (112,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,6)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (10,13)
+pt (9,14)
+pt (6,15)
+pt (5,15)
+pt (3,11)
+pt (1,6)
+endcollision
+endimg
+
+img 34
+pt (128,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,8)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (12,8)
+pt (11,11)
+pt (9,15)
+pt (5,15)
+pt (3,11)
+pt (2,8)
+endcollision
+endimg
+
+img 35
+pt (144,32)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,8)
+pt (3,3)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (12,8)
+pt (11,11)
+pt (9,15)
+pt (5,15)
+pt (3,11)
+pt (2,8)
+endcollision
+endimg
+
+img 36
+pt (0,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,9)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,9)
+endcollision
+endimg
+
+img 37
+pt (16,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,7)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,7)
+endcollision
+endimg
+
+img 38
+pt (32,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,6)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,6)
+endcollision
+endimg
+
+img 39
+pt (48,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,7)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,7)
+endcollision
+endimg
+
+img 40
+pt (64,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,9)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+
+img 41
+pt (80,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,7)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+
+img 42
+pt (96,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+
+img 43
+pt (112,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,7)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+
+img 44
+pt (128,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,9)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,9)
+endcollision
+endimg
+
+img 45
+pt (144,48)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,9)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,9)
+endcollision
+endimg
+
+anim [[man_w_s]]
+pause 100
+frame 2
+frame 3
+frame 4
+frame 5
+endanim
+
+anim [[man_w_n]]
+pause 100
+frame 6
+frame 7
+frame 8
+frame 9
+endanim
+

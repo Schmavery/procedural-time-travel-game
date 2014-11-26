@@ -21,6 +21,8 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
 import core.display.AnimationManager;
+import core.display.SpriteManager;
+import core.display.SpriteSheet;
 import entities.Markov;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
@@ -165,6 +167,10 @@ public class Game extends Core {
 	public static void initSpriteSheets(){
 		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
+		
+		SpriteSheet testSS = new SpriteSheet(SpriteSheetType.PEOPLE, "res/people.png.dat");
+		SpriteManager.get().loadSpriteSheet(testSS);
+		System.out.println("Anchor: "+SpriteManager.get().getImage(SpriteSheetType.PEOPLE, 0).getAnchor().getX());
 		
 		try {
 			Texture tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);

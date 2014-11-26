@@ -2,7 +2,6 @@ package core.display;
 
 import gui.GUtil.SpriteSheetType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpriteManager {
@@ -27,15 +26,15 @@ public class SpriteManager {
 	}
 	
 	public void addImage(Image img){
-		img.getSpriteSheet().addImage(img);
+		spriteSheets.get(img.getSpriteSheetType()).addImage(img);
 	}
 	
 	public void addAnim(Animation2 anim){
-		anim.getSpriteSheet().addAnim(anim);
+		spriteSheets.get(anim.getSpriteSheetType()).addAnim(anim);
 	}
 	
-	public Image getImage(SpriteSheet ss, int id){
-		return ss.getImage(id);
+	public Image getImage(SpriteSheetType ssType, int id){
+		return spriteSheets.get(ssType).getImage(id);
 	}
 	
 }

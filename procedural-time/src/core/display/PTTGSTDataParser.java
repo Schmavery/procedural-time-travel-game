@@ -22,17 +22,19 @@ public final class PTTGSTDataParser {
 				sb.setLength(0);
 				sb.append(str+"\n");
 			} else if (str.startsWith("endimg")){
-				Image img = new Image(ss);
+				Image img = new Image(ss.getType());
 				loadImage(sb.toString(), img);
 				sm.addImage(img);
 			} else if (str.startsWith("endanim")){
-				Animation2 anim = new Animation2(ss);
+				Animation2 anim = new Animation2(ss.getType());
 				loadAnim(sb.toString(), anim, sm);
 				sm.addAnim(anim);
 			} else {
 				sb.append(str+"\n");
 			}
 		}
+		ss.loadTexture();
+		System.out.println("Successfully loaded " + ss.getType().name());
 	}
 	
 	public static void loadImage(String data, Image img){
@@ -92,6 +94,7 @@ public final class PTTGSTDataParser {
 					rect = new Rectangle();
 				} else if (l.startsWith("collision")){
 					state = ParserState.COLLISION;
+					img.clearPoly();
 				} else if (l.startsWith("img ")){
 					String idStr = l.substring(4);
 					if (idStr.matches("\\d+")){
@@ -113,7 +116,7 @@ public final class PTTGSTDataParser {
 				anim.setPause(Integer.valueOf(l.replaceAll("[^\\d]", "")));
 			} else if (l.startsWith("frame ")){
 				int frameId = Integer.valueOf(l.replaceAll("[^\\d]", ""));
-				anim.addFrame(sm.getImage(anim.getSpriteSheet(), frameId));
+				anim.addFrame(sm.getImage(anim.getSpriteSheetType(), frameId));
 			}
 		}
 	}

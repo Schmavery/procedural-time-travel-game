@@ -1,16 +1,18 @@
 package core.display;
 
+import gui.GUtil.SpriteSheetType;
+
 
 public abstract class Sprite {
 	
-	private SpriteSheet spriteSheet;
+	private SpriteSheetType ssType;
 	
-	public Sprite(SpriteSheet ss) {
-		this.spriteSheet = ss;
+	public Sprite(SpriteSheetType ssType) {
+		this.ssType = ssType;
 	}
 	
-	public SpriteSheet getSpriteSheet(){
-		return spriteSheet;
+	public SpriteSheetType getSpriteSheetType(){
+		return ssType;
 	}
 	
 	public abstract int getTexX();
@@ -21,14 +23,16 @@ public abstract class Sprite {
 	
 	public abstract int getWidth();
 	
-	
+	public abstract long getAnimTime();
+	public abstract int getPause();
 	/**
 	 * This should only ever be called by SpriteInstance,
 	 * and never directly.  Use spriteInstance.draw(x, y);
-	 * @param x offset
-	 * @param y offset
+	 * @param x - offset
+	 * @param y - offset
+	 * @param index - Animation frame index
 	 */
-	public abstract void drawModel(float x, float y);
+	public abstract void drawModel(float x, float y, int index);
 //		GUtil.drawSprite(spriteSheet, x, y, Game.SCALE * getWidth(), Game.SCALE * getHeight(),
 //				getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
 	

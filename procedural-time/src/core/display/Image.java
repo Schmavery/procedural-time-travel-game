@@ -1,5 +1,7 @@
 package core.display;
 
+import gui.GUtil.SpriteSheetType;
+
 import java.util.ArrayList;
 
 import org.lwjgl.util.Point;
@@ -15,9 +17,21 @@ public class Image extends Sprite{
 	private Poly collisionPoly;
 	private Rectangle bounds;
 	
-	public Image(SpriteSheet ss) {
-		super(ss);
+	public Image(SpriteSheetType ssType) {
+		super(ssType);
 		hooks = new ArrayList<>();
+	}
+	
+	@Override
+	public long getAnimTime(){
+		return 0;
+	}
+	
+	@Override
+	public int getPause(){
+		// We divide by this...
+		// So it can't be 0...
+		return 1;
 	}
 	
 	public int getTexX(){
@@ -44,6 +58,10 @@ public class Image extends Sprite{
 		return collisionPoly;
 	}
 	
+	public void clearPoly(){
+		collisionPoly = new Poly();
+	}
+	
 	public Point getAnchor(){
 		return anchorPt;
 	}
@@ -65,8 +83,10 @@ public class Image extends Sprite{
 	}
 	
 	@Override
-	public void drawModel(float x, float y) {
+	public void drawModel(float x, float y, int index) {
 		// TODO Auto-generated method stub
+		// Ignore index
+		
 		
 	}
 	

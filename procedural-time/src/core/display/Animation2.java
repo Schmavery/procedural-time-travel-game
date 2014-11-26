@@ -1,5 +1,7 @@
 package core.display;
 
+import gui.GUtil.SpriteSheetType;
+
 import java.util.ArrayList;
 
 public class Animation2 extends Sprite{
@@ -8,9 +10,13 @@ public class Animation2 extends Sprite{
 	int pause;
 	ArrayList<Image> frameIds;
 	
-	public Animation2(SpriteSheet ss){
-		super(ss);
+	public Animation2(SpriteSheetType ssType){
+		super(ssType);
 		frameIds = new ArrayList<>();
+	}
+	
+	public long getAnimTime(){
+		return pause*frameIds.size();
 	}
 	
 	public String getName(){
@@ -23,6 +29,11 @@ public class Animation2 extends Sprite{
 	
 	public void addFrame(Image img){
 		this.frameIds.add(img);
+	}
+	
+	@Override
+	public int getPause(){
+		return pause;
 	}
 	
 	public void setPause(int pause){
@@ -54,7 +65,7 @@ public class Animation2 extends Sprite{
 	}
 	
 	@Override
-	public void drawModel(float x, float y) {
+	public void drawModel(float x, float y, int index) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -18,13 +18,17 @@ public class SpriteInstance {
 		time = 0;
 	}
 	
+	/**
+	 * Should only be called for sprites that are 
+	 * visible, in order to save processing time.
+	 * @param deltaTime - Time since last update
+	 */
 	public void update(long deltaTime){
-		time += deltaTime;
-		//TODO: reset on overflow, calc id
+		time = (time + deltaTime) % model.getAnimTime();
+		index = (int) (time / model.getPause());
 	}
 	
 	public void draw(float x, float y){
-		model.drawModel(x, y);
-		//TODO: frames
+		model.drawModel(x, y, index);
 	}
 }
