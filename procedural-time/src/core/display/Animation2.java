@@ -8,15 +8,15 @@ public class Animation2 extends Sprite{
 
 	String name;
 	int pause;
-	ArrayList<Image> frameIds;
+	ArrayList<Image> frames;
 	
 	public Animation2(SpriteSheetType ssType){
 		super(ssType);
-		frameIds = new ArrayList<>();
+		frames = new ArrayList<>();
 	}
 	
 	public long getAnimTime(){
-		return pause*frameIds.size();
+		return pause*frames.size();
 	}
 	
 	public String getName(){
@@ -28,7 +28,7 @@ public class Animation2 extends Sprite{
 	}
 	
 	public void addFrame(Image img){
-		this.frameIds.add(img);
+		this.frames.add(img);
 	}
 	
 	@Override
@@ -64,10 +64,18 @@ public class Animation2 extends Sprite{
 		return 0;
 	}
 	
+	public Image getFrame(int index){
+		return frames.get(index);
+	}
+	
+	public ArrayList<Image> getFrames(){
+		return frames;
+	}
+	
 	@Override
 	public void drawModel(float x, float y, int index) {
-		// TODO Auto-generated method stub
-		
+		// TODO: Anchor point
+		getFrame(index).drawModel(x, y, 0);	
 	}
 	
 }

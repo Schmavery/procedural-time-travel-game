@@ -1,5 +1,5 @@
 ##res/people.png
-img 2
+img 0
 pt (0,0)
 dim (16,16)
 anchor
@@ -8,7 +8,9 @@ hooks
 0 hooks
 endhooks
 collision
-pt (0,0)
+pt (1,9)
+pt (2,2)
+pt (4,0)
 pt (11,0)
 pt (13,2)
 pt (14,9)
@@ -18,12 +20,11 @@ pt (11,15)
 pt (4,15)
 pt (3,14)
 pt (1,11)
-pt (0,4)
-pt (0,0)
+pt (1,9)
 endcollision
 endimg
 
-img 3
+img 1
 pt (16,0)
 dim (16,16)
 anchor
@@ -47,7 +48,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 4
+img 2
 pt (32,0)
 dim (16,16)
 anchor
@@ -72,7 +73,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 5
+img 3
 pt (48,0)
 dim (16,16)
 anchor
@@ -96,7 +97,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 6
+img 4
 pt (64,0)
 dim (16,16)
 anchor
@@ -121,7 +122,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 7
+img 5
 pt (80,0)
 dim (16,16)
 anchor
@@ -145,7 +146,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 8
+img 6
 pt (96,0)
 dim (16,16)
 anchor
@@ -170,7 +171,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 9
+img 7
 pt (112,0)
 dim (16,16)
 anchor
@@ -194,7 +195,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 10
+img 8
 pt (128,0)
 dim (16,16)
 anchor
@@ -219,7 +220,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 11
+img 9
 pt (144,0)
 dim (16,16)
 anchor
@@ -244,7 +245,7 @@ pt (1,8)
 endcollision
 endimg
 
-img 12
+img 10
 pt (160,0)
 dim (16,16)
 anchor
@@ -269,7 +270,7 @@ pt (1,9)
 endcollision
 endimg
 
-img 13
+img 11
 pt (176,0)
 dim (16,16)
 anchor
@@ -294,7 +295,26 @@ pt (1,7)
 endcollision
 endimg
 
-img 14
+img 12
+pt (192,0)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,5)
+pt (5,2)
+pt (11,2)
+pt (14,5)
+pt (14,15)
+pt (2,15)
+pt (2,5)
+endcollision
+endimg
+
+img 13
 pt (0,16)
 dim (16,16)
 anchor
@@ -317,7 +337,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 15
+img 14
 pt (16,16)
 dim (16,16)
 anchor
@@ -338,7 +358,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 16
+img 15
 pt (32,16)
 dim (16,16)
 anchor
@@ -361,7 +381,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 17
+img 16
 pt (48,16)
 dim (16,16)
 anchor
@@ -382,7 +402,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 18
+img 17
 pt (64,16)
 dim (16,16)
 anchor
@@ -403,7 +423,7 @@ pt (2,4)
 endcollision
 endimg
 
-img 19
+img 18
 pt (80,16)
 dim (16,16)
 anchor
@@ -426,7 +446,7 @@ pt (2,4)
 endcollision
 endimg
 
-img 20
+img 19
 pt (96,16)
 dim (16,16)
 anchor
@@ -447,7 +467,7 @@ pt (2,4)
 endcollision
 endimg
 
-img 21
+img 20
 pt (112,16)
 dim (16,16)
 anchor
@@ -470,7 +490,7 @@ pt (2,4)
 endcollision
 endimg
 
-img 22
+img 21
 pt (128,16)
 dim (16,16)
 anchor
@@ -493,7 +513,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 23
+img 22
 pt (144,16)
 dim (16,16)
 anchor
@@ -515,7 +535,7 @@ pt (3,3)
 endcollision
 endimg
 
-img 24
+img 23
 pt (160,16)
 dim (16,16)
 anchor
@@ -537,7 +557,7 @@ pt (2,4)
 endcollision
 endimg
 
-img 25
+img 24
 pt (176,16)
 dim (16,16)
 anchor
@@ -557,6 +577,21 @@ pt (10,15)
 pt (5,15)
 pt (2,5)
 pt (2,4)
+endcollision
+endimg
+
+img 25
+pt (192,16)
+dim (16,16)
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,0)
+pt (14,0)
+pt (2,0)
 endcollision
 endimg
 
@@ -1014,17 +1049,33 @@ endimg
 
 anim [[man_w_s]]
 pause 100
+frame 0
+frame 1
 frame 2
 frame 3
-frame 4
-frame 5
 endanim
 
 anim [[man_w_n]]
 pause 100
+frame 4
+frame 5
 frame 6
 frame 7
-frame 8
-frame 9
+endanim
+
+anim [[man_w_e]]
+pause 100
+frame 13
+frame 14
+frame 15
+frame 16
+endanim
+
+anim [[man_w_w]]
+pause 100
+frame 17
+frame 18
+frame 19
+frame 20
 endanim
 

@@ -21,6 +21,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
 import core.display.AnimationManager;
+import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import core.display.SpriteSheet;
 import entities.Markov;
@@ -58,6 +59,7 @@ public class Game extends Core {
 	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
+	SpriteInstance test;
 	
 	boolean pauseDown = false;
 	GPanel screen;
@@ -164,13 +166,13 @@ public class Game extends Core {
 	
 	}
 	
-	public static void initSpriteSheets(){
+	public void initSpriteSheets(){
 		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		
 		SpriteSheet testSS = new SpriteSheet(SpriteSheetType.PEOPLE, "res/people.png.dat");
 		SpriteManager.get().loadSpriteSheet(testSS);
-		System.out.println("Anchor: "+SpriteManager.get().getImage(SpriteSheetType.PEOPLE, 0).getAnchor().getX());
+		test = SpriteManager.get().getAnim(SpriteSheetType.PEOPLE, "man_w_s").getInstance();
 		
 		try {
 			Texture tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
@@ -256,7 +258,7 @@ public class Game extends Core {
 			if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()){
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
-					if (tmp.getAction() != null && tmp.getAction().regionMatches(0, "say", 0, 3)){
+					if (tmp.getAction() != null && tmp.getAction().startsWith("say")){
 						player.say(tmp.getAction().substring(4));
 					}
 				} else {
@@ -277,6 +279,7 @@ public class Game extends Core {
 				}
 			}
 		}
+		test.update(deltaTime);
 	}
 	
 	@Override
@@ -380,7 +383,7 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(10, 10);
-		
+		test.draw(100,100);
 	}
 
 }

@@ -37,4 +37,7 @@ public class SpriteManager {
 		return spriteSheets.get(ssType).getImage(id);
 	}
 	
+	public Animation2 getAnim(SpriteSheetType ssType, String key){
+		return spriteSheets.get(ssType).getAnim(key);
+	}
 }

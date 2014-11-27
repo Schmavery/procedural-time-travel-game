@@ -31,4 +31,17 @@ public class SpriteInstance {
 	public void draw(float x, float y){
 		model.drawModel(x, y, index);
 	}
+	
+	@Override
+	public String toString(){
+		if (model instanceof Image){
+			return "SpriteModel[Img]:"+((Image) model).getId();
+		} else {
+			String nums = "";
+			for (Image i : ((Animation2) model).getFrames()){
+				nums += i.getId()+" ";
+			}
+			return "SpriteModel[Anim]:"+nums;
+		}
+	}
 }

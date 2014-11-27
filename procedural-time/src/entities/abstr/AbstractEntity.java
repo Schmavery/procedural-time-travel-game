@@ -9,7 +9,8 @@ import entities.interfaces.Entity;
 
 public abstract class AbstractEntity implements Entity
 {
-
+	// Note: The order of this enum is important, as the ordinal
+	// is used as an array index.
 	public static enum Facing {NORTH, EAST, SOUTH, WEST}
 
 	protected float x;

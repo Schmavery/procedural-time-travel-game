@@ -1,12 +1,15 @@
 package core.display;
 
+import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
 import java.util.ArrayList;
 
 import org.lwjgl.util.Point;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
+import core.Game;
 import core.util.Poly;
 
 public class Image extends Sprite{
@@ -24,7 +27,9 @@ public class Image extends Sprite{
 	
 	@Override
 	public long getAnimTime(){
-		return 0;
+		// We divide by this...
+		// So it can't be 0...
+		return 1;
 	}
 	
 	@Override
@@ -84,10 +89,9 @@ public class Image extends Sprite{
 	
 	@Override
 	public void drawModel(float x, float y, int index) {
-		// TODO Auto-generated method stub
-		// Ignore index
-		
-		
+		GUtil.drawSprite(getSpriteSheetType(), x-(anchorPt.getX()*Game.SCALE), y-(anchorPt.getY()*Game.SCALE), 
+				Game.SCALE * getWidth(), Game.SCALE * getHeight(),
+				getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
 	}
 	
 }
