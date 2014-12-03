@@ -2,7 +2,8 @@ package entities.abstr;
 
 import core.Game;
 import core.Tile;
-import core.display.Animation;
+import core.display.Sprite;
+import core.display.SpriteInstance;
 import core.path.PathException;
 import core.path.PathFinder;
 
@@ -14,13 +15,14 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	protected float speed;
 	protected boolean moving;
 	protected boolean collided;
-	protected Animation[] movingAnims;
+	protected SpriteInstance[] movingAnims;
 	protected PathFinder<Tile> tilePather;
 	
 
 	public AbstractMovingEntity(float x, float y)
 	{
 		super(x, y);
+		movingAnims = new SpriteInstance[4];
 	}
 
 	public void move(float dx, float dy)
@@ -94,12 +96,12 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 		return frame.getCenterY(y);
 	}
 
-	public void setMovingAnims(Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w)
+	public void setMovingAnims(Sprite spr_n, Sprite spr_e, Sprite spr_s, Sprite spr_w)
 	{
-		this.movingAnims[0] = anim_n.cloneAnim();
-		this.movingAnims[1] = anim_e.cloneAnim();
-		this.movingAnims[2] = anim_s.cloneAnim();
-		this.movingAnims[3] = anim_w.cloneAnim();
+		this.movingAnims[0] = spr_n.getInstance();
+		this.movingAnims[1] = spr_e.getInstance();
+		this.movingAnims[2] = spr_s.getInstance();
+		this.movingAnims[3] = spr_w.getInstance();
 	}
 
 	public boolean isMoving()

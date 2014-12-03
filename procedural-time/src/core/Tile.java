@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import core.display.Animation;
+import core.display.SpriteInstance;
 import core.path.Pathable;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
@@ -19,7 +19,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 
 	private int x, y;
 	private Type type;
-	private Animation anim;
+	private SpriteInstance spr;
 	double perlinVal;
 	boolean walkable;
 	List<Entity> entities;
@@ -37,11 +37,11 @@ public class Tile implements Serializable, Pathable<Tile>{
 		}
 	}
 	
-	public void setAnim(Animation anim){
-		this.anim = anim;
-//		if (anim.toString().indexOf("rock") > -1){
-//			walkable = false;
-//		}
+	public void setAnim(SpriteInstance spr){
+		this.spr = spr;
+		if (spr.getModel().getName().indexOf("rock") > -1){
+			walkable = false;
+		}
 	}
 	
 	public boolean isWalkable() {
@@ -62,10 +62,14 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
-	public int getTexX(){return anim.getTexX();}
-	public int getTexY(){return anim.getTexY();}
+//	public int getTexX(){return spr.getTexX();}
+//	public int getTexY(){return spr.getTexY();}
 	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}
 	public float getLeft(){return Game.SCALE*Game.TILE_SIZE*x;}
+	
+	public void draw(int x, int y){
+		spr.draw(x, y);
+	}
 	
 
 	///////////////////////////////////////

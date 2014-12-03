@@ -3,7 +3,8 @@ package entities.abstr;
 import java.util.Random;
 
 import core.Game;
-import core.display.Animation;
+import core.display.Sprite;
+import core.display.SpriteInstance;
 import entities.EntityFrame;
 import entities.interfaces.Entity;
 
@@ -15,30 +16,34 @@ public abstract class AbstractEntity implements Entity
 
 	protected float x;
 	protected float y;
-	protected Animation[] standingAnims;
+	protected SpriteInstance[] standingAnims;
 	protected Facing facing;
 	protected EntityFrame frame;
 	protected Random rand;
 
 	public AbstractEntity(float x, float y)
 	{
-		standingAnims = new Animation[4];
+		standingAnims = new SpriteInstance[4];
 		this.x = x;
 		this.y = y;
 		rand = new Random();
 		facing = Facing.NORTH;
 	}
 	
-	public void setAnim(Animation anim){
-		this.standingAnims[0] = anim.cloneAnim();
+	public void setSprite(Sprite spr){
+		if (spr != null){
+			this.standingAnims[0] = spr.getInstance();
+		} else {
+			System.out.println("Tried to set null sprite");
+		}
 	}
 
-	public void setStandingAnims(Animation anim_n, Animation anim_e, Animation anim_s, Animation anim_w)
+	public void setStandingAnims(Sprite spr_n, Sprite spr_e, Sprite spr_s, Sprite spr_w)
 	{
-		this.standingAnims[0] = anim_n.cloneAnim();
-		this.standingAnims[1] = anim_e.cloneAnim();
-		this.standingAnims[2] = anim_s.cloneAnim();
-		this.standingAnims[3] = anim_w.cloneAnim();
+		this.standingAnims[0] = spr_n.getInstance();
+		this.standingAnims[1] = spr_e.getInstance();
+		this.standingAnims[2] = spr_s.getInstance();
+		this.standingAnims[3] = spr_w.getInstance();
 	}
 
 	public float getX()
@@ -52,20 +57,8 @@ public abstract class AbstractEntity implements Entity
 
 	public int getTileY()
 	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
-
-//	public int getTexX()
-//	{ 
-//		return standingAnims[facing.ordinal()].getTexX();
-//	}
-//
-//	public int getTexY()
-//	{
-//		return standingAnims[facing.ordinal()].getTexY();
-//	}
 	
 	public void draw(float x, float y){
-//		GUtil.drawSprite (getSpriteSheet(), getX() + x,
-//				getY() + y, getTexX(), getTexY(), Game.SCALE*Game.TILE_SIZE, Game.SCALE*Game.TILE_SIZE, 16);
 		standingAnims[facing.ordinal()].draw(x + getX(), y + getY());
 	}
 	
@@ -73,6 +66,4 @@ public abstract class AbstractEntity implements Entity
 		standingAnims[facing.ordinal()].draw(x + getX(), y + getY(), w, h);
 	}
 	
-//	protected abstract SpriteSheet getSpriteSheet();
-
 }

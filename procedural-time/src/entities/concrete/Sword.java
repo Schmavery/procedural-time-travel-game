@@ -2,19 +2,20 @@ package entities.concrete;
 
 import core.Game;
 import core.Tile;
-import core.display.Animation;
-import core.display.AnimationManager;
+import core.display.SpriteInstance;
+import core.display.SpriteManager;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Weapon;
+import gui.GUtil.SpriteSheetType;
 
 public class Sword extends AbstractItem implements Weapon{
 	public int damage = 5;
 	
 	public Sword(float x, float y) {
 		super(x, y);
-		setAnim(AnimationManager.getAnim("sword"));
+		setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "sword"));
 	}
 
 	@Override
@@ -43,12 +44,12 @@ public class Sword extends AbstractItem implements Weapon{
 	}
 	
 	@Override
-	public Animation[] getSwingArray(){
+	public SpriteInstance[] getSwingArray(){
 		return null;
 	}
 	
 	@Override
-	public Animation[] getUseArray(){
+	public SpriteInstance[] getUseArray(){
 		return null;
 	}
 }

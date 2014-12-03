@@ -1,0 +1,3554 @@
+##res/map.png
+img 1
+pt (0,0)
+dim (16,16)
+name [[g_c1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 2
+pt (16,0)
+dim (16,16)
+name [[g_w]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 3
+pt (32,0)
+dim (16,16)
+name [[g_n]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 4
+pt (48,0)
+dim (16,16)
+name [[g_nw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 5
+pt (64,0)
+dim (16,16)
+name [[g_e]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 6
+pt (80,0)
+dim (16,16)
+name [[g_we]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 7
+pt (96,0)
+dim (16,16)
+name [[g_ne]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 8
+pt (112,0)
+dim (16,16)
+name [[g_wne]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 9
+pt (128,0)
+dim (16,16)
+name [[g_s]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 10
+pt (144,0)
+dim (16,16)
+name [[g_sw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 11
+pt (160,0)
+dim (16,16)
+name [[g_ns]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 12
+pt (176,0)
+dim (16,16)
+name [[g_wns]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 13
+pt (192,0)
+dim (16,16)
+name [[g_se]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 14
+pt (208,0)
+dim (16,16)
+name [[g_wse]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 15
+pt (224,0)
+dim (16,16)
+name [[g_nes]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 16
+pt (240,0)
+dim (16,16)
+name [[g_nesw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 17
+pt (0,16)
+dim (16,16)
+name [[s_c]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 18
+pt (16,16)
+dim (16,16)
+name [[s_w]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 19
+pt (32,16)
+dim (16,16)
+name [[s_n]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 20
+pt (48,16)
+dim (16,16)
+name [[s_nw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 21
+pt (64,16)
+dim (16,16)
+name [[s_e]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 22
+pt (80,16)
+dim (16,16)
+name [[s_we]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 23
+pt (96,16)
+dim (16,16)
+name [[s_ne]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 24
+pt (112,16)
+dim (16,16)
+name [[s_wne]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 25
+pt (128,16)
+dim (16,16)
+name [[s_s]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 26
+pt (144,16)
+dim (16,16)
+name [[s_sw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 27
+pt (160,16)
+dim (16,16)
+name [[s_ns]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 28
+pt (176,16)
+dim (16,16)
+name [[s_wns]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 29
+pt (192,16)
+dim (16,16)
+name [[s_se]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 30
+pt (208,16)
+dim (16,16)
+name [[s_wse]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 31
+pt (224,16)
+dim (16,16)
+name [[s_nes]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 32
+pt (240,16)
+dim (16,16)
+name [[s_nesw]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 33
+pt (0,32)
+dim (16,16)
+name [[33]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 34
+pt (16,32)
+dim (16,16)
+name [[34]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 35
+pt (32,32)
+dim (16,16)
+name [[35]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 36
+pt (48,32)
+dim (16,16)
+name [[36]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 37
+pt (64,32)
+dim (16,16)
+name [[37]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 38
+pt (80,32)
+dim (16,16)
+name [[38]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 39
+pt (96,32)
+dim (16,16)
+name [[39]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 40
+pt (112,32)
+dim (16,16)
+name [[40]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 41
+pt (128,32)
+dim (16,16)
+name [[41]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 42
+pt (144,32)
+dim (16,16)
+name [[42]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 43
+pt (160,32)
+dim (16,16)
+name [[43]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 44
+pt (176,32)
+dim (16,16)
+name [[44]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 45
+pt (192,32)
+dim (16,16)
+name [[45]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 46
+pt (208,32)
+dim (16,16)
+name [[46]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 47
+pt (224,32)
+dim (16,16)
+name [[47]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 48
+pt (240,32)
+dim (16,16)
+name [[48]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 49
+pt (0,48)
+dim (16,16)
+name [[49]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 50
+pt (16,48)
+dim (16,16)
+name [[50]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 51
+pt (32,48)
+dim (16,16)
+name [[51]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 52
+pt (48,48)
+dim (16,16)
+name [[52]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 53
+pt (64,48)
+dim (16,16)
+name [[53]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 54
+pt (80,48)
+dim (16,16)
+name [[54]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 55
+pt (96,48)
+dim (16,16)
+name [[55]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 56
+pt (112,48)
+dim (16,16)
+name [[56]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 57
+pt (128,48)
+dim (16,16)
+name [[57]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 58
+pt (144,48)
+dim (16,16)
+name [[58]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 59
+pt (160,48)
+dim (16,16)
+name [[59]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 60
+pt (176,48)
+dim (16,16)
+name [[60]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 61
+pt (192,48)
+dim (16,16)
+name [[61]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 62
+pt (208,48)
+dim (16,16)
+name [[62]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 63
+pt (224,48)
+dim (16,16)
+name [[63]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 64
+pt (240,48)
+dim (16,16)
+name [[64]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 65
+pt (0,64)
+dim (16,16)
+name [[g_c2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 66
+pt (16,64)
+dim (16,16)
+name [[g_c3]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 67
+pt (32,64)
+dim (16,16)
+name [[67]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 68
+pt (48,64)
+dim (16,16)
+name [[68]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 69
+pt (64,64)
+dim (16,16)
+name [[g_rock1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 70
+pt (80,64)
+dim (16,16)
+name [[g_rock2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 71
+pt (96,64)
+dim (16,16)
+name [[g_rock3]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 72
+pt (112,64)
+dim (16,16)
+name [[g_bush]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 73
+pt (128,64)
+dim (16,16)
+name [[tile1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 74
+pt (144,64)
+dim (16,16)
+name [[tile2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 75
+pt (160,64)
+dim (16,16)
+name [[d_rock1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 76
+pt (176,64)
+dim (16,16)
+name [[d_rock2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 77
+pt (192,64)
+dim (16,16)
+name [[d_rock3]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 78
+pt (208,64)
+dim (16,16)
+name [[d_c1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 79
+pt (224,64)
+dim (16,16)
+name [[d_c2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 80
+pt (240,64)
+dim (16,16)
+name [[d_c3]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 81
+pt (0,80)
+dim (16,16)
+name [[81]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 82
+pt (16,80)
+dim (16,16)
+name [[82]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 83
+pt (32,80)
+dim (16,16)
+name [[83]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 84
+pt (48,80)
+dim (16,16)
+name [[84]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 85
+pt (64,80)
+dim (16,16)
+name [[85]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 86
+pt (80,80)
+dim (16,16)
+name [[86]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 87
+pt (96,80)
+dim (16,16)
+name [[87]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 88
+pt (112,80)
+dim (16,16)
+name [[88]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 89
+pt (128,80)
+dim (16,16)
+name [[89]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 90
+pt (144,80)
+dim (16,16)
+name [[90]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 91
+pt (160,80)
+dim (16,16)
+name [[91]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 92
+pt (176,80)
+dim (16,16)
+name [[92]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 93
+pt (192,80)
+dim (16,16)
+name [[93]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 94
+pt (208,80)
+dim (16,16)
+name [[94]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 95
+pt (224,80)
+dim (16,16)
+name [[95]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 96
+pt (240,80)
+dim (16,16)
+name [[96]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 97
+pt (0,128)
+dim (16,16)
+name [[97]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 98
+pt (16,128)
+dim (16,16)
+name [[98]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 99
+pt (32,128)
+dim (16,16)
+name [[99]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 100
+pt (48,128)
+dim (16,16)
+name [[100]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 101
+pt (64,128)
+dim (16,16)
+name [[101]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 102
+pt (80,128)
+dim (16,16)
+name [[102]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 103
+pt (96,128)
+dim (16,16)
+name [[103]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 104
+pt (112,128)
+dim (16,16)
+name [[104]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 105
+pt (128,128)
+dim (16,16)
+name [[105]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 106
+pt (144,128)
+dim (16,16)
+name [[106]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 107
+pt (160,128)
+dim (16,16)
+name [[107]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 108
+pt (176,128)
+dim (16,16)
+name [[108]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 109
+pt (192,128)
+dim (16,16)
+name [[109]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 110
+pt (208,128)
+dim (16,16)
+name [[110]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 111
+pt (224,128)
+dim (16,16)
+name [[111]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 112
+pt (240,128)
+dim (16,16)
+name [[112]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 113
+pt (0,144)
+dim (16,16)
+name [[113]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 114
+pt (16,144)
+dim (16,16)
+name [[114]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 115
+pt (32,144)
+dim (16,16)
+name [[115]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 116
+pt (48,144)
+dim (16,16)
+name [[116]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 117
+pt (64,144)
+dim (16,16)
+name [[117]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 118
+pt (80,144)
+dim (16,16)
+name [[118]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 119
+pt (96,144)
+dim (16,16)
+name [[119]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 120
+pt (112,144)
+dim (16,16)
+name [[120]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 121
+pt (128,144)
+dim (16,16)
+name [[121]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 122
+pt (144,144)
+dim (16,16)
+name [[122]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 123
+pt (160,144)
+dim (16,16)
+name [[123]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 124
+pt (176,144)
+dim (16,16)
+name [[124]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 125
+pt (192,144)
+dim (16,16)
+name [[125]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 126
+pt (208,144)
+dim (16,16)
+name [[126]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 127
+pt (224,144)
+dim (16,16)
+name [[127]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 128
+pt (240,144)
+dim (16,16)
+name [[128]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 129
+pt (0,160)
+dim (16,16)
+name [[129]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 130
+pt (16,160)
+dim (16,16)
+name [[130]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 131
+pt (32,160)
+dim (16,16)
+name [[131]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 132
+pt (48,160)
+dim (16,16)
+name [[132]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 133
+pt (64,160)
+dim (16,16)
+name [[133]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 134
+pt (80,160)
+dim (16,16)
+name [[134]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 135
+pt (96,160)
+dim (16,16)
+name [[135]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 136
+pt (112,160)
+dim (16,16)
+name [[136]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 137
+pt (128,160)
+dim (16,16)
+name [[137]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 138
+pt (144,160)
+dim (16,16)
+name [[138]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 139
+pt (0,176)
+dim (16,16)
+name [[139]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 140
+pt (16,176)
+dim (16,16)
+name [[140]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 141
+pt (32,176)
+dim (16,16)
+name [[141]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 142
+pt (48,176)
+dim (16,16)
+name [[142]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 143
+pt (64,176)
+dim (16,16)
+name [[143]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 144
+pt (80,176)
+dim (16,16)
+name [[144]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 145
+pt (96,176)
+dim (16,16)
+name [[145]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 146
+pt (128,176)
+dim (16,16)
+name [[146]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 147
+pt (144,176)
+dim (16,16)
+name [[147]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 148
+pt (0,192)
+dim (16,16)
+name [[148]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 149
+pt (16,192)
+dim (16,16)
+name [[149]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 150
+pt (32,192)
+dim (16,16)
+name [[150]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 151
+pt (48,192)
+dim (16,16)
+name [[151]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 152
+pt (64,192)
+dim (16,16)
+name [[152]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 153
+pt (80,192)
+dim (16,16)
+name [[153]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 154
+pt (96,192)
+dim (16,16)
+name [[154]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 155
+pt (112,192)
+dim (16,16)
+name [[155]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 156
+pt (128,192)
+dim (16,16)
+name [[156]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 157
+pt (144,192)
+dim (16,16)
+name [[157]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 158
+pt (160,192)
+dim (16,16)
+name [[158]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 159
+pt (176,192)
+dim (16,16)
+name [[159]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 160
+pt (192,192)
+dim (16,16)
+name [[160]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 161
+pt (0,208)
+dim (16,16)
+name [[161]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 162
+pt (16,208)
+dim (16,16)
+name [[162]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 163
+pt (32,208)
+dim (16,16)
+name [[163]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 164
+pt (48,208)
+dim (16,16)
+name [[164]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 165
+pt (64,208)
+dim (16,16)
+name [[165]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 166
+pt (80,208)
+dim (16,16)
+name [[166]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 167
+pt (96,208)
+dim (16,16)
+name [[167]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 168
+pt (112,208)
+dim (16,16)
+name [[168]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 169
+pt (128,208)
+dim (16,16)
+name [[169]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 170
+pt (144,208)
+dim (16,16)
+name [[170]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 171
+pt (160,208)
+dim (16,16)
+name [[171]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 172
+pt (176,208)
+dim (16,16)
+name [[172]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 173
+pt (192,208)
+dim (16,16)
+name [[173]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 174
+pt (208,208)
+dim (16,16)
+name [[174]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 175
+pt (224,208)
+dim (16,16)
+name [[175]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 176
+pt (240,208)
+dim (16,16)
+name [[176]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 177
+pt (0,224)
+dim (16,16)
+name [[177]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 178
+pt (16,224)
+dim (16,16)
+name [[178]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 179
+pt (32,224)
+dim (16,16)
+name [[179]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 180
+pt (48,224)
+dim (16,16)
+name [[180]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 181
+pt (64,224)
+dim (16,16)
+name [[181]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 182
+pt (80,224)
+dim (16,16)
+name [[182]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 183
+pt (96,224)
+dim (16,16)
+name [[183]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 184
+pt (112,224)
+dim (16,16)
+name [[184]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 185
+pt (128,224)
+dim (16,16)
+name [[185]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 186
+pt (144,224)
+dim (16,16)
+name [[186]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 187
+pt (160,224)
+dim (16,16)
+name [[187]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 188
+pt (176,224)
+dim (16,16)
+name [[188]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 189
+pt (192,224)
+dim (16,16)
+name [[189]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 190
+pt (208,224)
+dim (16,16)
+name [[190]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 191
+pt (0,240)
+dim (16,16)
+name [[191]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 192
+pt (16,240)
+dim (16,16)
+name [[192]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 193
+pt (32,240)
+dim (16,16)
+name [[193]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 194
+pt (48,240)
+dim (16,16)
+name [[194]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 195
+pt (64,240)
+dim (16,16)
+name [[195]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 196
+pt (80,240)
+dim (16,16)
+name [[196]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 197
+pt (96,240)
+dim (16,16)
+name [[197]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 198
+pt (112,240)
+dim (16,16)
+name [[198]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 199
+pt (128,240)
+dim (16,16)
+name [[199]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 200
+pt (144,240)
+dim (16,16)
+name [[200]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 201
+pt (160,240)
+dim (16,16)
+name [[201]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 202
+pt (176,240)
+dim (16,16)
+name [[202]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 203
+pt (192,240)
+dim (16,16)
+name [[203]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 204
+pt (208,240)
+dim (16,16)
+name [[204]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+anim [[flower]]
+pause 600
+frame 67
+frame 68
+endanim
+anim [[w_c]]
+pause 400
+frame 33
+frame 49
+endanim
+anim [[w_w]]
+pause 400
+frame 34
+frame 50
+endanim
+anim [[w_n]]
+pause 400
+frame 35
+frame 51
+endanim
+anim [[w_nw]]
+pause 400
+frame 36
+frame 52
+endanim
+anim [[w_e]]
+pause 400
+frame 37
+frame 53
+endanim
+anim [[w_we]]
+pause 400
+frame 38
+frame 54
+endanim
+anim [[w_ne]]
+pause 400
+frame 39
+frame 55
+endanim
+anim [[w_wne]]
+pause 400
+frame 40
+frame 56
+endanim
+anim [[w_s]]
+pause 400
+frame 41
+frame 57
+endanim
+anim [[w_sw]]
+pause 400
+frame 42
+frame 58
+endanim
+anim [[w_ns]]
+pause 400
+frame 43
+frame 59
+endanim
+anim [[w_wns]]
+pause 400
+frame 44
+frame 60
+endanim
+anim [[w_se]]
+pause 400
+frame 45
+frame 61
+endanim
+anim [[w_wse]]
+pause 400
+frame 46
+frame 62
+endanim
+anim [[w_nes]]
+pause 400
+frame 47
+frame 63
+endanim
+anim [[w_nesw]]
+pause 400
+frame 48
+frame 64
+endanim

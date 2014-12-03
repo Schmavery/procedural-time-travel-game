@@ -21,7 +21,8 @@ public class SpriteSheet {
 	private String dataStr;
 	private Texture tex;
 	ArrayList<Image> imgs;
-	HashMap<String, Animation2> anims;
+	HashMap<String, Animation> anims;
+	HashMap<String, Sprite> sprites;
 	
 	/**
 	 * All the information that is needed before calling
@@ -34,6 +35,7 @@ public class SpriteSheet {
 		this.dataPath = dataPath;
 		imgs = new ArrayList<>();
 		anims = new HashMap<>();
+		sprites = new HashMap<>();
 	}
 	
 	public void loadTexture(){
@@ -84,15 +86,27 @@ public class SpriteSheet {
 		return imgs.get(id);
 	}
 	
-	public Animation2 getAnim(String key){
+	public Animation getAnim(String key){
 		return anims.get(key);
 	}
 	
 	public void addImage(Image img){
-		imgs.add(img);
+		while(imgs.size() <= img.getId()){
+			imgs.add(null);
+		}
+		imgs.set(img.getId(), img);
+		sprites.put(img.getName(), img);
 	}
 	
-	public void addAnim(Animation2 anim){
+	public void addAnim(Animation anim){
 		anims.put(anim.getName(), anim);
+		sprites.put(anim.getName(), anim);
+	}
+	
+	public Sprite get(String key){
+		if (!sprites.containsKey(key)){
+			System.out.println("Could not find sprite: "+key);
+		}
+		return sprites.get(key);
 	}
 }

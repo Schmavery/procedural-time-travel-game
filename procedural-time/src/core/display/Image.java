@@ -89,9 +89,16 @@ public class Image extends Sprite{
 	
 	@Override
 	public void drawModel(float x, float y, int index) {
-		GUtil.drawSprite(getSpriteSheetType(), x-(anchorPt.getX()*Game.SCALE), y-(anchorPt.getY()*Game.SCALE), 
-				Game.SCALE * getWidth(), Game.SCALE * getHeight(),
-				getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
+		this.drawModel(x, y, Game.SCALE * getWidth(), Game.SCALE * getHeight(), index);
+	}
+	
+	@Override
+	public void drawModel(float x, float y, float w, float h, int index) {
+		//TODO: reenable anchorPt offset
+//		GUtil.drawSprite(getSpriteSheetType(), x-(anchorPt.getX()*Game.SCALE), y-(anchorPt.getY()*Game.SCALE), 
+//				w, h, getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
+		GUtil.drawSprite(getSpriteSheetType(), x, y, 
+				w, h, getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
 	}
 	
 }

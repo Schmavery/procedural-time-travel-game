@@ -25,11 +25,23 @@ public class SpriteManager {
 		PTTGSTDataParser.load(ss, this);
 	}
 	
+	/**
+	 * For debugging purposes
+	 */
+	public void printLoadedSpriteSheets(){
+		String prt = "";
+		for (SpriteSheetType sst : spriteSheets.keySet()){
+			prt += sst.name() + ", ";
+		}
+		System.out.println(prt);
+		System.out.println(spriteSheets.get(SpriteSheetType.GUI));
+	}
+	
 	public void addImage(Image img){
 		spriteSheets.get(img.getSpriteSheetType()).addImage(img);
 	}
 	
-	public void addAnim(Animation2 anim){
+	public void addAnim(Animation anim){
 		spriteSheets.get(anim.getSpriteSheetType()).addAnim(anim);
 	}
 	
@@ -37,7 +49,11 @@ public class SpriteManager {
 		return spriteSheets.get(ssType).getImage(id);
 	}
 	
-	public Animation2 getAnim(SpriteSheetType ssType, String key){
+	public Animation getAnim(SpriteSheetType ssType, String key){
 		return spriteSheets.get(ssType).getAnim(key);
+	}
+	
+	public Sprite getSprite(SpriteSheetType ssType, String key){
+		return spriteSheets.get(ssType).get(key);
 	}
 }
