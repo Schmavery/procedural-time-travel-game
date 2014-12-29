@@ -14,13 +14,15 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
-import core.display.AnimationManager;
+import core.display.Sprite;
+import core.display.SpriteInstance;
+import core.display.SpriteManager;
+import core.display.SpriteSheet;
 import entities.Markov;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
@@ -35,7 +37,6 @@ import gui.GGridLayout;
 import gui.GPanel;
 import gui.GTextbox;
 import gui.GUtil;
-import gui.GUtil.Alignment;
 import gui.GUtil.SpriteSheetType;
 import gui.IContainer;
 
@@ -47,8 +48,6 @@ public class Game extends Core {
 	public static float SCALE = 2f;
 	public static Random rand = new Random();
 	
-	long totalTime = 0;
-	
 	Humanoid player;
 	List<Humanoid> humans;
 	List<Drawable> drawList;
@@ -56,6 +55,8 @@ public class Game extends Core {
 	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
+	
+	SpriteInstance testInst;
 	
 	boolean pauseDown = false;
 	GPanel screen;
@@ -81,7 +82,7 @@ public class Game extends Core {
 		drawLoading();
 		initMarkov();
 		
-		int numHumans = 10;
+		int numHumans = 100;
 		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Drawable>()
@@ -92,23 +93,19 @@ public class Game extends Core {
 				return (int) (d1.getY() - d2.getY());
 			}
 		};
-		AnimationManager.loadAnims("res/animations.txt", SpriteSheetType.MAP);
-		AnimationManager.loadAnims("res/peopleAnim.txt", SpriteSheetType.PEOPLE);
-		AnimationManager.loadAnims("res/itemAnim.txt", SpriteSheetType.ITEMS);
 		
-
-		tileMap = new TileMap(50);
+		tileMap = new TileMap(1000);
 		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
-			player.setMovingAnims(AnimationManager.getAnim("man_n_walk"), 
-					AnimationManager.getAnim("man_e_walk"),
-					AnimationManager.getAnim("man_s_walk"),
-					AnimationManager.getAnim("man_w_walk"));
-			player.setStandingAnims(AnimationManager.getAnim("man_n"), 
-					AnimationManager.getAnim("man_e"),
-					AnimationManager.getAnim("man_s"),
-					AnimationManager.getAnim("man_w"));
+			player.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
+			player.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n"), 
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 		humans.add(player);
 		
 		for (int i = 1; i < numHumans; i++){
@@ -123,33 +120,33 @@ public class Game extends Core {
 			if (rand.nextBoolean()){
 				tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 				
-				tmpHuman.setMovingAnims(AnimationManager.getAnim("man_n_walk"), 
-						AnimationManager.getAnim("man_e_walk"),
-						AnimationManager.getAnim("man_s_walk"),
-						AnimationManager.getAnim("man_w_walk"));
-				tmpHuman.setStandingAnims(AnimationManager.getAnim("man_n"), 
-						AnimationManager.getAnim("man_e"),
-						AnimationManager.getAnim("man_s"),
-						AnimationManager.getAnim("man_w"));
+				tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
+				tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n"), 
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 			} else {
 				tmpHuman = new NPC(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
 				
-				tmpHuman.setMovingAnims(AnimationManager.getAnim("girl_n_walk"), 
-						AnimationManager.getAnim("girl_e_walk"),
-						AnimationManager.getAnim("girl_s_walk"),
-						AnimationManager.getAnim("girl_w_walk"));
-				tmpHuman.setStandingAnims(AnimationManager.getAnim("girl_n"), 
-						AnimationManager.getAnim("girl_e"),
-						AnimationManager.getAnim("girl_s"),
-						AnimationManager.getAnim("girl_w"));
+				tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_n_walk"), 
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_e_walk"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_s_walk"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_w_walk"));
+				tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_n"), 
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_e"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_s"),
+						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_w"));
 			}
 			humans.add(tmpHuman);
 		}
 		
 		Humanoid tmp = humans.get(rand.nextInt(numHumans));
 		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
-		System.out.println(tmpTile.getX());
-		System.out.println(tmpTile.getY());
+//		System.out.println(tmpTile.getX());
+//		System.out.println(tmpTile.getY());
 		targetName = tmp.getName();
 		player.getItem(new Sword(0, 0));
 		player.doAction(ActionType.RETREIVE, 0);
@@ -166,15 +163,13 @@ public class Game extends Core {
 		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.PEOPLE, "res/people.png.dat"));
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.ITEMS, "res/items.png.dat"));
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.MAP, "res/map.png.dat"));
+		
 		try {
-			Texture tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
-			Texture peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
 			Texture guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
-			Texture itemTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/items.png")), GL11.GL_NEAREST);
-			GUtil.setGuiTex(guiTex);
-			GUtil.setPeopleTex(peopleTex);
-			GUtil.setMapTex(tileSheetTex);
-			GUtil.setItemTex(itemTex);
+			GUtil.setTex(SpriteSheetType.GUI, guiTex);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -182,8 +177,6 @@ public class Game extends Core {
 			e.printStackTrace();
 			exit();
 		}
-		
-		
 	}
 	
 	public void initGUI(){
@@ -226,20 +219,9 @@ public class Game extends Core {
 		test.addChild(new GButton("b4", "Say \"Hey\"", "say Hey!", new Color(10,100,100)));
 		test.addChild(new GButton("b4", "Say \"Hello\"", "say Hello", new Color(100,100,10)));
 		test.addChild(new GButton("b4", "Say \"Howdy\"", "say Howdy", new Color(100,10,100)));
-		
-		IContainer targetPanel = new GPanel("Target", "none", new Rectangle (675,25,300,100));
-		targetPanel.setBorder(GBorderFactory.createBasicBorder(ReadableColor.DKGREY));
-		targetPanel.setLayout(new GGridLayout(2, 1, 5, 0));
-		tb = new GTextbox("message", "Go and find:");
-		tb.setTextColor(ReadableColor.WHITE);
-		targetPanel.addChild(tb);
-		tb = new GTextbox("target", targetName);
-		tb.setAlignment(Alignment.CENTER);
-		tb.setTextColor(ReadableColor.RED);
-		targetPanel.addChild(tb);
-		screen.addChild(targetPanel);
-		
 	}
+	
+	
 	
 	@Override
 	public void update(long deltaTime){
@@ -250,7 +232,7 @@ public class Game extends Core {
 			if (Mouse.getEventButton() == 0 && !Mouse.getEventButtonState()){
 				GClickEvent tmp = screen.clickUp(Mouse.getEventX(), SCREEN_HEIGHT - Mouse.getEventY());
 				if (tmp != null){
-					if (tmp.getAction() != null && tmp.getAction().regionMatches(0, "say", 0, 3)){
+					if (tmp.getAction() != null && tmp.getAction().startsWith("say")){
 						player.say(tmp.getAction().substring(4));
 					}
 				} else {
@@ -275,8 +257,8 @@ public class Game extends Core {
 	
 	@Override
 	public void gameUpdate(long deltaTime){
-
-		AnimationManager.update(deltaTime);
+		tileMap.updateAnims(deltaTime);
+		
 		((GTextbox) (panel.search("tb"))).setText("X: "+ ((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
 		((GTextbox) (panel.search("tb2"))).setText("Y: "+ ((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
@@ -356,9 +338,11 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
-			GUtil.drawSprite(SpriteSheetType.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
-					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
-					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
+//			GUtil.drawSprite(SpriteSheetType.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
+//					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
+//					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
+			tile.draw((int) (tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f),
+					(int) (tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f));
 			
 		}
 		
@@ -374,7 +358,6 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(10, 10);
-		
 	}
 
 }

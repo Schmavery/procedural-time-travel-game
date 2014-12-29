@@ -1,8 +1,8 @@
 package core.display;
 
+import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpriteManager {
@@ -24,18 +24,38 @@ public class SpriteManager {
 	public void loadSpriteSheet(SpriteSheet ss){
 		spriteSheets.put(ss.getType(), ss);
 		PTTGSTDataParser.load(ss, this);
+		GUtil.setTex(ss.getType(), ss.getTex());
+	}
+	
+	/**
+	 * For debugging purposes
+	 */
+	public void printLoadedSpriteSheets(){
+		String prt = "";
+		for (SpriteSheetType sst : spriteSheets.keySet()){
+			prt += sst.name() + ", ";
+		}
+		System.out.println(prt);
+		System.out.println(spriteSheets.get(SpriteSheetType.GUI));
 	}
 	
 	public void addImage(Image img){
-		img.getSpriteSheet().addImage(img);
+		spriteSheets.get(img.getSpriteSheetType()).addImage(img);
 	}
 	
-	public void addAnim(Animation2 anim){
-		anim.getSpriteSheet().addAnim(anim);
+	public void addAnim(Animation anim){
+		spriteSheets.get(anim.getSpriteSheetType()).addAnim(anim);
 	}
 	
-	public Image getImage(SpriteSheet ss, int id){
-		return ss.getImage(id);
+	public Image getImage(SpriteSheetType ssType, int id){
+		return spriteSheets.get(ssType).getImage(id);
 	}
 	
+	public Animation getAnim(SpriteSheetType ssType, String key){
+		return spriteSheets.get(ssType).getAnim(key);
+	}
+	
+	public Sprite getSprite(SpriteSheetType ssType, String key){
+		return spriteSheets.get(ssType).get(key);
+	}
 }

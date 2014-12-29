@@ -10,13 +10,12 @@ import org.lwjgl.util.Rectangle;
 import core.ActionFactory;
 import core.ActionFactory.Action;
 import core.ActionFactory.ActionType;
-import core.display.Animation;
-import core.display.AnimationManager;
-import core.path.PathException;
-import core.path.PathFinder;
 import core.Game;
 import core.Message;
 import core.Tile;
+import core.display.SpriteManager;
+import core.path.PathException;
+import core.path.PathFinder;
 import entities.EntityFrame;
 import entities.abstr.AbstractMovingEntity;
 import entities.interfaces.Entity;
@@ -56,8 +55,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		inventory = new Holdable[3];
 		heldItem = fist;
 		this.facing = Facing.SOUTH;
-		movingAnims = new Animation[4];
-		standingAnims = new Animation[4];
 		frame = new EntityFrame(15, 10);
 		tilePather = new PathFinder<Tile>();
 		speed = 0.2f;
@@ -66,7 +63,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 				.addEntity(this);
 
 		this.name = name;
-//		getItem(new Wood(0,0));
 	}
 
 	public void update(long deltaTime) {
@@ -359,7 +355,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	@Override
 	public void draw(float x, float y) {
 		if (isDead()){
-			AnimationManager.getAnim("grave").draw(x + getX(), y + getY());
+			SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "grave").drawModel(x + getX(), y + getY(), 0);
 		} else if (currentAction != null){
 			currentAction.getAnim(facing).draw(x + getX(), y + getY());
 		} else {

@@ -68,7 +68,6 @@ public abstract class Core {
     }
     
     private void gameLoop(){
-    	System.out.println(System.currentTimeMillis());
     	int counter = 0;
         while (!Display.isCloseRequested()) {
         	// Render

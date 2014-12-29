@@ -8,8 +8,8 @@ import org.lwjgl.util.Rectangle;
  * pttg-sprite-tool data format, found on:
  * https://github.com/Schmavery/pttg-sprite-tool
  */
-public final class PTTGSTDataParser {
-	private enum ParserState {DEFAULT, ANCHOR, HOOKS, BOUNDS, COLLISION};
+public class PTTGSTDataParser {
+	private enum ParserState {DEFAULT, ANCHOR, HOOKS, INITIAL, COLLISION};
 	public static void load(SpriteSheet ss, SpriteManager sm){
 		String[] data = ss.readData().split("\n");
 		StringBuilder sb = new StringBuilder();
@@ -22,17 +22,19 @@ public final class PTTGSTDataParser {
 				sb.setLength(0);
 				sb.append(str+"\n");
 			} else if (str.startsWith("endimg")){
-				Image img = new Image(ss);
+				Image img = new Image(ss.getType());
 				loadImage(sb.toString(), img);
 				sm.addImage(img);
 			} else if (str.startsWith("endanim")){
-				Animation2 anim = new Animation2(ss);
+				Animation anim = new Animation(ss.getType());
 				loadAnim(sb.toString(), anim, sm);
 				sm.addAnim(anim);
 			} else {
 				sb.append(str+"\n");
 			}
 		}
+		ss.loadTexture();
+		System.out.println("Successfully loaded " + ss.getType().name());
 	}
 	
 	public static void loadImage(String data, Image img){
@@ -40,7 +42,6 @@ public final class PTTGSTDataParser {
 		SpriteHook tmpHook = null;
 		Rectangle rect = new Rectangle();
 		Point pt;
-		
 		
 		for (String l : data.split("\n")){
 			switch (state){
@@ -62,7 +63,7 @@ public final class PTTGSTDataParser {
 					state = ParserState.DEFAULT;
 				}
 				break;
-			case BOUNDS:
+			case INITIAL:
 				if (l.matches("pt +\\([0-9]+, ?[0-9]+\\)")){
 					pt = parsePoint(l.substring(l.indexOf("("), l.indexOf(")")+1));
 					rect.setLocation(pt);
@@ -71,6 +72,9 @@ public final class PTTGSTDataParser {
 					pt = parsePoint(l.substring(l.indexOf("("), l.indexOf(")")+1));
 					rect.setSize(pt.getX(), pt.getY());
 					img.setBounds(rect);
+				} else if (l.matches("name \\[\\[.+\\]\\]")){
+					String name = l.substring(l.indexOf("[[")+2, l.indexOf("]]"));
+					img.setName(name);
 					state = ParserState.DEFAULT;
 				}
 				break;
@@ -88,32 +92,33 @@ public final class PTTGSTDataParser {
 				} else if (l.startsWith("hooks")){
 					state = ParserState.HOOKS;
 				} else if (l.startsWith("img")){
-					state = ParserState.BOUNDS;
-					rect = new Rectangle();
-				} else if (l.startsWith("collision")){
-					state = ParserState.COLLISION;
-				} else if (l.startsWith("img ")){
 					String idStr = l.substring(4);
 					if (idStr.matches("\\d+")){
 						img.setId(Integer.valueOf(idStr));
 					}
+					state = ParserState.INITIAL;
+					rect = new Rectangle();
+				} else if (l.startsWith("collision")){
+					state = ParserState.COLLISION;
+					img.clearPoly();
 				}
 				break;
 			}
-			
 		}
 	}
 	
-	public static void loadAnim(String data, Animation2 anim, SpriteManager sm){
+	public static void loadAnim(String data, Animation anim, SpriteManager sm){
 		// Parsed Image Data
+		String name = "";
 		for (String l : data.split("\n")){
 			if (l.startsWith("anim ")){
-				anim.setName(l.substring(l.indexOf("[[")+2, l.indexOf("]]")));
+				name = l.substring(l.indexOf("[[")+2, l.indexOf("]]"));
+				anim.setName(name);
 			} else if (l.startsWith("pause ")){
 				anim.setPause(Integer.valueOf(l.replaceAll("[^\\d]", "")));
 			} else if (l.startsWith("frame ")){
 				int frameId = Integer.valueOf(l.replaceAll("[^\\d]", ""));
-				anim.addFrame(sm.getImage(anim.getSpriteSheet(), frameId));
+				anim.addFrame(sm.getImage(anim.getSpriteSheetType(), frameId));
 			}
 		}
 	}

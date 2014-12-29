@@ -26,8 +26,8 @@ public class Poly {
 	public void addPoint(int x, int y){
 		Point newPt = new Point(x, y);
 		
-		int max = Integer.MIN_VALUE;
-		Point p1 = null, p2 = null;
+		int max = 0;
+		Point p1 = newPt, p2 = newPt;
 		int tmp;
 		
 		// Recalc max interpoint distance

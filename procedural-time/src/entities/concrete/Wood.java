@@ -1,14 +1,15 @@
 package entities.concrete;
 
-import core.display.Animation;
-import core.display.AnimationManager;
+import core.display.SpriteInstance;
+import core.display.SpriteManager;
 import entities.abstr.AbstractItem;
 import entities.interfaces.Holdable;
+import gui.GUtil.SpriteSheetType;
 
 public class Wood extends AbstractItem implements Holdable{
 	public Wood(float x, float y) {
 		super(x, y);
-		setAnim(AnimationManager.getAnim("wood"));
+		setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "wood"));
 	}
 
 	@Override
@@ -24,13 +25,13 @@ public class Wood extends AbstractItem implements Holdable{
 	}
 
 	@Override
-	public Animation[] getSwingArray() {
+	public SpriteInstance[] getSwingArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Animation[] getUseArray() {
+	public SpriteInstance[] getUseArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}

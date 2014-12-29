@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
@@ -15,7 +16,8 @@ public final class GUtil {
 	}
 	
 	public static GFont fnt;
-	private static Texture guiTex, mapTex, peopleTex, itemTex;
+//	private static Texture guiTex, mapTex, peopleTex, itemTex;
+	private static HashMap<SpriteSheetType, Texture> texMap = new HashMap<>();
 	private static SpriteBatch batch = new SpriteBatch();
 	
 	private GUtil(){}
@@ -32,15 +34,15 @@ public final class GUtil {
 
 		float[] arr = {texX/ssSize, texY/ssSize, (texX+1)/ssSize, texY/ssSize, 
 				(texX+1)/ssSize, (texY+1)/ssSize, texX/ssSize, (texY+1)/ssSize};
-		batch.draw(getTexID(spr), arr, x, y, spriteW, spriteH, c);
+		batch.draw(texMap.get(spr).getTextureID(), arr, x, y, spriteW, spriteH, c);
 	}
 	
 	public static void drawSprite(SpriteSheetType spr, float x, float y, float spriteW, float spriteH, 
 									float texX, float texY, float texW, float texH, ReadableColor c){
-		int size = getTex(spr).getImageHeight();
+		int size = texMap.get(spr).getImageHeight();
 		float[] arr = {texX/size, texY/size, (texX+texW)/size, texY/size, 
 				(texX+texW)/size, (texY+texH)/size, texX/size, (texY+texH)/size};
-		batch.draw(getTexID(spr), arr, x, y, spriteW, spriteH, c);
+		batch.draw(texMap.get(spr).getTextureID(), arr, x, y, spriteW, spriteH, c);
 	}
 
 	public static void drawRect(Rectangle box, ReadableColor c){
@@ -81,19 +83,10 @@ public final class GUtil {
 	
 	public static void setFont(GFont font){
 		fnt = font;
+		texMap.put(SpriteSheetType.FONT, fnt.getTex());
 	}
-	public static void setGuiTex(Texture tex){
-		guiTex = tex;
-	}
-	public static void setPeopleTex(Texture tex){
-		peopleTex = tex;
-	}
-	public static void setMapTex(Texture tex){
-		mapTex = tex;
-	}
-	public static void setItemTex(Texture tex){
-		itemTex = tex;
-	}
+	
+	
 	
 	public static void begin(){
 		SpriteBatch.begin();
@@ -102,27 +95,15 @@ public final class GUtil {
 	public static void end(){
 		batch.end();
 	}
+
 	
-	private static int getTexID(SpriteSheetType spr){
-		return getTex(spr).getTextureID();
+	public static void setTex(SpriteSheetType ssType, Texture tex){
+		texMap.put(ssType, tex);
 	}
 	
-	private static Texture getTex(SpriteSheetType spr){
-		switch (spr){
-		case PEOPLE:
-			return peopleTex;
-		case MAP:
-			return mapTex;
-		case FONT:
-			return fnt.getTex();
-		case GUI:
-			return guiTex;
-		case ITEMS:
-			return itemTex;
-		default: 
-			return null;
-		}
-	}
+//	private static Texture getTex(SpriteSheetType spr){
+//		return texMap.get(spr);
+//	}
 	
 	static String readFile(String path, Charset encoding)
 	{

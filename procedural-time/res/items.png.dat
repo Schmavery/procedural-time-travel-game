@@ -1,0 +1,145 @@
+##res/items.png
+img 1
+pt (0,0)
+dim (16,16)
+name [[rupee]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (5,5)
+pt (8,2)
+pt (11,5)
+pt (11,10)
+pt (8,13)
+pt (5,10)
+pt (5,5)
+endcollision
+endimg
+img 2
+pt (16,0)
+dim (16,16)
+name [[wood]]
+anchor
+pt (8,10)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,11)
+pt (3,8)
+pt (4,7)
+pt (12,7)
+pt (13,8)
+pt (13,13)
+pt (3,13)
+pt (2,12)
+pt (2,11)
+endcollision
+endimg
+img 3
+pt (32,0)
+dim (16,16)
+name [[heart]]
+anchor
+pt (8,7)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,5)
+pt (4,4)
+pt (11,4)
+pt (12,5)
+pt (12,7)
+pt (8,11)
+pt (7,11)
+pt (3,7)
+pt (3,5)
+endcollision
+endimg
+img 4
+pt (48,0)
+dim (16,16)
+name [[apple]]
+anchor
+pt (7,9)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,8)
+pt (5,6)
+pt (8,4)
+pt (11,8)
+pt (11,10)
+pt (9,12)
+pt (5,12)
+pt (3,10)
+pt (3,8)
+endcollision
+endimg
+img 5
+pt (64,0)
+dim (16,16)
+name [[bubble]]
+anchor
+pt (7,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (4,8)
+pt (5,6)
+pt (7,5)
+pt (9,6)
+pt (10,8)
+pt (9,10)
+pt (7,11)
+pt (5,10)
+pt (4,8)
+endcollision
+endimg
+img 6
+pt (80,0)
+dim (16,16)
+name [[sword]]
+anchor
+pt (8,7)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,13)
+pt (3,8)
+pt (12,2)
+pt (13,2)
+pt (13,3)
+pt (7,12)
+pt (2,14)
+pt (1,13)
+endcollision
+endimg
+img 7
+pt (96,0)
+dim (16,16)
+name [[fist]]
+anchor
+pt (7,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,7)
+pt (3,3)
+pt (9,3)
+pt (11,5)
+pt (11,8)
+pt (9,13)
+pt (4,13)
+pt (1,8)
+pt (1,7)
+endcollision
+endimg
