@@ -1,5 +1,6 @@
 package core.display;
 
+import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class SpriteManager {
 	public void loadSpriteSheet(SpriteSheet ss){
 		spriteSheets.put(ss.getType(), ss);
 		PTTGSTDataParser.load(ss, this);
+		GUtil.setTex(ss.getType(), ss.getTex());
 	}
 	
 	/**

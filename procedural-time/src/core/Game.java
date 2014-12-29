@@ -82,7 +82,7 @@ public class Game extends Core {
 		drawLoading();
 		initMarkov();
 		
-		int numHumans = 10;
+		int numHumans = 100;
 		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Drawable>()
@@ -94,7 +94,7 @@ public class Game extends Core {
 			}
 		};
 		
-		tileMap = new TileMap(50);
+		tileMap = new TileMap(1000);
 		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
@@ -159,37 +159,17 @@ public class Game extends Core {
 	
 	}
 	
-	public void initSpriteSheets(){
+	public static void initSpriteSheets(){
 		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		
-		SpriteSheet peopleSS = new SpriteSheet(SpriteSheetType.PEOPLE, "res/people.png.dat");
-		SpriteSheet itemsSS = new SpriteSheet(SpriteSheetType.ITEMS, "res/items.png.dat");
-		SpriteSheet mapSS = new SpriteSheet(SpriteSheetType.MAP, "res/map.png.dat");
-		SpriteManager.get().loadSpriteSheet(peopleSS);
-		SpriteManager.get().loadSpriteSheet(itemsSS);
-		SpriteManager.get().loadSpriteSheet(mapSS);
-		SpriteManager.get().printLoadedSpriteSheets();
-		
-		Sprite testSpr;
-//		testSpr  = SpriteManager.get().getSprite(SpriteSheetType.GUI, "g_c1");
-//		if (testSpr == null){
-//			System.out.println("Is null");
-//		}
-		testSpr= SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "sword");
-		
-		testInst = testSpr.getInstance();
-		
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.PEOPLE, "res/people.png.dat"));
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.ITEMS, "res/items.png.dat"));
+		SpriteManager.get().loadSpriteSheet(new SpriteSheet(SpriteSheetType.MAP, "res/map.png.dat"));
 		
 		try {
-			Texture tileSheetTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/map.png")), GL11.GL_NEAREST);
-			Texture peopleTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/people.png")), GL11.GL_NEAREST);
 			Texture guiTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/gui.png")), GL11.GL_NEAREST);
-			Texture itemTex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res/items.png")), GL11.GL_NEAREST);
-			GUtil.setGuiTex(guiTex);
-			GUtil.setPeopleTex(peopleTex);
-			GUtil.setMapTex(tileSheetTex);
-			GUtil.setItemTex(itemTex);
+			GUtil.setTex(SpriteSheetType.GUI, guiTex);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			exit();
@@ -197,8 +177,6 @@ public class Game extends Core {
 			e.printStackTrace();
 			exit();
 		}
-		
-		
 	}
 	
 	public void initGUI(){
@@ -241,20 +219,9 @@ public class Game extends Core {
 		test.addChild(new GButton("b4", "Say \"Hey\"", "say Hey!", new Color(10,100,100)));
 		test.addChild(new GButton("b4", "Say \"Hello\"", "say Hello", new Color(100,100,10)));
 		test.addChild(new GButton("b4", "Say \"Howdy\"", "say Howdy", new Color(100,10,100)));
-		
-//		IContainer targetPanel = new GPanel("Target", "none", new Rectangle (675,25,300,100));
-//		targetPanel.setBorder(GBorderFactory.createBasicBorder(ReadableColor.DKGREY));
-//		targetPanel.setLayout(new GGridLayout(2, 1, 5, 0));
-//		tb = new GTextbox("message", "Go and find:");
-//		tb.setTextColor(ReadableColor.WHITE);
-//		targetPanel.addChild(tb);
-//		tb = new GTextbox("target", targetName);
-//		tb.setAlignment(Alignment.CENTER);
-//		tb.setTextColor(ReadableColor.RED);
-//		targetPanel.addChild(tb);
-//		screen.addChild(targetPanel);
-		
 	}
+	
+	
 	
 	@Override
 	public void update(long deltaTime){
@@ -391,7 +358,6 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(10, 10);
-		testInst.draw(50, 50);
 	}
 
 }

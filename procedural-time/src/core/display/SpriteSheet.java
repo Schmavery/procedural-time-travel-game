@@ -86,6 +86,10 @@ public class SpriteSheet {
 		return imgs.get(id);
 	}
 	
+	public Texture getTex(){
+		return tex;
+	}
+	
 	public Animation getAnim(String key){
 		return anims.get(key);
 	}
