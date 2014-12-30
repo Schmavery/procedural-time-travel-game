@@ -60,6 +60,14 @@ public final class GUtil {
 		drawSprite(SpriteSheetType.GUI, x+16,          y+innerH + 16, 1, 6, innerW, 16, 32, c);	// Bottom Mid
 		drawSprite(SpriteSheetType.GUI, x+ innerW + 16, y+innerH + 16, 2, 6, 16, 16, 32, c);		// Bottom Right
 	}
+	
+	public static void drawPixel(int x, int y, ReadableColor c){
+		drawPixel(x, y, 1, c);
+	}
+	
+	public static void drawPixel(int x, int y, int size, ReadableColor c){
+		drawSprite(SpriteSheetType.GUI, x, y, 1, 5, size, size, 32, c);
+	}
 
 	public static void drawText(int x, int y, ReadableColor c, String text){
 		drawText(x, y, c, text, fnt);

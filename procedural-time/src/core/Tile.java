@@ -13,24 +13,24 @@ import entities.interfaces.Placeable;
 public class Tile implements Serializable, Pathable<Tile>{
 	
 	private static final long serialVersionUID = 1L;
-	public static enum Type {
+	public static enum TileType {
 		GRASS, DIRT, WATER, SAND;
 	}
 
 	private int x, y;
-	private Type type;
+	private TileType type;
 	private SpriteInstance spr;
 	double perlinVal;
 	boolean walkable;
 	List<Entity> entities;
 	
-	public Tile(Type type, double perlinVal, int x, int y){
+	public Tile(TileType type, double perlinVal, int x, int y){
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.perlinVal = perlinVal;
 		this.entities = new LinkedList<>();
-		if (type == Type.WATER){
+		if (type == TileType.WATER){
 			walkable = false;
 		} else {
 			walkable = true;
@@ -60,7 +60,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return true;
 	}
 	
-	public Type getType(){return type;}
+	public TileType getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
 	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}

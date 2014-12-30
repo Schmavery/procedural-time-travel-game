@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
-import core.Tile.Type;
+import core.Tile.TileType;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import core.util.PerlinNoise;
@@ -82,7 +82,7 @@ public class TileMap implements Serializable{
 	 */
 	private int calcBitmask(int x, int y){
 		int total = 0;
-		Type centerType = tileMap[x][y].getType();
+		TileType centerType = tileMap[x][y].getType();
 
 
 		if (x - 1 >= 0 && tileMap[x-1][y].getType() != centerType){
@@ -119,22 +119,22 @@ public class TileMap implements Serializable{
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
 				Tile t = tileMap[x][y];
-				if (t.getType().equals(Type.GRASS) && calcPerlinVal(x, y) > 0.25){
+				if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 0.25){
 					if (rand.nextInt(5) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
 					}
-				} else if (t.getType().equals(Type.GRASS) && calcPerlinVal(x, y) > 3){
+				} else if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 3){
 					if (rand.nextInt(2) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.BIG));
 					}
-				} else if (t.getType().equals(Type.DIRT) && calcPerlinVal(x, y) > 0.25){
+				} else if (t.getType().equals(TileType.DIRT) && calcPerlinVal(x, y) > 0.25){
 					if (rand.nextInt(10) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.SMALL));
 					}
-				} else if (!t.getType().equals(Type.WATER) && !t.getType().equals(Type.SAND)){
+				} else if (!t.getType().equals(TileType.WATER) && !t.getType().equals(TileType.SAND)){
 					if (rand.nextInt(500) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
@@ -149,16 +149,16 @@ public class TileMap implements Serializable{
 	 * Uses Perlin noise to pick random tile types
 	 * Helper class for generateTerrain()
 	 */
-	private static Type genTileType(int x, int y){
+	private static TileType genTileType(int x, int y){
 		double pVal = calcPerlinVal(x, y);
 		if(pVal > 3){
-			return Type.WATER;
+			return TileType.WATER;
 		}else if(pVal > 0.25){
-			return Type.GRASS;
+			return TileType.GRASS;
 		} else if (pVal < -3.2){
-			return Type.SAND;
+			return TileType.SAND;
 		} else {
-			return Type.DIRT;
+			return TileType.DIRT;
 		}
 	}
 	
@@ -217,7 +217,7 @@ public class TileMap implements Serializable{
 		}
 	}
 	
-	public Type getTexID(int tileX, int tileY){
+	public TileType getTexID(int tileX, int tileY){
 		return tileMap[tileX][tileY].getType();
 	}
 	

@@ -12,8 +12,10 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Drawable;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -26,7 +28,7 @@ import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
 import entities.concrete.NPC;
 import entities.concrete.Sword;
-import entities.interfaces.Drawable;
+import entities.interfaces.Entity;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
@@ -48,8 +50,8 @@ public class Game extends Core {
 	
 	Humanoid player;
 	List<Humanoid> humans;
-	List<Drawable> drawList;
-	Comparator<Drawable> drawComparator;
+	List<Entity> drawList;
+	Comparator<Entity> drawComparator;
 	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
@@ -57,6 +59,7 @@ public class Game extends Core {
 	boolean pauseDown = false;
 	GPanel screen;
 	GPanel panel;
+	MiniMap miniMap;
 	
 	public static TileMap getMap(){
 		return tileMap;
@@ -78,14 +81,15 @@ public class Game extends Core {
 		drawLoading();
 		initMarkov();
 		RandomManager.init(1);
+		miniMap = new MiniMap(100);
 		
 		int numHumans = 100;
 		
 		drawList = new ArrayList<>(100);
-		drawComparator = new Comparator<Drawable>()
+		drawComparator = new Comparator<Entity>()
 		{
 			@Override
-			public int compare(Drawable d1, Drawable d2)
+			public int compare(Entity d1, Entity d2)
 			{
 				return (int) (d1.getY() - d2.getY());
 			}
@@ -350,12 +354,13 @@ public class Game extends Core {
 				drawList.addAll(tile.getEntities());
 		}
 		Collections.sort(drawList, drawComparator);
-		for (Drawable d : drawList){
+		for (Entity d : drawList){
 			d.draw(SCREEN_WIDTH/2f - player.getX(), SCREEN_HEIGHT/2f - player.getY());
 		}
 
 		screen.draw();
 		player.drawStatus(10, 10);
+		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE)-5, 5, tileMap.getTile(playerTile_x, playerTile_y));
 	}
 
 }
