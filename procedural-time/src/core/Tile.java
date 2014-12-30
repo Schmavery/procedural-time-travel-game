@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import core.display.SpriteInstance;
 import core.path.Pathable;
+import entities.concrete.Tree;
+import entities.concrete.Tree.TreeType;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 
@@ -35,13 +38,19 @@ public class Tile implements Serializable, Pathable<Tile>{
 		} else {
 			walkable = true;
 		}
+		if (type == Type.GRASS){
+			if ((new Random()).nextInt(5) == 0){
+				float scale = Game.SCALE*Game.TILE_SIZE;
+				entities.add(new Tree(x*scale, y*scale, TreeType.SMALL));
+			}
+		}
 	}
 	
 	public void setAnim(SpriteInstance spr){
 		this.spr = spr;
-		if (spr.getModel().getName().indexOf("rock") > -1){
-			walkable = false;
-		}
+//		if (spr.getModel().getName().indexOf("rock") > -1){
+//			walkable = false;
+//		}
 	}
 	
 	public boolean isWalkable() {
@@ -62,8 +71,6 @@ public class Tile implements Serializable, Pathable<Tile>{
 	public Type getType(){return type;}
 	public int getX(){return x;}
 	public int getY(){return y;}
-//	public int getTexX(){return spr.getTexX();}
-//	public int getTexY(){return spr.getTexY();}
 	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}
 	public float getLeft(){return Game.SCALE*Game.TILE_SIZE*x;}
 	
@@ -83,13 +90,13 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return 5*(Math.abs(this.x - p.x)  + Math.abs(this.y - p.y)); 
 	}
 	
-	private void addTile(List<Tile> list, int x, int y){
+	private static void addTile(List<Tile> list, int x, int y){
 		if (isWalkableTile(x, y)){
 			list.add(Game.getMap().getTile(x, y));
 		}
 	}
 	
-	private boolean isWalkableTile(int x, int y){
+	private static boolean isWalkableTile(int x, int y){
 		if (x >= 0
 				&& x < Game.getMap().getSize()
 				&& y >= 0

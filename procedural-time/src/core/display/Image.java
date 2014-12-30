@@ -95,12 +95,10 @@ public class Image extends Sprite{
 	@Override
 	public void drawModel(float x, float y, float w, float h, int index) {
 		//TODO: reenable anchorPt offset
-//		GUtil.drawSprite(getSpriteSheetType(), x-(anchorPt.getX()*Game.SCALE), y-(anchorPt.getY()*Game.SCALE), 
-//				w, h, getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
-		if (getName().equals("rupee")) System.out.println("rupee:"+w+" "+h+" "+bounds.toString());
-		if (getName().equals("man_s")) System.out.println("man_s:"+w+" "+h+" "+bounds.toString());
-		GUtil.drawSprite(getSpriteSheetType(), x, y, 
+		GUtil.drawSprite(getSpriteSheetType(), x-(anchorPt.getX()*Game.SCALE), y-(anchorPt.getY()*Game.SCALE), 
 				w, h, getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
+//		GUtil.drawSprite(getSpriteSheetType(), x, y, 
+//				w, h, getTexX(), getTexY(), getWidth(), getHeight(), ReadableColor.WHITE);
 	}
 	
 }

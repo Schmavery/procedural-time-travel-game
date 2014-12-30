@@ -19,8 +19,6 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
 import core.ActionFactory.ActionType;
-import core.display.Sprite;
-import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import core.display.SpriteSheet;
 import entities.Markov;
@@ -56,8 +54,6 @@ public class Game extends Core {
 	Markov maleNames;
 	Markov femaleNames;
 	
-	SpriteInstance testInst;
-	
 	boolean pauseDown = false;
 	GPanel screen;
 	GPanel panel;
@@ -81,6 +77,7 @@ public class Game extends Core {
 		initSpriteSheets();
 		drawLoading();
 		initMarkov();
+		RandomManager.init(1);
 		
 		int numHumans = 100;
 		
@@ -144,9 +141,8 @@ public class Game extends Core {
 		}
 		
 		Humanoid tmp = humans.get(rand.nextInt(numHumans));
-		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
-//		System.out.println(tmpTile.getX());
-//		System.out.println(tmpTile.getY());
+//		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
+//		System.out.println(tmpTile.getX()+", "+tmpTile.getY());
 		targetName = tmp.getName();
 		player.getItem(new Sword(0, 0));
 		player.doAction(ActionType.RETREIVE, 0);
@@ -347,7 +343,7 @@ public class Game extends Core {
 		}
 		
 		drawList.clear();
-		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2, playerTile_x, playerTile_y)){
+		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
 			if (tile.getEntities() != null)
 				drawList.addAll(tile.getEntities());
 		}

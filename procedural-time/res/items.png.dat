@@ -23,7 +23,7 @@ pt (16,0)
 dim (16,16)
 name [[wood]]
 anchor
-pt (8,10)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -44,7 +44,7 @@ pt (32,0)
 dim (16,16)
 name [[heart]]
 anchor
-pt (8,7)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -65,7 +65,7 @@ pt (48,0)
 dim (16,16)
 name [[apple]]
 anchor
-pt (7,9)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -84,9 +84,9 @@ endimg
 img 5
 pt (64,0)
 dim (16,16)
-name [[bubble]]
+name [[energy]]
 anchor
-pt (7,8)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -107,7 +107,7 @@ pt (80,0)
 dim (16,16)
 name [[sword]]
 anchor
-pt (8,7)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -127,19 +127,295 @@ pt (96,0)
 dim (16,16)
 name [[fist]]
 anchor
-pt (7,8)
+pt (8,8)
 hooks
 0 hooks
 endhooks
 collision
+pt (2,7)
+pt (4,3)
+pt (10,3)
+pt (12,5)
+pt (12,8)
+pt (10,13)
+pt (5,13)
+pt (2,8)
+pt (2,7)
+endcollision
+endimg
+img 12
+pt (0,208)
+dim (16,16)
+name [[roof_nw]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,9)
 pt (1,7)
-pt (3,3)
-pt (9,3)
-pt (11,5)
-pt (11,8)
-pt (9,13)
-pt (4,13)
-pt (1,8)
-pt (1,7)
+pt (5,1)
+pt (6,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,9)
+endcollision
+endimg
+img 13
+pt (16,208)
+dim (16,16)
+name [[roof_n]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 14
+pt (32,208)
+dim (16,16)
+name [[roof_ne]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (9,0)
+pt (10,1)
+pt (14,7)
+pt (15,9)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 15
+pt (0,224)
+dim (16,16)
+name [[roof_sw]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 16
+pt (16,224)
+dim (16,16)
+name [[roof_s]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 17
+pt (32,224)
+dim (16,16)
+name [[roof_se]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 18
+pt (48,224)
+dim (16,16)
+name [[floor]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 19
+pt (64,224)
+dim (16,16)
+name [[wall_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 20
+pt (0,240)
+dim (16,16)
+name [[window]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 21
+pt (16,240)
+dim (16,16)
+name [[door_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 22
+pt (32,240)
+dim (16,16)
+name [[wall_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 23
+pt (48,240)
+dim (16,16)
+name [[door_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 24
+pt (64,240)
+dim (16,16)
+name [[wall_3]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (8,8)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (8,8)
+endcollision
+endimg
+img 25
+pt (240,0)
+dim (16,32)
+name [[christmas_tree]]
+anchor
+pt (8,25)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,28)
+pt (4,12)
+pt (7,6)
+pt (8,6)
+pt (11,12)
+pt (15,28)
+pt (14,29)
+pt (12,30)
+pt (9,31)
+pt (6,31)
+pt (3,30)
+pt (1,29)
+pt (0,28)
+endcollision
+endimg
+img 26
+pt (224,0)
+dim (16,32)
+name [[tree]]
+anchor
+pt (8,25)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,6)
+pt (1,5)
+pt (5,3)
+pt (8,3)
+pt (12,4)
+pt (14,6)
+pt (15,11)
+pt (15,12)
+pt (9,31)
+pt (6,31)
+pt (1,13)
+pt (0,6)
 endcollision
 endimg

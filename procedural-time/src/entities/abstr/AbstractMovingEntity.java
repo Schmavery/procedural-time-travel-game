@@ -109,10 +109,10 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	
 	@Override
 	public void draw(float x, float y){
-		if (moving)
-			movingAnims[facing.ordinal()].draw(x + getX(), y + getY());
-		else 
-			super.draw(x, y);
+		if (moving){
+			float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+			movingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
+		} else super.draw(x, y);
 	}
 
 }

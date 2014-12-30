@@ -3,6 +3,7 @@ package entities.abstr;
 import java.util.Random;
 
 import core.Game;
+import core.RandomManager;
 import core.display.Sprite;
 import core.display.SpriteInstance;
 import entities.EntityFrame;
@@ -14,6 +15,8 @@ public abstract class AbstractEntity implements Entity
 	// is used as an array index.
 	public static enum Facing {NORTH, EAST, SOUTH, WEST}
 
+	private static int MAX_ID = 0;
+	private int id;
 	protected float x;
 	protected float y;
 	protected SpriteInstance[] standingAnims;
@@ -23,10 +26,11 @@ public abstract class AbstractEntity implements Entity
 
 	public AbstractEntity(float x, float y)
 	{
+		id = MAX_ID++;
 		standingAnims = new SpriteInstance[4];
 		this.x = x;
 		this.y = y;
-		rand = new Random();
+		rand = new Random(RandomManager.getSeed(id));
 		facing = Facing.NORTH;
 	}
 	
@@ -59,11 +63,13 @@ public abstract class AbstractEntity implements Entity
 	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
 	
 	public void draw(float x, float y){
-		standingAnims[facing.ordinal()].draw(x + getX(), y + getY());
+		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+		standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
 	}
 	
 	public void draw(float x, float y, float w, float h){
-		standingAnims[facing.ordinal()].draw(x + getX(), y + getY(), w, h);
+		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+		standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
 	}
 	
 }

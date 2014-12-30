@@ -355,9 +355,11 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	@Override
 	public void draw(float x, float y) {
 		if (isDead()){
+			// TODO: Remove this hacky nonsense
 			SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "grave").drawModel(x + getX(), y + getY(), 0);
 		} else if (currentAction != null){
-			currentAction.getAnim(facing).draw(x + getX(), y + getY());
+			float offset = (Game.TILE_SIZE*Game.SCALE) /2;
+			currentAction.getAnim(facing).draw(x + getX() + offset, y + getY() + offset);
 		} else {
 			super.draw(x, y);
 		}

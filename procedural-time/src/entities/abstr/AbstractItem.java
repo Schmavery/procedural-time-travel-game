@@ -29,9 +29,7 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	
 	@Override
 	public void draw(float x, float y){
-//		System.out.println("test");
 		facing = Facing.NORTH;
 		super.draw(x, y);
-//		System.out.println("Drew item " + this.toString());
 	}
 }
