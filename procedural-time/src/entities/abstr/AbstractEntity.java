@@ -1,9 +1,12 @@
 package entities.abstr;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Random;
 
 import core.Game;
 import core.RandomManager;
+import core.Tile;
 import core.display.Sprite;
 import core.display.SpriteInstance;
 import entities.EntityFrame;
@@ -17,8 +20,7 @@ public abstract class AbstractEntity implements Entity
 
 	private static int MAX_ID = 0;
 	private int id;
-	protected float x;
-	protected float y;
+	protected float x, y;
 	protected SpriteInstance[] standingAnims;
 	protected Facing facing;
 	protected EntityFrame frame;
@@ -30,6 +32,7 @@ public abstract class AbstractEntity implements Entity
 		standingAnims = new SpriteInstance[4];
 		this.x = x;
 		this.y = y;
+		warpToClosestClearTile();
 		rand = new Random(RandomManager.getSeed(id));
 		facing = Facing.NORTH;
 	}
@@ -72,4 +75,44 @@ public abstract class AbstractEntity implements Entity
 		standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
 	}
 	
+	protected void warpToClosestClearTile(){
+		Tile t;
+		// Map being initialized
+		if (Game.getMap() == null) return;
+			
+		if (frame != null)
+			t = Game.getMap().getWorldTile(frame.getCenterX(x), frame.getCenterY(y));
+		else
+			t = Game.getMap().getWorldTile(x, y);
+		if (!t.isWalkable()){
+			int[] xOffsets = {0, 0, -1, 1};
+			int[] yOffsets = {-1, 1, 0, 0};
+			HashSet<Tile> closed = new HashSet<>();
+			LinkedList<Tile> open = new LinkedList<>();
+			Tile warpTile = null;
+			open.add(t);
+			Tile add;
+			while (!open.isEmpty() && warpTile == null){
+				t = open.removeLast();
+				for (int i = 0; i < xOffsets.length; i++){
+					add = Game.getMap().getTile(t.getX()+xOffsets[i], t.getX()+yOffsets[i]);
+					if (closed.contains(add)) continue;
+					if (add.isWalkable()){
+						warpTile = add;
+						break;
+					} else {
+						open.addFirst(add);
+					}
+				}
+				closed.add(t);
+			}
+			if (warpTile != null){
+				float offset = Game.SCALE*Game.TILE_SIZE;
+				x = warpTile.getLeft() + offset;
+				y = warpTile.getTop() + offset;
+			} else {
+				System.out.println("Warp failed :(");
+			}
+		}
+	}
 }

@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import core.display.SpriteInstance;
 import core.path.Pathable;
-import entities.concrete.Tree;
-import entities.concrete.Tree.TreeType;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 

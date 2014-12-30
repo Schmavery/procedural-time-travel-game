@@ -24,6 +24,7 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	public void addToMap(float x, float y){
 		this.x = x;
 		this.y = y;
+		warpToClosestClearTile();
 		Game.getMap().getTile(getTileX(), getTileY()).addEntity(this);
 	}
 	

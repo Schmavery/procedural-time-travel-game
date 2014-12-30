@@ -92,6 +92,8 @@ public class Game extends Core {
 		};
 		
 		tileMap = new TileMap(1000);
+		System.out.println("Done initializing map");
+		//TODO: RandomManager
 		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
