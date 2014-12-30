@@ -53,7 +53,7 @@ public class TileMap implements Serializable{
 	
 	public TileMap(int size){
 		seed = (int) System.currentTimeMillis();
-//		seed = 366907858;
+		seed = 366907858;
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
@@ -125,10 +125,10 @@ public class TileMap implements Serializable{
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
 					}
 				} else if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 3){
-					if (rand.nextInt(2) == 0){
+//					if (rand.nextInt(2) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.BIG));
-					}
+//					}
 				} else if (t.getType().equals(TileType.DIRT) && calcPerlinVal(x, y) > 0.25){
 					if (rand.nextInt(10) == 0){
 						float scale = Game.SCALE*Game.TILE_SIZE;
@@ -149,7 +149,7 @@ public class TileMap implements Serializable{
 	 * Uses Perlin noise to pick random tile types
 	 * Helper class for generateTerrain()
 	 */
-	private static TileType genTileType(int x, int y){
+	private TileType genTileType(int x, int y){
 		double pVal = calcPerlinVal(x, y);
 		if(pVal > 3){
 			return TileType.WATER;
@@ -162,10 +162,13 @@ public class TileMap implements Serializable{
 		}
 	}
 	
-	private static double calcPerlinVal(int x, int y){
+	private double calcPerlinVal(int x, int y){
 		double scaleX = 1.1/100;
 		double scaleY = 10;
-		return scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
+		double ret = scaleY*PerlinNoise.noise(scaleX*x, scaleX*y);
+		ret += PerlinNoise.noise((1.1/10)*x, (1.1/10)*y);
+		ret += (PerlinNoise.noise(1.1/100*(x+size), 1.1/100*(x+size)))*PerlinNoise.noise((1.1)*x, (1.1)*y);
+		return ret;
 	}
 	
 	/**
@@ -269,7 +272,7 @@ public class TileMap implements Serializable{
 		int x1, x2, y1, y2;
 		
 		public LocaleIterator(int centerX, int centerY, int radius){
-			int absRadius = Math.abs(radius);
+//			int absRadius = Math.abs(radius);
 			x1 = Math.min(size - 1, Math.max(0, centerX - radius));
 			x2 = Math.min(size - 1, Math.max(0, centerX + radius));
 			y1 = Math.min(size - 1, Math.max(0, centerY - radius));

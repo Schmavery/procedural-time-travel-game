@@ -304,18 +304,18 @@ public class Game extends Core {
 		}
 
 		for (Humanoid human : humans){
-			if (!human.equals(player)){
-				if (!human.isMoving() && !human.isDead()){
-					if (rand.nextInt(100) == 1){
-						int destX = human.getTileX() + (rand.nextInt(10) - 5);
-						int destY = human.getTileY() + (rand.nextInt(10) - 5);
-						human.walkTo(destX, destY);
-					}
-					if (rand.nextInt(5000) == 1){
-						human.say("Hey.");
-					}
-				}
-			}
+//			if (!human.equals(player)){
+//				if (!human.isMoving() && !human.isDead()){
+//					if (rand.nextInt(100) == 1){
+//						int destX = human.getTileX() + (rand.nextInt(10) - 5);
+//						int destY = human.getTileY() + (rand.nextInt(10) - 5);
+//						human.walkTo(destX, destY);
+//					}
+//					if (rand.nextInt(5000) == 1){
+//						human.say("Hey.");
+//					}
+//				}
+//			}
 			human.update(deltaTime);
 		}
 		screen.update(deltaTime);
@@ -360,7 +360,7 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(10, 10);
-		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE)-5, 5, tileMap.getTile(playerTile_x, playerTile_y));
+		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 0, tileMap.getTile(playerTile_x, playerTile_y));
 	}
 
 }

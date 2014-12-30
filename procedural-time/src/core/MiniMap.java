@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.lwjgl.util.Color;
 import org.lwjgl.util.ReadableColor;
+import org.lwjgl.util.Rectangle;
 
 import core.Tile.TileType;
 
@@ -13,10 +14,13 @@ import core.Tile.TileType;
 public class MiniMap {
 	
 	private int size;
+	private Rectangle frame;
 	private HashMap<String, ReadableColor> colors;
 	
 	public MiniMap(int size){
 		this.size = size;
+		frame = new Rectangle(0, 0, (int) (size*Game.SCALE) + 20, (int) (size*Game.SCALE) + 20);
+		
 		colors = new HashMap<>();
 		colors.put(TileType.DIRT.name(), new Color(144, 133, 96));
 		colors.put(TileType.GRASS.name(), new Color(191, 200, 134));
@@ -31,6 +35,9 @@ public class MiniMap {
 	}
 	
 	public void draw(float x, float y, Tile center){
+		frame.setLocation((int) x - 10, (int) y - 10); 
+		GUtil.drawRect(frame, ReadableColor.DKGREY);
+		
 		Tile start = null;
 		ReadableColor c;
 		for (Tile tile : Game.getMap().getLocale(size/2, center.getX(), center.getY())){

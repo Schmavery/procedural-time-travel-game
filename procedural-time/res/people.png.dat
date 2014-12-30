@@ -2,7 +2,7 @@
 img 1
 pt (0,0)
 dim (16,16)
-name [[man_s]]
+name [[man_w]]
 anchor
 pt (8,10)
 hooks
@@ -51,7 +51,7 @@ endimg
 img 3
 pt (32,0)
 dim (16,16)
-name [[3]]
+name [[man_s]]
 anchor
 pt (8,10)
 hooks
@@ -174,7 +174,7 @@ endimg
 img 8
 pt (112,0)
 dim (16,16)
-name [[8]]
+name [[man_e]]
 anchor
 pt (8,10)
 hooks
@@ -295,29 +295,10 @@ pt (1,10)
 pt (1,7)
 endcollision
 endimg
-img 13
-pt (192,0)
-dim (16,16)
-name [[grave]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,5)
-pt (5,2)
-pt (11,2)
-pt (14,5)
-pt (14,15)
-pt (2,15)
-pt (2,5)
-endcollision
-endimg
 img 14
 pt (0,16)
 dim (16,16)
-name [[man_e]]
+name [[13]]
 anchor
 pt (8,10)
 hooks
@@ -426,7 +407,7 @@ endimg
 img 19
 pt (80,16)
 dim (16,16)
-name [[man_w]]
+name [[19]]
 anchor
 pt (8,10)
 hooks
@@ -490,332 +471,10 @@ pt (2,5)
 pt (2,4)
 endcollision
 endimg
-img 22
-pt (128,16)
-dim (16,16)
-name [[22]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (3,3)
-pt (6,0)
-pt (11,0)
-pt (12,1)
-pt (13,4)
-pt (13,5)
-pt (10,15)
-pt (5,15)
-pt (4,11)
-pt (3,6)
-pt (3,3)
-endcollision
-endimg
-img 23
-pt (144,16)
-dim (16,16)
-name [[23]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (3,3)
-pt (6,0)
-pt (11,0)
-pt (12,1)
-pt (13,4)
-pt (13,5)
-pt (10,15)
-pt (5,15)
-pt (3,7)
-pt (3,3)
-endcollision
-endimg
-img 24
-pt (160,16)
-dim (16,16)
-name [[24]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,4)
-pt (3,1)
-pt (4,0)
-pt (9,0)
-pt (12,3)
-pt (12,7)
-pt (10,15)
-pt (5,15)
-pt (2,5)
-pt (2,4)
-endcollision
-endimg
-img 25
-pt (176,16)
-dim (16,16)
-name [[25]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,4)
-pt (3,1)
-pt (4,0)
-pt (9,0)
-pt (12,3)
-pt (12,6)
-pt (11,11)
-pt (10,15)
-pt (5,15)
-pt (2,5)
-pt (2,4)
-endcollision
-endimg
-img 27
-pt (0,32)
-dim (16,16)
-name [[girl_s]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,8)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (12,8)
-pt (11,11)
-pt (9,15)
-pt (5,15)
-pt (3,11)
-pt (2,8)
-endcollision
-endimg
-img 28
-pt (16,32)
-dim (16,16)
-name [[28]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,6)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (13,6)
-pt (11,11)
-pt (10,13)
-pt (9,14)
-pt (6,15)
-pt (5,15)
-pt (4,13)
-pt (1,6)
-endcollision
-endimg
-img 29
-pt (32,32)
-dim (16,16)
-name [[29]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,5)
-pt (5,1)
-pt (9,1)
-pt (13,5)
-pt (11,11)
-pt (9,15)
-pt (5,15)
-pt (3,11)
-pt (1,5)
-endcollision
-endimg
-img 30
-pt (48,32)
-dim (16,16)
-name [[30]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,6)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (13,6)
-pt (10,13)
-pt (9,15)
-pt (8,15)
-pt (5,14)
-pt (4,13)
-pt (3,11)
-pt (1,6)
-endcollision
-endimg
-img 31
-pt (64,32)
-dim (16,16)
-name [[girl_n]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,8)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (12,8)
-pt (10,13)
-pt (9,15)
-pt (5,15)
-pt (4,13)
-pt (2,8)
-endcollision
-endimg
-img 32
-pt (80,32)
-dim (16,16)
-name [[32]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,6)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (13,6)
-pt (11,11)
-pt (9,15)
-pt (8,15)
-pt (5,14)
-pt (4,13)
-pt (1,6)
-endcollision
-endimg
-img 33
-pt (96,32)
-dim (16,16)
-name [[33]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,5)
-pt (5,1)
-pt (9,1)
-pt (13,5)
-pt (10,13)
-pt (9,15)
-pt (5,15)
-pt (4,13)
-pt (1,5)
-endcollision
-endimg
-img 34
-pt (112,32)
-dim (16,16)
-name [[34]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (1,6)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (13,6)
-pt (10,13)
-pt (9,14)
-pt (6,15)
-pt (5,15)
-pt (3,11)
-pt (1,6)
-endcollision
-endimg
-img 35
-pt (128,32)
-dim (16,16)
-name [[35]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,8)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (12,8)
-pt (11,11)
-pt (9,15)
-pt (5,15)
-pt (3,11)
-pt (2,8)
-endcollision
-endimg
-img 36
-pt (144,32)
-dim (16,16)
-name [[36]]
-anchor
-pt (8,10)
-hooks
-0 hooks
-endhooks
-collision
-pt (2,8)
-pt (3,3)
-pt (5,1)
-pt (9,1)
-pt (11,3)
-pt (12,8)
-pt (11,11)
-pt (9,15)
-pt (5,15)
-pt (3,11)
-pt (2,8)
-endcollision
-endimg
 img 37
 pt (0,48)
 dim (16,16)
-name [[girl_e]]
+name [[33]]
 anchor
 pt (8,10)
 hooks
@@ -837,7 +496,7 @@ endimg
 img 38
 pt (16,48)
 dim (16,16)
-name [[38]]
+name [[girl_s]]
 anchor
 pt (8,10)
 hooks
@@ -881,7 +540,7 @@ endimg
 img 40
 pt (48,48)
 dim (16,16)
-name [[40]]
+name [[girl_n]]
 anchor
 pt (8,10)
 hooks
@@ -903,7 +562,7 @@ endimg
 img 41
 pt (64,48)
 dim (16,16)
-name [[girl_w]]
+name [[41]]
 anchor
 pt (8,10)
 hooks
@@ -1010,12 +669,166 @@ pt (3,13)
 pt (2,9)
 endcollision
 endimg
-img 46
-pt (144,48)
+img 47
+pt (0,64)
 dim (16,16)
-name [[46]]
+name [[47]]
 anchor
-pt (8,10)
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,7)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,7)
+endcollision
+endimg
+img 48
+pt (16,64)
+dim (16,16)
+name [[girl_e]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,6)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,6)
+endcollision
+endimg
+img 49
+pt (32,64)
+dim (16,16)
+name [[49]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,7)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,7)
+endcollision
+endimg
+img 50
+pt (48,64)
+dim (16,16)
+name [[girl_w]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,9)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+img 51
+pt (64,64)
+dim (16,16)
+name [[51]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,7)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+img 52
+pt (80,64)
+dim (16,16)
+name [[52]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,6)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+img 53
+pt (96,64)
+dim (16,16)
+name [[53]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,13)
+pt (4,2)
+pt (5,1)
+pt (9,1)
+pt (11,3)
+pt (13,7)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+endcollision
+endimg
+img 54
+pt (112,64)
+dim (16,16)
+name [[54]]
+anchor
+pt (0,0)
 hooks
 0 hooks
 endhooks
@@ -1032,79 +845,694 @@ pt (3,13)
 pt (2,9)
 endcollision
 endimg
+img 55
+pt (128,64)
+dim (16,16)
+name [[55]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,9)
+pt (4,3)
+pt (6,1)
+pt (10,1)
+pt (11,2)
+pt (12,13)
+pt (8,15)
+pt (7,15)
+pt (3,13)
+pt (2,9)
+endcollision
+endimg
+img 56
+pt (0,80)
+dim (16,16)
+name [[56]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+img 57
+pt (16,80)
+dim (16,16)
+name [[57]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,15)
+pt (9,15)
+pt (4,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+img 58
+pt (32,80)
+dim (16,16)
+name [[58]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+img 59
+pt (48,80)
+dim (16,16)
+name [[59]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (11,14)
+pt (6,15)
+pt (3,15)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+img 60
+pt (64,80)
+dim (16,16)
+name [[60]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+img 61
+pt (80,80)
+dim (16,16)
+name [[61]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (11,14)
+pt (6,15)
+pt (3,15)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+img 62
+pt (96,80)
+dim (16,16)
+name [[62]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+img 63
+pt (112,80)
+dim (16,16)
+name [[63]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,15)
+pt (9,15)
+pt (4,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+img 64
+pt (128,80)
+dim (16,16)
+name [[64]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,9)
+endcollision
+endimg
+img 65
+pt (144,80)
+dim (16,16)
+name [[65]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,8)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,8)
+pt (14,11)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,11)
+pt (1,8)
+endcollision
+endimg
+img 66
+pt (160,80)
+dim (16,16)
+name [[66]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,9)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,9)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,9)
+endcollision
+endimg
+img 67
+pt (176,80)
+dim (16,16)
+name [[67]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,7)
+pt (2,2)
+pt (4,0)
+pt (11,0)
+pt (13,2)
+pt (14,7)
+pt (14,10)
+pt (12,14)
+pt (11,15)
+pt (4,15)
+pt (3,14)
+pt (1,10)
+pt (1,7)
+endcollision
+endimg
+img 68
+pt (192,80)
+dim (16,16)
+name [[grave]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,5)
+pt (5,2)
+pt (11,2)
+pt (14,5)
+pt (14,15)
+pt (2,15)
+pt (2,5)
+endcollision
+endimg
+img 69
+pt (0,96)
+dim (16,16)
+name [[69]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+img 70
+pt (16,96)
+dim (16,16)
+name [[70]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (12,15)
+pt (3,15)
+pt (3,3)
+endcollision
+endimg
+img 71
+pt (32,96)
+dim (16,16)
+name [[71]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+img 72
+pt (48,96)
+dim (16,16)
+name [[72]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (12,15)
+pt (3,15)
+pt (3,3)
+endcollision
+endimg
+img 73
+pt (64,96)
+dim (16,16)
+name [[73]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,15)
+pt (3,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+img 74
+pt (80,96)
+dim (16,16)
+name [[74]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+img 75
+pt (96,96)
+dim (16,16)
+name [[75]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,15)
+pt (3,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+img 76
+pt (112,96)
+dim (16,16)
+name [[76]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+img 77
+pt (128,96)
+dim (16,16)
+name [[77]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (4,11)
+pt (3,6)
+pt (3,3)
+endcollision
+endimg
+img 78
+pt (144,96)
+dim (16,16)
+name [[78]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (3,3)
+pt (6,0)
+pt (11,0)
+pt (12,1)
+pt (13,4)
+pt (13,5)
+pt (10,15)
+pt (5,15)
+pt (3,7)
+pt (3,3)
+endcollision
+endimg
+img 79
+pt (160,96)
+dim (16,16)
+name [[79]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,7)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
+img 80
+pt (176,96)
+dim (16,16)
+name [[80]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,4)
+pt (3,1)
+pt (4,0)
+pt (9,0)
+pt (12,3)
+pt (12,6)
+pt (11,11)
+pt (10,15)
+pt (5,15)
+pt (2,5)
+pt (2,4)
+endcollision
+endimg
 anim [[man_n_walk]]
 pause 150
 frame 5
 frame 6
-frame 7
-frame 8
 endanim
 anim [[man_s_walk]]
 pause 150
-frame 1
-frame 2
 frame 3
 frame 4
 endanim
 anim [[man_w_walk]]
 pause 150
-frame 18
-frame 19
-frame 20
-frame 21
+frame 1
+frame 2
 endanim
 anim [[man_e_walk]]
 pause 150
-frame 14
-frame 15
-frame 16
-frame 17
+frame 7
+frame 8
 endanim
 anim [[man_n_stow]]
 pause 100
+frame 5
 frame 11
-frame 12
 endanim
 anim [[man_s_stow]]
 pause 100
-frame 9
+frame 3
 frame 10
 endanim
 anim [[man_e_stow]]
 pause 100
-frame 22
-frame 23
+frame 8
+frame 12
 endanim
 anim [[man_w_stow]]
 pause 100
-frame 24
-frame 25
+frame 1
+frame 9
 endanim
 anim [[girl_n_walk]]
 pause 150
-frame 31
-frame 32
-frame 33
-frame 34
-endanim
-anim [[girl_s_walk]]
-pause 150
-frame 27
-frame 28
-frame 29
-frame 30
-endanim
-anim [[girl_w_walk]]
-pause 150
+frame 40
 frame 41
 frame 42
 frame 43
-frame 44
 endanim
-anim [[girl_e_walk]]
+anim [[girl_s_walk]]
 pause 150
 frame 37
 frame 38
 frame 39
-frame 40
+frame 44
+endanim
+anim [[girl_w_walk]]
+pause 150
+frame 50
+frame 51
+frame 52
+frame 53
+endanim
+anim [[girl_e_walk]]
+pause 150
+frame 47
+frame 48
+frame 49
+frame 54
+endanim
+anim [[man_n_atk]]
+pause 150
+frame 18
+frame 19
+endanim
+anim [[man_s_atk]]
+pause 150
+frame 16
+frame 17
+endanim
+anim [[man_e_atk]]
+pause 150
+frame 20
+frame 21
+endanim
+anim [[man_w_atk]]
+pause 150
+frame 14
+frame 15
 endanim

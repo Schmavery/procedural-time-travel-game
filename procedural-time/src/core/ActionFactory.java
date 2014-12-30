@@ -21,10 +21,10 @@ public class ActionFactory {
 	public static Action swing(){
 		return new Action(
 				ActionType.SWING,
-				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
-				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
-				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
-				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
+				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_atk"), 
+				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_atk"),
+				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_atk"),
+				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_atk"));
 	}
 	
 	public static Action use(){
