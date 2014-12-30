@@ -38,15 +38,10 @@ public class Tile implements Serializable, Pathable<Tile>{
 		} else {
 			walkable = true;
 		}
-		if (type == Type.GRASS){
-			if ((new Random()).nextInt(5) == 0){
-				float scale = Game.SCALE*Game.TILE_SIZE;
-				entities.add(new Tree(x*scale, y*scale, TreeType.SMALL));
-			}
-		}
+		
 	}
 	
-	public void setAnim(SpriteInstance spr){
+	public void setSprite(SpriteInstance spr){
 		this.spr = spr;
 //		if (spr.getModel().getName().indexOf("rock") > -1){
 //			walkable = false;
@@ -101,7 +96,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 				&& x < Game.getMap().getSize()
 				&& y >= 0
 				&& y < Game.getMap().getSize()){
-			if (Game.getMap().getTile(x, y).walkable){
+			if (Game.getMap().getTile(x, y).isWalkable()){
 				return true;
 			}
 		}

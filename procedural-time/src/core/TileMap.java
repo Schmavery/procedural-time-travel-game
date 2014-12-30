@@ -1,6 +1,8 @@
 package core;
 
 import entities.abstr.AbstractEntity.Facing;
+import entities.concrete.Tree;
+import entities.concrete.Tree.TreeType;
 import gui.GUtil.SpriteSheetType;
 
 import java.io.Serializable;
@@ -110,7 +112,35 @@ public class TileMap implements Serializable{
 		}
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
-				tileMap[x][y].setAnim(genAnimID(x, y));
+				tileMap[x][y].setSprite(genAnimID(x, y));
+			}
+		}
+		PerlinNoise.setSeed(seed+1);
+		for (int x = 0; x < size; x++){
+			for (int y = 0; y < size; y++){
+				Tile t = tileMap[x][y];
+				if (t.getType().equals(Type.GRASS) && calcPerlinVal(x, y) > 0.25){
+					if (rand.nextInt(5) == 0){
+						float scale = Game.SCALE*Game.TILE_SIZE;
+						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
+					}
+				} else if (t.getType().equals(Type.GRASS) && calcPerlinVal(x, y) > 3){
+					if (rand.nextInt(2) == 0){
+						float scale = Game.SCALE*Game.TILE_SIZE;
+						t.addEntity(new Tree(x*scale, y*scale, TreeType.BIG));
+					}
+				} else if (t.getType().equals(Type.DIRT) && calcPerlinVal(x, y) > 0.25){
+					if (rand.nextInt(10) == 0){
+						float scale = Game.SCALE*Game.TILE_SIZE;
+						t.addEntity(new Tree(x*scale, y*scale, TreeType.SMALL));
+					}
+				} else if (!t.getType().equals(Type.WATER) && !t.getType().equals(Type.SAND)){
+					if (rand.nextInt(500) == 0){
+						float scale = Game.SCALE*Game.TILE_SIZE;
+						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
+					}
+				}
+					
 			}
 		}
 	}
@@ -123,9 +153,9 @@ public class TileMap implements Serializable{
 		double pVal = calcPerlinVal(x, y);
 		if(pVal > 3){
 			return Type.WATER;
-		}else if(pVal > 0.3){
+		}else if(pVal > 0.25){
 			return Type.GRASS;
-		} else if (pVal < -3){
+		} else if (pVal < -3.2){
 			return Type.SAND;
 		} else {
 			return Type.DIRT;

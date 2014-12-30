@@ -10,12 +10,26 @@ import entities.interfaces.Weapon;
 import gui.GUtil.SpriteSheetType;
 
 public class Tree extends AbstractItem implements Placeable, Hittable{
-	public static enum TreeType {SMALL, BIG, LEAFY};
+	public static enum TreeType {SMALL, BIG, LEAFY, ANY};
 	private HealthTracker health;
 	private int num_logs;
 	
 	public Tree(float x, float y, TreeType type){
 		super(x, y);
+		if (type.equals(TreeType.ANY)){
+			switch (rand.nextInt(5)){
+				case 1:
+				case 2:
+					type = TreeType.BIG;
+					break;
+//				case 2:
+//					type = TreeType.LEAFY;
+//					break;
+				default:
+					type = TreeType.SMALL;
+					break;
+			}
+		}
 		switch (type){
 		case BIG:
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "big_tree"));
@@ -30,7 +44,6 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 			health = new HealthTracker(10);
 			break;
 		}
-		
 	}
 	
 	public void die(){

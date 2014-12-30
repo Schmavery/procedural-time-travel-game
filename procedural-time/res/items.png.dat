@@ -419,3 +419,27 @@ pt (1,13)
 pt (0,6)
 endcollision
 endimg
+img 27
+pt (230,32)
+dim (26,42)
+name [[big_tree]]
+anchor
+pt (13,36)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,6)
+pt (1,5)
+pt (5,3)
+pt (8,3)
+pt (12,4)
+pt (14,6)
+pt (15,11)
+pt (15,12)
+pt (9,31)
+pt (6,31)
+pt (1,13)
+pt (0,6)
+endcollision
+endimg
