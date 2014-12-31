@@ -51,8 +51,9 @@ public class TileMap implements Serializable{
 
 	
 	public TileMap(int size){
-		seed = (int) System.currentTimeMillis();
-		seed = 366907858;
+//		seed = (int) System.currentTimeMillis();
+//		seed = 366907858;
+		seed = RandomManager.getSeed("TileMap");
 		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
@@ -66,6 +67,10 @@ public class TileMap implements Serializable{
 			}
 		}
 		
+		
+	}
+	
+	public void init(){
 		generateTerrain();
 	}
 	
@@ -136,7 +141,6 @@ public class TileMap implements Serializable{
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
 					}
 				}
-					
 			}
 		}
 	}

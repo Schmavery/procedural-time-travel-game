@@ -29,5 +29,9 @@ public class RandomManager {
 		return seeder[id % numSeeds];
 	}
 	
+	public static int getSeed(String id){
+		return getSeed(id.hashCode());
+	}
+	
 	public static int getMasterSeed(){ return masterSeed;}
 }

@@ -46,15 +46,15 @@ public class Game extends Core {
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 2f;
-	public static Random rand = new Random();
 	
 	Humanoid player;
 	List<Humanoid> humans;
 	List<Entity> drawList;
 	Comparator<Entity> drawComparator;
-	String targetName;
+//	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
+	Random rand;
 	
 	boolean pauseDown = false;
 	GPanel screen;
@@ -80,7 +80,9 @@ public class Game extends Core {
 		initSpriteSheets();
 		drawLoading();
 		initMarkov();
+		//TODO: RANDOM INIT
 		RandomManager.init(1);
+		rand = new Random(RandomManager.getSeed("Game"));
 		miniMap = new MiniMap(100);
 		
 		int numHumans = 100;
@@ -96,6 +98,7 @@ public class Game extends Core {
 		};
 		
 		tileMap = new TileMap(1000);
+		tileMap.init();
 		System.out.println("Done initializing map");
 		//TODO: RandomManager
 		Random rand = new Random();
@@ -146,10 +149,10 @@ public class Game extends Core {
 			humans.add(tmpHuman);
 		}
 		
-		Humanoid tmp = humans.get(rand.nextInt(numHumans));
+//		Humanoid tmp = humans.get(rand.nextInt(numHumans));
 //		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
 //		System.out.println(tmpTile.getX()+", "+tmpTile.getY());
-		targetName = tmp.getName();
+//		targetName = tmp.getName();
 		player.getItem(new Sword(0, 0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
