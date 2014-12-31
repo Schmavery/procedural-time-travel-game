@@ -145,14 +145,18 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return 10;
 	}
 	
+	///////////////////////////
 	//// Entity Management ////
+	///////////////////////////
 	
 	public void addEntity(Entity h){
 		entities.add(h);
 	}
 	
 	public void removeEntity(Entity h){
+//		System.out.println("walkable:"+isWalkable());
 		entities.remove(h);
+//		System.out.println("walkable:"+isWalkable());
 	}
 	
 	public List<Entity> getEntities(){

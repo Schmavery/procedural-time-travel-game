@@ -1,7 +1,9 @@
 package entities.abstr;
 
 import core.Game;
+import core.display.SpriteManager;
 import entities.interfaces.Item;
+import gui.GUtil.SpriteSheetType;
 
 public abstract class AbstractItem extends AbstractEntity implements Item
 {
@@ -16,9 +18,9 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	}
 	
 	public void removeFromMap(){
+		Game.getMap().getTile(getTileX(), getTileY()).removeEntity(this);
 		this.x = 0;
 		this.y = 0;
-		Game.getMap().getTile(getTileX(), getTileY()).removeEntity(this);
 	}
 	
 	public void addToMap(float x, float y){

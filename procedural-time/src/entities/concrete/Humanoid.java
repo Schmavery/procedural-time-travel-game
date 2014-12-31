@@ -18,6 +18,7 @@ import core.path.PathException;
 import core.path.PathFinder;
 import entities.EntityFrame;
 import entities.abstr.AbstractMovingEntity;
+import entities.components.HealthTracker;
 import entities.interfaces.Entity;
 import entities.interfaces.Hittable;
 import entities.interfaces.Holdable;
@@ -37,8 +38,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	private List<Message> messages;
 	String name;
-	private int health;
-	private int maxHealth;
+//	private int health;
+//	private int maxHealth;
+	private HealthTracker health;
 	Holdable[] inventory;
 	Holdable heldItem;
 	Action currentAction;
@@ -50,8 +52,9 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		super(x, y);
 
 		// this.gender = gender;
-		maxHealth = 20;
-		health = maxHealth;
+		health = new HealthTracker(20);
+//		maxHealth = 20;
+//		health = maxHealth;
 		inventory = new Holdable[3];
 		heldItem = fist;
 		this.facing = Facing.SOUTH;
@@ -202,7 +205,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	@Override
 	public void hit(Weapon w, Humanoid wielder) {
 		if (this != wielder){
-			setHealth(health - w.getDamage()); 
+			health.damage(w.getDamage());
 		}
 	}
 
@@ -335,21 +338,20 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 	
 	public void setHealth(int h) {
-		if (isDead()){
+		if (health.isDead()){
 			return;
 		}
-		health = Math.max(Math.min(maxHealth, h), 0);
-		if (health == 0){
+		if (health.set(h)){
 			die();
 		}
 	}
 
 	public int getHealth() {
-		return health;
+		return health.get();
 	}
 	
 	public boolean isDead() {
-		return (health <= 0 && maxHealth > 0);
+		return (health.isDead());
 	}
 	
 	@Override
@@ -374,13 +376,14 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 					ReadableColor.BLACK, m.getText());
 		}
 		
-		if (health < maxHealth && !isDead()){
-			int len = 80;
-			int amt = (int) ((float) health / maxHealth * len);
-			GUtil.drawSprite(SpriteSheetType.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
-			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
-			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
-		}
+//		if (health < maxHealth && !isDead()){
+//			int len = 80;
+//			int amt = (int) ((float) health / maxHealth * len);
+//			GUtil.drawSprite(SpriteSheetType.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
+//			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
+//			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
+//		}
+		health.draw(getX()+x, getY()+y);
 	}
 	
 	public void drawStatus(float x, float y){

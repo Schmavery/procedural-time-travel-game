@@ -304,18 +304,18 @@ public class Game extends Core {
 		}
 
 		for (Humanoid human : humans){
-//			if (!human.equals(player)){
+			if (!human.equals(player)){
 //				if (!human.isMoving() && !human.isDead()){
 //					if (rand.nextInt(100) == 1){
 //						int destX = human.getTileX() + (rand.nextInt(10) - 5);
 //						int destY = human.getTileY() + (rand.nextInt(10) - 5);
 //						human.walkTo(destX, destY);
 //					}
-//					if (rand.nextInt(5000) == 1){
-//						human.say("Hey.");
-//					}
+					if (rand.nextInt(5000) == 1){
+						human.say("Hey.");
+					}
 //				}
-//			}
+			}
 			human.update(deltaTime);
 		}
 		screen.update(deltaTime);

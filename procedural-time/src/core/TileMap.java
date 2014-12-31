@@ -22,7 +22,6 @@ import core.util.PerlinNoise;
  *
  */
 public class TileMap implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 	private Tile[][] tileMap;
 	private int size;
@@ -116,27 +115,24 @@ public class TileMap implements Serializable{
 			}
 		}
 		PerlinNoise.setSeed(seed+1);
+		float scale = Game.SCALE*Game.TILE_SIZE;
 		for (int x = 0; x < size; x++){
 			for (int y = 0; y < size; y++){
 				Tile t = tileMap[x][y];
 				if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 0.25){
 					if (rand.nextInt(5) == 0){
-						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
 					}
-				} else if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 3){
-//					if (rand.nextInt(2) == 0){
-						float scale = Game.SCALE*Game.TILE_SIZE;
+				} else if (t.getType().equals(TileType.GRASS) && calcPerlinVal(x, y) > 1){
+					if (rand.nextInt(2) == 0){
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.BIG));
-//					}
+					}
 				} else if (t.getType().equals(TileType.DIRT) && calcPerlinVal(x, y) > 0.25){
 					if (rand.nextInt(10) == 0){
-						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.SMALL));
 					}
 				} else if (!t.getType().equals(TileType.WATER) && !t.getType().equals(TileType.SAND)){
 					if (rand.nextInt(500) == 0){
-						float scale = Game.SCALE*Game.TILE_SIZE;
 						t.addEntity(new Tree(x*scale, y*scale, TreeType.ANY));
 					}
 				}
@@ -272,11 +268,11 @@ public class TileMap implements Serializable{
 		int x1, x2, y1, y2;
 		
 		public LocaleIterator(int centerX, int centerY, int radius){
-//			int absRadius = Math.abs(radius);
-			x1 = Math.min(size - 1, Math.max(0, centerX - radius));
-			x2 = Math.min(size - 1, Math.max(0, centerX + radius));
-			y1 = Math.min(size - 1, Math.max(0, centerY - radius));
-			y2 = Math.min(size - 1, Math.max(0, centerY + radius));
+			int absRadius = Math.abs(radius);
+			x1 = Math.min(size - 1, Math.max(0, centerX - absRadius));
+			x2 = Math.min(size - 1, Math.max(0, centerX + absRadius));
+			y1 = Math.min(size - 1, Math.max(0, centerY - absRadius));
+			y2 = Math.min(size - 1, Math.max(0, centerY + absRadius));
 			
 			currX = x1;
 			currY = y1;

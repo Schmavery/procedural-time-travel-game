@@ -34,14 +34,17 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 		case BIG:
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "big_tree"));
 			health = new HealthTracker(20);
+			num_logs = 5;
 			break;
 		case LEAFY:
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "tree"));
 			health = new HealthTracker(10);
+			num_logs = 3;
 			break;
 		case SMALL:
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "christmas_tree"));
 			health = new HealthTracker(10);
+			num_logs = 3;
 			break;
 		}
 	}
@@ -66,6 +69,16 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 
 	@Override
 	public void hit(Weapon w, Humanoid wielder) {
+		
+		if(health.damage(w.getDamage())){
+			die();
+		}
+	}
+	
+	@Override
+	public void draw(float x, float y){
+		super.draw(x, y);
+		health.draw(x + getX(), y + getY());
 	}
 	
 }
