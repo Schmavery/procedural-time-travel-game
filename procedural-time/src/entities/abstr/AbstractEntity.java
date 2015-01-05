@@ -22,6 +22,7 @@ public abstract class AbstractEntity implements Entity
 	private int id;
 	protected float x, y;
 	private int drawPriority;
+	private SpecialType specialType;
 	protected SpriteInstance[] standingAnims;
 	protected Facing facing;
 	protected EntityFrame frame;
@@ -37,6 +38,7 @@ public abstract class AbstractEntity implements Entity
 		rand = new Random(RandomManager.getSeed(id));
 		facing = Facing.NORTH;
 		drawPriority = 0;
+		specialType = SpecialType.NORMAL;
 	}
 	
 	public void setSprite(Sprite spr){
@@ -66,6 +68,15 @@ public abstract class AbstractEntity implements Entity
 
 	public int getTileY()
 	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
+	
+	public void setSpecialType(SpecialType specialType) {
+		this.specialType = specialType;
+	}
+	
+	@Override
+	public SpecialType getSpecialType(){
+		return this.specialType;
+	}
 	
 	protected void setDrawPriority(int p){
 		this.drawPriority = p;

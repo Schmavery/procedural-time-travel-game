@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * General purpose Polygon class (using java.awt.Point)
+ * General purpose Polygon class (using org.lwjgl.util.Point)
  * with the ability to test for overlap with another
- * Polygon using the separating axis theor.
+ * Polygon using the separating axis theorem.
  * (Note: This only works for convex polygons)
  */
 public class Poly {
@@ -20,8 +20,6 @@ public class Poly {
 	public Poly(){
 		pts = new LinkedList<>();
 	}
-	
-	
 	
 	public void addPoint(int x, int y){
 		Point newPt = new Point(x, y);

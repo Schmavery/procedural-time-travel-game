@@ -1,7 +1,7 @@
 package entities.concrete;
 
 import core.display.SpriteManager;
-import entities.abstr.AbstractItem;
+import entities.abstr.AbstractPlacedItem;
 import entities.components.HealthTracker;
 import entities.interfaces.Hittable;
 import entities.interfaces.Item;
@@ -9,13 +9,15 @@ import entities.interfaces.Placeable;
 import entities.interfaces.Weapon;
 import gui.GUtil.SpriteSheetType;
 
-public class Tree extends AbstractItem implements Placeable, Hittable{
+public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 	public static enum TreeType {SMALL, BIG, LEAFY, ANY};
 	private HealthTracker health;
 	private int num_logs;
 	
 	public Tree(float x, float y, TreeType type){
 		super(x, y);
+		setPlaced(true);
+		setSpecialType(SpecialType.FOLIAGE);
 		TreeType tType;
 		if (type.equals(TreeType.ANY)){
 			switch (rand.nextInt(5)){
@@ -23,9 +25,6 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 				case 2:
 					tType = TreeType.BIG;
 					break;
-//				case 2:
-//					type = TreeType.LEAFY;
-//					break;
 				default:
 					tType = TreeType.SMALL;
 					break;
@@ -54,20 +53,17 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 	
 	public void die(){
 		for (int i = 0; i < rand.nextInt(num_logs); i++){
-			Item w = new Wood(0, 0);
+//			Item w = new Wood(0, 0);
+			// Temporary, to test house placement
+			Item w;
+			if (rand.nextBoolean()){
+				w = new House(0, 0);
+			} else {
+				w = new Floor(0, 0);
+			}
 			w.addToMap(getX() + rand.nextInt(20) - 10, getY() + rand.nextInt(20) - 10);
 		}
 		this.removeFromMap();
-	}
-	
-	@Override
-	public boolean isWalkable() {
-		return false;
-	}
-
-	@Override
-	public boolean isPlaced() {
-		return true;
 	}
 
 	@Override

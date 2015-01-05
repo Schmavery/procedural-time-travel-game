@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.Color;
+import org.lwjgl.util.Point;
 import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 
@@ -66,6 +67,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 				.addEntity(this);
 
 		this.name = name;
+		setSpecialType(SpecialType.PERSON);
 	}
 
 	public void update(long deltaTime) {
@@ -316,6 +318,10 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		return -1;
 	}
 	
+	public Point getPlacePoint(){
+		return new Point((int) getX(), (int) getY());
+	}
+	
 	public void die(){
 		switch (rand.nextInt(3)) {
 		case 0:
@@ -338,12 +344,8 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 	
 	public void setHealth(int h) {
-		if (health.isDead()){
-			return;
-		}
-		if (health.set(h)){
-			die();
-		}
+		if (health.isDead()) return;
+		if (health.set(h)) die();
 	}
 
 	public int getHealth() {
@@ -376,13 +378,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 					ReadableColor.BLACK, m.getText());
 		}
 		
-//		if (health < maxHealth && !isDead()){
-//			int len = 80;
-//			int amt = (int) ((float) health / maxHealth * len);
-//			GUtil.drawSprite(SpriteSheetType.GUI, getX() + x-16, getY() + y-16, 1, 5, len+4, 10, 32, ReadableColor.GREY);
-//			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, len, 6, 32, ReadableColor.DKGREY);
-//			GUtil.drawSprite(SpriteSheetType.GUI, getX()+x-14, getY() + y-14, 1, 5, amt, 6, 32, ReadableColor.GREEN);
-//		}
 		health.draw(getX()+x, getY()+y);
 	}
 	
