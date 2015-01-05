@@ -16,21 +16,22 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 	
 	public Tree(float x, float y, TreeType type){
 		super(x, y);
+		TreeType tType;
 		if (type.equals(TreeType.ANY)){
 			switch (rand.nextInt(5)){
 				case 1:
 				case 2:
-					type = TreeType.BIG;
+					tType = TreeType.BIG;
 					break;
 //				case 2:
 //					type = TreeType.LEAFY;
 //					break;
 				default:
-					type = TreeType.SMALL;
+					tType = TreeType.SMALL;
 					break;
 			}
-		}
-		switch (type){
+		} else tType = type;
+		switch (tType){
 		case BIG:
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "big_tree"));
 			health = new HealthTracker(20);
@@ -45,6 +46,8 @@ public class Tree extends AbstractItem implements Placeable, Hittable{
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "christmas_tree"));
 			health = new HealthTracker(10);
 			num_logs = 3;
+			break;
+		default:
 			break;
 		}
 	}

@@ -12,10 +12,8 @@ import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Drawable;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -93,6 +91,9 @@ public class Game extends Core {
 			@Override
 			public int compare(Entity d1, Entity d2)
 			{
+				if (d1.getDrawPriority() != d2.getDrawPriority()){
+					return (int) (d1.getDrawPriority() - d2.getDrawPriority());
+				}
 				return (int) (d1.getY() - d2.getY());
 			}
 		};

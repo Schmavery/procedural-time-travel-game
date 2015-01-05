@@ -21,6 +21,7 @@ public abstract class AbstractEntity implements Entity
 	private static int MAX_ID = 0;
 	private int id;
 	protected float x, y;
+	private int drawPriority;
 	protected SpriteInstance[] standingAnims;
 	protected Facing facing;
 	protected EntityFrame frame;
@@ -35,6 +36,7 @@ public abstract class AbstractEntity implements Entity
 		warpToClosestClearTile();
 		rand = new Random(RandomManager.getSeed(id));
 		facing = Facing.NORTH;
+		drawPriority = 0;
 	}
 	
 	public void setSprite(Sprite spr){
@@ -44,7 +46,7 @@ public abstract class AbstractEntity implements Entity
 			System.out.println("Tried to set null sprite");
 		}
 	}
-
+	
 	public void setStandingAnims(Sprite spr_n, Sprite spr_e, Sprite spr_s, Sprite spr_w)
 	{
 		this.standingAnims[0] = spr_n.getInstance();
@@ -65,14 +67,25 @@ public abstract class AbstractEntity implements Entity
 	public int getTileY()
 	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
 	
-	public void draw(float x, float y){
-		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
-		standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
+	protected void setDrawPriority(int p){
+		this.drawPriority = p;
+	}
+
+	@Override
+	public int getDrawPriority(){
+		return this.drawPriority;
 	}
 	
+	@Override
+	public void draw(float x, float y){
+		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
+	}
+	
+	@Override
 	public void draw(float x, float y, float w, float h){
 		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
-		standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
+		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
 	}
 	
 	protected void warpToClosestClearTile(){
@@ -96,6 +109,7 @@ public abstract class AbstractEntity implements Entity
 				t = open.removeLast();
 				for (int i = 0; i < xOffsets.length; i++){
 					add = Game.getMap().getTile(t.getX()+xOffsets[i], t.getX()+yOffsets[i]);
+					if (add == null) continue;
 					if (closed.contains(add)) continue;
 					if (add.isWalkable()){
 						warpTile = add;

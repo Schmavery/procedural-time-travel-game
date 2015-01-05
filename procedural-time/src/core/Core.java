@@ -68,7 +68,6 @@ public abstract class Core {
     }
     
     private void gameLoop(){
-    	int counter = 0;
         while (!Display.isCloseRequested()) {
         	// Render
         	long deltaTime = getDelta();
