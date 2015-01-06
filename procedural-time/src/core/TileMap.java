@@ -51,10 +51,7 @@ public class TileMap implements Serializable{
 
 	
 	public TileMap(int size){
-//		seed = (int) System.currentTimeMillis();
-//		seed = 366907858;
 		seed = RandomManager.getSeed("TileMap");
-		System.out.println("Seed: "+seed);
 		tileMap = new Tile[size][size];
 		this.size = size;
 		this.rand = new Random(seed);

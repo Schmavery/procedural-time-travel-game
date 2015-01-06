@@ -1,7 +1,5 @@
 package entities.concrete;
 
-import java.util.Iterator;
-
 import core.Game;
 import core.Tile;
 import core.display.SpriteInstance;
@@ -24,10 +22,13 @@ public class Sword extends AbstractItem implements Weapon{
 	public void swing(Humanoid user) {
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
-//			for (Entity h : t.getEntities(); ){
 			Entity h;
-			for(Iterator<Entity> iter = t.getEntities().iterator(); iter.hasNext();){
-				h = iter.next();
+			// Old methods of iterating
+//			for (Entity h : t.getEntities(); ){
+//			for(Iterator<Entity> iter = t.getEntities().iterator(); iter.hasNext();){
+//				h = iter.next();
+			for (int i = t.getEntities().size() - 1; i >= 0; i--){
+				h = t.getEntities().get(i);
 				if (h instanceof Hittable){
 					// TODO: Check for collision
 //					System.out.println("Hitting "+h+"on tile "+t+"->"+t.getEntities());

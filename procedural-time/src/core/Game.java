@@ -41,11 +41,11 @@ import gui.IContainer;
 public class Game extends Core {
 	// Singletons
 	private static TileMap tileMap;
+	private static Humanoid player;
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 2f;
 	
-	Humanoid player;
 	List<Humanoid> humans;
 	List<Entity> drawList;
 	Comparator<Entity> drawComparator;
@@ -61,6 +61,10 @@ public class Game extends Core {
 	
 	public static TileMap getMap(){
 		return tileMap;
+	}
+	
+	public static Humanoid getPlayer(){
+		return player;
 	}
 	
 	public static void main(String[] args){
@@ -101,8 +105,6 @@ public class Game extends Core {
 		tileMap = new TileMap(1000);
 		tileMap.init();
 		System.out.println("Done initializing map");
-		//TODO: RandomManager
-		Random rand = new Random();
 		humans = new ArrayList<Humanoid>(numHumans);
 		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
 			player.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
@@ -124,36 +126,19 @@ public class Game extends Core {
 			} while (!tileMap.getWorldTile(randX, randY).walkable);
 
 			Humanoid tmpHuman;
-			if (rand.nextBoolean()){
-				tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
-				
-				tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
-				tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n"), 
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
-			} else {
-				tmpHuman = new NPC(randX, randY, Gender.FEMALE, femaleNames.genWordInRange(4, 10));
-				
-				tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_n_walk"), 
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_e_walk"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_s_walk"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_w_walk"));
-				tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_n"), 
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_e"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_s"),
-						SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "girl_w"));
-			}
+			tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
+			
+			tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
+			tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n"), 
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
+					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 			humans.add(tmpHuman);
 		}
 		
-//		Humanoid tmp = humans.get(rand.nextInt(numHumans));
-//		Tile tmpTile = tileMap.getWorldTile(tmp.getX(), tmp.getY());
-//		System.out.println(tmpTile.getX()+", "+tmpTile.getY());
-//		targetName = tmp.getName();
 		player.getItem(new Sword(0, 0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
@@ -308,18 +293,19 @@ public class Game extends Core {
 		}
 
 		for (Humanoid human : humans){
-			if (!human.equals(player)){
+//			if (!human.equals(player)){
+//				// Have humanoids wander
 //				if (!human.isMoving() && !human.isDead()){
 //					if (rand.nextInt(100) == 1){
 //						int destX = human.getTileX() + (rand.nextInt(10) - 5);
 //						int destY = human.getTileY() + (rand.nextInt(10) - 5);
 //						human.walkTo(destX, destY);
 //					}
-					if (rand.nextInt(5000) == 1){
-						human.say("Hey.");
-					}
+//					if (rand.nextInt(5000) == 1){
+//						human.say("Hey.");
+//					}
 //				}
-			}
+//			}
 			human.update(deltaTime);
 		}
 		screen.update(deltaTime);

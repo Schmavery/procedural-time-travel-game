@@ -2,8 +2,6 @@ package entities.concrete;
 
 import java.util.HashMap;
 
-import org.lwjgl.util.Point;
-
 import core.Game;
 import core.Tile;
 import core.display.Sprite;
@@ -35,16 +33,6 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable {
 		}
 		setSpecialType(SpecialType.HOUSE);
 		setSprite(sprites.get("loose_house"));
-	}
-	
-	@Override
-	public boolean isWalkable() {
-		return false;
-	}
-
-	@Override
-	public boolean isPlaced() {
-		return true;
 	}
 	
 	/**
@@ -107,9 +95,7 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable {
 
 	@Override
 	public void use(Humanoid user) {
-		Point pt = user.getPlacePoint();
-		addToMap(pt.getX(), pt.getY());
-		setPlaced(true);
+		place(user);
 	}
 
 	@Override

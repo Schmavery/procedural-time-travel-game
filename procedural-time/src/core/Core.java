@@ -110,7 +110,6 @@ public abstract class Core {
 				(SCREEN_HEIGHT - 40)/2, ReadableColor.WHITE, str);
 		GUtil.end();
 		Display.update();
-		System.out.println(System.currentTimeMillis());
 	}
 
 	public void pauseGame(){

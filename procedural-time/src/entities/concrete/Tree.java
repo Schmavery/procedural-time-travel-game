@@ -17,6 +17,8 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 	public Tree(float x, float y, TreeType type){
 		super(x, y);
 		setPlaced(true);
+		setAligned(true);
+		setWalkable(false);
 		setSpecialType(SpecialType.FOLIAGE);
 		TreeType tType;
 		if (type.equals(TreeType.ANY)){

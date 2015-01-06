@@ -37,9 +37,7 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 
 	@Override
 	public void use(Humanoid user) {
-		Point pt = user.getPlacePoint();
-		addToMap(pt.getX(), pt.getY());
-		setPlaced(true);
+		place(user);
 	}
 
 	@Override

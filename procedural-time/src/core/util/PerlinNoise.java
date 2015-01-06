@@ -1,4 +1,7 @@
 package core.util;
+
+import java.util.Random;
+
 /**
     Computes Perlin Noise for one, two, and three dimensions.<p>
     The result is a continuous function that interpolates a smooth path
@@ -202,8 +205,7 @@ public final class PerlinNoise {
    private static void init() {
       int i, j, k;
       double u, v, w, U, V, W, Hi, Lo;
-      java.util.Random r = new java.util.Random(seed);
-      //java.util.Random r = new java.util.Random();
+      Random r = new Random(seed);
       for (i = 0; i < B; i++) {
          p[i] = i;
          g1[i] = 2 * r.nextDouble() - 1;

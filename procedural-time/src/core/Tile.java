@@ -29,7 +29,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 		this.x = x;
 		this.y = y;
 		this.perlinVal = perlinVal;
-		this.entities = new LinkedList<>();
+		this.entities = new ArrayList<>();
 		if (type == TileType.WATER){
 			walkable = false;
 		} else {

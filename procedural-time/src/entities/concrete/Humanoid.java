@@ -39,8 +39,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	private List<Message> messages;
 	String name;
-//	private int health;
-//	private int maxHealth;
 	private HealthTracker health;
 	Holdable[] inventory;
 	Holdable heldItem;
@@ -54,8 +52,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 		// this.gender = gender;
 		health = new HealthTracker(20);
-//		maxHealth = 20;
-//		health = maxHealth;
 		inventory = new Holdable[3];
 		heldItem = fist;
 		this.facing = Facing.SOUTH;
@@ -71,6 +67,18 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	public void update(long deltaTime) {
+		if (!this.isMoving() && !this.isDead() && !this.equals(Game.getPlayer())){
+			if (rand.nextInt(100) == 1){
+				int destX = this.getTileX() + (rand.nextInt(10) - 5);
+				int destY = this.getTileY() + (rand.nextInt(10) - 5);
+				this.walkTo(destX, destY);
+			}
+			if (rand.nextInt(5000) == 1){
+				this.say("Hey.");
+			}
+		}
+		
+		
 		processMessages();
 		if (isDead()){
 			return;
@@ -232,11 +240,15 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		}
 	}
 	
-	public void drop(){
-		if (heldItem == fist){
-			return;
-		} else {
+	public void dropCurrentItem(){
+		if (heldItem != fist){
 			heldItem.addToMap(getX() + rand.nextInt(20) - 10, getY() + rand.nextInt(20) - 10);
+			removeCurrentItem();
+		}
+	}
+	
+	public void removeCurrentItem(){
+		if (heldItem != fist){
 			heldItem = fist;
 		}
 	}
@@ -273,13 +285,12 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	
 	public void doAction(ActionType aType, int index){
 		if (currentAction != null){
-//			System.out.println("Hey!");
 			return;
 		} else {
 			switch (aType) {
 				case DROP:
 					currentAction = ActionFactory.drop();
-					drop();
+					dropCurrentItem();
 					break;
 				case RETREIVE:
 					currentAction = ActionFactory.retreive();
@@ -339,7 +350,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 		
 		//Drop Items
 		while (heldItem != fist){
-			drop();
+			dropCurrentItem();
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package core;
 
+import entities.interfaces.Entity;
 import gui.GUtil;
 
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public class MiniMap {
 		colors.put(TileType.SAND.name(), new Color(217, 188, 108));
 		colors.put(TileType.WATER.name(), new Color(76, 137, 172));
 		colors.put("TREE", new Color(23, 152, 35));
+		colors.put("HOUSE", new Color(212, 108, 109));
+		colors.put("NPC", ReadableColor.YELLOW);
 		colors.put("PLAYER", ReadableColor.WHITE);
 	}
 	
@@ -34,27 +37,42 @@ public class MiniMap {
 		return size;
 	}
 	
+	public ReadableColor getColor(Tile tile, Tile center){
+		if (tile.equals(center)) return colors.get("PLAYER");
+		
+		ReadableColor c = colors.get(tile.getType().name());
+		
+		boolean placed = tile.walkable && !tile.isWalkable();
+		for (Entity e: tile.getEntities()){
+			switch (e.getSpecialType()) {
+			case FOLIAGE:
+				if (placed) c = colors.get("TREE");
+				break;
+			case HOUSE:
+				if (placed) c = colors.get("HOUSE");
+				break;
+			case PERSON:
+				if (!e.equals(Game.getPlayer())) c = colors.get("NPC");
+				break;
+			default:
+				break;
+			}
+		}
+		return c;
+	}
+	
 	public void draw(float x, float y, Tile center){
 		frame.setLocation((int) x - 10, (int) y - 10); 
 		GUtil.drawRect(frame, ReadableColor.DKGREY);
 		
 		Tile start = null;
-		ReadableColor c;
 		for (Tile tile : Game.getMap().getLocale(size/2, center.getX(), center.getY())){
 			if (start == null){
 				start = tile;
 			}
-			c = colors.get(tile.getType().name());
 			
-			if (tile.walkable && !tile.isWalkable()){
-				c = colors.get("TREE");
-			}
-			
-			if (tile.equals(center)){
-				c = colors.get("PLAYER");
-			}
 			GUtil.drawPixel((int)(x + Game.SCALE*(tile.getX() - start.getX())), 
-					(int)(y + Game.SCALE*(tile.getY() - start.getY())), (int) Game.SCALE, c);
+					(int)(y + Game.SCALE*(tile.getY() - start.getY())), (int) Game.SCALE, getColor(tile, center));
 		}
 	}
 }
