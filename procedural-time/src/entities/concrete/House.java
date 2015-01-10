@@ -8,12 +8,13 @@ import core.display.Sprite;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
+import entities.interfaces.DynamicSprite;
 import entities.interfaces.Entity;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 import gui.GUtil.SpriteSheetType;
 
-public class House extends AbstractPlacedItem implements Placeable, Holdable {
+public class House extends AbstractPlacedItem implements Placeable, Holdable, DynamicSprite {
 
 	private HashMap<String, Sprite> sprites;
 	private String[][] bitmaskKeys;
@@ -41,18 +42,19 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable {
 	private static int calcBitmask(int x, int y, boolean recalcSurrounding){
 		int total = 0;
 		int size = Game.getMap().getSize();
-		int[] offsets = {0, 0, -1, 1};
+		int[] offsets = {-1, 0, 1, 0};
 		int add = 1;
 		for (int i = 0; i < offsets.length; i++){
 			if (x + offsets[i] >= 0 &&
 				x + offsets[i] < size &&
 				y + offsets[(i+2)%4] >= 0 &&
 				y + offsets[(i+2)%4] < size){
-				Tile t = Game.getMap().getTile(x + offsets[i], y + offsets[(i+2)%4]);
+				Tile t = Game.getMap().getTile(x + offsets[i], y + offsets[(i+3)%4]);
 				boolean containsHouse = false;
+				if (t == null) System.out.println((x + offsets[i]) + "," + (y + offsets[(i+3)%4]));
 				for (Entity e : t.getEntities()){
 					if (e.getSpecialType().equals(SpecialType.HOUSE)){
-						if (recalcSurrounding) ((House) e).recalcSprite(false);
+						if (recalcSurrounding && e instanceof House) ((House) e).recalcSprite(false);
 						containsHouse = true;
 						break;
 					}
@@ -66,7 +68,7 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable {
 		return total;
 	}
 	
-	
+	@Override
 	public void recalcSprite(boolean recalcSurrounding){
 		int bitmask = calcBitmask(getTileX(), getTileY(), recalcSurrounding);
 		setSprite(sprites.get(bitmaskKeys[bitmask][rand.nextInt(bitmaskKeys[bitmask].length)]));

@@ -1,7 +1,7 @@
 package entities.concrete;
 
-import org.lwjgl.util.Point;
-
+import core.Game;
+import core.Tile;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
@@ -39,6 +39,16 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	public void use(Humanoid user) {
 		place(user);
 	}
+	
+//	@Override
+//	public void place(Humanoid user){
+//		super.place(user);
+//		int[] offsets = {-1, 0, 1, 0};
+//		Tile t;
+//		for (int i = 0; i < offsets.length; i++){
+//			t = Game.getMap().getTile(user.getTileX() + offsets[i], user.getTileY() + offsets[(i+3)%4]);
+//		}
+//	}
 
 	@Override
 	public SpriteInstance[] getSwingArray() {

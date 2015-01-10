@@ -38,13 +38,11 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 	}
 	
 	public void setAligned(boolean aligned) {
-		//TODO: Implement autoalignment
 		this.aligned = aligned;
 	}
 	
-	public void place(Humanoid owner){
+	protected void place(Humanoid owner){
 		Point pt = owner.getPlacePoint();
-		setPlaced(true);
 		int placeX = snapToTile(pt.getX());
 		int placeY = snapToTile(pt.getY());
 		addToMap(placeX, placeY);
@@ -52,6 +50,12 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 		owner.removeCurrentItem();
 	}
 	
+	/**
+	 * No side effects, simply returns a world coordinate snapped to the 
+	 * closest (but under) tile boundary.
+	 * @param coord
+	 * @return
+	 */
 	private static int snapToTile(float coord){
 		int scale = (int) (Game.TILE_SIZE*Game.SCALE);
 		return ((int) coord/scale)*scale;

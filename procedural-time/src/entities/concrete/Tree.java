@@ -1,5 +1,7 @@
 package entities.concrete;
 
+import org.lwjgl.util.ReadableColor;
+
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
 import entities.components.HealthTracker;
@@ -7,6 +9,7 @@ import entities.interfaces.Hittable;
 import entities.interfaces.Item;
 import entities.interfaces.Placeable;
 import entities.interfaces.Weapon;
+import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
 public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
@@ -64,13 +67,13 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 				w = new Floor(0, 0);
 			}
 			w.addToMap(getX() + rand.nextInt(20) - 10, getY() + rand.nextInt(20) - 10);
+			if (w.getY() - getY() >= 10) System.out.println("PROBLEM"+(w.getY() - getY()));
 		}
 		this.removeFromMap();
 	}
 
 	@Override
 	public void hit(Weapon w, Humanoid wielder) {
-		
 		if(health.damage(w.getDamage())){
 			die();
 		}

@@ -135,6 +135,7 @@ public abstract class AbstractEntity implements Entity
 				float offset = Game.SCALE*Game.TILE_SIZE;
 				x = warpTile.getLeft() + offset;
 				y = warpTile.getTop() + offset;
+				System.out.println("warped");
 			} else {
 				System.out.println("Warp failed :(");
 			}

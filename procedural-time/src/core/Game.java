@@ -14,6 +14,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
+import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -293,19 +294,6 @@ public class Game extends Core {
 		}
 
 		for (Humanoid human : humans){
-//			if (!human.equals(player)){
-//				// Have humanoids wander
-//				if (!human.isMoving() && !human.isDead()){
-//					if (rand.nextInt(100) == 1){
-//						int destX = human.getTileX() + (rand.nextInt(10) - 5);
-//						int destY = human.getTileY() + (rand.nextInt(10) - 5);
-//						human.walkTo(destX, destY);
-//					}
-//					if (rand.nextInt(5000) == 1){
-//						human.say("Hey.");
-//					}
-//				}
-//			}
 			human.update(deltaTime);
 		}
 		screen.update(deltaTime);
@@ -350,6 +338,8 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(10, 10);
+		GUtil.drawPixel((int) (SCREEN_WIDTH/2f - player.getX()) + player.getPlacePoint().getX(), 
+				(int) (SCREEN_HEIGHT/2f - player.getY()) + player.getPlacePoint().getY(), 2, ReadableColor.BLACK);
 		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 0, tileMap.getTile(playerTile_x, playerTile_y));
 	}
 

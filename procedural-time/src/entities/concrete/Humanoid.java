@@ -330,7 +330,11 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 	
 	public Point getPlacePoint(){
-		return new Point((int) getX(), (int) getY());
+		int centerOffset = (int)(0.5*Game.SCALE*Game.TILE_SIZE);
+		int[] xMods = {0, 1, 0, -1};
+		int[] yMods = {-1, 0, 1, 0};
+		return new Point((int) (getX() + centerOffset + 2*centerOffset*xMods[facing.ordinal()]),
+				(int) (getY() + centerOffset + 2*centerOffset*yMods[facing.ordinal()]));
 	}
 	
 	public void die(){
