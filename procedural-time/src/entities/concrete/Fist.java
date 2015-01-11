@@ -1,5 +1,7 @@
 package entities.concrete;
 
+import org.lwjgl.util.Point;
+
 import core.Game;
 import core.Tile;
 import core.display.SpriteInstance;
@@ -21,7 +23,9 @@ public int damage = 1;
 
 	@Override
 	public void swing(Humanoid user) {
-		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
+//		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
+		Point pt = user.getPlacePoint();
+		Tile t = Game.getMap().getWorldTile(pt.getX(), pt.getY());
 			//check if there is collision with damageable entities
 			for (Entity h : t.getEntities()){
 				if (h instanceof Hittable){
@@ -29,7 +33,7 @@ public int damage = 1;
 					((Hittable) h).hit(this, user);
 				}
 			}
-		}
+//		}
 	}
 
 	@Override
@@ -37,16 +41,30 @@ public int damage = 1;
 		if (user.inventoryFull()){
 			return;
 		}
+//		Tile t = Game.getMap().getWorldTile(pt.getX(), pt.getY());
+		Point pt = user.getPlacePoint();
+		Holdable min = null;
+		int minDist = Integer.MAX_VALUE;
 		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			for (Entity e : t.getEntities()){
+				// TODO: Check for collision
 				if (e instanceof Holdable){
-					// TODO: Check for collision
-					if (user.getItem((Holdable) e));
-						((Holdable) e).removeFromMap();
-					return;
+					if (getDist(pt, e) < minDist){
+						minDist = getDist(pt, e);
+						min = (Holdable) e;
+					}
 				}
-			}			
+			}
 		}
+		if (min != null && user.getItem(min)){
+			(min).removeFromMap();
+		}
+	}
+	
+	public static int getDist(Point pt, Entity e){
+		int dist = (pt.getX()- (int) e.getX())*(pt.getX()- (int) e.getX());
+		dist += (pt.getY()- (int) e.getY())*(pt.getY()- (int) e.getY());
+		return dist;
 	}
 
 	@Override
