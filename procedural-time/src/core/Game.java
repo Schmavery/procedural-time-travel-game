@@ -173,44 +173,31 @@ public class Game extends Core {
 	
 	public void initGUI(){
 		screen = new GPanel("screen", null, new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-		panel = new GPanel("panel", null, new Rectangle(10,555,355,230));
-		panel.setBorder(GBorderFactory.createBasicBorder(new Color(95, 158, 160)));
+		panel = new GPanel("panel", null, new Rectangle(SCREEN_WIDTH/2,600,SCREEN_WIDTH/2,200));
+		panel.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
 		screen.addChild(panel);
 		
-		GTextbox title = new GTextbox("title", "<< Main Menu >>", 50, 15);
-		GButton p1 = new GButton("Dr. Seuss", "Menu", "pause", 10, 45);
+		GButton p1 = new GButton("Menubtn", "Menu", "menu", 10, 85);
 		p1.setBorder(GBorderFactory.createButtonBorder(new Color(50, 100, 50)));
-		GButton p2 = new GButton("Eggs and Ham", "Pause", null, 10, 105);
+		GButton p2 = new GButton("Heybtn", "Hey!", "say Hey!", 10, 140);
 		p2.setBorder(GBorderFactory.createButtonBorder(new Color(50, 50, 100)));
-		GPanel p3 = new GPanel("p3", null, new Rectangle(130, 45, 210, 110));
+		
+		GPanel p3 = new GPanel("p3", null, new Rectangle(130, 85, 210, 110));
 		p3.setBorder(GBorderFactory.createBasicBorder(new Color(50, 50, 50)));
-		GTextbox tb  = new GTextbox("tb", "test: ---  ", 10, 10);
-		GTextbox tb2 = new GTextbox("tb2", "test: ---  ", 10, 30);
+		GTextbox tb  = new GTextbox("tb_x", "test: ---  ", 10, 10);
+		GTextbox tb2 = new GTextbox("tb_y", "test: ---  ", 10, 30);
 		GTextbox tb3 = new GTextbox("tb3", "test: ---  ", 10, 50);
 		GTextbox tb4 = new GTextbox("tb4", "test: ---  ", 10, 70);
 		tb.setTextColor(new Color(200, 200, 200));
 		tb2.setTextColor(new Color(200, 200, 200));
-		GButton p5 = new GButton("Sam I Am", "Extra Long Button!", null, 10, 165);
-		p5.setBorder(GBorderFactory.createButtonBorder(new Color(100, 50, 50)));
+		
 		p3.addChild(tb);
 		p3.addChild(tb2);
 		p3.addChild(tb3);
 		p3.addChild(tb4);
-		panel.addChild(title);
 		panel.addChild(p1);
 		panel.addChild(p2);
 		panel.addChild(p3);
-		panel.addChild(p5);
-		
-		
-		IContainer test = new GPanel("Test Panel", "none", new Rectangle (435, 655, 550, 130));
-		screen.addChild(test);
-		test.setLayout(new GGridLayout(2, 2, 10, 10));
-		test.setBorder(GBorderFactory.createBasicBorder(new Color(100, 120, 100)));
-		test.addChild(new GButton("b4", "Say \"Something\"", "say Something!", new Color(10,100,100)));
-		test.addChild(new GButton("b4", "Say \"Hey\"", "say Hey!", new Color(10,100,100)));
-		test.addChild(new GButton("b4", "Say \"Hello\"", "say Hello", new Color(100,100,10)));
-		test.addChild(new GButton("b4", "Say \"Howdy\"", "say Howdy", new Color(100,10,100)));
 	}
 	
 	
@@ -251,8 +238,8 @@ public class Game extends Core {
 	public void gameUpdate(long deltaTime){
 		tileMap.updateAnims(deltaTime);
 		
-		((GTextbox) (panel.search("tb"))).setText("X: "+ ((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
-		((GTextbox) (panel.search("tb2"))).setText("Y: "+ ((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
+		((GTextbox) (panel.search("tb_x"))).setText("X: "+ ((int) (player.getCenterX()/(SCALE*TILE_SIZE))));
+		((GTextbox) (panel.search("tb_y"))).setText("Y: "+ ((int) (player.getCenterY()/(SCALE*TILE_SIZE))));
 		float speed = 100f;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
@@ -337,10 +324,11 @@ public class Game extends Core {
 		}
 
 		screen.draw();
-		player.drawStatus(10, 10);
+		player.drawStatus(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 220);
 		GUtil.drawPixel((int) (SCREEN_WIDTH/2f - player.getX()) + player.getPlacePoint().getX(), 
 				(int) (SCREEN_HEIGHT/2f - player.getY()) + player.getPlacePoint().getY(), 2, ReadableColor.BLACK);
-		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 0, tileMap.getTile(playerTile_x, playerTile_y));
+		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 
+				SCREEN_HEIGHT - 200, tileMap.getTile(playerTile_x, playerTile_y));
 	}
 
 }

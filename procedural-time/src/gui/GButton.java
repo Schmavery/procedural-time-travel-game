@@ -7,8 +7,6 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 /**
  * 
- * @author avery
- *
  * This is a generic button class designed to be put on a GPanel object.
  */
 
