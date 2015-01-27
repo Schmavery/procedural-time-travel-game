@@ -222,7 +222,7 @@ public class TileMap implements Serializable{
 	}
 	
 	
-	public Tile getTile(int tileX, int tileY){
+	public Tile getGridTile(int tileX, int tileY){
 		if ( tileX >= 0 && tileX < size && tileY >= 0 && tileY < size){
 			return tileMap[tileX][tileY];
 		}
@@ -239,7 +239,7 @@ public class TileMap implements Serializable{
 	public Tile getWorldTile(float x, float y){
 		int xIndex = (int) (x / (Game.TILE_SIZE*Game.SCALE));
 		int yIndex = (int) (y / (Game.TILE_SIZE*Game.SCALE));
-		return getTile(xIndex, yIndex);
+		return getGridTile(xIndex, yIndex);
 	}
 	
 	

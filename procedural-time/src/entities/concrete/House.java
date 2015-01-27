@@ -8,77 +8,92 @@ import core.display.Sprite;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
-import entities.interfaces.DynamicSprite;
 import entities.interfaces.Entity;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 import gui.GUtil.SpriteSheetType;
 
-public class House extends AbstractPlacedItem implements Placeable, Holdable, DynamicSprite {
+public class House extends AbstractPlacedItem implements Placeable, Holdable {
 
-	private HashMap<String, Sprite> sprites;
+	protected HashMap<String, Sprite> sprites;
 	private String[][] bitmaskKeys;
 	
 	public House(float x, float y){
 		super(x, y);
 		sprites = new HashMap<>();
 		String[] spriteNames = {"wall_s_1", "wall_s_2", "wall_e", "wall_w", "wall_n_1",
-				"wall_ne", "wall_nw", "door_s", "door_n", "window_s", "roof_n", "loose_house"};
+				"wall_ne", "wall_nw", "door_s", "door_n", "window_s", "roof_n",
+				"loose_house", "door_n", "door_s", "door_1"};
 		String[] southKeys = {"wall_s_1", "wall_s_2", "window_s"};
 		String[] empty = {"roof_n"};
-		String[][] tmp = {empty, {"wall_w"},{"wall_n_1"},{"wall_nw"},{"wall_e"},empty,{"wall_ne"},
-				empty, southKeys, southKeys, empty, empty, southKeys, southKeys, empty, empty};
+		String[][] tmp = {empty, empty, empty, southKeys, empty, empty, {"wall_ne"},
+				/*7*/ {"wall_e"}, empty, southKeys, empty, southKeys, {"wall_nw"}, 
+				/*13*/{"wall_w"}, {"wall_n_1"}, empty};
 		bitmaskKeys = tmp;
 		for (String s : spriteNames){
 			sprites.put(s, SpriteManager.get().getSprite(SpriteSheetType.ITEMS, s));
 		}
 		setSpecialType(SpecialType.HOUSE);
 		setSprite(sprites.get("loose_house"));
+		setWalkable(false);
+		setAligned(true);
 	}
 	
 	/**
 	 * Calculates bitmask to determine how the house item is surrounded.
+	 * Key below indicates which cardinal directions have adjacent house tiles
+	 * 0	- none
+	 * 1	- n
+	 * 2	- w
+	 * 3	- nw
+	 * 4	- s
+	 * 5	- ns
+	 * 6	- ws
+	 * 7	- nws
+	 * 8	- e
+	 * 9	- ne
+	 * 10	- ew
+	 * 11	- nwe
+	 * 12	- se
+	 * 13	- nse
+	 * 14	- wse
+	 * 15	- nwse
 	 */
-	private static int calcBitmask(int x, int y, boolean recalcSurrounding){
+	protected int calcBitmask() {
 		int total = 0;
 		int size = Game.getMap().getSize();
-		int[] offsets = {-1, 0, 1, 0};
+		// N, W, S, E
+		int[] offsets = {0, -1, 0, 1};
 		int add = 1;
 		for (int i = 0; i < offsets.length; i++){
-			if (x + offsets[i] >= 0 &&
-				x + offsets[i] < size &&
-				y + offsets[(i+2)%4] >= 0 &&
-				y + offsets[(i+2)%4] < size){
-				Tile t = Game.getMap().getTile(x + offsets[i], y + offsets[(i+3)%4]);
-				boolean containsHouse = false;
-				if (t == null) System.out.println((x + offsets[i]) + "," + (y + offsets[(i+3)%4]));
+			if (getTileX() + offsets[i] >= 0 &&
+				getTileX() + offsets[i] < size &&
+				getTileY() + offsets[(i+1)%4] >= 0 &&
+				getTileY() + offsets[(i+1)%4] < size){
+				Tile t = Game.getMap().getGridTile(getTileX() + offsets[i], getTileY() + offsets[(i+1)%4]);
 				for (Entity e : t.getEntities()){
 					if (e.getSpecialType().equals(SpecialType.HOUSE)){
-						if (recalcSurrounding && e instanceof House) ((House) e).recalcSprite(false);
-						containsHouse = true;
+						total += add;
 						break;
 					}
 				}
-				if (containsHouse){
-					total += add;
-					add *= 2;
-				}
+				add *= 2;
 			}
 		}
 		return total;
 	}
-	
-	@Override
-	public void recalcSprite(boolean recalcSurrounding){
-		int bitmask = calcBitmask(getTileX(), getTileY(), recalcSurrounding);
-		setSprite(sprites.get(bitmaskKeys[bitmask][rand.nextInt(bitmaskKeys[bitmask].length)]));
-	}
 
 	@Override
-	public void setPlaced(boolean placed) {
-		super.setPlaced(placed);
+	public void recalcSprite() {
 		if (placed){
-			recalcSprite(true);			
+			int bitmask = calcBitmask();
+			setSprite(sprites.get(bitmaskKeys[bitmask][rand.nextInt(bitmaskKeys[bitmask].length)]));	
+			if (bitmask == 7 || bitmask == 13){
+				// Sidewalls of the house
+				setDrawPriority(1);
+			} else {
+				setDrawPriority(0);
+			}
 		} else {
 			setSprite(sprites.get("loose_house"));
 		}
@@ -97,7 +112,7 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable, Dy
 
 	@Override
 	public void use(Humanoid user) {
-		place(user);
+		if (place(user)) user.getItem(new House(0,0));
 	}
 
 	@Override
@@ -111,6 +126,8 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable, Dy
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 }

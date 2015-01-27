@@ -1,7 +1,5 @@
 package entities.concrete;
 
-import core.Game;
-import core.Tile;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
@@ -20,8 +18,7 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	}
 
 	@Override
-	public void setPlaced(boolean placed){
-		super.setPlaced(placed);
+	public void recalcSprite(){
 		if (placed){
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+(rand.nextInt(2)+1)));
 		} else {
@@ -31,24 +28,13 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	
 	@Override
 	public void swing(Humanoid user) {
-		// TODO Auto-generated method stub
-		
+		//TODO
 	}
 
 	@Override
 	public void use(Humanoid user) {
-		place(user);
+		if (place(user)) user.getItem(new Floor(0,0));
 	}
-	
-//	@Override
-//	public void place(Humanoid user){
-//		super.place(user);
-//		int[] offsets = {-1, 0, 1, 0};
-//		Tile t;
-//		for (int i = 0; i < offsets.length; i++){
-//			t = Game.getMap().getTile(user.getTileX() + offsets[i], user.getTileY() + offsets[(i+3)%4]);
-//		}
-//	}
 
 	@Override
 	public SpriteInstance[] getSwingArray() {

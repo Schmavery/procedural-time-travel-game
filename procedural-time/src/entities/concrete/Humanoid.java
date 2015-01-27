@@ -67,6 +67,13 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	public void update(long deltaTime) {
+		Tile t = Game.getMap().getWorldTile(x, y);
+		if (frame.isColliding(Game.getMap(), x, y)){
+			warpToClosestClearTile();
+			//TODO: This doesn't always work
+		}
+		
+		// TODO: This "getPlayer()" is too hard-coded
 		if (!this.isMoving() && !this.isDead() && !this.equals(Game.getPlayer())){
 			if (rand.nextInt(100) == 1){
 				int destX = this.getTileX() + (rand.nextInt(10) - 5);

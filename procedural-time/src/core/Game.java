@@ -23,6 +23,9 @@ import core.ActionFactory.ActionType;
 import core.display.SpriteManager;
 import core.display.SpriteSheet;
 import entities.Markov;
+import entities.concrete.Door;
+import entities.concrete.Floor;
+import entities.concrete.House;
 import entities.concrete.Humanoid;
 import entities.concrete.Humanoid.Gender;
 import entities.concrete.NPC;
@@ -32,12 +35,10 @@ import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
 import gui.GFont;
-import gui.GGridLayout;
 import gui.GPanel;
 import gui.GTextbox;
 import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
-import gui.IContainer;
 
 public class Game extends Core {
 	// Singletons
@@ -141,6 +142,9 @@ public class Game extends Core {
 		}
 		
 		player.getItem(new Sword(0, 0));
+		player.getItem(new Floor(0, 0));
+		player.getItem(new House(0, 0));
+		player.getItem(new Door(0,0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
 	}
@@ -308,8 +312,8 @@ public class Game extends Core {
 //			GUtil.drawSprite(SpriteSheetType.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
 //					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
 //					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
-			tile.draw((int) (tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f),
-					(int) (tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f));
+			tile.draw((int) (tile.getGridX() * tileSide - player.getX() + SCREEN_WIDTH/2f),
+					(int) (tile.getGridY() * tileSide - player.getY() + SCREEN_HEIGHT/2f));
 			
 		}
 		
@@ -328,7 +332,7 @@ public class Game extends Core {
 		GUtil.drawPixel((int) (SCREEN_WIDTH/2f - player.getX()) + player.getPlacePoint().getX(), 
 				(int) (SCREEN_HEIGHT/2f - player.getY()) + player.getPlacePoint().getY(), 2, ReadableColor.BLACK);
 		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 
-				SCREEN_HEIGHT - 200, tileMap.getTile(playerTile_x, playerTile_y));
+				SCREEN_HEIGHT - 200, tileMap.getGridTile(playerTile_x, playerTile_y));
 	}
 
 }

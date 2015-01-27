@@ -5,7 +5,6 @@ import entities.interfaces.Item;
 
 public abstract class AbstractItem extends AbstractEntity implements Item
 {
-//	public static enum ItemState {LOOSE, PLACED, HELD, STOWED}
 	public AbstractItem(float x, float y){
 		super(x, y);
 	}
@@ -15,7 +14,7 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	}
 	
 	public void removeFromMap(){
-		Game.getMap().getTile(getTileX(), getTileY()).removeEntity(this);
+		Game.getMap().getGridTile(getTileX(), getTileY()).removeEntity(this);
 		this.x = 0;
 		this.y = 0;
 	}
@@ -23,8 +22,7 @@ public abstract class AbstractItem extends AbstractEntity implements Item
 	public void addToMap(float x, float y){
 		this.x = x;
 		this.y = y;
-//		warpToClosestClearTile();
-		Game.getMap().getTile(getTileX(), getTileY()).addEntity(this);
+		Game.getMap().getGridTile(getTileX(), getTileY()).addEntity(this);
 	}
 	
 	@Override

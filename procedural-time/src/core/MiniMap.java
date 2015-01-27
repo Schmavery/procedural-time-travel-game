@@ -66,13 +66,13 @@ public class MiniMap {
 		GUtil.drawRect(frame, ReadableColor.DKGREY);
 		
 		Tile start = null;
-		for (Tile tile : Game.getMap().getLocale(size/2, center.getX(), center.getY())){
+		for (Tile tile : Game.getMap().getLocale(size/2, center.getGridX(), center.getGridY())){
 			if (start == null){
 				start = tile;
 			}
 			
-			GUtil.drawPixel((int)(x + Game.SCALE*(tile.getX() - start.getX())), 
-					(int)(y + Game.SCALE*(tile.getY() - start.getY())), (int) Game.SCALE, getColor(tile, center));
+			GUtil.drawPixel((int)(x + Game.SCALE*(tile.getGridX() - start.getGridX())), 
+					(int)(y + Game.SCALE*(tile.getGridY() - start.getGridY())), (int) Game.SCALE, getColor(tile, center));
 		}
 	}
 }

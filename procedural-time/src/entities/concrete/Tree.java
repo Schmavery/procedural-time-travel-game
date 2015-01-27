@@ -1,7 +1,5 @@
 package entities.concrete;
 
-import org.lwjgl.util.ReadableColor;
-
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
 import entities.components.HealthTracker;
@@ -9,7 +7,6 @@ import entities.interfaces.Hittable;
 import entities.interfaces.Item;
 import entities.interfaces.Placeable;
 import entities.interfaces.Weapon;
-import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
 public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
@@ -84,5 +81,4 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 		super.draw(x, y);
 		health.draw(x + getX(), y + getY());
 	}
-	
 }

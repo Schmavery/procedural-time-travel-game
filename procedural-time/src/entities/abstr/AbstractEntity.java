@@ -78,6 +78,11 @@ public abstract class AbstractEntity implements Entity
 		return this.specialType;
 	}
 	
+	/**
+	 * Default is 0.
+	 * Negative is below 0, positive draws on top.
+	 * @param p New draw priority
+	 */
 	protected void setDrawPriority(int p){
 		this.drawPriority = p;
 	}
@@ -109,18 +114,13 @@ public abstract class AbstractEntity implements Entity
 		else
 			t = Game.getMap().getWorldTile(x, y);
 		if (!t.isWalkable()){
-			int[] xOffsets = {0, 0, -1, 1};
-			int[] yOffsets = {-1, 1, 0, 0};
 			HashSet<Tile> closed = new HashSet<>();
 			LinkedList<Tile> open = new LinkedList<>();
 			Tile warpTile = null;
 			open.add(t);
-			Tile add;
 			while (!open.isEmpty() && warpTile == null){
 				t = open.removeLast();
-				for (int i = 0; i < xOffsets.length; i++){
-					add = Game.getMap().getTile(t.getX()+xOffsets[i], t.getX()+yOffsets[i]);
-					if (add == null) continue;
+				for (Tile add: t.getReachable()){
 					if (closed.contains(add)) continue;
 					if (add.isWalkable()){
 						warpTile = add;

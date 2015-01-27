@@ -61,8 +61,8 @@ public class Tile implements Serializable, Pathable<Tile>{
 	}
 	
 	public TileType getType(){return type;}
-	public int getX(){return x;}
-	public int getY(){return y;}
+	public int getGridX(){return x;}
+	public int getGridY(){return y;}
 	public float getTop(){return Game.SCALE*Game.TILE_SIZE*y;}
 	public float getLeft(){return Game.SCALE*Game.TILE_SIZE*x;}
 	
@@ -84,7 +84,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	private static void addTile(List<Tile> list, int x, int y){
 		if (isWalkableTile(x, y)){
-			list.add(Game.getMap().getTile(x, y));
+			list.add(Game.getMap().getGridTile(x, y));
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 				&& x < Game.getMap().getSize()
 				&& y >= 0
 				&& y < Game.getMap().getSize()){
-			if (Game.getMap().getTile(x, y).isWalkable()){
+			if (Game.getMap().getGridTile(x, y).isWalkable()){
 				return true;
 			}
 		}
@@ -109,25 +109,25 @@ public class Tile implements Serializable, Pathable<Tile>{
 		
 		if (isWalkableTile(x+1, y+1)){
 			if (isWalkableTile(x+1, y) && isWalkableTile(x, y+1)){
-				reachable.add(Game.getMap().getTile(x+1, y+1));
+				reachable.add(Game.getMap().getGridTile(x+1, y+1));
 			}
 		}
 		
 		if (isWalkableTile(x-1, y-1)){
 			if (isWalkableTile(x-1, y) && isWalkableTile(x, y-1)){
-				reachable.add(Game.getMap().getTile(x-1, y-1));
+				reachable.add(Game.getMap().getGridTile(x-1, y-1));
 			}
 		}
 		
 		if (isWalkableTile(x-1, y+1)){
 			if (isWalkableTile(x-1, y) && isWalkableTile(x, y+1)){
-				reachable.add(Game.getMap().getTile(x-1, y+1));
+				reachable.add(Game.getMap().getGridTile(x-1, y+1));
 			}
 		}
 		
 		if (isWalkableTile(x+1, y-1)){
 			if (isWalkableTile(x+1, y) && isWalkableTile(x, y-1)){
-				reachable.add(Game.getMap().getTile(x+1, y-1));
+				reachable.add(Game.getMap().getGridTile(x+1, y-1));
 			}
 		}
 		return reachable;

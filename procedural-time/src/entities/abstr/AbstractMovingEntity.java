@@ -64,12 +64,12 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 
 	public void walkTo(int tileX, int tileY)
 	{
-		if (Game.getMap().getTile(tileX, tileY) == null || !Game.getMap().getTile(tileX, tileY).isWalkable()){
+		if (Game.getMap().getGridTile(tileX, tileY) == null || !Game.getMap().getGridTile(tileX, tileY).isWalkable()){
 			return;
 		} else {
 			tilePather.clear();
 			tilePather.newPath(	Game.getMap().getWorldTile(getCenterX(), getCenterY()),
-					Game.getMap().getTile(tileX, tileY));
+					Game.getMap().getGridTile(tileX, tileY));
 			pathGen();
 		}
 	}
