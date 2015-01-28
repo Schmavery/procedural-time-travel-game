@@ -1,6 +1,6 @@
 package entities.concrete;
 
-public class NPC extends Humanoid {
+public class NPC extends Human {
 	
 	public NPC(float x, float y, Gender gender, String name) {
 		super(x, y, gender, name);

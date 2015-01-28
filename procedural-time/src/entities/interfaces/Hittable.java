@@ -1,7 +1,7 @@
 package entities.interfaces;
 
-import entities.concrete.Humanoid;
+import entities.concrete.Human;
 
 public interface Hittable {
-	public void hit(Weapon w, Humanoid wielder);
+	public void hit(Weapon w, Human wielder);
 }

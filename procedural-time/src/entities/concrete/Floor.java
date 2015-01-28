@@ -27,12 +27,12 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	}
 	
 	@Override
-	public void swing(Humanoid user) {
+	public void swing(Human user) {
 		//TODO
 	}
 
 	@Override
-	public void use(Humanoid user) {
+	public void use(Human user) {
 		if (place(user)) user.getItem(new Floor(0,0));
 	}
 

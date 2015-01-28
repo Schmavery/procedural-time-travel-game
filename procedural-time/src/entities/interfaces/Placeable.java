@@ -1,6 +1,6 @@
 package entities.interfaces;
 
-import entities.concrete.Humanoid;
+import entities.concrete.Human;
 
 
 public interface Placeable extends Entity{
@@ -22,5 +22,5 @@ public interface Placeable extends Entity{
 	 * @param owner
 	 * @return true if the place succeeds.
 	 */
-	public boolean place(Humanoid owner);
+	public boolean place(Human owner);
 }

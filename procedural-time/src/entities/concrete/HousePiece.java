@@ -13,12 +13,12 @@ import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 import gui.GUtil.SpriteSheetType;
 
-public class House extends AbstractPlacedItem implements Placeable, Holdable {
+public class HousePiece extends AbstractPlacedItem implements Placeable, Holdable {
 
 	protected HashMap<String, Sprite> sprites;
 	private String[][] bitmaskKeys;
 	
-	public House(float x, float y){
+	public HousePiece(float x, float y){
 		super(x, y);
 		sprites = new HashMap<>();
 		String[] spriteNames = {"wall_s_1", "wall_s_2", "wall_e", "wall_w", "wall_n_1",
@@ -105,14 +105,14 @@ public class House extends AbstractPlacedItem implements Placeable, Holdable {
 	}
 
 	@Override
-	public void swing(Humanoid user) {
+	public void swing(Human user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void use(Humanoid user) {
-		if (place(user)) user.getItem(new House(0,0));
+	public void use(Human user) {
+		if (place(user)) user.getItem(new HousePiece(0,0));
 	}
 
 	@Override

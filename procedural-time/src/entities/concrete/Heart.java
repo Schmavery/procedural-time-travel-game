@@ -12,7 +12,7 @@ public class Heart extends AbstractItem implements Hittable{
 	}
 
 	@Override
-	public void hit(Weapon w, Humanoid wielder) {
+	public void hit(Weapon w, Human wielder) {
 		removeFromMap();
 		wielder.setHealth(wielder.getHealth() + 1);;
 	}

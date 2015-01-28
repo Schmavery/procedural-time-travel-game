@@ -22,7 +22,7 @@ public int damage = 1;
 	}
 
 	@Override
-	public void swing(Humanoid user) {
+	public void swing(Human user) {
 //		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 		Point pt = user.getPlacePoint();
 		Tile t = Game.getMap().getWorldTile(pt.getX(), pt.getY());
@@ -37,7 +37,7 @@ public int damage = 1;
 	}
 
 	@Override
-	public void use(Humanoid user) {
+	public void use(Human user) {
 		if (user.inventoryFull()){
 			return;
 		}

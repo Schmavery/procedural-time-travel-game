@@ -25,12 +25,13 @@ import core.display.SpriteSheet;
 import entities.Markov;
 import entities.concrete.Door;
 import entities.concrete.Floor;
-import entities.concrete.House;
-import entities.concrete.Humanoid;
-import entities.concrete.Humanoid.Gender;
+import entities.concrete.HousePiece;
+import entities.concrete.Human;
+import entities.concrete.Human.Gender;
 import entities.concrete.NPC;
 import entities.concrete.Sword;
 import entities.interfaces.Entity;
+import entities.town.Town;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
@@ -43,12 +44,12 @@ import gui.GUtil.SpriteSheetType;
 public class Game extends Core {
 	// Singletons
 	private static TileMap tileMap;
-	private static Humanoid player;
+	private static Human player;
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 2f;
 	
-	List<Humanoid> humans;
+	List<Human> humans;
 	List<Entity> drawList;
 	Comparator<Entity> drawComparator;
 //	String targetName;
@@ -65,7 +66,7 @@ public class Game extends Core {
 		return tileMap;
 	}
 	
-	public static Humanoid getPlayer(){
+	public static Human getPlayer(){
 		return player;
 	}
 	
@@ -107,8 +108,8 @@ public class Game extends Core {
 		tileMap = new TileMap(1000);
 		tileMap.init();
 		System.out.println("Done initializing map");
-		humans = new ArrayList<Humanoid>(numHumans);
-		player = new Humanoid((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
+		humans = new ArrayList<Human>(numHumans);
+		player = new Human((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
 			player.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
@@ -127,7 +128,7 @@ public class Game extends Core {
 				randY = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
 			} while (!tileMap.getWorldTile(randX, randY).walkable);
 
-			Humanoid tmpHuman;
+			Human tmpHuman;
 			tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
 			
 			tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
@@ -141,9 +142,11 @@ public class Game extends Core {
 			humans.add(tmpHuman);
 		}
 		
+		initTown();
+		
 		player.getItem(new Sword(0, 0));
 		player.getItem(new Floor(0, 0));
-		player.getItem(new House(0, 0));
+		player.getItem(new HousePiece(0, 0));
 		player.getItem(new Door(0,0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
@@ -204,6 +207,9 @@ public class Game extends Core {
 		panel.addChild(p3);
 	}
 	
+	public void initTown(){
+		(new Town(1,1)).createHouse(player.getTileX(), player.getTileY() + 10, 10, 7);
+	}
 	
 	
 	@Override
@@ -284,7 +290,7 @@ public class Game extends Core {
 			pauseGame();
 		}
 
-		for (Humanoid human : humans){
+		for (Human human : humans){
 			human.update(deltaTime);
 		}
 		screen.update(deltaTime);

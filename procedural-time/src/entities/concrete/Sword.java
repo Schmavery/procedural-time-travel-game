@@ -21,7 +21,7 @@ public class Sword extends AbstractItem implements Weapon{
 	}
 
 	@Override
-	public void swing(Humanoid user) {
+	public void swing(Human user) {
 //		for (Tile t : Game.getMap().getLocale(2, user.getTileX(), user.getTileY())){
 			//check if there is collision with damageable entities
 			// Old methods of iterating
@@ -43,7 +43,7 @@ public class Sword extends AbstractItem implements Weapon{
 	}
 
 	@Override
-	public void use(Humanoid user) {
+	public void use(Human user) {
 		swing(user);
 	}
 

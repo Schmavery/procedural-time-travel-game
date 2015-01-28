@@ -28,7 +28,7 @@ import entities.interfaces.Weapon;
 import gui.GUtil;
 import gui.GUtil.SpriteSheetType;
 
-public class Humanoid extends AbstractMovingEntity implements Hittable,
+public class Human extends AbstractMovingEntity implements Hittable,
 		Talkable {
 	
 	public static enum Gender {
@@ -47,7 +47,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 
 	// private Gender gender;
 
-	public Humanoid(float x, float y, Gender gender, String name) {
+	public Human(float x, float y, Gender gender, String name) {
 		super(x, y);
 
 		// this.gender = gender;
@@ -157,15 +157,6 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 			movingAnims[facing.ordinal()].update(deltaTime);
 		}
 
-		if (tilePather.isRunning()) {
-			try {
-				tilePather.generatePath(100);
-			} catch (PathException e) {
-				System.out.println(e.getMessage());
-				tilePather.clear();
-			}
-		}
-
 		if (currentAction != null){
 			if (!currentAction.update(deltaTime)){
 				endAction(currentAction);
@@ -220,7 +211,7 @@ public class Humanoid extends AbstractMovingEntity implements Hittable,
 	}
 
 	@Override
-	public void hit(Weapon w, Humanoid wielder) {
+	public void hit(Weapon w, Human wielder) {
 		if (this != wielder){
 			health.damage(w.getDamage());
 		}

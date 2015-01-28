@@ -13,13 +13,13 @@ public class Wood extends AbstractItem implements Holdable{
 	}
 
 	@Override
-	public void swing(Humanoid user) {
+	public void swing(Human user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void use(Humanoid user) {
+	public void use(Human user) {
 		// TODO Auto-generated method stub
 		
 	}

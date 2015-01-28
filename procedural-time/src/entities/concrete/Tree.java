@@ -59,7 +59,7 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 			// Temporary, to test house placement
 			Item w;
 			if (rand.nextBoolean()){
-				w = new House(0, 0);
+				w = new HousePiece(0, 0);
 			} else {
 				w = new Floor(0, 0);
 			}
@@ -70,7 +70,7 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 	}
 
 	@Override
-	public void hit(Weapon w, Humanoid wielder) {
+	public void hit(Weapon w, Human wielder) {
 		if(health.damage(w.getDamage())){
 			die();
 		}

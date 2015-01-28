@@ -4,7 +4,7 @@ import org.lwjgl.util.Point;
 
 import core.Game;
 import core.Tile;
-import entities.concrete.Humanoid;
+import entities.concrete.Human;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
 
@@ -40,7 +40,6 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 	
 	@Override
 	public void setPlaced(boolean placed) {
-		System.out.println("setting placed");
 		this.placed = placed;
 		recalcSprite();
 		int[] offsets = {0, -1, 0, 1};
@@ -51,10 +50,9 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 					getTileY() + offsets[(i+1)%4] >= 0 &&
 					getTileY() + offsets[(i+1)%4] < size){
 				Tile t = Game.getMap().getGridTile(getTileX() + offsets[i], getTileY() + offsets[(i+1)%4]);
-				if (t == null || t.getEntities() == null) {
-//					System.out.println("Null:"+(x + offsets[i]) + "," + (y + offsets[(i+3)%4]));
-					continue;
-				}
+				
+				if (t == null || t.getEntities() == null) continue;
+				
 				for (Entity e : t.getEntities()){
 					if (e instanceof Placeable){
 						((Placeable) e).recalcSprite();
@@ -75,8 +73,8 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 	}
 	
 	@Override
-	public boolean place(int x, int y){
-		Tile t = Game.getMap().getGridTile(x, y);
+	public boolean place(int gridX, int gridY){
+		Tile t = Game.getMap().getGridTile(gridX, gridY);
 		if (t == null) return false;
 		if (!t.isWalkable()) return false;
 		
@@ -87,7 +85,7 @@ public abstract class AbstractPlacedItem extends AbstractItem implements Placeab
 	}
 	
 	@Override
-	public boolean place(Humanoid owner){
+	public boolean place(Human owner){
 		Point pt = owner.getPlacePoint();
 		int placeX = snapToTile(pt.getX());
 		int placeY = snapToTile(pt.getY());

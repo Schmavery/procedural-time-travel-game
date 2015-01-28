@@ -89,6 +89,12 @@ public class PathFinder<T extends Pathable<T>> {
 		running = true;
 	}
 	
+	/**
+	 * 
+	 * @param steps Number of steps to run the algorithm.  If steps <= 0, run to completion.
+	 * @return Whether the path finished generation
+	 * @throws PathException on timeout
+	 */
 	public boolean generatePath(int steps) throws PathException{
 		if (steps <= 0){
 			long startTime = System.currentTimeMillis();
@@ -96,7 +102,6 @@ public class PathFinder<T extends Pathable<T>> {
 				if (System.currentTimeMillis() - startTime > 10) throw new PathException("Path timeout");
 			}
 			path = makePathList();
-//			System.out.println(System.currentTimeMillis() - time);
 			return true;
 		} else {
 			// Give the algorithm another few steps to run.
@@ -131,6 +136,9 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public List<T> getPath(){
+		if (path == null){
+			makePathList();
+		}
 		return path;
 	}
 	
@@ -154,6 +162,7 @@ public class PathFinder<T extends Pathable<T>> {
 		if (hasNext()){
 			return path.remove(0);
 		} else {
+			clear();
 			return null;
 		}
 	}

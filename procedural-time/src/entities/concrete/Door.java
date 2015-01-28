@@ -3,7 +3,7 @@ package entities.concrete;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 
-public class Door extends House implements Placeable, Holdable {
+public class Door extends HousePiece implements Placeable, Holdable {
 	private String[] bitmaskKeys;
 	public Door(float x, float y) {
 		super(x, y);
@@ -11,8 +11,8 @@ public class Door extends House implements Placeable, Holdable {
 		setWalkable(true);
 		String empty = "roof_n";
 		String[] tmp = {empty, empty, empty, empty, empty, empty, empty,
-				/*7*/ "wall_e", empty, empty, empty, "door_s", empty, 
-				/*13*/"wall_w", "door_n", empty};
+				/*7*/ "wall_n", empty, empty, empty, "door_s", empty, 
+				/*13*/"wall_n", "door_n", empty};
 		bitmaskKeys = tmp;
 		
 	}
@@ -37,7 +37,7 @@ public class Door extends House implements Placeable, Holdable {
 	 * 15	- nwse
 	 */
 	@Override
-	public void use(Humanoid user) {
+	public void use(Human user) {
 		if (place(user)) user.getItem(new Door(0,0));
 	}
 	
