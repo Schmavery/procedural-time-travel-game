@@ -67,7 +67,6 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 		if (Game.getMap().getGridTile(tileX, tileY) == null || !Game.getMap().getGridTile(tileX, tileY).isWalkable()){
 			return;
 		} else {
-			tilePather.clear();
 			tilePather.newPath(	Game.getMap().getWorldTile(getCenterX(), getCenterY()),
 					Game.getMap().getGridTile(tileX, tileY));
 			pathGen();
@@ -78,7 +77,7 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 	{
 		if (tilePather.isRunning()){
 			try {
-				tilePather.generatePath(100);
+				tilePather.generatePath();
 			} catch (PathException e){
 				System.out.println(e.getMessage());
 				tilePather.clear();

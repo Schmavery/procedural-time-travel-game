@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class PathFinder<T extends Pathable<T>> {
+	private static final ExecutorService pool = Executors.newFixedThreadPool(10);
 	List<PathNode> open, closed;
 	T target;
 	PathNode finalNode;
 	List<T> path;
 	boolean running = false;
+	Future<List<T>> future;
 	
 	private class PathNode implements Comparable<PathNode>{
 		private T node;
@@ -74,6 +81,16 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 
 	public void clear(){
+		if (future != null){
+			future.cancel(true);
+			System.out.println("--->"+future.isCancelled());
+			try {
+				future.get();
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			future = null;
+		}
 		this.open.clear();
 		this.closed.clear();
 		this.finalNode = null;
@@ -83,10 +100,18 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public void newPath(T start, T target){
+		clear();
 		this.target = target;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
 		running = true;
+		future = pool.submit(new Callable<List<T>>() {
+			@Override
+			public List<T> call() throws Exception {
+				while (!calcPath()) { if (Thread.interrupted()) {return null;}}
+				return makePathList();
+			}
+		});
 	}
 	
 	/**
@@ -95,24 +120,26 @@ public class PathFinder<T extends Pathable<T>> {
 	 * @return Whether the path finished generation
 	 * @throws PathException on timeout
 	 */
-	public boolean generatePath(int steps) throws PathException{
-		if (steps <= 0){
-			long startTime = System.currentTimeMillis();
-			while (!calcPath()){ /* Run algorithm to completion*/ 
-				if (System.currentTimeMillis() - startTime > 10) throw new PathException("Path timeout");
+	public boolean generatePath() throws PathException{
+		if (future == null){
+			System.out.println("Reminder, you need to call newPath before generating one...");
+			future = pool.submit(new Callable<List<T>>() {
+				@Override
+				public List<T> call() throws Exception {
+					while (!calcPath()) { 
+						if (Thread.interrupted()) {System.out.println("null"); return null;}
+					}
+					return makePathList();
+				}
+			});
+		}
+		if (future != null && future.isDone()){
+			try {path = future.get();} catch(ExecutionException | InterruptedException e){ 
+				throw new PathException("Couldn't get path");
 			}
-			path = makePathList();
+			future = null;
 			return true;
 		} else {
-			// Give the algorithm another few steps to run.
-			// If it finishes early/on time, return true.
-			for (int i = 0; i < steps; i++){
-				if (calcPath()){
-					path = makePathList();
-					return true;
-				}
-			}
-			// Else, return false.
 			return false;
 		}
 	}
@@ -212,7 +239,8 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public boolean isRunning(){
-		return running;
+//		return running;
+		return (future != null);
 	}
 	
 }

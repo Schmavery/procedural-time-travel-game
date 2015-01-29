@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import org.lwjgl.util.Point;
+import org.lwjgl.util.Rectangle;
 
 import core.Game;
 import core.RandomManager;
@@ -45,20 +46,19 @@ public class Town {
 	}
 	
 	public boolean createHouse(int x, int y, int width, int height){
-		if (!checkHouse(x, y, width, height)) return false;
-		
-		House h = new House(x, y, width, height);
-		for (int i = 0; i < width; i++){
-			for (int j = 0; j < height; j++){
+		House h = new House(new Rectangle(x, y, width, height));
+		if (!checkHouse(h)) return false;
+		for (int i = 0; i < h.getRect().getWidth(); i++){
+			for (int j = 0; j < h.getRect().getHeight(); j++){
 				if (j != 0)
-					(new Floor(0, 0)).place(x+i, y+j);
-				if (i == 0 || j == 0 || j == height-1 || i == width-1){
-					if (rand.nextInt(5) == 0 && i != 0 && i != width-1){
-						(new Door(0, 0)).place(x+i, y+j);
-						h.addDoor(new Point(x+i, y+j));
+					(new Floor(0, 0)).place(h.getRect().getX()+i, h.getRect().getY()+j);
+				if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1){
+					if (rand.nextInt(5) == 0 && i != 0 && i != h.getRect().getWidth()-1){
+						(new Door(0, 0)).place(h.getRect().getX()+i, h.getRect().getY()+j);
+						h.addDoor(new Point(h.getRect().getX()+i, h.getRect().getY()+j));
 					}
 					else
-						(new HousePiece(0, 0)).place(x+i, y+j);
+						(new HousePiece(0, 0)).place(h.getRect().getX()+i, h.getRect().getY()+j);
 				}
 			}
 		}
@@ -73,11 +73,15 @@ public class Town {
 	 * @param height In tiles
 	 * @return true if the house can be placed at this point
 	 */
-	public static boolean checkHouse(int x, int y, int width, int height){
+	public static boolean checkHouse(House h){
 		//TODO: Check for connectivity to spine
-		for (int i = 0; i < width; i++){
-			for (int j = 0; j < height; j++){
-				if (!Game.getMap().getGridTile(x+i, y+j).isWalkable()) return false;
+		
+		for (int i = 0; i < h.getRect().getWidth(); i++){
+			for (int j = 0; j < h.getRect().getHeight(); j++){
+				if (!Game.getMap().getGridTile(h.getRect().getX()+i, 
+						h.getRect().getY()+j).isWalkable()) {
+					return false;
+				}
 			}
 		}
 		return true;
