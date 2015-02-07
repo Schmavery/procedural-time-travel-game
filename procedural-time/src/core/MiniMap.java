@@ -43,6 +43,9 @@ public class MiniMap {
 		ReadableColor c = colors.get(tile.getType().name());
 		
 		boolean placed = tile.walkable && !tile.isWalkable();
+		
+		// Faster than calling tile.hasSpecialType for each type.
+		// TODO: fix this so it isn't deterministic on the order of the list
 		for (Entity e: tile.getEntities()){
 			switch (e.getSpecialType()) {
 			case FOLIAGE:

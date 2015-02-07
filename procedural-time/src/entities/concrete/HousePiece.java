@@ -71,12 +71,9 @@ public class HousePiece extends AbstractPlacedItem implements Placeable, Holdabl
 				getTileY() + offsets[(i+1)%4] >= 0 &&
 				getTileY() + offsets[(i+1)%4] < size){
 				Tile t = Game.getMap().getGridTile(getTileX() + offsets[i], getTileY() + offsets[(i+1)%4]);
-				for (Entity e : t.getEntities()){
-					if (e.getSpecialType().equals(SpecialType.HOUSE)){
-						total += add;
-						break;
-					}
-				}
+				
+				if (t.hasSpecialType(SpecialType.HOUSE)) total += add;
+				
 				add *= 2;
 			}
 		}

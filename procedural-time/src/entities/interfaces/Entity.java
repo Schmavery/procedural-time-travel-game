@@ -2,7 +2,7 @@ package entities.interfaces;
 
 
 public interface Entity{
-	public static enum SpecialType {PERSON, HOUSE, FOLIAGE, NORMAL};
+	public static enum SpecialType {PERSON, HOUSE, FOLIAGE, NORMAL, PATH};
 	public void draw(float x, float y);
 	public void draw(float x, float y, float w, float h);
 	public float getX();

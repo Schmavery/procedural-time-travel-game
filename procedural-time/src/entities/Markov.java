@@ -9,9 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import core.RandomManager;
+
 public class Markov
 {
-	private Random rand = new Random();
+	private Random rand;
 	private HashMap<String, List<String>> dict;
 	private int length;
 	private List<String> starts;
@@ -44,6 +46,7 @@ public class Markov
 	}
 	
 	private void generateDict(List<String> corpus){
+		rand = new Random(RandomManager.getSeed("Markov"+corpus.size()));
 		for (String word : corpus){
 			if (word.length() < length){
 				continue;

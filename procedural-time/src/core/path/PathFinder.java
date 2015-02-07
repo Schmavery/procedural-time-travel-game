@@ -15,11 +15,10 @@ import java.util.concurrent.Future;
 public class PathFinder<T extends Pathable<T>> {
 	private static final ExecutorService pool = Executors.newFixedThreadPool(10);
 	List<PathNode> open, closed;
-	T target;
+	T start, target;
 	PathNode finalNode;
 	List<T> path;
 	Set<T> exclude;
-	boolean running = false;
 	Future<List<T>> future;
 	
 	private class PathNode implements Comparable<PathNode>{
@@ -97,9 +96,9 @@ public class PathFinder<T extends Pathable<T>> {
 		this.closed.clear();
 		this.exclude = null;
 		this.finalNode = null;
+		this.start = null;
 		this.target = null;
 		path = null;
-		running = false;
 	}
 	
 	public void newPath(T start, T target){
@@ -110,9 +109,9 @@ public class PathFinder<T extends Pathable<T>> {
 		clear();
 		this.exclude = exclude;
 		this.target = target;
+		this.start = start;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
-		running = true;
 		future = pool.submit(new Callable<List<T>>() {
 			@Override
 			public List<T> call() throws Exception {
@@ -142,7 +141,7 @@ public class PathFinder<T extends Pathable<T>> {
 		}
 		if (future != null && future.isDone()){
 			try {path = future.get();} catch(ExecutionException | InterruptedException e){ 
-				throw new PathException("Couldn't get path");
+				throw new PathException("Couldn't get path from "+start.toString()+" to "+target.toString());
 			}
 			future = null;
 			return true;
@@ -216,14 +215,11 @@ public class PathFinder<T extends Pathable<T>> {
 		PathNode node = open.remove(0);
 		if (node.node.equals(target)){
 			finalNode = node;
-			running = false;
 			return true;
 		}
 
-		// Add all neighbouring nodes to open
 		for (T p : node.node.getReachable()){
-			// Skip excluded tiles.
-			if (exclude != null && exclude.contains(p)) continue;
+			if (exclude != null && exclude.contains(p)) continue; // Skip excluded tiles.
 			PathNode tmp = new PathNode(p, node);
 			int index;
 			if ((index = open.indexOf(tmp)) > -1){
@@ -232,7 +228,6 @@ public class PathFinder<T extends Pathable<T>> {
 				if (closed.indexOf(tmp) > -1){
 					continue;
 				}
-//				System.out.println("new node");
 				index = Collections.binarySearch(open, tmp);
 				if (index >= 0){
 					open.add(index, tmp);
@@ -248,7 +243,6 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public boolean isRunning(){
-//		return running;
 		return (future != null);
 	}
 	

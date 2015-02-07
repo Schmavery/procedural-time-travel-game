@@ -9,7 +9,7 @@ import core.RandomManager;
 import core.Tile;
 import core.display.Sprite;
 import core.display.SpriteInstance;
-import entities.EntityFrame;
+import entities.components.EntityFrame;
 import entities.interfaces.Entity;
 
 public abstract class AbstractEntity implements Entity

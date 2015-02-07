@@ -79,7 +79,7 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 			try {
 				tilePather.generatePath();
 			} catch (PathException e){
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
 				tilePather.clear();
 			}
 		}

@@ -17,6 +17,7 @@ import core.path.PathFinder;
 import entities.concrete.Door;
 import entities.concrete.Floor;
 import entities.concrete.HousePiece;
+import entities.interfaces.Entity.SpecialType;
 import entities.town.SpinePoint.SpineType;
 
 public class Town {
@@ -29,7 +30,6 @@ public class Town {
 		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
 		spine = new LinkedList<>();
 		spine.add(new SpinePoint(x, y, SpineType.WELL));
-		//spine.add(new SpinePoint(x, y, SpineType.WELL));
 		pather = new PathFinder<Tile>();
 	}
 	
@@ -43,7 +43,10 @@ public class Town {
 			diffY = rand.nextInt(50);
 			w = rand.nextInt(15)+5;
 			h = rand.nextInt(15)+5;
-			if (attempts++ > 100) break;
+			
+			// TODO: Add new spine point.
+			// Upgrade current spine point to dense?
+			if (++attempts > 100) break;
 		}while (!createHouse(sp.getX() + diffX, sp.getY() + diffY, w, h));
 	}
 	
@@ -64,6 +67,7 @@ public class Town {
 			try {
 				while (pather.generatePath());
 			} catch (PathException e) {
+				System.out.println("Failed");
 				continue;
 			}
 			pather.getPath();
@@ -72,7 +76,7 @@ public class Town {
 		return l;
 	}
 	
-	public void addSpine(SpineType type){
+	public void addSpinePoint(SpineType type){
 		int x = 0, y = 0;
 		switch (type) {
 		case OUTER:
@@ -86,13 +90,6 @@ public class Town {
 		}
 		spine.add(new SpinePoint(x, y, type));
 	}
-	
-//	public void addSpine(int gridX, int gridY, SpineType type){
-//		SpinePoint newSp = new SpinePoint(gridX, gridY, type);
-//		if (findPathToSpine(newSp.getTile(), null){
-//			
-//		}
-//	}
 	
 	public boolean createHouse(int x, int y, int width, int height){
 		House h = new House(new Rectangle(x, y, width, height));
@@ -120,22 +117,33 @@ public class Town {
 	/**
 	 * Check if a house can be placed here.  This has side effects of filling
 	 * the house with more precise data about its placement (doors and spine path).
-	 * @param x GridX
-	 * @param y GridY
-	 * @param width In tiles
-	 * @param height In tiles
+	 * 
+	 * Factors in correct house placement:
+	 * 	- A house must be entirely on "walkable" terrain
+	 *  - A house cannot be inside another house
+	 *  - A house cannot be directly adjacent to another house
+	 * 
+	 * @param h A house initialized with a position rectangle
 	 * @return true if the house can be placed at this point
 	 */
 	public boolean checkHouse(House h){
 		HashSet<Tile> exclude = new HashSet<>();
 		int currX, currY;
 		Tile t;
-		for (int i = 0; i < h.getRect().getWidth(); i++){
-			for (int j = 0; j < h.getRect().getHeight(); j++){
+		
+		// Check one larger than house to prevent adjacency.
+		for (int i = -1; i < h.getRect().getWidth() + 1; i++){
+			for (int j = -1; j < h.getRect().getHeight() + 1; j++){
 				currX = h.getRect().getX()+i;
 				currY = h.getRect().getY()+j;
 				t = Game.getMap().getGridTile(currX, currY);
-				if (!t.isWalkable()) return false;
+				// Rejection check
+				if (t == null) return false;
+				// If inside defined house boundaries
+				if (i > -1 && j > -1 && i < h.getRect().getWidth() && j < h.getRect().getHeight())
+					if (!t.isWalkable()) return false;
+				
+				if (t.hasSpecialType(SpecialType.HOUSE)) return false;
 				
 				// Is an outer wall
 				if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 
@@ -145,11 +153,13 @@ public class Town {
 						h.addDoor(t);
 					}
 				}
-						
 			}
 		}
 		
-		//Check for connectivity to spine, add result to spine;
+		// TODO: Better house heuristic
+		if (h.getDoors().size() == 0) return false;
+		
+		// Check for connectivity to spine, (add result to spine path... TODO)
 		for (Tile door : h.getDoors()){
 			findPathToSpine(door, exclude);
 		}

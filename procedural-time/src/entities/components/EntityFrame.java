@@ -1,4 +1,4 @@
-package entities;
+package entities.components;
 
 import core.Game;
 import core.Tile;

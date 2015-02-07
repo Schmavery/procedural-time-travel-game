@@ -9,6 +9,7 @@ import core.display.SpriteInstance;
 import core.path.Pathable;
 import entities.interfaces.Entity;
 import entities.interfaces.Placeable;
+import entities.interfaces.Entity.SpecialType;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -161,6 +162,15 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	public List<Entity> getEntities(){
 		return entities;
+	}
+	
+	public boolean hasSpecialType(SpecialType type){
+		for (Entity e : entities){
+			if (e.getSpecialType().equals(type)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
