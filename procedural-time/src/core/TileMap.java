@@ -320,6 +320,7 @@ public class TileMap implements Serializable{
 		return new VisionIterator(centerX, centerY, length, face);
 	}
 	
+	// TODO: Finish this
 	public class VisionIterator implements Iterator<Tile>, Iterable<Tile>{
 
 		int currX, currY;

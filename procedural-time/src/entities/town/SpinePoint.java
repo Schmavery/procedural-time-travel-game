@@ -1,18 +1,14 @@
 package entities.town;
 
-import org.lwjgl.util.Point;
-
 import core.Game;
 import core.Tile;
 
 public class SpinePoint {
 	public static enum SpineType {OUTER, WELL};
 	private SpineType type;
-	private Point pt;
 	private Tile tile;
 	
 	public SpinePoint(int gridX, int gridY, SpineType type){
-		this.pt = new Point(gridX, gridY);
 		this.type = type;
 		tile = Game.getMap().getGridTile(gridX, gridY);
 	}
@@ -28,4 +24,7 @@ public class SpinePoint {
 	public Tile getTile(){
 		return tile;
 	}
+	
+	public int getX(){ return tile.getGridX();}
+	public int getY(){ return tile.getGridY();}
 }

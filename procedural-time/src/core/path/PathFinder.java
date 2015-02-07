@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,6 +18,7 @@ public class PathFinder<T extends Pathable<T>> {
 	T target;
 	PathNode finalNode;
 	List<T> path;
+	Set<T> exclude;
 	boolean running = false;
 	Future<List<T>> future;
 	
@@ -83,16 +86,16 @@ public class PathFinder<T extends Pathable<T>> {
 	public void clear(){
 		if (future != null){
 			future.cancel(true);
-			System.out.println("--->"+future.isCancelled());
 			try {
 				future.get();
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
+			} catch (CancellationException | InterruptedException | ExecutionException e) {
+				// We don't care about the result
 			}
 			future = null;
 		}
 		this.open.clear();
 		this.closed.clear();
+		this.exclude = null;
 		this.finalNode = null;
 		this.target = null;
 		path = null;
@@ -100,7 +103,12 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public void newPath(T start, T target){
+		newPath(start, target, null);
+	}
+	
+	public void newPath(T start, T target, Set<T> exclude){
 		clear();
+		this.exclude = exclude;
 		this.target = target;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
@@ -115,8 +123,7 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	/**
-	 * 
-	 * @param steps Number of steps to run the algorithm.  If steps <= 0, run to completion.
+	 * Starts path generation and checks completion
 	 * @return Whether the path finished generation
 	 * @throws PathException on timeout
 	 */
@@ -215,6 +222,8 @@ public class PathFinder<T extends Pathable<T>> {
 
 		// Add all neighbouring nodes to open
 		for (T p : node.node.getReachable()){
+			// Skip excluded tiles.
+			if (exclude != null && exclude.contains(p)) continue;
 			PathNode tmp = new PathNode(p, node);
 			int index;
 			if ((index = open.indexOf(tmp)) > -1){

@@ -1,22 +1,28 @@
 package entities.town;
 
 import java.util.LinkedList;
+import java.util.List;
 
-import org.lwjgl.util.Point;
 import org.lwjgl.util.Rectangle;
+
+import core.Tile;
 
 
 public class House {
-	LinkedList<Point> doors;
+	LinkedList<Tile> doors;
 	Rectangle rect;
 
 	public House(Rectangle rect){
 		doors = new LinkedList<>();
 		this.rect = rect;
 	}
-	public void addDoor(Point gridPt){
+	public void addDoor(Tile gridPt){
 		doors.add(gridPt);
 	}
+	public List<Tile> getDoors(){
+		return doors;
+	}
+	
 	public Rectangle getRect(){
 		return rect;
 	}

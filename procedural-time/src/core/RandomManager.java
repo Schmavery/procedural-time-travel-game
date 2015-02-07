@@ -30,7 +30,7 @@ public class RandomManager {
 	}
 	
 	public static int getSeed(String id){
-		return getSeed(id.hashCode());
+		return getSeed(Math.abs(id.hashCode()));
 	}
 	
 	public static int getMasterSeed(){ return masterSeed;}

@@ -15,7 +15,6 @@ import core.Game;
 import core.Message;
 import core.Tile;
 import core.display.SpriteManager;
-import core.path.PathException;
 import core.path.PathFinder;
 import entities.EntityFrame;
 import entities.abstr.AbstractMovingEntity;
@@ -67,7 +66,6 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	}
 
 	public void update(long deltaTime) {
-		Tile t = Game.getMap().getWorldTile(x, y);
 		if (frame.isColliding(Game.getMap(), x, y)){
 			warpToClosestClearTile();
 			//TODO: This doesn't always work

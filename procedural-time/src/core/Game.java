@@ -47,12 +47,13 @@ public class Game extends Core {
 	private static Human player;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 2f;
+	public static float SCALE = 0.5f;
 	
 	List<Human> humans;
 	List<Entity> drawList;
+	Town town;
+	
 	Comparator<Entity> drawComparator;
-//	String targetName;
 	Markov maleNames;
 	Markov femaleNames;
 	Random rand;
@@ -82,11 +83,11 @@ public class Game extends Core {
 	@Override
 	public void init() {
 		super.init();
+		//TODO: RANDOM INIT
+		RandomManager.init(1);
 		initSpriteSheets();
 		drawLoading();
 		initMarkov();
-		//TODO: RANDOM INIT
-		RandomManager.init(1);
 		rand = new Random(RandomManager.getSeed("Game"));
 		miniMap = new MiniMap(100);
 		
@@ -208,7 +209,7 @@ public class Game extends Core {
 	}
 	
 	public void initTown(){
-		(new Town(1,1)).createHouse(player.getTileX(), player.getTileY() + 10, 10, 7);
+		town = new Town(player.getTileX(), player.getTileY() + 10);
 	}
 	
 	
@@ -281,6 +282,9 @@ public class Game extends Core {
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_E)){
 			player.doAction(ActionType.DROP);
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_G)){
+			town.grow();
 		}
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
