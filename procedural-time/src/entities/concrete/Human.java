@@ -54,7 +54,7 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		inventory = new Holdable[3];
 		heldItem = fist;
 		this.facing = Facing.SOUTH;
-		frame = new EntityFrame(15, 10);
+		frame = new EntityFrame(4, 6, 3);
 		tilePather = new PathFinder<Tile>();
 		speed = 0.2f;
 		messages = new ArrayList<>(10);
@@ -390,6 +390,11 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		}
 		
 		health.draw(getX()+x, getY()+y);
+		if (debug){
+			GUtil.drawPixel((int) (getPlacePoint().getX()+x), 
+					(int) (getPlacePoint().getY()+y), 2, ReadableColor.BLACK);
+			frame.draw(getX() + x, getY() + y);
+		}
 	}
 	
 	public void drawStatus(float x, float y){

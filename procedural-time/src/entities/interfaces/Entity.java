@@ -9,4 +9,5 @@ public interface Entity{
 	public float getY();
 	public int getDrawPriority();
 	public SpecialType getSpecialType();
+	public void setDebug(boolean on);
 }

@@ -47,7 +47,7 @@ public class Game extends Core {
 	private static Human player;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 2f;
+	public static float SCALE = 1f;
 	
 	List<Human> humans;
 	List<Entity> drawList;
@@ -120,6 +120,7 @@ public class Game extends Core {
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 		humans.add(player);
+		player.setDebug(true);
 		
 		for (int i = 1; i < numHumans; i++){
 			float randX;
@@ -339,8 +340,7 @@ public class Game extends Core {
 
 		screen.draw();
 		player.drawStatus(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 220);
-		GUtil.drawPixel((int) (SCREEN_WIDTH/2f - player.getX()) + player.getPlacePoint().getX(), 
-				(int) (SCREEN_HEIGHT/2f - player.getY()) + player.getPlacePoint().getY(), 2, ReadableColor.BLACK);
+
 		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 
 				SCREEN_HEIGHT - 200, tileMap.getGridTile(playerTile_x, playerTile_y));
 	}

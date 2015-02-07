@@ -27,6 +27,8 @@ public abstract class AbstractEntity implements Entity
 	protected Facing facing;
 	protected EntityFrame frame;
 	protected Random rand;
+	protected boolean debug;
+	
 
 	public AbstractEntity(float x, float y)
 	{
@@ -38,6 +40,7 @@ public abstract class AbstractEntity implements Entity
 		rand = new Random(RandomManager.getSeed(id));
 		facing = Facing.NORTH;
 		drawPriority = 0;
+		debug = false;
 		specialType = SpecialType.NORMAL;
 	}
 	
@@ -57,25 +60,24 @@ public abstract class AbstractEntity implements Entity
 		this.standingAnims[3] = spr_w.getInstance();
 	}
 
-	public float getX()
-	{return x;}
+	public float getX()	{return x;}
 
-	public float getY()
-	{return y;}
+	public float getY()	{return y;}
 
-	public int getTileX()
-	{return (int) (x/(Game.SCALE*Game.TILE_SIZE));}
+	public int getTileX() {return (int) (x/(Game.SCALE*Game.TILE_SIZE));}
 
-	public int getTileY()
-	{return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
+	public int getTileY() {return (int) (y/(Game.SCALE*Game.TILE_SIZE));}
 	
-	public void setSpecialType(SpecialType specialType) {
-		this.specialType = specialType;
-	}
-	
+	@Override
+	public void setDebug(boolean on) {debug = on;}
+
 	@Override
 	public SpecialType getSpecialType(){
 		return this.specialType;
+	}
+	
+	public void setSpecialType(SpecialType specialType) {
+		this.specialType = specialType;
 	}
 	
 	/**
