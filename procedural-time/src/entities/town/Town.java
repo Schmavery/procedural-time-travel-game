@@ -40,8 +40,8 @@ public class Town {
 		int attempts = 0;
 		do {
 			sp = getRandomWell();
-			diffX = rand.nextInt(50);
-			diffY = rand.nextInt(50);
+			diffX = rand.nextInt(100)-50;
+			diffY = rand.nextInt(100)-50;
 			w = rand.nextInt(15)+5;
 			h = rand.nextInt(15)+5;
 			
@@ -146,6 +146,7 @@ public class Town {
 				t = Game.getMap().getGridTile(currX, currY);
 				// Rejection check
 				if (t == null) return false;
+				if (t.hasSpecialType(SpecialType.PATH)) return false;
 				// If inside defined house boundaries
 				if (i > -1 && j > -1 && i < h.getRect().getWidth() && j < h.getRect().getHeight())
 					if (!t.isWalkable()) return false;
@@ -153,8 +154,8 @@ public class Town {
 				if (t.hasSpecialType(SpecialType.HOUSE)) return false;
 				
 				// Is an outer wall
-				if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 
-						|| i == h.getRect().getWidth()-1){
+				if ((i != -1 && j != -1 || j != h.getRect().getHeight() || i != h.getRect().getWidth()) && 
+					(i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1)){
 					exclude.add(t); // Exclude from later pathfinding
 					if (rand.nextInt(5) == 0 && i > 0 && i < h.getRect().getWidth()-1){
 						h.addDoor(t);

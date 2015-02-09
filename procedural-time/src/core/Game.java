@@ -46,7 +46,7 @@ public class Game extends Core {
 	private static Human player;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 2f;
+	public static float SCALE = 0.5f;
 	
 	List<Human> humans;
 	List<Entity> drawList;
