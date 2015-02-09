@@ -56,7 +56,7 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		this.facing = Facing.SOUTH;
 		frame = new EntityFrame(4, 6, 3);
 		tilePather = new PathFinder<Tile>();
-		speed = 0.2f;
+		speed = 0.1f*Game.SCALE;
 		messages = new ArrayList<>(10);
 		Game.getMap().getWorldTile(frame.getCenterX(x), frame.getCenterY(y))
 				.addEntity(this);
@@ -109,6 +109,7 @@ public class Human extends AbstractMovingEntity implements Hittable,
 			dx = deltaTime * dx;
 			dy = deltaTime * dy;
 			float speed = deltaTime * this.speed;
+			if (debug) speed *= 2;
 			// Handle Speed //
 			if (dx != 0 && dy != 0) {
 				float hyp = 0.85f * speed;

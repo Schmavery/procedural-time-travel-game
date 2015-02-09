@@ -26,4 +26,9 @@ public class House {
 	public Rectangle getRect(){
 		return rect;
 	}
+	
+	@Override
+	public String toString(){
+		return "House:("+rect.getX()+","+rect.getY()+","+rect.getWidth()+","+rect.getHeight()+")";
+	}
 }

@@ -12,7 +12,7 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 		super(x, y);
 		setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "loose_floor"));
 		setSpecialType(SpecialType.HOUSE);
-		setDrawPriority(-1);
+		setDrawPriority(-2);
 		setWalkable(true);
 		setAligned(true);
 	}

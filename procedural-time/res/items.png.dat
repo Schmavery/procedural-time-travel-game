@@ -844,6 +844,71 @@ pt (1,13)
 pt (0,12)
 endcollision
 endimg
+img 57
+pt (112,240)
+dim (16,16)
+name [[path_1]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,0)
+pt (13,0)
+pt (15,3)
+pt (14,10)
+pt (10,13)
+pt (5,14)
+pt (1,12)
+pt (1,0)
+endcollision
+endimg
+img 58
+pt (128,240)
+dim (16,16)
+name [[path_2]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (1,0)
+pt (12,2)
+pt (14,3)
+pt (15,5)
+pt (15,6)
+pt (14,15)
+pt (13,15)
+pt (7,14)
+pt (3,13)
+pt (0,0)
+endcollision
+endimg
+img 59
+pt (144,240)
+dim (16,16)
+name [[path_3]]
+anchor
+pt (0,0)
+hooks
+0 hooks
+endhooks
+collision
+pt (1,8)
+pt (2,3)
+pt (4,1)
+pt (14,1)
+pt (15,15)
+pt (12,15)
+pt (3,14)
+pt (2,13)
+pt (1,9)
+pt (1,8)
+endcollision
+endimg
 anim [[sword_n]]
 pause 150
 frame 44

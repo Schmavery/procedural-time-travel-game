@@ -17,6 +17,7 @@ import core.path.PathFinder;
 import entities.concrete.Door;
 import entities.concrete.Floor;
 import entities.concrete.HousePiece;
+import entities.concrete.Path;
 import entities.interfaces.Entity.SpecialType;
 import entities.town.SpinePoint.SpineType;
 
@@ -46,7 +47,10 @@ public class Town {
 			
 			// TODO: Add new spine point.
 			// Upgrade current spine point to dense?
-			if (++attempts > 100) break;
+			if (++attempts > 100) {
+				System.out.println("Grow aborted");
+				break;
+			}
 		}while (!createHouse(sp.getX() + diffX, sp.getY() + diffY, w, h));
 	}
 	
@@ -65,12 +69,11 @@ public class Town {
 		for (SpinePoint pt : spine) {
 			pather.newPath(start, pt.getTile(), exclude);
 			try {
-				while (pather.generatePath());
+				while (!pather.generatePath());
 			} catch (PathException e) {
-				System.out.println("Failed");
 				continue;
 			}
-			pather.getPath();
+			l = pather.getPath();
 			break;
 		}
 		return l;
@@ -93,8 +96,12 @@ public class Town {
 	
 	public boolean createHouse(int x, int y, int width, int height){
 		House h = new House(new Rectangle(x, y, width, height));
+		System.out.println("Creating "+h);
 		int currX, currY;
-		if (!checkHouse(h)) return false;
+		if (!checkHouse(h)) {
+			System.out.println("Housecheck failed");
+			return false;
+		}
 		for (int i = 0; i < h.getRect().getWidth(); i++){
 			for (int j = 0; j < h.getRect().getHeight(); j++){
 				currX = h.getRect().getX()+i;
@@ -149,21 +156,42 @@ public class Town {
 				if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 
 						|| i == h.getRect().getWidth()-1){
 					exclude.add(t); // Exclude from later pathfinding
-					if (rand.nextInt(5) == 0 && i != 0 && i != h.getRect().getWidth()-1){
+					if (rand.nextInt(5) == 0 && i > 0 && i < h.getRect().getWidth()-1){
 						h.addDoor(t);
 					}
 				}
 			}
 		}
 		
-		// TODO: Better house heuristic
 		if (h.getDoors().size() == 0) return false;
 		
-		// Check for connectivity to spine, (add result to spine path... TODO)
-		for (Tile door : h.getDoors()){
-			findPathToSpine(door, exclude);
+		// Check for overlap with spine points
+		//TODO: check for overlap with spine paths
+		for (SpinePoint sp: spine){
+			if (h.getRect().contains(sp.getX(), sp.getY())) {
+				System.out.println("Overlaps with spine");
+				return false;
+			}
 		}
+
 		
-		return true;
+		System.out.println("Checking spine connectivity");
+		// Check for connectivity to spine, (add result to spine path... TODO)
+		List<Tile> path = null;
+		for (Tile door : h.getDoors()){
+			path = findPathToSpine(door, exclude);
+			if (path != null){
+				for (Tile pathTile : path){
+					if (!pathTile.hasSpecialType(SpecialType.PATH)){
+						Path p = new Path(0,0);
+						if (!p.place(pathTile.getGridX(), pathTile.getGridY())){
+							System.out.println("Couldn't place path");
+						}
+					}
+				}
+				break;
+			}
+		}
+		return (path != null);
 	}
 }

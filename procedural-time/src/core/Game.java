@@ -14,7 +14,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
-import org.lwjgl.util.ReadableColor;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -47,11 +46,12 @@ public class Game extends Core {
 	private static Human player;
 	
 	public static int TILE_SIZE = 16;
-	public static float SCALE = 1f;
+	public static float SCALE = 2f;
 	
 	List<Human> humans;
 	List<Entity> drawList;
 	Town town;
+	int growPause = 0;
 	
 	Comparator<Entity> drawComparator;
 	Markov maleNames;
@@ -284,9 +284,16 @@ public class Game extends Core {
 		if (Keyboard.isKeyDown(Keyboard.KEY_E)){
 			player.doAction(ActionType.DROP);
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_G)){
-			town.grow();
+		
+		if (growPause == 0){
+			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
+				town.grow();
+				growPause = 10;
+			}
+		} else if (growPause > 0){
+			growPause--;
 		}
+		
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
 			pauseDown = true;
@@ -320,9 +327,6 @@ public class Game extends Core {
 		int playerTile_y = (int) Math.floor(player.getY() / (tileSide));
 		
 		for (Tile tile : tileMap.getLocale((SCREEN_WIDTH/(int)tileSide)/2 + 1, playerTile_x, playerTile_y)){
-//			GUtil.drawSprite(SpriteSheetType.MAP, tile.getX() * tileSide - player.getX() + SCREEN_WIDTH/2f,
-//					tile.getY() * tileSide - player.getY() + SCREEN_HEIGHT/2f,
-//					tile.getTexX(), tile.getTexY(), tileSide, tileSide, 16);
 			tile.draw((int) (tile.getGridX() * tileSide - player.getX() + SCREEN_WIDTH/2f),
 					(int) (tile.getGridY() * tileSide - player.getY() + SCREEN_HEIGHT/2f));
 			

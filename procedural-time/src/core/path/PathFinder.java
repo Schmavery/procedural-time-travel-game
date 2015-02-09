@@ -75,12 +75,6 @@ public class PathFinder<T extends Pathable<T>> {
 		open = new ArrayList<PathNode>();
 		closed = new ArrayList<PathNode>();
 	}
-	
-	public PathFinder(T start, T target){
-		open = new ArrayList<PathNode>();
-		closed = new ArrayList<PathNode>();
-		newPath(start, target);
-	}
 
 	public void clear(){
 		if (future != null){
@@ -128,16 +122,7 @@ public class PathFinder<T extends Pathable<T>> {
 	 */
 	public boolean generatePath() throws PathException{
 		if (future == null){
-			System.out.println("Reminder, you need to call newPath before generating one...");
-			future = pool.submit(new Callable<List<T>>() {
-				@Override
-				public List<T> call() throws Exception {
-					while (!calcPath()) { 
-						if (Thread.interrupted()) {System.out.println("null"); return null;}
-					}
-					return makePathList();
-				}
-			});
+			throw new RuntimeException("Reminder, you need to call newPath before generating one...");
 		}
 		if (future != null && future.isDone()){
 			try {path = future.get();} catch(ExecutionException | InterruptedException e){ 
@@ -170,7 +155,7 @@ public class PathFinder<T extends Pathable<T>> {
 	
 	public List<T> getPath(){
 		if (path == null){
-			makePathList();
+			path = makePathList();
 		}
 		return path;
 	}
