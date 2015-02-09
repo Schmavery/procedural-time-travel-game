@@ -14,6 +14,7 @@ import core.RandomManager;
 import core.Tile;
 import core.path.PathException;
 import core.path.PathFinder;
+import core.path.TargetFunction;
 import entities.concrete.Door;
 import entities.concrete.Floor;
 import entities.concrete.HousePiece;
@@ -26,6 +27,12 @@ public class Town {
 	PathFinder<Tile> pather;
 	LinkedList<House> houses;
 	Random rand;
+	TargetFunction<Tile> pathTarget = new TargetFunction<Tile>() {
+		@Override
+		public boolean isTarget(Tile target) {
+			return target.hasSpecialType(SpecialType.PATH);
+		}
+	}; 
 	
 	public Town(int x, int y){
 		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
@@ -67,7 +74,7 @@ public class Town {
 	public List<Tile> findPathToSpine(Tile start, Set<Tile> exclude){
 		List <Tile> l = null;
 		for (SpinePoint pt : spine) {
-			pather.newPath(start, pt.getTile(), exclude);
+			pather.newPath(start, pt.getTile(), pathTarget, exclude);
 			try {
 				while (!pather.generatePath());
 			} catch (PathException e) {

@@ -16,6 +16,7 @@ public class PathFinder<T extends Pathable<T>> {
 	private static final ExecutorService pool = Executors.newFixedThreadPool(10);
 	List<PathNode> open, closed;
 	T start, target;
+	TargetFunction<T> targetFn;
 	PathNode finalNode;
 	List<T> path;
 	Set<T> exclude;
@@ -96,14 +97,15 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public void newPath(T start, T target){
-		newPath(start, target, null);
+		newPath(start, target, null, null);
 	}
 	
-	public void newPath(T start, T target, Set<T> exclude){
+	public void newPath(T start, T target, TargetFunction<T> targetFn, Set<T> exclude){
 		clear();
 		this.exclude = exclude;
 		this.target = target;
 		this.start = start;
+		this.targetFn = targetFn;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
 		future = pool.submit(new Callable<List<T>>() {
@@ -198,9 +200,17 @@ public class PathFinder<T extends Pathable<T>> {
 			throw new PathException("Empty open list. " + target.toString());
 		}
 		PathNode node = open.remove(0);
-		if (node.node.equals(target)){
-			finalNode = node;
-			return true;
+		if (target != null){
+			if (node.node.equals(target)){
+				finalNode = node;
+				return true;
+			}
+		}
+		if (targetFn != null){
+			if (targetFn.isTarget(node.node)){
+				finalNode = node;
+				return true;
+			}
 		}
 
 		for (T p : node.node.getReachable()){
