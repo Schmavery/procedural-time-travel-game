@@ -103,10 +103,8 @@ public class Town {
 	
 	public boolean createHouse(int x, int y, int width, int height){
 		House h = new House(new Rectangle(x, y, width, height));
-		System.out.println("Creating "+h);
 		int currX, currY;
 		if (!checkHouse(h)) {
-			System.out.println("Housecheck failed");
 			return false;
 		}
 		for (int i = 0; i < h.getRect().getWidth(); i++){
@@ -183,7 +181,6 @@ public class Town {
 		}
 
 		
-		System.out.println("Checking spine connectivity");
 		// Check for connectivity to spine, (add result to spine path... TODO)
 		List<Tile> path = null;
 		for (Tile door : h.getDoors()){

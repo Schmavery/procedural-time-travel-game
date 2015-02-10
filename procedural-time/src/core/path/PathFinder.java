@@ -2,6 +2,7 @@ package core.path;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,8 @@ import java.util.concurrent.Future;
 
 public class PathFinder<T extends Pathable<T>> {
 	private static final ExecutorService pool = Executors.newFixedThreadPool(10);
-	List<PathNode> open, closed;
+	List<PathNode> open;
+	Set<PathNode> closed;
 	T start, target;
 	TargetFunction<T> targetFn;
 	PathNode finalNode;
@@ -74,7 +76,7 @@ public class PathFinder<T extends Pathable<T>> {
 	
 	public PathFinder(){
 		open = new ArrayList<PathNode>();
-		closed = new ArrayList<PathNode>();
+		closed = new HashSet<PathNode>();
 	}
 
 	public void clear(){
@@ -217,12 +219,12 @@ public class PathFinder<T extends Pathable<T>> {
 			if (exclude != null && exclude.contains(p)) continue; // Skip excluded tiles.
 			PathNode tmp = new PathNode(p, node);
 			int index;
+			if (closed.contains(tmp)){
+				continue;
+			}
 			if ((index = open.indexOf(tmp)) > -1){
 				open.get(index).newParent(tmp);
 			} else {
-				if (closed.indexOf(tmp) > -1){
-					continue;
-				}
 				index = Collections.binarySearch(open, tmp);
 				if (index >= 0){
 					open.add(index, tmp);

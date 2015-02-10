@@ -44,7 +44,7 @@ public class SpriteSheet {
 		if (firstLine.startsWith("##")){
 			path = firstLine.substring(2);
 			try {
-				tex = TextureLoader.getTexture("PNG", new FileInputStream(new File(path)), GL11.GL_NEAREST);
+				tex = TextureLoader.getTexture("PNG", new FileInputStream(new File("res"+File.separator+path)), GL11.GL_NEAREST);
 			} catch (IOException e) {
 				System.out.println("Texture load failed: "+e.getMessage());
 			}

@@ -73,11 +73,11 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		
 		// TODO: This "getPlayer()" is too hard-coded
 		if (!this.isMoving() && !this.isDead() && !this.equals(Game.getPlayer())){
-			if (rand.nextInt(100) == 1){
-				int destX = this.getTileX() + (rand.nextInt(10) - 5);
-				int destY = this.getTileY() + (rand.nextInt(10) - 5);
-				this.walkTo(destX, destY);
-			}
+//			if (rand.nextInt(100) == 1){
+//				int destX = this.getTileX() + (rand.nextInt(10) - 5);
+//				int destY = this.getTileY() + (rand.nextInt(10) - 5);
+//				this.walkTo(destX, destY);
+//			}
 			if (rand.nextInt(5000) == 1){
 				this.say("Hey.");
 			}

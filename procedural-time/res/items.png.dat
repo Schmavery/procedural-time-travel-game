@@ -1,4 +1,4 @@
-##res/items.png
+##items.png
 img 1
 pt (0,0)
 dim (16,16)
@@ -849,7 +849,7 @@ pt (112,240)
 dim (16,16)
 name [[path_1]]
 anchor
-pt (0,0)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -869,7 +869,7 @@ pt (128,240)
 dim (16,16)
 name [[path_2]]
 anchor
-pt (0,0)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -892,7 +892,7 @@ pt (144,240)
 dim (16,16)
 name [[path_3]]
 anchor
-pt (0,0)
+pt (8,8)
 hooks
 0 hooks
 endhooks
@@ -907,6 +907,42 @@ pt (3,14)
 pt (2,13)
 pt (1,9)
 pt (1,8)
+endcollision
+endimg
+img 60
+pt (112,224)
+dim (16,16)
+name [[door_w]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (1,0)
+pt (3,2)
+pt (3,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 61
+pt (128,224)
+dim (16,16)
+name [[door_e]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (12,2)
+pt (14,0)
+pt (15,0)
+pt (15,15)
+pt (12,15)
+pt (12,2)
 endcollision
 endimg
 anim [[sword_n]]
