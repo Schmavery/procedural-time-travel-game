@@ -16,9 +16,11 @@ public class House {
 		doors = new LinkedList<>();
 		this.rect = rect;
 	}
-	public void addDoor(Tile gridPt){
-		doors.add(gridPt);
+	
+	public void addDoor(Tile t){
+		doors.add(t);
 	}
+	
 	public List<Tile> getDoors(){
 		return doors;
 	}

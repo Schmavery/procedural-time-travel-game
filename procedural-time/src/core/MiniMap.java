@@ -20,7 +20,7 @@ public class MiniMap {
 	
 	public MiniMap(int size){
 		this.size = size;
-		frame = new Rectangle(0, 0, (int) (size*Game.SCALE) + 20, (int) (size*Game.SCALE) + 20);
+		frame = new Rectangle(0, 0, (int) (size*2) + 20, (int) (size*2) + 20);
 		
 		colors = new HashMap<>();
 		colors.put(TileType.DIRT.name(), new Color(144, 133, 96));
@@ -74,8 +74,10 @@ public class MiniMap {
 				start = tile;
 			}
 			
-			GUtil.drawPixel((int)(x + Game.SCALE*(tile.getGridX() - start.getGridX())), 
-					(int)(y + Game.SCALE*(tile.getGridY() - start.getGridY())), (int) Game.SCALE, getColor(tile, center));
+//			GUtil.drawPixel((int)(x + Game.SCALE*(tile.getGridX() - start.getGridX())), 
+//					(int)(y + Game.SCALE*(tile.getGridY() - start.getGridY())), (int) Game.SCALE, getColor(tile, center));
+			GUtil.drawPixel((int)(x + 2*(tile.getGridX() - start.getGridX())), 
+					(int)(y + 2*(tile.getGridY() - start.getGridY())), (int) 2, getColor(tile, center));
 		}
 	}
 }

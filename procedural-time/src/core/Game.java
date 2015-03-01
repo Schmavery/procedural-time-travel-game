@@ -47,7 +47,7 @@ public class Game extends Core {
 	
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 2f;
-	
+	 
 	List<Human> humans;
 	List<Entity> drawList;
 	Town town;
@@ -285,14 +285,13 @@ public class Game extends Core {
 			player.doAction(ActionType.DROP);
 		}
 		
-		if (growPause == 0){
-			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
-				town.grow();
-				growPause = 10;
-			}
-		} else if (growPause > 0){
-			growPause--;
-		}
+//		if (growPause == 0){
+//			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
+		town.grow();
+//			}
+//		} else if (growPause > 0){
+//			growPause--;
+//		}
 		
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)){
@@ -341,11 +340,12 @@ public class Game extends Core {
 		for (Entity d : drawList){
 			d.draw(SCREEN_WIDTH/2f - player.getX(), SCREEN_HEIGHT/2f - player.getY());
 		}
+		
 
 		screen.draw();
 		player.drawStatus(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 220);
 
-		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*SCALE), 
+		miniMap.draw(SCREEN_WIDTH-(miniMap.getSize()*2), 
 				SCREEN_HEIGHT - 200, tileMap.getGridTile(playerTile_x, playerTile_y));
 	}
 

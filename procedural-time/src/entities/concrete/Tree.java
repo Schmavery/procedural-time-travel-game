@@ -1,5 +1,6 @@
 package entities.concrete;
 
+import core.Game;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
 import entities.components.HealthTracker;
@@ -55,16 +56,10 @@ public class Tree extends AbstractPlacedItem implements Placeable, Hittable{
 	
 	public void die(){
 		for (int i = 0; i < rand.nextInt(num_logs); i++){
-//			Item w = new Wood(0, 0);
-			// Temporary, to test house placement
-			Item w;
-			if (rand.nextBoolean()){
-				w = new HousePiece(0, 0);
-			} else {
-				w = new Floor(0, 0);
-			}
-			w.addToMap(getX() + rand.nextInt(20) - 10, getY() + rand.nextInt(20) - 10);
-			if (w.getY() - getY() >= 10) System.out.println("PROBLEM"+(w.getY() - getY()));
+			Item w = new Wood(0, 0);
+			float s = Game.SCALE;
+			w.addToMap(getX() + rand.nextInt((int)(s*10)) - (int)(s*5), 
+					getY() + rand.nextInt((int)(s*10)) - (int)(s*5));
 		}
 		this.removeFromMap();
 	}

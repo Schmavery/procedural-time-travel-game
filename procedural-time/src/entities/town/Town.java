@@ -1,5 +1,6 @@
 package entities.town;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import org.lwjgl.util.Rectangle;
 import core.Game;
 import core.RandomManager;
 import core.Tile;
+import core.path.NeighbourFunction;
 import core.path.PathException;
 import core.path.PathFinder;
 import core.path.TargetFunction;
@@ -23,22 +25,62 @@ import entities.interfaces.Entity.SpecialType;
 import entities.town.SpinePoint.SpineType;
 
 public class Town {
-	LinkedList<SpinePoint> spine;
-	PathFinder<Tile> pather;
-	LinkedList<House> houses;
-	Random rand;
+	public static enum GrowthStage {INIT, DENSE};
+	
+	private LinkedList<SpinePoint> spine;
+	private PathFinder<Tile> pather;
+	private LinkedList<House> houses;
+	private Random rand;
+	
+	PathTree pathTree;
+	
+	class PathTarget implements TargetFunction<Tile>{
+		List<Tile> exclude = new LinkedList<>();
+		public void setExclude(List<Tile> exclude){
+			this.exclude = exclude;
+		}
+		@Override
+		public boolean isTarget(Tile target) {
+			return pathTree.isFreeOf(target, exclude);
+		}
+	}
+//	PathTarget pathTarget = new PathTarget();
+	
 	TargetFunction<Tile> pathTarget = new TargetFunction<Tile>() {
 		@Override
 		public boolean isTarget(Tile target) {
-			return target.hasSpecialType(SpecialType.PATH);
+			return pathTree.hasPath(target);
 		}
 	}; 
+	
+	NeighbourFunction<Tile> neighourFn = new NeighbourFunction<Tile>() {
+		private void addTile(List<Tile> list, int x, int y){
+			if (x >= 0
+					&& x < Game.getMap().getSize()
+					&& y >= 0
+					&& y < Game.getMap().getSize()
+					&& Game.getMap().getGridTile(x, y).isWalkable()
+					&& !Game.getMap().getGridTile(x, y).hasSpecialType(SpecialType.HOUSE)){
+				list.add(Game.getMap().getGridTile(x, y));
+			}
+		}
+		@Override
+		public List<Tile> getNeighbours(Tile node) {
+			List<Tile> reachable = new ArrayList<>(4);
+			addTile(reachable, node.getGridX() - 1, node.getGridY());
+			addTile(reachable, node.getGridX()    , node.getGridY() - 1);
+			addTile(reachable, node.getGridX() + 1, node.getGridY());
+			addTile(reachable, node.getGridX()    , node.getGridY() + 1);
+			return reachable;
+		}
+	};
 	
 	public Town(int x, int y){
 		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
 		spine = new LinkedList<>();
 		spine.add(new SpinePoint(x, y, SpineType.WELL));
 		pather = new PathFinder<Tile>();
+		pathTree = new PathTree(Game.getMap().getGridTile(x, y));
 	}
 	
 	public void grow(){
@@ -52,10 +94,8 @@ public class Town {
 			w = rand.nextInt(15)+5;
 			h = rand.nextInt(15)+5;
 			
-			// TODO: Add new spine point.
 			// Upgrade current spine point to dense?
-			if (++attempts > 100) {
-				System.out.println("Grow aborted");
+			if (++attempts > 10) {
 				break;
 			}
 		}while (!createHouse(sp.getX() + diffX, sp.getY() + diffY, w, h));
@@ -74,7 +114,7 @@ public class Town {
 	public List<Tile> findPathToSpine(Tile start, Set<Tile> exclude){
 		List <Tile> l = null;
 		for (SpinePoint pt : spine) {
-			pather.newPath(start, pt.getTile(), pathTarget, exclude);
+			pather.newPath(start, pt.getTile(), pathTarget, neighourFn, exclude);
 			try {
 				while (!pather.generatePath());
 			} catch (PathException e) {
@@ -139,6 +179,13 @@ public class Town {
 	 * @return true if the house can be placed at this point
 	 */
 	public boolean checkHouse(House h){
+		// Check for overlap with spine points
+		for (SpinePoint sp: spine){
+			if (h.getRect().contains(sp.getX(), sp.getY())) {
+				System.out.println("Overlaps with spine");
+				return false;
+			}
+		}
 		HashSet<Tile> exclude = new HashSet<>();
 		int currX, currY;
 		Tile t;
@@ -159,10 +206,11 @@ public class Town {
 				if (t.hasSpecialType(SpecialType.HOUSE)) return false;
 				
 				// Is an outer wall
-				if ((i != -1 && j != -1 || j != h.getRect().getHeight() || i != h.getRect().getWidth()) && 
+				if ((i != -1 && j != -1 && j != h.getRect().getHeight() && i != h.getRect().getWidth()) && 
 					(i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1)){
 					exclude.add(t); // Exclude from later pathfinding
-					if (rand.nextInt(5) == 0 && i > 0 && i < h.getRect().getWidth()-1){
+					if (rand.nextInt(10) == 0 && ((i > 0  && i < h.getRect().getWidth()-1)
+							|| (j > 0  && j < h.getRect().getHeight()-1))){
 						h.addDoor(t);
 					}
 				}
@@ -170,33 +218,32 @@ public class Town {
 		}
 		
 		if (h.getDoors().size() == 0) return false;
-		
-		// Check for overlap with spine points
-		//TODO: check for overlap with spine paths
-		for (SpinePoint sp: spine){
-			if (h.getRect().contains(sp.getX(), sp.getY())) {
-				System.out.println("Overlaps with spine");
-				return false;
-			}
-		}
 
-		
 		// Check for connectivity to spine, (add result to spine path... TODO)
 		List<Tile> path = null;
 		for (Tile door : h.getDoors()){
 			path = findPathToSpine(door, exclude);
 			if (path != null){
-				for (Tile pathTile : path){
-					if (!pathTile.hasSpecialType(SpecialType.PATH)){
-						Path p = new Path(0,0);
-						if (!p.place(pathTile.getGridX(), pathTile.getGridY())){
-							System.out.println("Couldn't place path");
-						}
-					}
-				}
 				break;
 			}
 		}
-		return (path != null);
+		
+		if (path == null) {
+			System.out.println("No path");
+			return false;
+		}
+
+		pathTree.addPath(path);
+		
+		for (Tile pathTile : path){
+			if (!pathTile.hasSpecialType(SpecialType.PATH)){
+				Path p = new Path(0,0);
+				if (!p.place(pathTile.getGridX(), pathTile.getGridY())){
+					System.out.println("Couldn't place path");
+				}
+			}
+		}
+		
+		return true;
 	}
 }

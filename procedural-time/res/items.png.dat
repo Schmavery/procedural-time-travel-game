@@ -945,6 +945,46 @@ pt (12,15)
 pt (12,2)
 endcollision
 endimg
+img 62
+pt (112,208)
+dim (16,16)
+name [[door_w_open]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (1,0)
+pt (8,2)
+pt (11,3)
+pt (13,5)
+pt (13,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 63
+pt (128,208)
+dim (16,16)
+name [[door_e_open]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (2,5)
+pt (4,3)
+pt (7,2)
+pt (14,0)
+pt (15,0)
+pt (15,15)
+pt (2,15)
+pt (2,5)
+endcollision
+endimg
 anim [[sword_n]]
 pause 150
 frame 44

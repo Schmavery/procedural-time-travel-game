@@ -73,11 +73,11 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		
 		// TODO: This "getPlayer()" is too hard-coded
 		if (!this.isMoving() && !this.isDead() && !this.equals(Game.getPlayer())){
-//			if (rand.nextInt(100) == 1){
-//				int destX = this.getTileX() + (rand.nextInt(10) - 5);
-//				int destY = this.getTileY() + (rand.nextInt(10) - 5);
-//				this.walkTo(destX, destY);
-//			}
+			if (rand.nextInt(100) == 1){
+				int destX = this.getTileX() + (rand.nextInt(10) - 5);
+				int destY = this.getTileY() + (rand.nextInt(10) - 5);
+				this.walkTo(destX, destY);
+			}
 			if (rand.nextInt(5000) == 1){
 				this.say("Hey.");
 			}
@@ -327,7 +327,7 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	}
 	
 	public Point getPlacePoint(){
-		int centerOffset = (int)(0.5*Game.SCALE*Game.TILE_SIZE);
+		int centerOffset = (int)(0.4*Game.SCALE*Game.TILE_SIZE);
 		int[] xMods = {0, 1, 0, -1};
 		int[] yMods = {-1, 0, 1, 0};
 		return new Point((int) (getX() + centerOffset + 2*centerOffset*xMods[facing.ordinal()]),

@@ -19,6 +19,7 @@ public class PathFinder<T extends Pathable<T>> {
 	Set<PathNode> closed;
 	T start, target;
 	TargetFunction<T> targetFn;
+	NeighbourFunction<T> neighbourFunction;
 	PathNode finalNode;
 	List<T> path;
 	Set<T> exclude;
@@ -99,15 +100,16 @@ public class PathFinder<T extends Pathable<T>> {
 	}
 	
 	public void newPath(T start, T target){
-		newPath(start, target, null, null);
+		newPath(start, target, null, null, null);
 	}
 	
-	public void newPath(T start, T target, TargetFunction<T> targetFn, Set<T> exclude){
+	public void newPath(T start, T target, TargetFunction<T> targetFn, NeighbourFunction<T> neighbourFn, Set<T> exclude){
 		clear();
 		this.exclude = exclude;
 		this.target = target;
 		this.start = start;
 		this.targetFn = targetFn;
+		this.neighbourFunction = neighbourFn;
 		PathNode startNode = new PathNode(start, null);
 		open.add(startNode);
 		future = pool.submit(new Callable<List<T>>() {
@@ -143,7 +145,7 @@ public class PathFinder<T extends Pathable<T>> {
 	 * Generate and return path to target, or null if one doesn't exist.
 	 * @return The path to the target, or null if one doesn't exist.
 	 */
-	private List<T> makePathList(){
+	private LinkedList<T> makePathList(){
 //		System.out.println("Making path list");
 		if (finalNode == null){
 			return null;
@@ -215,7 +217,13 @@ public class PathFinder<T extends Pathable<T>> {
 			}
 		}
 
-		for (T p : node.node.getReachable()){
+		List<T> reachable;
+		if (neighbourFunction != null){
+			reachable = neighbourFunction.getNeighbours(node.node);
+		} else {
+			reachable = node.node.getReachable();
+		}
+		for (T p : reachable){
 			if (exclude != null && exclude.contains(p)) continue; // Skip excluded tiles.
 			PathNode tmp = new PathNode(p, node);
 			int index;
@@ -241,6 +249,16 @@ public class PathFinder<T extends Pathable<T>> {
 	
 	public boolean isRunning(){
 		return (future != null);
+	}
+	
+	@Override
+	public String toString(){
+		String s = "Pather:";
+		s += isRunning()?"-running-":"";
+		s += "|Open|="+open.size();
+		s += ",|Closed|="+closed.size();
+		return s;
+		
 	}
 	
 }

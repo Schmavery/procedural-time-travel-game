@@ -8,7 +8,6 @@ import core.display.Sprite;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
-import entities.interfaces.Entity;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 import gui.GUtil.SpriteSheetType;
@@ -23,7 +22,8 @@ public class HousePiece extends AbstractPlacedItem implements Placeable, Holdabl
 		sprites = new HashMap<>();
 		String[] spriteNames = {"wall_s_1", "wall_s_2", "wall_e", "wall_w", "wall_n_1",
 				"wall_ne", "wall_nw", "door_s", "door_n", "window_s", "roof_n",
-				"loose_house", "door_n", "door_s", "door_1"};
+				"loose_house", "door_n", "door_s", "door_e", "door_w", "door_e_open", 
+				"door_w_open","door_1"};
 		String[] southKeys = {"wall_s_1", "wall_s_2", "window_s"};
 		String[] empty = {"roof_n"};
 		String[][] tmp = {empty, empty, empty, southKeys, empty, empty, {"wall_ne"},

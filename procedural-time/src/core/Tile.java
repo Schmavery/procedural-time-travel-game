@@ -2,14 +2,13 @@ package core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import core.display.SpriteInstance;
 import core.path.Pathable;
 import entities.interfaces.Entity;
-import entities.interfaces.Placeable;
 import entities.interfaces.Entity.SpecialType;
+import entities.interfaces.Placeable;
 
 public class Tile implements Serializable, Pathable<Tile>{
 	
@@ -102,7 +101,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 	}
 
 	public List<Tile> getReachable() {
-		List<Tile> reachable = new ArrayList<>(4);
+		List<Tile> reachable = new ArrayList<>(8);
 		addTile(reachable, x - 1, y);
 		addTile(reachable, x    , y - 1);
 		addTile(reachable, x + 1, y);

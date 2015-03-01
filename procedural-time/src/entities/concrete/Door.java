@@ -1,18 +1,20 @@
 package entities.concrete;
 
+import core.Game;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 
 public class Door extends HousePiece implements Placeable, Holdable {
 	private String[] bitmaskKeys;
+	private int currBitMask = 0;
 	public Door(float x, float y) {
 		super(x, y);
 		recalcSprite();
 		setWalkable(true);
 		String empty = "roof_n";
 		String[] tmp = {empty, empty, empty, empty, empty, empty, empty,
-				/*7*/ "wall_n", empty, empty, empty, "door_s", empty, 
-				/*13*/"wall_n", "door_n", empty};
+				/*7*/ "door_e", empty, empty, empty, "door_s", empty, 
+				/*13*/"door_w", "door_n", empty};
 		bitmaskKeys = tmp;
 		
 	}
@@ -44,11 +46,39 @@ public class Door extends HousePiece implements Placeable, Holdable {
 	@Override
 	public void recalcSprite() {
 		if (placed){
-			int bitmask = calcBitmask();
-			setSprite(sprites.get(bitmaskKeys[bitmask]));	
+			currBitMask = calcBitmask();
+			setSprite(sprites.get(bitmaskKeys[currBitMask]));
+			if (currBitMask == 7 || currBitMask == 13){
+				// Sidewalls of the house
+				setDrawPriority(1);
+			} else {
+				setDrawPriority(0);
+			}
 		} else {
 			setSprite(sprites.get("door_1"));
+			currBitMask = 0;
 		}
+	}
+	
+	@Override
+	public void draw(float x, float y){
+		// Redundant check because hasSpecialType is expensive.
+		if (currBitMask == 7 || currBitMask == 13){
+			if (Game.getMap().getGridTile(getTileX(), getTileY()).hasSpecialType(SpecialType.PERSON)){
+				if (currBitMask == 7){
+					setSprite(sprites.get("door_e_open"));
+				} else {
+					setSprite(sprites.get("door_w_open"));
+				}
+			} else {
+				if (currBitMask == 7){
+					setSprite(sprites.get("door_e"));
+				} else {
+					setSprite(sprites.get("door_w"));
+				}
+			}
+		}
+		super.draw(x, y);
 	}
 	
 }
