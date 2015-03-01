@@ -27,7 +27,7 @@ import entities.town.SpinePoint.SpineType;
 public class Town {
 	public static enum GrowthStage {INIT, DENSE};
 	
-	private LinkedList<SpinePoint> spine;
+	private SpinePoint well;
 	private PathFinder<Tile> pather;
 	private LinkedList<House> houses;
 	private Random rand;
@@ -77,8 +77,7 @@ public class Town {
 	
 	public Town(int x, int y){
 		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
-		spine = new LinkedList<>();
-		spine.add(new SpinePoint(x, y, SpineType.WELL));
+		well = new SpinePoint(x, y, SpineType.WELL);
 		pather = new PathFinder<Tile>();
 		pathTree = new PathTree(Game.getMap().getGridTile(x, y));
 	}
@@ -88,7 +87,6 @@ public class Town {
 		int diffX, diffY,w,h;
 		int attempts = 0;
 		do {
-			sp = getRandomWell();
 			diffX = rand.nextInt(100)-50;
 			diffY = rand.nextInt(100)-50;
 			w = rand.nextInt(15)+5;
@@ -98,47 +96,20 @@ public class Town {
 			if (++attempts > 10) {
 				break;
 			}
-		}while (!createHouse(sp.getX() + diffX, sp.getY() + diffY, w, h));
+		}while (!createHouse(well.getX() + diffX, well.getY() + diffY, w, h));
 	}
-	
-	// TODO: Make better...
-	public SpinePoint getRandomWell(){
-		Collections.shuffle(spine);
-		for (SpinePoint sp : spine){
-			if (sp.getType() == SpineType.WELL) return sp;
-		}
-		return null;
-	}
-	
 	
 	public List<Tile> findPathToSpine(Tile start, Set<Tile> exclude){
 		List <Tile> l = null;
-		for (SpinePoint pt : spine) {
-			pather.newPath(start, pt.getTile(), pathTarget, neighourFn, exclude);
-			try {
-				while (!pather.generatePath());
-			} catch (PathException e) {
-				continue;
-			}
-			l = pather.getPath();
-			break;
+		pather.newPath(start, well.getTile(), pathTarget, neighourFn, exclude);
+		try {
+			while (!pather.generatePath());
+		} catch (PathException e) {
+			pather.clear();
+			return null;
 		}
+		l = pather.getPath();
 		return l;
-	}
-	
-	public void addSpinePoint(SpineType type){
-		int x = 0, y = 0;
-		switch (type) {
-		case OUTER:
-			x = rand.nextInt(100)+100;
-			y = rand.nextInt(100)+100;
-			break;
-		case WELL:
-			x = rand.nextInt(100)+100;
-			y = rand.nextInt(100)+100;
-			break;
-		}
-		spine.add(new SpinePoint(x, y, type));
 	}
 	
 	public boolean createHouse(int x, int y, int width, int height){
@@ -180,11 +151,9 @@ public class Town {
 	 */
 	public boolean checkHouse(House h){
 		// Check for overlap with spine points
-		for (SpinePoint sp: spine){
-			if (h.getRect().contains(sp.getX(), sp.getY())) {
-				System.out.println("Overlaps with spine");
-				return false;
-			}
+		if (h.getRect().contains(well.getX(), well.getY())) {
+			System.out.println("Overlaps with well");
+			return false;
 		}
 		HashSet<Tile> exclude = new HashSet<>();
 		int currX, currY;
