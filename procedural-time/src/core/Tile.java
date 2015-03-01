@@ -2,6 +2,7 @@ package core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import core.display.SpriteInstance;
@@ -154,9 +155,24 @@ public class Tile implements Serializable, Pathable<Tile>{
 	}
 	
 	public void removeEntity(Entity h){
-//		System.out.println("walkable:"+isWalkable());
 		entities.remove(h);
-//		System.out.println("walkable:"+isWalkable());
+	}
+	
+	/**
+	 * Removes the first entity found of a given type
+	 * @param type
+	 * @return Whether an entity was removed
+	 */
+	public boolean removeEntityBySpecialType(SpecialType type){
+		Iterator<Entity> iter = entities.iterator();
+		while (iter.hasNext()){
+			if (iter.next().getSpecialType().equals(type)){
+				iter.remove();
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public List<Entity> getEntities(){
