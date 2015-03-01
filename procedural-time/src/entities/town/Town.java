@@ -202,7 +202,7 @@ public class Town {
 			return false;
 		}
 
-		pathTree.addPath(path);
+		pathTree.checkAddPath(path).apply();
 		
 		for (Tile pathTile : path){
 			if (!pathTile.hasSpecialType(SpecialType.PATH)){

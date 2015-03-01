@@ -3,6 +3,7 @@ package entities.town;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import core.Tile;
 
@@ -56,13 +57,17 @@ public class PathTree {
 	}
 	
 	/**
-	 * Add simple path to the tree
+	 * Check if a simple path can be added to the tree.
+	 * @param path Path to be added
+	 * @return null if adding path is impossible, otherwise a TreeDiff object to be applied to the tree.
 	 */
-	public void addPath(List<Tile> path){
+	public TreeDiff checkAddPath(List<Tile> path){
 		// Get tile to connect to tree
+		TreeDiff diff = new TreeDiff(this);
 		Tile last = path.get(path.size()-1);
 		
 		PathEdge newEdge = new PathEdge();
+		diff.addEdge(newEdge);
 		newEdge.path = path;
 		
 		if (pathTiles.containsKey(last)){
@@ -72,9 +77,10 @@ public class PathTree {
 			for (int i = 0; i < path.size()-1; i++){ // Skip tile that connects to tree
 				t = path.get(i);
 				if (!pathTiles.containsKey(t)){
-					pathTiles.put(t, newEdge);
+					diff.addMapping(t, newEdge);
 				} else {
-					throw new RuntimeException("Overlapping paths -> bad path");
+					System.out.println("Overlapping paths -> bad path");
+					return null;
 				}
 			}
 			
@@ -86,13 +92,15 @@ public class PathTree {
 			if (parent.position.equals(last)){
 				newEdge.parent = parent;
 				newEdge.child = null;
-				parent.children.add(newEdge);
 			} else {
 				// make new branch
 				System.out.println("Adding path");
 				PathNode branch = new PathNode(last);
 				PathEdge bottomEdgeHalf = new PathEdge();
+				diff.addEdge(bottomEdgeHalf);
 				PathEdge topEdgeHalf = new PathEdge();
+				diff.addEdge(topEdgeHalf);
+				diff.removeEdge(oldEdge);
 				bottomEdgeHalf.path = new LinkedList<>();
 				topEdgeHalf.path = new LinkedList<>();
 				bottomEdgeHalf.parent = branch;
@@ -107,25 +115,32 @@ public class PathTree {
 				branch.children.add(bottomEdgeHalf);
 				branch.parent = topEdgeHalf;
 				
-				if (oldEdge.child != null) oldEdge.child.parent = bottomEdgeHalf;
-				oldEdge.parent.children.remove(oldEdge);
-				oldEdge.parent.children.add(topEdgeHalf);
-				
+				// Split oldEdge path in 2
 				boolean reachedBranch = false;
 				for (Tile pathPiece : oldEdge.path){
 					if (reachedBranch |= (pathPiece.equals(last))){
 						topEdgeHalf.path.add(pathPiece);
-						pathTiles.put(pathPiece, topEdgeHalf);
+						diff.addMapping(pathPiece, topEdgeHalf);
 					} else {
 						bottomEdgeHalf.path.add(pathPiece);
-						pathTiles.put(pathPiece, bottomEdgeHalf);
+						diff.addMapping(pathPiece, bottomEdgeHalf);
 					}
 				}
 			}
 		} else {
-			throw new RuntimeException("Path does not connect with tree");
+			System.out.println("Path does not connect with tree");
+			return null;
 		}
+		return diff;
 	}
+	
+	public TreeDiff checkRewrite(){
+		TreeDiff diff = new TreeDiff(this);
+		return diff;
+	}
+	
+	
+	
 	
 	/**
 	 * Return true if the target is an existing path Tile that is not
