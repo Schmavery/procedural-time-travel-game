@@ -1,36 +1,21 @@
 package entities.town;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import core.Game;
 import core.Tile;
 import core.path.NeighbourFunction;
 import core.path.PathException;
 import core.path.PathFinder;
 import core.path.TargetFunction;
-import entities.interfaces.Entity.SpecialType;
 
 public class PathTree {
-	private PathFinder<Tile> pather;
 
-	
-	class PathTarget implements TargetFunction<Tile>{
-		Set<Tile> exclude = new HashSet<>();
-		public void setExclude(Set<Tile> exclude){
-			this.exclude = exclude;
-		}
-		@Override
-		public boolean isTarget(Tile target) {
-			return isFreeOf(target, exclude);
-		}
-	}
 //	PathTarget pathTarget = new PathTarget();
-	
+	PathTarget rewriteTarget = new PathTarget(this);
 	TargetFunction<Tile> pathTarget = new TargetFunction<Tile>() {
 		@Override
 		public boolean isTarget(Tile target) {
@@ -38,33 +23,10 @@ public class PathTree {
 		}
 	}; 
 	
-	NeighbourFunction<Tile> neighourFn = new NeighbourFunction<Tile>() {
-		private void addTile(List<Tile> list, int x, int y){
-			if (x >= 0
-					&& x < Game.getMap().getSize()
-					&& y >= 0
-					&& y < Game.getMap().getSize()
-					&& Game.getMap().getGridTile(x, y).isWalkable()
-					&& !Game.getMap().getGridTile(x, y).hasSpecialType(SpecialType.HOUSE)){
-				list.add(Game.getMap().getGridTile(x, y));
-			}
-		}
-		@Override
-		public List<Tile> getNeighbours(Tile node) {
-			List<Tile> reachable = new ArrayList<>(4);
-			addTile(reachable, node.getGridX() - 1, node.getGridY());
-			addTile(reachable, node.getGridX()    , node.getGridY() - 1);
-			addTile(reachable, node.getGridX() + 1, node.getGridY());
-			addTile(reachable, node.getGridX()    , node.getGridY() + 1);
-			return reachable;
-		}
-	};
-	
-	
-	
-	
 	PathNode root;
 	HashMap<Tile, PathEdge> pathTiles;
+	private PathFinder<Tile> pather;
+	NeighbourFunction<Tile> neighbourFn = new PathNeighbour();
 	
 	public PathTree(Tile center){
 		root = new PathNode(center);
@@ -75,14 +37,13 @@ public class PathTree {
 		PathEdge dummy = new PathEdge();
 		dummy.parent = root;
 		dummy.child = root;
-		System.out.println("Dummy:" + dummy);
 		pathTiles.put(center, dummy);
 	}
 	
 	public TreeDiff checkAddHouse(House h, Set<Tile> exclude){
 		List<Tile> path = null;
 		for (Tile door : h.getDoors()){
-			path = findPathToSpine(door, exclude);
+			path = findPath(door, exclude, pathTarget, neighbourFn);
 			if (path != null){
 				break;
 			}
@@ -95,9 +56,25 @@ public class PathTree {
 	 * Check if a simple path can be added to the tree.
 	 * An edge with a null child ends in a house
 	 * @param path Path to be added
+	 * @param h Optional House to be associated with path
 	 * @return null if adding path is impossible, otherwise a TreeDiff object to be applied to the tree.
 	 */
 	public TreeDiff checkAddPath(List<Tile> path, House h){
+		return checkAddPath(path, h, null);
+	}
+	
+	/**
+	 * Check if a simple path can be added to the tree.
+	 * An edge with a null child ends in a house
+	 * @param path Path to be added
+	 * @param pathNode Optional PathNode to be associated with path
+	 * @return null if adding path is impossible, otherwise a TreeDiff object to be applied to the tree.
+	 */
+	public TreeDiff checkAddPath(List<Tile> path, PathNode pathNode){
+		return checkAddPath(path, null, pathNode);
+	}
+	
+	private TreeDiff checkAddPath(List<Tile> path, House h, PathNode pathNode){
 		// Get tile to connect to tree
 		TreeDiff diff = new TreeDiff(this);
 		Tile last = path.get(path.size()-1);
@@ -105,7 +82,7 @@ public class PathTree {
 		PathEdge newEdge = new PathEdge();
 		diff.addEdge(newEdge);
 		newEdge.path = path;
-		newEdge.child = null;
+		newEdge.child = pathNode;
 		newEdge.house = h;
 		
 		if (pathTiles.containsKey(last)){
@@ -126,7 +103,6 @@ public class PathTree {
 				newEdge.parent = parent;
 			} else {
 				// make new branch
-				System.out.println("Adding path");
 				PathNode branch = new PathNode(last);
 				PathEdge bottomEdgeHalf = new PathEdge();
 				PathEdge topEdgeHalf = new PathEdge();
@@ -170,16 +146,75 @@ public class PathTree {
 	 * Remove all excluded edges, maintain list of their orphaned nodes.
 	 * Remove any nodes with neither parents nor children
 	 * Reconnect children to tree.
-	 * @param exclude
-	 * @return
+	 * @param exclude Tiles to be routed around
+	 * @return Appropriate diff for rewriting tree
 	 */
 	public TreeDiff checkRewrite(Set<Tile> exclude){
 		TreeDiff diff = new TreeDiff(this);
+		Set<PathNode> orphans = new HashSet<>();
+		
+		for (Tile t : exclude){
+			if (!pathTiles.containsKey(t)) continue; // Ignore tiles not part of paths
+			PathEdge cutEdge = pathTiles.get(t);
+			diff.removeEdge(cutEdge);
+			
+			// Removing a node from the tree
+			if (t.equals(cutEdge.child)){
+				// Remove the node from orphans
+				orphans.remove(cutEdge.child);
+				// Remove all child edges
+				for (PathEdge childEdge : cutEdge.child.children){
+					diff.removeEdge(childEdge);
+				}
+			} else {
+				orphans.add(cutEdge.child);	
+			}
+		}
+		System.out.println("Created orphan list");
+		
+		// Attempt to reattach orphans
+		boolean reattachFailed = false;
+		TreeDiff reattachDiff = new TreeDiff(this);
+		do {
+			System.out.println("stuck");
+			for (PathNode orphan : orphans){
+				System.out.println("stuck2");
+				// Generate valid path for this orphan
+				System.out.println("Searching for path");
+				List<Tile> path = findPath(orphan.position, exclude, rewriteTarget, neighbourFn);
+				System.out.println("Found path");
+				if (path != null){
+					reattachFailed = true;
+					break;
+				}
+				TreeDiff orphanDiff = checkAddPath(path, orphan);
+				if (!reattachFailed) reattachDiff.compose(orphanDiff);
+			}
+		} while (reattachFailed && decayOrphans(orphans, diff));
+		System.out.println("Not stuck");
+		
+		if (reattachFailed) return null;
 		return diff;
 	}
 	
-	
-	
+	/**
+	 * Replaced orphaned PathNodes with their children
+	 * @param orphans Set of orphaned PathNodes to be reconnected to the tree
+	 * @return false if decay failed (no orphan decay was possible)
+	 */
+	private static boolean decayOrphans(Set<PathNode> orphans, TreeDiff diff){
+		LinkedList<PathNode> decayed = new LinkedList<>();
+		for (PathNode pn : orphans){
+			System.out.println("Stuck decaying");
+			for (PathEdge child: pn.children){
+				diff.removeEdge(child);
+				decayed.add(child.child);
+			}
+		}
+		orphans.clear();
+		orphans.addAll(decayed);
+		return (!decayed.isEmpty());
+	}
 	
 	/**
 	 * Return true if the target is an existing path Tile that is not
@@ -208,9 +243,10 @@ public class PathTree {
 		return pathTiles.containsKey(t);
 	}
 	
-	public List<Tile> findPathToSpine(Tile start, Set<Tile> exclude){
+	public List<Tile> findPath(Tile start, Set<Tile> exclude, TargetFunction<Tile> pathTarget, 
+			NeighbourFunction<Tile> neighbourFn){
 		List <Tile> l = null;
-		pather.newPath(start, root.position, pathTarget, neighourFn, exclude);
+		pather.newPath(start, root.position, pathTarget, neighbourFn, exclude);
 		try {
 			while (!pather.generatePath());
 		} catch (PathException e) {

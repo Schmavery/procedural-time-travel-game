@@ -1,26 +1,17 @@
 package entities.town;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.lwjgl.util.Rectangle;
 
 import core.Game;
 import core.RandomManager;
 import core.Tile;
-import core.path.NeighbourFunction;
-import core.path.PathException;
-import core.path.PathFinder;
-import core.path.TargetFunction;
 import entities.concrete.Door;
 import entities.concrete.Floor;
 import entities.concrete.HousePiece;
-import entities.concrete.Path;
 import entities.interfaces.Entity.SpecialType;
 import entities.town.SpinePoint.SpineType;
 
@@ -30,10 +21,8 @@ public class Town {
 	private SpinePoint well;
 	private LinkedList<House> houses;
 	private Random rand;
-	
+	private int densityCount;
 	PathTree pathTree;
-	
-	
 	
 	public Town(int x, int y){
 		stage = GrowthStage.INIT;
@@ -43,9 +32,14 @@ public class Town {
 	}
 	
 	public void grow(){
-		SpinePoint sp;
 		int diffX, diffY,w,h;
 		int attempts = 0;
+		if (stage.equals(GrowthStage.DENSE)) return;
+		if (densityCount > 50) {
+			System.out.println("Achieved dense town");
+			stage = GrowthStage.DENSE;
+			return;
+		}
 		do {
 			diffX = rand.nextInt(100)-50;
 			diffY = rand.nextInt(100)-50;
@@ -54,9 +48,11 @@ public class Town {
 			
 			// Upgrade current spine point to dense?
 			if (++attempts > 100) {
-				break;
+				if (stage.equals(GrowthStage.INIT)) densityCount++;
+				return;
 			}
 		}while (!createHouse(well.getX() + diffX, well.getY() + diffY, w, h));
+		densityCount = 0;
 	}
 	
 	
@@ -104,7 +100,7 @@ public class Town {
 	public TreeDiff checkHouse(House h){
 		// Check for overlap with spine points
 		if (h.getRect().contains(well.getX(), well.getY())) {
-			System.out.println("Overlaps with well");
+//			System.out.println("Overlaps with well");
 			return null;
 		}
 		HashSet<Tile> exclude = new HashSet<>();
@@ -112,13 +108,14 @@ public class Town {
 		Tile t;
 		boolean pathBlocked = false;
 		
-		// Check one larger than house to prevent adjacency.
+		// Check one larger than house to prevent direct adjacency.
 		for (int i = -1; i < h.getRect().getWidth() + 1; i++){
 			for (int j = -1; j < h.getRect().getHeight() + 1; j++){
 				currX = h.getRect().getX()+i;
 				currY = h.getRect().getY()+j;
 				t = Game.getMap().getGridTile(currX, currY);
-				// Rejection check
+				
+				// Rejection checks
 				if (t == null) return null;
 				if (t.hasSpecialType(SpecialType.PATH)) pathBlocked = true;
 				// If inside defined house boundaries
@@ -127,13 +124,15 @@ public class Town {
 				
 				if (t.hasSpecialType(SpecialType.HOUSE)) return null;
 				
+				
 				// Is an outer wall
-				if ((i != -1 && j != -1 && j != h.getRect().getHeight() && i != h.getRect().getWidth()) && 
-					(i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1)){
+				if (i != -1 && j != -1 && j != h.getRect().getHeight() && i != h.getRect().getWidth()){
 					exclude.add(t); // Exclude from later pathfinding
-					if (rand.nextInt(10) == 0 && ((i > 0  && i < h.getRect().getWidth()-1)
-							|| (j > 0  && j < h.getRect().getHeight()-1))){
-						h.addDoor(t);
+					if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1){
+						if (rand.nextInt(10) == 0 && ((i > 0  && i < h.getRect().getWidth()-1)
+								|| (j > 0  && j < h.getRect().getHeight()-1))){
+							h.addDoor(t);
+						}
 					}
 				}
 			}
@@ -141,7 +140,20 @@ public class Town {
 		
 		if (h.getDoors().size() == 0) return null;
 		if (pathBlocked && stage.equals(GrowthStage.INIT)) return null;
-		TreeDiff diff = pathTree.checkAddHouse(h, exclude);
-		return diff;
+		else if (pathBlocked && stage.equals(GrowthStage.DENSE)){
+			TreeDiff rewriteDiff = pathTree.checkRewrite(exclude);
+			if (rewriteDiff == null) return null;
+			rewriteDiff.apply();
+			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);
+			rewriteDiff.revert();
+			if (houseDiff == null) return null;
+			rewriteDiff.compose(houseDiff);
+			return rewriteDiff;
+		}
+		return pathTree.checkAddHouse(h, exclude);
+	}
+	
+	public LinkedList<House> getHouses(){
+		return houses;
 	}
 }

@@ -27,12 +27,14 @@ public class TreeDiff {
 	
 	public void removeEdge(PathEdge e){
 		assert(e.parent != null);
-		removedEdges.add(e);
+		if (!removedEdges.contains(e))
+			removedEdges.add(e);
 	}
 
 	public void addEdge(PathEdge e){
 		assert(e.parent != null);
-		newEdges.add(e);
+		if (!newEdges.contains(e))
+			newEdges.add(e);
 	}
 	
 	public void removeMapping(Tile key, PathEdge val){
@@ -40,7 +42,6 @@ public class TreeDiff {
 	}
 	
 	public void addMapping(Tile key, PathEdge val){
-		if (newMappings.containsKey(key)) System.out.println("Key overlap");
 		newMappings.put(key, val);
 	}
 	
@@ -120,5 +121,31 @@ public class TreeDiff {
 			if (edge.child != null) edge.child.parent = null;
 		}
 		
+	}
+	
+	/**
+	 * Composes two diffs so that they can be applied together
+	 * Note: This can result in long edge lists
+	 * @param diff Second diff in the sequence
+	 */
+	public void compose(TreeDiff diff){
+		newMappings.putAll(diff.newMappings);
+		for (Tile t : diff.removedMappings.keySet()) newMappings.remove(t);
+		
+		removedMappings.putAll(diff.removedMappings);
+		for (Tile t : diff.newMappings.keySet()) removedMappings.remove(t);
+
+		newEdges.addAll(diff.newEdges);
+		removedEdges.addAll(diff.removedEdges);
+	}
+	
+	/**
+	 * Wipes diff clean of changes.
+	 */
+	public void clear(){
+		newMappings.clear();
+		removedMappings.clear();
+		newEdges.clear();
+		removedEdges.clear();
 	}
 }
