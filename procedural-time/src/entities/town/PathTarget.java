@@ -22,9 +22,4 @@ public class PathTarget implements TargetFunction<Tile> {
 	public boolean isTarget(Tile target) {
 		return pathTree.isFreeOf(target, exclude);
 	}
-	
-//	@Override
-//	public boolean isTarget(Tile target) {
-//		return hasPath(target);
-//	}
 }

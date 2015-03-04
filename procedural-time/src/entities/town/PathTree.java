@@ -48,7 +48,7 @@ public class PathTree {
 				break;
 			}
 		}
-		if (path == null) return null;
+		if (path == null || path.size() == 0) return null; //TODO handle size 0 paths
 		return checkAddPath(path, h);
 	}
 	
@@ -80,7 +80,6 @@ public class PathTree {
 		Tile last = path.get(path.size()-1);
 		
 		PathEdge newEdge = new PathEdge();
-		diff.addEdge(newEdge);
 		newEdge.path = path;
 		newEdge.child = pathNode;
 		newEdge.house = h;
@@ -88,19 +87,10 @@ public class PathTree {
 		if (pathTiles.containsKey(last)){
 			PathEdge oldEdge = pathTiles.get(last);
 			
-			for (Tile t : path){ 
-				if (t.equals(last)) continue; // Skip tile that connects to tree
-				if (!pathTiles.containsKey(t)){
-					diff.addMapping(t, newEdge);
-				} else {
-					System.out.println("Overlapping paths -> bad path");
-					return null;
-				}
-			}
-			
 			PathNode parent = oldEdge.parent;
 			if (parent.position.equals(last)){
 				newEdge.parent = parent;
+				diff.addEdge(newEdge);
 			} else {
 				// make new branch
 				PathNode branch = new PathNode(last);
@@ -122,15 +112,13 @@ public class PathTree {
 				topEdgeHalf.path = new LinkedList<>();
 				boolean reachedBranch = false;
 				for (Tile pathPiece : oldEdge.path){
-					diff.removeMapping(pathPiece, oldEdge);
 					if (reachedBranch |= (pathPiece.equals(last))){
 						topEdgeHalf.path.add(pathPiece);
-						diff.addMapping(pathPiece, topEdgeHalf);
 					} else {
 						bottomEdgeHalf.path.add(pathPiece);
-						diff.addMapping(pathPiece, bottomEdgeHalf);
 					}
 				}
+				diff.addEdge(newEdge);
 				diff.addEdge(bottomEdgeHalf);
 				diff.addEdge(topEdgeHalf);
 				diff.removeEdge(oldEdge);
@@ -150,13 +138,13 @@ public class PathTree {
 	 * @return Appropriate diff for rewriting tree
 	 */
 	public TreeDiff checkRewrite(Set<Tile> exclude){
-		TreeDiff diff = new TreeDiff(this);
+		TreeDiff removeDiff = new TreeDiff(this);
 		Set<PathNode> orphans = new HashSet<>();
 		
 		for (Tile t : exclude){
 			if (!pathTiles.containsKey(t)) continue; // Ignore tiles not part of paths
 			PathEdge cutEdge = pathTiles.get(t);
-			diff.removeEdge(cutEdge);
+			removeDiff.removeEdge(cutEdge);
 			
 			// Removing a node from the tree
 			if (t.equals(cutEdge.child)){
@@ -164,10 +152,10 @@ public class PathTree {
 				orphans.remove(cutEdge.child);
 				// Remove all child edges
 				for (PathEdge childEdge : cutEdge.child.children){
-					diff.removeEdge(childEdge);
+					removeDiff.removeEdge(childEdge);
 				}
 			} else {
-				orphans.add(cutEdge.child);	
+				if (cutEdge.child != null) orphans.add(cutEdge.child);	
 			}
 		}
 		System.out.println("Created orphan list");
@@ -178,9 +166,9 @@ public class PathTree {
 		do {
 			System.out.println("stuck");
 			for (PathNode orphan : orphans){
-				System.out.println("stuck2");
 				// Generate valid path for this orphan
-				System.out.println("Searching for path");
+				System.out.println("Searching for path"+orphan);
+				rewriteTarget.setExclude(exclude);
 				List<Tile> path = findPath(orphan.position, exclude, rewriteTarget, neighbourFn);
 				System.out.println("Found path");
 				if (path != null){
@@ -188,13 +176,26 @@ public class PathTree {
 					break;
 				}
 				TreeDiff orphanDiff = checkAddPath(path, orphan);
-				if (!reattachFailed) reattachDiff.compose(orphanDiff);
+				if (!reattachFailed) {
+					orphanDiff.apply(false);
+					reattachDiff.compose(orphanDiff);
+				}	
 			}
-		} while (reattachFailed && decayOrphans(orphans, diff));
+			reattachDiff.revert(false);
+			if (reattachFailed){
+				removeDiff.revert(false);
+				if (decayOrphans(orphans, removeDiff)) break;
+				removeDiff.apply(false);
+				reattachDiff.clear();
+			}
+		} while (reattachFailed);
 		System.out.println("Not stuck");
 		
 		if (reattachFailed) return null;
-		return diff;
+		
+		removeDiff.revert(false);
+		removeDiff.compose(reattachDiff);
+		return removeDiff;
 	}
 	
 	/**
@@ -208,7 +209,7 @@ public class PathTree {
 			System.out.println("Stuck decaying");
 			for (PathEdge child: pn.children){
 				diff.removeEdge(child);
-				decayed.add(child.child);
+				if (child.child != null) decayed.add(child.child);
 			}
 		}
 		orphans.clear();
@@ -235,8 +236,8 @@ public class PathTree {
 					}
 				}
 			}
+			return true;
 		}
-		return true;
 	}
 	
 	public boolean hasPath(Tile t){

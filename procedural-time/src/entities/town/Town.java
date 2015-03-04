@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.lwjgl.util.Rectangle;
 
+import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
+
 import core.Game;
 import core.RandomManager;
 import core.Tile;
@@ -34,11 +36,10 @@ public class Town {
 	public void grow(){
 		int diffX, diffY,w,h;
 		int attempts = 0;
-		if (stage.equals(GrowthStage.DENSE)) return;
+//		if (stage.equals(GrowthStage.DENSE)) return;
 		if (densityCount > 50) {
 			System.out.println("Achieved dense town");
 			stage = GrowthStage.DENSE;
-			return;
 		}
 		do {
 			diffX = rand.nextInt(100)-50;
@@ -59,12 +60,13 @@ public class Town {
 	
 	public boolean createHouse(int x, int y, int width, int height){
 		House h = new House(new Rectangle(x, y, width, height));
+		
 		int currX, currY;
 		TreeDiff diff = checkHouse(h);
 		if (diff == null) {
 			return false;
 		}
-		diff.apply();
+		diff.apply(true);
 		
 		for (int i = 0; i < h.getRect().getWidth(); i++){
 			for (int j = 0; j < h.getRect().getHeight(); j++){
@@ -141,11 +143,15 @@ public class Town {
 		if (h.getDoors().size() == 0) return null;
 		if (pathBlocked && stage.equals(GrowthStage.INIT)) return null;
 		else if (pathBlocked && stage.equals(GrowthStage.DENSE)){
+			if (stage.equals(GrowthStage.DENSE)){
+				System.out.println("Checking:"+h);
+			}
 			TreeDiff rewriteDiff = pathTree.checkRewrite(exclude);
 			if (rewriteDiff == null) return null;
-			rewriteDiff.apply();
+			System.out.println(rewriteDiff);
+			rewriteDiff.apply(false);
 			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);
-			rewriteDiff.revert();
+			rewriteDiff.revert(false);
 			if (houseDiff == null) return null;
 			rewriteDiff.compose(houseDiff);
 			return rewriteDiff;
