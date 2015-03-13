@@ -4,9 +4,12 @@ import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
 import entities.interfaces.Holdable;
+import entities.town.House;
 import gui.GUtil.SpriteSheetType;
 
 public class Floor extends AbstractPlacedItem implements Holdable{
+	
+	private House house;
 	
 	public Floor(float x, float y) {
 		super(x, y);
@@ -20,7 +23,11 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	@Override
 	public void recalcSprite(){
 		if (placed){
-			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+(rand.nextInt(2)+1)));
+			if (house != null){	
+				setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, house.getSpritePrefix()+"floor_"+(rand.nextInt(2)+1)));
+			} else {
+				setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+(rand.nextInt(2)+1)));
+			}
 		} else {
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "loose_floor"));
 		}
@@ -46,6 +53,10 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 	public SpriteInstance[] getUseArray() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void setHouse(House h){
+		this.house = h;
 	}
 
 }

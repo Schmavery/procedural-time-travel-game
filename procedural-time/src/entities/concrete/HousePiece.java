@@ -10,12 +10,14 @@ import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
+import entities.town.House;
 import gui.GUtil.SpriteSheetType;
 
 public class HousePiece extends AbstractPlacedItem implements Placeable, Holdable {
 
 	protected HashMap<String, Sprite> sprites;
 	private String[][] bitmaskKeys;
+	private House house;
 	
 	public HousePiece(float x, float y){
 		super(x, y);
@@ -124,7 +126,9 @@ public class HousePiece extends AbstractPlacedItem implements Placeable, Holdabl
 		return null;
 	}
 
-
+	public void setHouse(House h){
+		this.house = h;
+	}
 
 
 }

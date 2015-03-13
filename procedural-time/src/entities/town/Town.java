@@ -24,6 +24,8 @@ public class Town {
 	private int densityCount;
 	PathTree pathTree;
 	
+	String[] housePrefixes = {"d", "g", "b", "r", ""};
+	
 	public Town(int x, int y){
 		stage = GrowthStage.INIT;
 		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
@@ -57,7 +59,8 @@ public class Town {
 	
 	
 	public boolean createHouse(int x, int y, int width, int height){
-		House h = new House(new Rectangle(x, y, width, height));
+		House h = new House(new Rectangle(x, y, width, height), 
+				housePrefixes[rand.nextInt(housePrefixes.length)]);
 		
 		int currX, currY;
 		TreeDiff diff = checkHouse(h);
@@ -66,18 +69,29 @@ public class Town {
 		}
 		diff.apply(true);
 		
+		Door d;
+		HousePiece hp;
+		Floor f;
 		for (int i = 0; i < h.getRect().getWidth(); i++){
 			for (int j = 0; j < h.getRect().getHeight(); j++){
 				currX = h.getRect().getX()+i;
 				currY = h.getRect().getY()+j;
 				
-				if (j != 0) (new Floor(0, 0)).place(currX, currY);
+				if (j != 0) {
+					f = new Floor(0, 0);
+					f.setHouse(h);
+					f.place(currX, currY);
+				}
 				
 				if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1) {
 					if (h.getDoors().contains(Game.getMap().getGridTile(currX, currY))){
-						(new Door(0, 0)).place(currX, currY);
+						d = new Door(0, 0);
+						d.setHouse(h);
+						d.place(currX, currY);
 					} else {
-						(new HousePiece(0, 0)).place(currX, currY);
+						hp = new HousePiece(0, 0);
+						hp.setHouse(h);
+						hp.place(currX, currY);
 					}
 				}
 			}

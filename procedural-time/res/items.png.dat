@@ -985,6 +985,142 @@ pt (2,15)
 pt (2,5)
 endcollision
 endimg
+img 64
+pt (192,224)
+dim (16,16)
+name [[bfloor_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 65
+pt (208,224)
+dim (16,16)
+name [[bfloor_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 66
+pt (224,224)
+dim (16,16)
+name [[rfloor_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 67
+pt (240,224)
+dim (16,16)
+name [[rfloor_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 68
+pt (192,240)
+dim (16,16)
+name [[gfloor_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 69
+pt (208,240)
+dim (16,16)
+name [[gfloor_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 70
+pt (224,240)
+dim (16,16)
+name [[dfloor_1]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
+img 71
+pt (240,240)
+dim (16,16)
+name [[dfloor_2]]
+anchor
+pt (8,8)
+hooks
+0 hooks
+endhooks
+collision
+pt (0,0)
+pt (15,0)
+pt (15,15)
+pt (0,15)
+pt (0,0)
+endcollision
+endimg
 anim [[sword_n]]
 pause 150
 frame 44
