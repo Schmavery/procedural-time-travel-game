@@ -2,6 +2,7 @@ package entities.town;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import core.Game;
 import core.Tile;
@@ -10,13 +11,26 @@ import entities.interfaces.Entity.SpecialType;
 
 public class PathNeighbour implements NeighbourFunction<Tile> {
 
-	private static void addTile(List<Tile> list, int x, int y){
+	PathTree tree;
+	Set<Tile> exclude;
+	public PathNeighbour(PathTree tree){
+		this.tree = tree;
+	}
+	
+	public void setExclude(Set<Tile> exclude){
+		this.exclude = exclude;
+	}
+	
+	private void addTile(List<Tile> list, int x, int y){
+		Tile t = Game.getMap().getGridTile(x, y);
 		if (x >= 0
 				&& x < Game.getMap().getSize()
 				&& y >= 0
 				&& y < Game.getMap().getSize()
-				&& Game.getMap().getGridTile(x, y).isWalkable()
-				&& !Game.getMap().getGridTile(x, y).hasSpecialType(SpecialType.HOUSE)){
+				&& t.isWalkable()
+				&& !t.hasSpecialType(SpecialType.HOUSE)
+				&& (!tree.pathTiles.containsKey(t) || tree.isFreeOf(t, exclude))
+				){
 			list.add(Game.getMap().getGridTile(x, y));
 		}
 	}

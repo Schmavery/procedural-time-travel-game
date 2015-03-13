@@ -35,9 +35,8 @@ public class TreeDiff {
 			Tile last = null;
 			for (Tile t : e.path){   // Perform this for all but the last tile
 				if (last != null) {
-					if (!tree.pathTiles.containsKey(t)){
-						removeMapping(t, e);
-					}
+					if (last.getGridX() == 500 && last.getGridY() == 510) throw new RuntimeException();
+					removeMapping(last, e);
 				}
 				last = t;
 			}
@@ -54,9 +53,7 @@ public class TreeDiff {
 			Tile last = null;
 			for (Tile t : e.path){   // Perform this for all but the last tile
 				if (last != null) {
-					if (!tree.pathTiles.containsKey(t)){
-						addMapping(t, e);
-					}
+					addMapping(last, e);
 				}
 				last = t;
 			}
@@ -77,10 +74,12 @@ public class TreeDiff {
 	public void apply(boolean updateMap){
 		// Remove old tile mappings
 		for (Tile t: removedMappings.keySet()){
-			tree.pathTiles.remove(t);
-			if (updateMap) t.removeEntityBySpecialType(SpecialType.PATH);
+			if (tree.pathTiles.containsKey(t)){
+				tree.pathTiles.remove(t);
+				if (updateMap) t.removeEntityBySpecialType(SpecialType.PATH);
+			}
 		}
-			
+		
 		// Add new tile mappings
 		tree.pathTiles.putAll(newMappings);
 		if (updateMap){
@@ -114,8 +113,10 @@ public class TreeDiff {
 		if (next != null) next.revert(updateMap);
 		
 		for (Tile t: newMappings.keySet()){
-			tree.pathTiles.remove(t);
-			if (updateMap) t.removeEntityBySpecialType(SpecialType.PATH);
+			if (tree.pathTiles.containsKey(t)){
+				tree.pathTiles.remove(t);
+				if (updateMap) t.removeEntityBySpecialType(SpecialType.PATH);
+			}
 		}
 			
 		tree.pathTiles.putAll(removedMappings);
@@ -151,14 +152,6 @@ public class TreeDiff {
 	 * @param diff Second diff in the sequence
 	 */
 	public void compose(TreeDiff diff){
-//		newMappings.putAll(diff.newMappings);
-//		for (Tile t : diff.removedMappings.keySet()) newMappings.remove(t);
-//		
-//		removedMappings.putAll(diff.removedMappings);
-//		for (Tile t : diff.newMappings.keySet()) removedMappings.remove(t);
-//
-//		newEdges.addAll(diff.newEdges);
-//		removedEdges.addAll(diff.removedEdges);
 		if (next != null){
 			next.compose(diff);
 		} else {
@@ -167,7 +160,7 @@ public class TreeDiff {
 	}
 	
 	/**
-	 * Wipes diff clean of changes.
+	 * Wipes diff clean of changes.  Keep pathtree reference.
 	 */
 	public void clear(){
 		newMappings.clear();
@@ -175,5 +168,15 @@ public class TreeDiff {
 		newEdges.clear();
 		removedEdges.clear();
 		next = null;
+	}
+	
+	@Override
+	public String toString(){
+		int removed = 0, added = 0;
+		for (TreeDiff td = this; td != null; td = td.next){
+			removed += td.removedEdges.size();
+			added   += td.newEdges.size();  
+		}
+		return "TreeDiff:new("+added+"),remove("+removed+")";
 	}
 }

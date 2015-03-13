@@ -6,8 +6,6 @@ import java.util.Random;
 
 import org.lwjgl.util.Rectangle;
 
-import com.sun.corba.se.impl.orbutil.DenseIntMapImpl;
-
 import core.Game;
 import core.RandomManager;
 import core.Tile;
@@ -19,7 +17,7 @@ import entities.town.SpinePoint.SpineType;
 
 public class Town {
 	public static enum GrowthStage {INIT, DENSE};
-	private GrowthStage stage;
+	public GrowthStage stage;
 	private SpinePoint well;
 	private LinkedList<House> houses;
 	private Random rand;
@@ -36,10 +34,11 @@ public class Town {
 	public void grow(){
 		int diffX, diffY,w,h;
 		int attempts = 0;
-//		if (stage.equals(GrowthStage.DENSE)) return;
-		if (densityCount > 50) {
+		//if (stage.equals(GrowthStage.DENSE)) return;
+		if (densityCount > 50 && !stage.equals(GrowthStage.DENSE)) {
 			System.out.println("Achieved dense town");
 			stage = GrowthStage.DENSE;
+			return;
 		}
 		do {
 			diffX = rand.nextInt(100)-50;
@@ -47,8 +46,7 @@ public class Town {
 			w = rand.nextInt(15)+5;
 			h = rand.nextInt(15)+5;
 			
-			// Upgrade current spine point to dense?
-			if (++attempts > 100) {
+			if (++attempts > 500) {
 				if (stage.equals(GrowthStage.INIT)) densityCount++;
 				return;
 			}
@@ -100,11 +98,13 @@ public class Town {
 	 * @return null if the house can be placed at this point.  Otherwise, the necessary tree diff.
 	 */
 	public TreeDiff checkHouse(House h){
-		// Check for overlap with spine points
-		if (h.getRect().contains(well.getX(), well.getY())) {
-//			System.out.println("Overlaps with well");
-			return null;
+		// Check for overlap with well (And give it some room)
+		for (int i = 0; i < 9; i++){
+			if (h.getRect().contains(well.getX() + (i%3-1), well.getY() + (1/3-1))) {
+				return null;
+			}
 		}
+		
 		HashSet<Tile> exclude = new HashSet<>();
 		int currX, currY;
 		Tile t;
@@ -119,17 +119,19 @@ public class Town {
 				
 				// Rejection checks
 				if (t == null) return null;
-				if (t.hasSpecialType(SpecialType.PATH)) pathBlocked = true;
+				
 				// If inside defined house boundaries
-				if (i > -1 && j > -1 && i < h.getRect().getWidth() && j < h.getRect().getHeight())
+				if (i > -1 && j > -1 && i < h.getRect().getWidth() && j < h.getRect().getHeight()){
+					if (t.hasSpecialType(SpecialType.PATH)) pathBlocked =  true;
 					if (!t.isWalkable()) return null;
+					exclude.add(t); // Exclude from later pathfinding
+				}
 				
 				if (t.hasSpecialType(SpecialType.HOUSE)) return null;
 				
 				
 				// Is an outer wall
 				if (i != -1 && j != -1 && j != h.getRect().getHeight() && i != h.getRect().getWidth()){
-					exclude.add(t); // Exclude from later pathfinding
 					if (i == 0 || j == 0 || j == h.getRect().getHeight()-1 || i == h.getRect().getWidth()-1){
 						if (rand.nextInt(10) == 0 && ((i > 0  && i < h.getRect().getWidth()-1)
 								|| (j > 0  && j < h.getRect().getHeight()-1))){
@@ -143,9 +145,7 @@ public class Town {
 		if (h.getDoors().size() == 0) return null;
 		if (pathBlocked && stage.equals(GrowthStage.INIT)) return null;
 		else if (pathBlocked && stage.equals(GrowthStage.DENSE)){
-			if (stage.equals(GrowthStage.DENSE)){
-				System.out.println("Checking:"+h);
-			}
+			System.out.println("Checking:"+h);
 			TreeDiff rewriteDiff = pathTree.checkRewrite(exclude);
 			if (rewriteDiff == null) return null;
 			System.out.println(rewriteDiff);
@@ -155,8 +155,11 @@ public class Town {
 			if (houseDiff == null) return null;
 			rewriteDiff.compose(houseDiff);
 			return rewriteDiff;
+		} else {
+			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);
+			System.out.println("Adding:"+houseDiff);
+			return houseDiff;
 		}
-		return pathTree.checkAddHouse(h, exclude);
 	}
 	
 	public LinkedList<House> getHouses(){

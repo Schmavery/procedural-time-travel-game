@@ -31,6 +31,7 @@ import entities.concrete.NPC;
 import entities.concrete.Sword;
 import entities.interfaces.Entity;
 import entities.town.Town;
+import entities.town.Town.GrowthStage;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
@@ -285,9 +286,12 @@ public class Game extends Core {
 			player.doAction(ActionType.DROP);
 		}
 		
+		
+//		if (town.stage.equals(GrowthStage.INIT)) town.grow();
 //		if (growPause == 0){
 //			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
-		town.grow();
+				town.grow();
+//				growPause = 100;
 //			}
 //		} else if (growPause > 0){
 //			growPause--;
