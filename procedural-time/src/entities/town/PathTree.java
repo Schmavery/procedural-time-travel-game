@@ -37,7 +37,6 @@ public class PathTree {
 		dummy.path = new LinkedList<Tile>();
 		dummy.path.add(center);
 		pathTiles.put(center, dummy);
-		System.out.println("Dummy:"+dummy);
 	}
 	
 	public TreeDiff checkAddHouse(House h, Set<Tile> exclude){
@@ -168,7 +167,6 @@ public class PathTree {
 				orphans.add(cutEdge);	
 			}
 		}
-		System.out.println("Created orphan list"+orphans.size()+","+removed.size());
 		
 		// Attempt to reattach orphans
 		boolean reattachFailed = false;
@@ -177,24 +175,17 @@ public class PathTree {
 			removeDiff.apply(false);
 			for (PathEdge orphan : orphans){
 				// Generate valid path for this orphan
-				System.out.println("Searching for path"+orphan);
 				List<Tile> path = null;
 				// Check if edge connects to house
 				if (orphan.child != null){
-					System.out.println("Reattaching pathnode");
 					path = findPath(orphan.child.position, exclude, rewriteTarget, neighbourFn);
 				} else {
-					System.out.println("Reattaching house");
 					for (Tile door : orphan.house.doors){
-						System.out.println("Pathfind");
 						path = findPath(door, exclude, rewriteTarget, neighbourFn);
-						System.out.println("Pathfound");
 						if (path != null) break;
 					}
-					System.out.println("doors done");
 				}
 				if (path != null){
-					System.out.println("Found path"+path.size());
 					TreeDiff orphanDiff;
 					if (orphan.child != null){
 						orphanDiff = checkAddPath(path, orphan.child);
@@ -210,13 +201,10 @@ public class PathTree {
 			}
 			reattachDiff.revert(false);
 			if (reattachFailed){
-				System.out.println("Reattach failed");
 				removeDiff.revert(false);
 				if (!decayOrphans(orphans, removeDiff)) {
-					System.out.println("Orphan decay failed");
 					break;
 				}
-				if (!orphans.isEmpty()) System.out.println("decayedorphans:"+orphans.size());
 				reattachDiff.clear();
 			}
 		} while (reattachFailed);
@@ -289,21 +277,10 @@ public class PathTree {
 		try {
 			while (!pather.generatePath());
 		} catch (PathException e) {
-			System.out.println("PathException");
 			pather.clear();
 			return null;
 		}
 		l = pather.getPath();
-		
-//		if (l != null && l.size() == 0){
-//			System.out.println(">>>"+start);
-//			for (Tile t : exclude){
-//				System.out.println(":"+t);
-//			}
-//			System.out.println("<<<");
-//		} else if (l != null){
-//			if (!l.get(0).equals(start)) System.out.println("STARTTTTTTTT");
-//		}
 		
 		if (l != null){
 			l.add(0, start);

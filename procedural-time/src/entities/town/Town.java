@@ -145,19 +145,17 @@ public class Town {
 		if (h.getDoors().size() == 0) return null;
 		if (pathBlocked && stage.equals(GrowthStage.INIT)) return null;
 		else if (pathBlocked && stage.equals(GrowthStage.DENSE)){
-			System.out.println("Checking:"+h);
 			TreeDiff rewriteDiff = pathTree.checkRewrite(exclude);
 			if (rewriteDiff == null) return null;
-			System.out.println(rewriteDiff);
 			rewriteDiff.apply(false);
 			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);
 			rewriteDiff.revert(false);
 			if (houseDiff == null) return null;
 			rewriteDiff.compose(houseDiff);
+			System.out.println("Rewrite Success:"+h);
 			return rewriteDiff;
 		} else {
 			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);
-			System.out.println("Adding:"+houseDiff);
 			return houseDiff;
 		}
 	}
