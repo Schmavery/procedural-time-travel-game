@@ -33,8 +33,10 @@ public class TreeDiff {
 		if (!removedEdges.contains(e)){
 			removedEdges.add(e);
 			Tile last = null;
+			Tile first = e.path.get(0);
 			for (Tile t : e.path){   // Perform this for all but the last tile
 				if (last != null) {
+					if (t.equals(first) && e.house != null) continue;
 					if (last.getGridX() == 500 && last.getGridY() == 510) throw new RuntimeException();
 					removeMapping(last, e);
 				}
@@ -51,7 +53,9 @@ public class TreeDiff {
 		if (!newEdges.contains(e)){
 			newEdges.add(e);
 			Tile last = null;
+			Tile first = e.path.get(0);
 			for (Tile t : e.path){   // Perform this for all but the last tile
+				if (t.equals(first) && e.house != null) continue;
 				if (last != null) {
 					addMapping(last, e);
 				}

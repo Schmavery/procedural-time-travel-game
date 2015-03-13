@@ -13,12 +13,6 @@ import core.path.PathFinder;
 public class PathTree {
 
 	PathTarget rewriteTarget = new PathTarget(this);
-//	TargetFunction<Tile> pathTarget = new TargetFunction<Tile>() {
-//		@Override
-//		public boolean isTarget(Tile target) {
-//			return hasPath(target);
-//		}
-//	}; 
 	
 	PathNode root;
 	HashMap<Tile, PathEdge> pathTiles;
