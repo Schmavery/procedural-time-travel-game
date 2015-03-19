@@ -9,14 +9,18 @@ import core.Tile;
 
 
 public class House {
+	public static enum HouseType {D, G, B, R, NONE};
+	private static String[] housePrefixes = {"d", "g", "b", "r", ""};
 	LinkedList<Tile> doors;
 	Rectangle rect;
-	String spritePrefix;
+	HouseType type;
+	int swapCount;
 
-	public House(Rectangle rect, String spr){
-		doors = new LinkedList<>();
+	public House(Rectangle rect, HouseType type){
+		this.doors = new LinkedList<>();
 		this.rect = rect;
-		spritePrefix = spr;
+		this.type = type;
+		swapCount = 0;
 	}
 	
 	public void addDoor(Tile t){
@@ -32,8 +36,19 @@ public class House {
 	}
 	
 	public String getSpritePrefix(){
-		return spritePrefix;
+		return housePrefixes[type.ordinal()];
 	}
+	
+	public HouseType getType(){
+		return type;
+	}
+	
+	public void setType(HouseType t){
+		this.type = t;
+	}
+	
+	public int getSwapCount() {return swapCount;}
+	public void incSwaps() {swapCount++;}
 	
 	@Override
 	public String toString(){

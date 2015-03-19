@@ -10,6 +10,7 @@ import gui.GUtil.SpriteSheetType;
 public class Floor extends AbstractPlacedItem implements Holdable{
 	
 	private House house;
+	private int randFloorIndex;
 	
 	public Floor(float x, float y) {
 		super(x, y);
@@ -18,19 +19,26 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 		setDrawPriority(-2);
 		setWalkable(true);
 		setAligned(true);
+		randFloorIndex = (rand.nextInt(2)+1);
 	}
 
 	@Override
 	public void recalcSprite(){
 		if (placed){
-			if (house != null){	
-				setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, house.getSpritePrefix()+"floor_"+(rand.nextInt(2)+1)));
-			} else {
-				setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+(rand.nextInt(2)+1)));
-			}
+			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+randFloorIndex));
 		} else {
 			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "loose_floor"));
 		}
+	}
+	
+	@Override
+	public void draw(float x, float y){
+		if (placed && house != null){	
+			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, house.getSpritePrefix()+"floor_"+randFloorIndex));
+		} else if (placed){
+			setSprite(SpriteManager.get().getSprite(SpriteSheetType.ITEMS, "floor_"+(rand.nextInt(2)+1)));
+		}
+		super.draw(x, y);
 	}
 	
 	@Override
