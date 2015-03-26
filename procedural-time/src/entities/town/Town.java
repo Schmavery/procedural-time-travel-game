@@ -183,7 +183,7 @@ public class Town {
 	}
 	
 	private boolean createHouse(int x, int y, int width, int height){
-		House h = new House(new Rectangle(x, y, width, height), 
+		House h = new House(new Rectangle(x, y, width, height), this,
 				HouseType.values()[rand.nextInt(HouseType.values().length)]);
 		
 		int currX, currY;
@@ -232,7 +232,7 @@ public class Town {
 		swapHouses(); // Check if you can recolour another house instead
 		
 		numHouseTypes[h.getType().ordinal()]++;
-		System.out.println("Added house #"+houses.size()+", new cluster: "+evaluateCluster());
+		//System.out.println("Added house #"+houses.size()+", new cluster: "+evaluateCluster());
 		return true;
 	}
 	
@@ -257,8 +257,11 @@ public class Town {
 				min = numHouseTypes[ht.ordinal()];
 			}
 		}
-		System.out.println(argMin.name());
 		return argMin;
+	}
+	
+	public int getNumType(HouseType ht){
+		return numHouseTypes[ht.ordinal()];
 	}
 	
 	/**

@@ -72,26 +72,11 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	public void update(long deltaTime) {
 		if (frame.isColliding(Game.getMap(), x, y)){
 			warpToClosestClearTile();
-			//TODO: This doesn't always work
 		}
-		
-		// TODO: This "getPlayer()" is too hard-coded
-		if (!this.isMoving() && !this.isDead() && !this.equals(Game.getPlayer())){
-			if (rand.nextInt(100) == 1){
-				int destX = this.getTileX() + (rand.nextInt(10) - 5);
-				int destY = this.getTileY() + (rand.nextInt(10) - 5);
-				this.walkTo(destX, destY);
-			}
-			if (rand.nextInt(5000) == 1){
-				this.say("Hey.");
-			}
-		}
-		
 		
 		processMessages();
-		if (isDead()){
-			return;
-		}
+		if (isDead()) return;
+		
 		if (!tilePather.isEmpty()) {
 			dx = (tilePather.currNode().getLeft()
 					+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterX())

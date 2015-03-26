@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -24,7 +26,6 @@ import core.display.SpriteSheet;
 import entities.Markov;
 import entities.concrete.Human;
 import entities.concrete.Human.Gender;
-import entities.concrete.NPC;
 import entities.concrete.Sword;
 import entities.interfaces.Entity;
 import entities.town.Town;
@@ -87,7 +88,7 @@ public class Game extends Core {
 		rand = new Random(RandomManager.getSeed("Game"));
 		miniMap = new MiniMap(100);
 		
-		int numHumans = 100;
+//		int numHumans = 0;
 		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Entity>()
@@ -116,26 +117,16 @@ public class Game extends Core {
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 		player.setDebug(true);
 		
-		for (int i = 1; i < numHumans; i++){
-			float randX;
-			float randY;
-			do{
-				randX = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
-				randY = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
-			} while (!tileMap.getWorldTile(randX, randY).walkable);
-
-			Human tmpHuman;
-			tmpHuman = new NPC(randX, randY, Gender.MALE);
-			
-			tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w_walk"));
-			tmpHuman.setStandingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n"), 
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
-					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
-		}
+//		for (int i = 0; i < 5; i++){
+//			float randX = 500*SCALE*TILE_SIZE;
+//			float randY = 510*SCALE*TILE_SIZE;
+////			do{
+////				randX = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
+////				randY = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
+////			} while (!tileMap.getWorldTile(randX, randY).walkable);
+//			new NPC(randX, randY, Gender.MALE);
+//		}
+//		System.out.println("Spawned");
 		
 		initTown();
 		
@@ -293,11 +284,16 @@ public class Game extends Core {
 			pauseGame();
 		}
 
+		Set<Entity> updatedEntities = new HashSet<>();
 		for (int i = 0 ; i < tileMap.getSize(); i++){
 			for (int j = 0; j < tileMap.getSize(); j++){
 				List<Entity> eList = tileMap.getGridTile(i, j).getEntities();
 				for (int k = eList.size() - 1; k >= 0; k--){
-					eList.get(k).update(deltaTime);
+					Entity e = eList.get(k);
+					if (e != null && !updatedEntities.contains(e)){
+						updatedEntities.add(e);
+						e.update(deltaTime);
+					}
 				}
 			}
 		}
@@ -313,7 +309,7 @@ public class Game extends Core {
 			pauseDown = false;
 			unpauseGame();
 		}
-		player.update(deltaTime);
+//		player.update(deltaTime);
 	}
 	
 	@Override
