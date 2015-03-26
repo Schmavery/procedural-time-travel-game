@@ -22,6 +22,7 @@ import entities.town.House.HouseType;
 import entities.town.SpinePoint.SpineType;
 
 public class Town {
+	private static final int HOUSE_SIZE = 15, HOUSE_RANGE = 5;
 	public static enum GrowthStage {INIT, DENSE};
 	public GrowthStage stage;
 	private SpinePoint well;
@@ -29,13 +30,15 @@ public class Town {
 	private Random rand;
 	private int densityCount;
 	PathTree pathTree;
+	private int[] numHouseTypes;
 	
 	public Town(int x, int y){
 		stage = GrowthStage.INIT;
-		rand = new Random(RandomManager.getSeed("Town"+x+":"+y));
+		rand = new Random(RandomManager.getSeed("Town1"+x+":"+y));
 		well = new SpinePoint(x, y, SpineType.WELL);
 		pathTree = new PathTree(Game.getMap().getGridTile(x, y));
 		houses = new LinkedList<>();
+		numHouseTypes = new int[HouseType.values().length];
 	}
 	
 	public void grow(){
@@ -51,10 +54,14 @@ public class Town {
 		} else {
 			// Create New House
 			do {
-				diffX = rand.nextInt(100)-50;
-				diffY = rand.nextInt(100)-50;
-				w = rand.nextInt(15)+5;
-				h = rand.nextInt(15)+5;
+				int range = calcRange();
+				double magnitude = Math.pow(rand.nextDouble(), 3)*range;
+				double angle = rand.nextDouble()*2*Math.PI;
+				diffX = (int) (Math.cos(angle)*magnitude);
+				diffY = (int) (Math.sin(angle)*magnitude);
+				
+				w = rand.nextInt(HOUSE_SIZE) + HOUSE_RANGE;
+				h = rand.nextInt(HOUSE_SIZE) + HOUSE_RANGE;
 				
 				if (++attempts > 100) {
 					if (stage.equals(GrowthStage.INIT)) densityCount++;
@@ -63,6 +70,11 @@ public class Town {
 			}while (!createHouse(well.getX() + diffX, well.getY() + diffY, w, h));
 			densityCount = 0;
 		}
+
+	}
+	
+	private int calcRange(){
+		return (int) Math.sqrt(houses.size())*6 + 10;
 	}
 	
 	public float evaluateCluster(){
@@ -110,11 +122,11 @@ public class Town {
 	 * @return Set of houses near h
 	 */
 	private Set<House> getNearbyHouses(House h){
-		int dist = 10;
+		int dist = 15;
 		Set<House> hSet = new HashSet<>();
 		Rectangle r = new Rectangle(h.getRect());
 		r.setSize(2*dist, 2*dist);
-		r.translate(-dist, -dist);
+		r.translate(-dist + (h.getRect().getWidth()/2), -dist + (h.getRect().getHeight()/2));
 		for (House tmpH : houses){
 			if (r.intersects(tmpH.getRect())) hSet.add(tmpH);
 		}
@@ -131,37 +143,21 @@ public class Town {
 				float h2P = evaluateHouse(h2);
 				if (h1P < h2P) return -1;
 				else if (h1P > h2P) return 1;
-				else {
-					return h1.getSwapCount() - h2.getSwapCount();
-				}
+				else return 0;
 			}
 		});
-//		Collections.shuffle(houses);
-		// Now we try to fix the worst-situated house.
 		House worstHouse = houses.get(0);
 		HouseType type = getMostFrequentNearbyType(worstHouse);
 		List<House> swaps = new ArrayList<>(houses.size());
 		for (House swapH : houses){
-			if (!swapH.equals(worstHouse)){
-				if (swapH.getType().equals(type)){// && getMostFrequentNearbyType(swapH).equals(worstHouse.type)){
-//					swapH.setType(worstHouse.getType());
-//					worstHouse.setType(type);
-////					if (getNearbyHouses(worstHouse).contains(swapH)) continue;
-//					swapH.incSwaps();
-//					worstHouse.incSwaps();
-//					System.out.println("Clustering Score: "+evaluateCluster());
-//					break;
+			if (!swapH.getType().equals(worstHouse.getType())){
+				if (swapH.getType().equals(type)){
 					swaps.add(swapH);
 				}
 			}
 		}
-//		Collections.sort(swaps, new Comparator<House>() {
-//			@Override
-//			public int compare(House h1, House h2) {
-//				return h1.getSwapCount() - h2.getSwapCount();
-//			}
-//		});
-		Collections.shuffle(swaps);
+
+//		Collections.shuffle(swaps);
 		float before = evaluateCluster();
 		for (House s : swaps){
 			if (swapHouses(s, worstHouse, before)) break;
@@ -174,21 +170,19 @@ public class Town {
 		h1.setType(h2.getType());
 		h2.setType(type);
 		float after = evaluateCluster();
-		if (before > after){
+		if (before >= after){
 			// Revert
 			h2.setType(h1.getType());
 			h1.setType(type);
 			return false;
-		} else {			
-			h1.incSwaps();
-			h2.incSwaps();
+		} else {
+			h1.swap(h2);
 			System.out.println("Improved Clustering Score: "+after);
 			return true;
 		}
 	}
 	
 	private boolean createHouse(int x, int y, int width, int height){
-		
 		House h = new House(new Rectangle(x, y, width, height), 
 				HouseType.values()[rand.nextInt(HouseType.values().length)]);
 		
@@ -227,7 +221,44 @@ public class Town {
 			}
 		}
 		houses.add(h);
+		
+		// Either set to the the most frequent or the least common
+		if (rand.nextBoolean()){
+			h.setType(getMostFrequentNearbyType(h));
+		} else {
+			h.setType(getLeastCommonHouseType());
+		}
+		h.spawnPerson();
+		swapHouses(); // Check if you can recolour another house instead
+		
+		numHouseTypes[h.getType().ordinal()]++;
+		System.out.println("Added house #"+houses.size()+", new cluster: "+evaluateCluster());
 		return true;
+	}
+	
+	private HouseType getMostCommonHouseType(){
+		HouseType argMax = null;
+		int max = -1;
+		for (HouseType ht : HouseType.values()){
+			if (numHouseTypes[ht.ordinal()] > max){
+				argMax = ht;
+				max = numHouseTypes[ht.ordinal()];
+			}
+		}
+		return argMax;
+	}
+	
+	private HouseType getLeastCommonHouseType(){
+		HouseType argMin = null;
+		int min = Integer.MAX_VALUE;
+		for (HouseType ht : HouseType.values()){
+			if (numHouseTypes[ht.ordinal()] < min){
+				argMin = ht;
+				min = numHouseTypes[ht.ordinal()];
+			}
+		}
+		System.out.println(argMin.name());
+		return argMin;
 	}
 	
 	/**
@@ -245,7 +276,7 @@ public class Town {
 	private TreeDiff checkHouse(House h){
 		// Check for overlap with well (And give it some room)
 		for (int i = 0; i < 9; i++){
-			if (h.getRect().contains(well.getX() + (i%3-1), well.getY() + (1/3-1))) {
+			if (h.getRect().contains(well.getX() + (i%3-1), well.getY() + (i/3-1))) {
 				return null;
 			}
 		}

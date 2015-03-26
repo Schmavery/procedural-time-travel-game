@@ -16,6 +16,7 @@ import core.Message;
 import core.Tile;
 import core.display.SpriteManager;
 import core.path.PathFinder;
+import entities.Markov;
 import entities.abstr.AbstractMovingEntity;
 import entities.components.EntityFrame;
 import entities.components.HealthTracker;
@@ -33,7 +34,9 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	public static enum Gender {
 		MALE, FEMALE
 	}
-
+	
+	
+	public static Markov[] markovs = new Markov[Gender.values().length];
 	public static Fist fist = new Fist();
 
 	private List<Message> messages;
@@ -42,14 +45,10 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	Holdable[] inventory;
 	Holdable heldItem;
 	Action currentAction;
-	
 
-	// private Gender gender;
-
-	public Human(float x, float y, Gender gender, String name) {
+	public Human(float x, float y, Gender gender) {
 		super(x, y);
 
-		// this.gender = gender;
 		health = new HealthTracker(20);
 		inventory = new Holdable[3];
 		heldItem = fist;
@@ -61,10 +60,15 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		Game.getMap().getWorldTile(frame.getCenterX(x), frame.getCenterY(y))
 				.addEntity(this);
 
-		this.name = name;
+		this.name = markovs[gender.ordinal()].genWordInRange(4, 10);
 		setSpecialType(SpecialType.PERSON);
 	}
+	
+	public static void setMarkov(Gender g, Markov m){
+		markovs[g.ordinal()] = m;
+	}
 
+	@Override
 	public void update(long deltaTime) {
 		if (frame.isColliding(Game.getMap(), x, y)){
 			warpToClosestClearTile();
@@ -367,6 +371,7 @@ public class Human extends AbstractMovingEntity implements Hittable,
 	public boolean isDead() {
 		return (health.isDead());
 	}
+
 	
 	@Override
 	public void draw(float x, float y) {

@@ -5,6 +5,7 @@ public interface Entity{
 	public static enum SpecialType {PERSON, HOUSE, FOLIAGE, NORMAL, PATH};
 	public void draw(float x, float y);
 	public void draw(float x, float y, float w, float h);
+	public void update(long deltaTime);
 	public float getX();
 	public float getY();
 	public int getDrawPriority();

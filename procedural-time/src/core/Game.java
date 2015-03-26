@@ -22,16 +22,12 @@ import core.ActionFactory.ActionType;
 import core.display.SpriteManager;
 import core.display.SpriteSheet;
 import entities.Markov;
-import entities.concrete.Door;
-import entities.concrete.Floor;
-import entities.concrete.HousePiece;
 import entities.concrete.Human;
 import entities.concrete.Human.Gender;
 import entities.concrete.NPC;
 import entities.concrete.Sword;
 import entities.interfaces.Entity;
 import entities.town.Town;
-import entities.town.Town.GrowthStage;
 import gui.GBorderFactory;
 import gui.GButton;
 import gui.GClickEvent;
@@ -49,7 +45,6 @@ public class Game extends Core {
 	public static int TILE_SIZE = 16;
 	public static float SCALE = 1f;
 	 
-	List<Human> humans;
 	List<Entity> drawList;
 	Town town;
 	int growPause = 0;
@@ -110,8 +105,7 @@ public class Game extends Core {
 		tileMap = new TileMap(1000);
 		tileMap.init();
 		System.out.println("Done initializing map");
-		humans = new ArrayList<Human>(numHumans);
-		player = new Human((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE, maleNames.genWordInRange(4, 10));
+		player = new Human((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE);
 			player.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s_walk"),
@@ -120,7 +114,6 @@ public class Game extends Core {
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
-		humans.add(player);
 		player.setDebug(true);
 		
 		for (int i = 1; i < numHumans; i++){
@@ -132,7 +125,7 @@ public class Game extends Core {
 			} while (!tileMap.getWorldTile(randX, randY).walkable);
 
 			Human tmpHuman;
-			tmpHuman = new NPC(randX, randY, Gender.MALE, maleNames.genWordInRange(4, 10));
+			tmpHuman = new NPC(randX, randY, Gender.MALE);
 			
 			tmpHuman.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
@@ -142,23 +135,21 @@ public class Game extends Core {
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
-			humans.add(tmpHuman);
 		}
 		
 		initTown();
 		
 		player.getItem(new Sword(0, 0));
-		player.getItem(new Floor(0, 0));
-		player.getItem(new HousePiece(0, 0));
-		player.getItem(new Door(0,0));
+		//player.getItem(new Floor(0, 0));
+		//player.getItem(new HousePiece(0, 0));
+		//player.getItem(new Door(0,0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
 	}
 	
 	public void initMarkov(){
-		maleNames = new Markov("res/mnames.txt", 2);
-		femaleNames = new Markov("res/fnames.txt", 2);
-	
+		Human.setMarkov(Gender.MALE, new Markov("res/mnames.txt", 2));
+		Human.setMarkov(Gender.FEMALE, femaleNames = new Markov("res/fnames.txt", 2));
 	}
 	
 	public static void initSpriteSheets(){
@@ -213,7 +204,6 @@ public class Game extends Core {
 	public void initTown(){
 		town = new Town(player.getTileX(), player.getTileY() + 10);
 	}
-	
 	
 	@Override
 	public void update(long deltaTime){
@@ -286,8 +276,6 @@ public class Game extends Core {
 			player.doAction(ActionType.DROP);
 		}
 		
-		
-//		if (town.stage.equals(GrowthStage.INIT)) town.grow();
 //		if (growPause == 0){
 //			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
 				town.grow();
@@ -305,9 +293,15 @@ public class Game extends Core {
 			pauseGame();
 		}
 
-		for (Human human : humans){
-			human.update(deltaTime);
+		for (int i = 0 ; i < tileMap.getSize(); i++){
+			for (int j = 0; j < tileMap.getSize(); j++){
+				List<Entity> eList = tileMap.getGridTile(i, j).getEntities();
+				for (int k = eList.size() - 1; k >= 0; k--){
+					eList.get(k).update(deltaTime);
+				}
+			}
 		}
+		
 		screen.update(deltaTime);
 	}
 	

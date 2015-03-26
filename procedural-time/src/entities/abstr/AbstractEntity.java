@@ -80,32 +80,6 @@ public abstract class AbstractEntity implements Entity
 		this.specialType = specialType;
 	}
 	
-	/**
-	 * Default is 0.
-	 * Negative is below 0, positive draws on top.
-	 * @param p New draw priority
-	 */
-	protected void setDrawPriority(int p){
-		this.drawPriority = p;
-	}
-
-	@Override
-	public int getDrawPriority(){
-		return this.drawPriority;
-	}
-	
-	@Override
-	public void draw(float x, float y){
-		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
-		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
-	}
-	
-	@Override
-	public void draw(float x, float y, float w, float h){
-		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
-		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
-	}
-	
 	protected void warpToClosestClearTile(){
 		Tile t;
 		// Map being initialized
@@ -137,10 +111,41 @@ public abstract class AbstractEntity implements Entity
 				float offset = Game.SCALE*Game.TILE_SIZE;
 				x = warpTile.getLeft() + offset;
 				y = warpTile.getTop() + offset;
-//				System.out.println("warped");
 			} else {
 				System.out.println("Warp failed :(");
 			}
 		}
 	}
+	
+	public void update(long deltaTime){
+		
+	}
+	
+	/**
+	 * Default is 0.
+	 * Negative is below 0, positive draws on top.
+	 * @param p New draw priority
+	 */
+	protected void setDrawPriority(int p){
+		this.drawPriority = p;
+	}
+
+	@Override
+	public int getDrawPriority(){
+		return this.drawPriority;
+	}
+	
+	@Override
+	public void draw(float x, float y){
+		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset);
+	}
+	
+	@Override
+	public void draw(float x, float y, float w, float h){
+		float offset = (Game.TILE_SIZE*Game.SCALE)/2;
+		this.standingAnims[facing.ordinal()].draw(x + getX() + offset, y + getY() + offset, w, h);
+	}
+	
+	
 }

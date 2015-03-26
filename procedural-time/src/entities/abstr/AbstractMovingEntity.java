@@ -38,29 +38,6 @@ public abstract class AbstractMovingEntity extends AbstractEntity
 		moving = true;
 	}
 	
-	public void seek(){
-		//TODO 
-	}
-	
-	public void flee(){
-		//TODO
-	}
-	
-	public void arrive(){
-		//TODO
-	}
-	
-	public void pursue(){
-		//TODO
-	}
-	
-	public void evade(){
-		//TODO
-	}
-	
-	public void wander(){
-		//TODO
-	}
 
 	public void walkTo(int tileX, int tileY)
 	{
