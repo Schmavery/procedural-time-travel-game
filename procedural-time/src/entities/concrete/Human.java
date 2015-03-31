@@ -78,16 +78,19 @@ public class Human extends AbstractMovingEntity implements Hittable,
 		if (isDead()) return;
 		
 		if (!tilePather.isEmpty()) {
-			dx = (tilePather.currNode().getLeft()
-					+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterX())
-					/ deltaTime;
-			dy = (tilePather.currNode().getTop()
-					+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterY())
-					/ deltaTime;
-			if (frame.isContained(tilePather.currNode(), x, y)) {
-				tilePather.nextNode();
+			if (tilePather.currNode().isWalkable()){
+				dx = (tilePather.currNode().getLeft()
+						+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterX())
+						/ deltaTime;
+				dy = (tilePather.currNode().getTop()
+						+ (Game.SCALE * Game.TILE_SIZE / 2) - getCenterY())
+						/ deltaTime;
+				if (frame.isContained(tilePather.currNode(), x, y)) {
+					tilePather.nextNode();
+				}
+			} else {
+				tilePather.clear();
 			}
-
 		}
 
 		moving = (dx != 0 || dy != 0);
