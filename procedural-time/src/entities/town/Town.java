@@ -14,6 +14,8 @@ import org.lwjgl.util.Rectangle;
 import core.Game;
 import core.RandomManager;
 import core.Tile;
+import core.util.GraphWriter;
+import core.util.GraphWriter.GraphType;
 import entities.concrete.Door;
 import entities.concrete.Floor;
 import entities.concrete.HousePiece;
@@ -70,6 +72,7 @@ public class Town {
 			}while (!createHouse(well.getX() + diffX, well.getY() + diffY, w, h));
 			densityCount = 0;
 		}
+		GraphWriter.log(GraphType.CLUSTER, String.valueOf((evaluateCluster())));
 
 	}
 	
@@ -177,7 +180,7 @@ public class Town {
 			return false;
 		} else {
 			h1.swap(h2);
-			System.out.println("Improved Clustering Score: "+after);
+//			System.out.println("Improved Clustering Score: "+after);
 			return true;
 		}
 	}
@@ -331,7 +334,7 @@ public class Town {
 			rewriteDiff.revert(false);
 			if (houseDiff == null) return null;
 			rewriteDiff.compose(houseDiff);
-			System.out.println("Rewrite Success:"+h);
+//			System.out.println("Rewrite Success:"+h);
 			return rewriteDiff;
 		} else {
 			TreeDiff houseDiff = pathTree.checkAddHouse(h, exclude);

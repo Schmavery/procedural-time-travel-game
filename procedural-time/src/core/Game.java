@@ -23,6 +23,8 @@ import org.newdawn.slick.opengl.TextureLoader;
 import core.ActionFactory.ActionType;
 import core.display.SpriteManager;
 import core.display.SpriteSheet;
+import core.util.GraphWriter;
+import core.util.GraphWriter.GraphType;
 import entities.Markov;
 import entities.concrete.Human;
 import entities.concrete.Human.Gender;
@@ -74,7 +76,6 @@ public class Game extends Core {
 	
 	Game(){
  		super();
-		init();
 	}
 	
 	@Override
@@ -87,8 +88,6 @@ public class Game extends Core {
 		initMarkov();
 		rand = new Random(RandomManager.getSeed("Game"));
 		miniMap = new MiniMap(100);
-		
-//		int numHumans = 0;
 		
 		drawList = new ArrayList<>(100);
 		drawComparator = new Comparator<Entity>()
@@ -117,17 +116,6 @@ public class Game extends Core {
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 		player.setDebug(true);
 		
-//		for (int i = 0; i < 5; i++){
-//			float randX = 500*SCALE*TILE_SIZE;
-//			float randY = 510*SCALE*TILE_SIZE;
-////			do{
-////				randX = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
-////				randY = rand.nextFloat()*SCALE*TILE_SIZE*(tileMap.getSize() - 1);
-////			} while (!tileMap.getWorldTile(randX, randY).walkable);
-//			new NPC(randX, randY, Gender.MALE);
-//		}
-//		System.out.println("Spawned");
-		
 		initTown();
 		
 		player.getItem(new Sword(0, 0));
@@ -136,6 +124,10 @@ public class Game extends Core {
 		//player.getItem(new Door(0,0));
 		player.doAction(ActionType.RETREIVE, 0);
 		initGUI();
+		
+
+		
+		GraphWriter.resetTime();
 	}
 	
 	public void initMarkov(){
@@ -143,7 +135,7 @@ public class Game extends Core {
 		Human.setMarkov(Gender.FEMALE, femaleNames = new Markov("res/fnames.txt", 2));
 	}
 	
-	public static void initSpriteSheets(){
+	public void initSpriteSheets(){
 		GFont font = new GFont("res/arial.fnt");
 		GUtil.setFont(font);
 		
@@ -198,6 +190,7 @@ public class Game extends Core {
 	
 	@Override
 	public void update(long deltaTime){
+		GraphWriter.update(deltaTime);
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				exit();
 		}
@@ -343,4 +336,9 @@ public class Game extends Core {
 				SCREEN_HEIGHT - 200, tileMap.getGridTile(playerTile_x, playerTile_y));
 	}
 
+	@Override
+	public void exit(){
+		GraphWriter.write(GraphType.CLUSTER, "clusterScore.csv");
+		super.exit();
+	}
 }

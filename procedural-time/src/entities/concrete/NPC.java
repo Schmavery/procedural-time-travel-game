@@ -35,7 +35,6 @@ public class NPC extends Human {
 	}
 	
 	public void notifyHouseSwap(House oldH, House newH){
-		System.out.println("Swap");
 		for (int i = 0; i < houses.length; i++){
 			if (houses[i] == oldH){
 				houses[i] = newH;

@@ -124,16 +124,21 @@ public abstract class Core {
 	 * @return Time since last frame.
 	 */
 	private long getDelta(){
-		long currentTime = (Sys.getTime()*1000)/Sys.getTimerResolution();
-		long delta = currentTime - lastFrame;
-		lastFrame = currentTime;
-		return delta;
+		if (lastFrame == 0){
+			lastFrame = (Sys.getTime()*1000)/Sys.getTimerResolution();
+			return 0;
+		} else {
+			long currentTime = (Sys.getTime()*1000)/Sys.getTimerResolution();
+			long delta = currentTime - lastFrame;
+			lastFrame = currentTime;
+			return delta;
+		}
 	}
 	
 	/**
 	 * Safely close the program.
 	 */
-	public static void exit(){
+	public void exit(){
 		Display.destroy();
         System.exit(0);
 	}
