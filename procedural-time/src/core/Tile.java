@@ -2,6 +2,7 @@ package core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return 5*(Math.abs(this.x - p.x)  + Math.abs(this.y - p.y)); 
 	}
 	
-	private static void addTile(List<Tile> list, int x, int y){
+	private static void addWalkableTileToList(List<Tile> list, int x, int y){
 		if (isWalkableTile(x, y)){
 			list.add(Game.getMap().getGridTile(x, y));
 		}
@@ -103,10 +104,10 @@ public class Tile implements Serializable, Pathable<Tile>{
 
 	public List<Tile> getReachable() {
 		List<Tile> reachable = new ArrayList<>(8);
-		addTile(reachable, x - 1, y);
-		addTile(reachable, x    , y - 1);
-		addTile(reachable, x + 1, y);
-		addTile(reachable, x    , y + 1);
+		addWalkableTileToList(reachable, x - 1, y);
+		addWalkableTileToList(reachable, x    , y - 1);
+		addWalkableTileToList(reachable, x + 1, y);
+		addWalkableTileToList(reachable, x    , y + 1);
 		
 		if (isWalkableTile(x+1, y+1)){
 			if (isWalkableTile(x+1, y) && isWalkableTile(x, y+1)){
@@ -152,10 +153,12 @@ public class Tile implements Serializable, Pathable<Tile>{
 	
 	public void addEntity(Entity h){
 		entities.add(h);
+		Game.getEM().addEntity(h);
 	}
 	
 	public void removeEntity(Entity h){
 		entities.remove(h);
+		Game.getEM().removeEntity(h);
 	}
 	
 	/**
@@ -165,8 +168,11 @@ public class Tile implements Serializable, Pathable<Tile>{
 	 */
 	public boolean removeEntityBySpecialType(SpecialType type){
 		Iterator<Entity> iter = entities.iterator();
+		Entity e;
 		while (iter.hasNext()){
-			if (iter.next().getSpecialType().equals(type)){
+			e = iter.next();
+			if (e.getSpecialType().equals(type)){
+				Game.getEM().removeEntity(e);
 				iter.remove();
 				return true;
 			}
@@ -175,8 +181,12 @@ public class Tile implements Serializable, Pathable<Tile>{
 		return false;
 	}
 	
+	/**
+	 * Returns unmodifiable list of entities.
+	 * @return
+	 */
 	public List<Entity> getEntities(){
-		return entities;
+		return Collections.unmodifiableList(entities);
 	}
 	
 	public boolean hasSpecialType(SpecialType type){

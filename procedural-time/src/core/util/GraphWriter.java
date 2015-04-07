@@ -44,8 +44,10 @@ public class GraphWriter {
 	 * @param filename
 	 */
 	public static void write(GraphType type, String filename){
-//		System.out.println(outputs[type.ordinal()].toString());
-		
+		if (outputs[type.ordinal()] == null){
+			System.err.println("Could not save empty "+type.name()+" graph to filename '"+filename+"'.");
+			return;
+		}
 		try (PrintWriter out = new PrintWriter(filename)){
 			out.write(outputs[type.ordinal()].toString());
 		}

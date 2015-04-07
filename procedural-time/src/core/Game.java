@@ -25,6 +25,7 @@ import core.display.SpriteManager;
 import core.display.SpriteSheet;
 import core.util.GraphWriter;
 import core.util.GraphWriter.GraphType;
+import entities.EntityManager;
 import entities.Markov;
 import entities.concrete.Human;
 import entities.concrete.Human.Gender;
@@ -43,6 +44,7 @@ import gui.GUtil.SpriteSheetType;
 public class Game extends Core {
 	// Singletons
 	private static TileMap tileMap;
+	private static EntityManager eManager;
 	private static Human player;
 	
 	public static int TILE_SIZE = 16;
@@ -64,6 +66,10 @@ public class Game extends Core {
 	
 	public static TileMap getMap(){
 		return tileMap;
+	}
+	
+	public static EntityManager getEM(){
+		return eManager;
 	}
 	
 	public static Human getPlayer(){
@@ -102,9 +108,11 @@ public class Game extends Core {
 			}
 		};
 		
+		eManager = new EntityManager();
 		tileMap = new TileMap(1000);
 		tileMap.init();
 		System.out.println("Done initializing map");
+		
 		player = new Human((tileMap.getSize()/2)*SCALE*TILE_SIZE, (tileMap.getSize()/2)*SCALE*TILE_SIZE, Gender.MALE);
 			player.setMovingAnims(SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_n_walk"), 
 					SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_e_walk"),
@@ -277,20 +285,8 @@ public class Game extends Core {
 			pauseGame();
 		}
 
-		Set<Entity> updatedEntities = new HashSet<>();
-		for (int i = 0 ; i < tileMap.getSize(); i++){
-			for (int j = 0; j < tileMap.getSize(); j++){
-				List<Entity> eList = tileMap.getGridTile(i, j).getEntities();
-				for (int k = eList.size() - 1; k >= 0; k--){
-					Entity e = eList.get(k);
-					if (e != null && !updatedEntities.contains(e)){
-						updatedEntities.add(e);
-						e.update(deltaTime);
-					}
-				}
-			}
-		}
-		
+		getEM().update(deltaTime);
+		System.out.println(deltaTime);
 		screen.update(deltaTime);
 	}
 	
