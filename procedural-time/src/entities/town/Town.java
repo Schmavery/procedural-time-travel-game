@@ -293,8 +293,8 @@ public class Town {
 		boolean pathBlocked = false;
 		
 		// Check one larger than house to prevent direct adjacency.
-		for (int i = -1; i < h.getRect().getWidth() + 1; i++){
-			for (int j = -1; j < h.getRect().getHeight() + 1; j++){
+		for (int i = 0; i < h.getRect().getWidth(); i++){
+			for (int j = 0; j < h.getRect().getHeight(); j++){
 				currX = h.getRect().getX()+i;
 				currY = h.getRect().getY()+j;
 				t = Game.getMap().getGridTile(currX, currY);

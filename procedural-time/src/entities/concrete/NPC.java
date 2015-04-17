@@ -1,14 +1,22 @@
 package entities.concrete;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import org.lwjgl.util.Rectangle;
+
 import core.Tile;
 import core.display.SpriteManager;
 import entities.town.House;
+import entities.town.House.HouseType;
 import gui.GUtil.SpriteSheetType;
 
 public class NPC extends Human {
+	private static final float FRIEND_DIST = 10;
 	public enum HousePurpose {HOME, WORK};
 	public enum DayState {HOME, WORK, RAND};
 	private House[] houses;
+	private ArrayList<NPC> friends;
 	private DayState state;
 	private boolean interrupted;
 	private int putterDelay;
@@ -26,6 +34,7 @@ public class NPC extends Human {
 				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_s"),
 				SpriteManager.get().getSprite(SpriteSheetType.PEOPLE, "man_w"));
 		houses = new House[HousePurpose.values().length];
+		friends = new ArrayList<>();
 	}
 	
 	public void setHouse(HousePurpose p, House h){
@@ -53,7 +62,7 @@ public class NPC extends Human {
 			switch (state){
 			case HOME:
 				if (putterDelay < 0){
-					say("I'm going to go home");
+//					say("I'm going to go home");
 					putterDelay = rand.nextInt(10) + 3;
 				}
 				if (rand.nextInt(100) == 1){
@@ -66,7 +75,7 @@ public class NPC extends Human {
 				break;
 			case WORK:
 				if (putterDelay < 0){
-					say("I'm going to go to work");
+//					say("I'm going to go to work");
 					putterDelay = rand.nextInt(10) + 3;
 				}
 				if (rand.nextInt(100) == 1){
@@ -91,6 +100,29 @@ public class NPC extends Human {
 			}
 		}
 		super.update(deltaTime);
+	}
+
+	public void findFriends(LinkedList<House> town) {
+		for (House h : town){
+			if (h.getType().equals(HouseType.RESIDENTIAL)
+					|| h.getType().equals(HouseType.RESIDENTIAL2)){
+				if (houses[HousePurpose.HOME.ordinal()] != null 
+						&& houses[HousePurpose.HOME.ordinal()].getDist(h) < FRIEND_DIST){
+					findFriends(h);
+				}
+			} else if (houses[HousePurpose.WORK.ordinal()] != null 
+					&& houses[HousePurpose.WORK.ordinal()].equals(h)){
+				findFriends(h);
+			}
+		}
+	}
+	
+	public void findFriends(House h){
+		for (NPC npc : h.getDependents()){
+			if (!friends.contains(npc)){
+				
+			}
+		}
 	}
 	
 }

@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -270,7 +268,7 @@ public class Game extends Core {
 		
 //		if (growPause == 0){
 //			if (Keyboard.isKeyDown(Keyboard.KEY_G)){
-				town.grow();
+				town.grow(); 
 //				growPause = 100;
 //			}
 //		} else if (growPause > 0){
@@ -286,7 +284,7 @@ public class Game extends Core {
 		}
 
 		getEM().update(deltaTime);
-		System.out.println(deltaTime);
+		
 		screen.update(deltaTime);
 	}
 	

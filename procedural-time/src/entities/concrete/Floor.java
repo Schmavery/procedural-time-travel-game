@@ -3,11 +3,12 @@ package entities.concrete;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
+import entities.interfaces.HasHouse;
 import entities.interfaces.Holdable;
 import entities.town.House;
 import gui.GUtil.SpriteSheetType;
 
-public class Floor extends AbstractPlacedItem implements Holdable{
+public class Floor extends AbstractPlacedItem implements Holdable, HasHouse {
 	
 	private House house;
 	private int randFloorIndex;
@@ -62,9 +63,13 @@ public class Floor extends AbstractPlacedItem implements Holdable{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public void setHouse(House h){
 		this.house = h;
+	}
+
+	public House getHouse(){
+		return house;
 	}
 
 }

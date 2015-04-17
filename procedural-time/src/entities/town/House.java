@@ -16,7 +16,7 @@ import entities.concrete.NPC.HousePurpose;
 
 public class House {
 	private static int COUNT = 0;
-	public static enum HouseType {D, G, B, R, RESIDENTIAL};
+	public static enum HouseType {WORK, RESIDENTIAL2, B, WORK2, RESIDENTIAL};
 	private static String[] housePrefixes = {"d", "g", "b", "r", ""};
 	
 	Town town;
@@ -36,7 +36,7 @@ public class House {
 	}
 	
 	public void spawnPerson(){
-		if (type != null && (type.equals(HouseType.RESIDENTIAL) || type.equals(HouseType.G))){
+		if (type != null && (type.equals(HouseType.RESIDENTIAL) || type.equals(HouseType.RESIDENTIAL2))){
 			// Spawn person
 			NPC tmpHuman;
 			Tile placeTile = getRandContainedTile();
@@ -44,10 +44,12 @@ public class House {
 			tmpHuman.setHouse(HousePurpose.HOME, this);
 			attachNPC(tmpHuman);
 			
-			int numWorkLoc = town.getNumType(HouseType.D) + town.getNumType(HouseType.R);
+			
+			// Find work location
+			int numWorkLoc = town.getNumType(HouseType.WORK) + town.getNumType(HouseType.WORK2);
 			for (House h : town.getHouses()){
 				if (h == this) continue;
-				if (h.getType().equals(HouseType.D) || h.getType().equals(HouseType.R)){
+				if (h.getType().equals(HouseType.WORK) || h.getType().equals(HouseType.WORK2)){
 					if (rand.nextFloat() < 1f/numWorkLoc){
 						// Pick this house
 						tmpHuman.setHouse(HousePurpose.WORK, h);
@@ -57,6 +59,8 @@ public class House {
 					}
 				}
 			}
+			
+			tmpHuman.findFriends(town.getHouses());
 		}
 	}
 	
@@ -114,5 +118,14 @@ public class House {
 	@Override
 	public String toString(){
 		return "House:("+rect.getX()+","+rect.getY()+","+rect.getWidth()+","+rect.getHeight()+")";
+	}
+	
+	public float getDist(House h){
+		return Math.abs((this.rect.getX()+(this.rect.getWidth()/2)) - (h.rect.getX()+(h.rect.getWidth()/2)))
+			+  Math.abs((this.rect.getY()+(this.rect.getHeight()/2)) - (h.rect.getY()+(h.rect.getHeight()/2)));
+	}
+	
+	public List<NPC> getDependents(){
+		return dependent;
 	}
 }

@@ -8,12 +8,14 @@ import core.display.Sprite;
 import core.display.SpriteInstance;
 import core.display.SpriteManager;
 import entities.abstr.AbstractPlacedItem;
+import entities.interfaces.Entity;
+import entities.interfaces.HasHouse;
 import entities.interfaces.Holdable;
 import entities.interfaces.Placeable;
 import entities.town.House;
 import gui.GUtil.SpriteSheetType;
 
-public class HousePiece extends AbstractPlacedItem implements Placeable, Holdable {
+public class HousePiece extends AbstractPlacedItem implements Placeable, Holdable, HasHouse {
 
 	protected HashMap<String, Sprite> sprites;
 	private String[][] bitmaskKeys;
@@ -74,7 +76,17 @@ public class HousePiece extends AbstractPlacedItem implements Placeable, Holdabl
 				getTileY() + offsets[(i+1)%4] < size){
 				Tile t = Game.getMap().getGridTile(getTileX() + offsets[i], getTileY() + offsets[(i+1)%4]);
 				
-				if (t.hasSpecialType(SpecialType.HOUSE)) total += add;
+				if (t.hasSpecialType(SpecialType.HOUSE)){
+					for (Entity e : t.getEntities()){
+						if ((e instanceof HasHouse) 
+							&& (((HasHouse) e).getHouse() == house)){
+							total += add;
+							break;
+						}
+					}
+				}
+//						&& t instanceof HasHouse
+//						&& ((HasHouse) t).getHouse() == house) total += add;
 				
 				add *= 2;
 			}
@@ -130,5 +142,8 @@ public class HousePiece extends AbstractPlacedItem implements Placeable, Holdabl
 		this.house = h;
 	}
 
+	public House getHouse(){
+		return house;
+	}
 
 }

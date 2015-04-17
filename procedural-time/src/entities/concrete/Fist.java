@@ -27,12 +27,15 @@ public int damage = 1;
 		Point pt = user.getPlacePoint();
 		Tile t = Game.getMap().getWorldTile(pt.getX(), pt.getY());
 			//check if there is collision with damageable entities
-			for (Entity h : t.getEntities()){
-				if (h instanceof Hittable){
-					// TODO: Check for collision
-					((Hittable) h).hit(this, user);
-				}
+		Entity h;
+		for (int i = t.getEntities().size() - 1; i >= 0; i--){
+			h = t.getEntities().get(i);
+			if (h instanceof Hittable){
+				((Hittable) h).hit(this, user);
+			} else {
+				System.out.println("Not hittable");
 			}
+		}
 //		}
 	}
 
